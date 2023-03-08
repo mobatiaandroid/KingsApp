@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/listBackGround"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/listStatus"
+            android:gravity="center|left"
+            android:text="iedeyiwydfiewuhyfiyehdfchydefhdfhcdsfh
+            cksyfikysfysdhckdhsckhdskchkdshcdscfdskcydscdscsdfsdyfdsfc
+            yxvdcvdsfvdsydsdsyvdsufvudsxffsu"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/grey"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/listStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:layout_toLeftOf="@+id/arrowImg"
+            android:text="Pending"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/arrowImg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/chevron_right" />
+        <RelativeLayout
+            android:id="@+id/timeanddateli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/desc"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            >
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center|left"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:paddingBottom="10dp"
+                android:textColor="@color/greyy"
+                android:textSize="15sp"
+                android:text="13 Sep 2022"/>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="23dp"
+                android:gravity="center|right"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:paddingBottom="10dp"
+                android:textColor="@color/greyy"
+                android:textSize="15sp"
+                android:text="9:30 pm"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/background_color_c"
+            android:layout_below="@+id/timeanddateli"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

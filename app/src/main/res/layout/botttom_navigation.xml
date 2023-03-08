@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/bottomLinear"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:theme="@style/NavigationTheme"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:weightSum="100">
+
+        <RelativeLayout
+            android:id="@+id/homeRel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="20">
+
+            <ImageView
+                android:id="@+id/homeImg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/home4"
+                 />
+            <TextView
+                android:id="@+id/homeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:text="@string/Home"
+                android:layout_below="@+id/homeImg"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/messageRel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="20">
+
+            <ImageView
+                android:id="@+id/messageImg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/message4" />
+            <TextView
+                android:id="@+id/messageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/grey_bottom"
+                android:layout_marginTop="5dp"
+                android:text="@string/Message"
+                android:layout_below="@+id/messageImg"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/aboutRel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="20">
+
+            <RelativeLayout
+                android:id="@+id/cartCountRel"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone"
+                android:background="@drawable/calender1" >
+
+                <TextView
+                    android:id="@+id/cartCountTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="112"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/aboutImg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="20"
+                android:background="@drawable/about" />
+            <TextView
+                android:id="@+id/aboutText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/grey_bottom"
+                android:layout_marginTop="5dp"
+                android:text="@string/About"
+                android:layout_below="@+id/aboutImg"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/profileRel"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="20">
+            <ImageView
+                android:id="@+id/profileImg"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/contact" />
+            <TextView
+                android:id="@+id/contactText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_bottom"
+                android:text="@string/Contact"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/profileImg"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/settingRel"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="20">
+            <ImageView
+                android:id="@+id/otherImg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="20"
+                android:background="@drawable/settings"
+                />
+            <TextView
+                android:id="@+id/otherText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textColor="@color/grey_bottom"
+                android:text="@string/Settings"
+                android:layout_below="@+id/otherImg"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

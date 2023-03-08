@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@drawable/image_background">
+    <LinearLayout
+        android:id="@+id/linearBottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="120"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--<RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_weight="20">
+
+
+            <ImageView
+                android:id="@+id/action_bar_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/burger_menu" />
+
+
+            <TextView
+                android:id="@+id/logoClickImgView"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true" />
+
+            <LinearLayout
+                android:id="@+id/linear_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="30dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/switch_button"
+                    android:layout_width="45dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/switch_button_home" />
+
+                <ImageView
+                    android:id="@+id/student_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/profile_photo" />
+            </LinearLayout>
+
+        </RelativeLayout>-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            android:layout_marginTop="120dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp">
+
+                <ImageView
+                    android:id="@+id/home_logo_image"
+                    android:layout_width="130dp"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="30dp"
+                    android:visibility="visible"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/kings_school_logo" />
+                <TextView
+                    android:id="@+id/title_of_school"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logoheading"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:textSize="28dp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/home_logo_image"/>
+                <ImageView
+                    android:id="@+id/home_logo_image_arab"
+                    android:layout_width="130dp"
+                    android:layout_height="110dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/kings_school_logo"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlHome"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="70"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:id="@+id/lnrOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="33"
+                    android:orientation="horizontal"
+                    android:weightSum="90">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:background="@drawable/first_one">
+                        <RelativeLayout
+                            android:id="@+id/relOne"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <ImageView
+                                android:id="@+id/relImgOne"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true"
+                                android:gravity="center" />
+                            <TextView
+                                android:id="@+id/relTxtOne"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/relImgOne"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center"
+                                android:textAllCaps="false"
+                                android:maxLines="1" />
+
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="60"
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/first_two">
+                        <RelativeLayout
+                            android:id="@+id/relFive"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <TextView
+                                android:id="@+id/relTxtFive"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_below="@+id/relImgFive"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:textAllCaps="false"                                android:maxLines="1" />
+
+                            <ImageView
+                                android:id="@+id/relImgFive"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/lnrTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="33"
+                    android:layout_marginTop="4dp"
+                    android:weightSum="90"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="60"
+                        android:background="@drawable/first_three">
+                        <RelativeLayout
+                            android:id="@+id/relTwo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <TextView
+                                android:id="@+id/relTxtTwo"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_below="@+id/relImgTwo"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:textAllCaps="false"
+                                android:maxLines="2"/>
+
+                            <ImageView
+                                android:id="@+id/relImgTwo"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/first_four">
+                        <RelativeLayout
+                            android:id="@+id/relSeven"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <TextView
+                                android:id="@+id/relTxtSeven"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_below="@+id/relImgSeven"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:textAllCaps="false"
+                                android:maxLines="1" />
+
+                            <ImageView
+                                android:id="@+id/relImgSeven"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true"
+                                />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lnrThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="33"
+                    android:layout_marginTop="4dp"
+                    android:weightSum="90"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:background="@drawable/first_five">
+                        <RelativeLayout
+                            android:id="@+id/relEight"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <TextView
+                                android:id="@+id/relTxtEight"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/relImgEight"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="5dp"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="10dp"
+                                android:textAllCaps="false" />
+
+                            <ImageView
+                                android:id="@+id/relImgEight"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/first_six">
+                        <RelativeLayout
+                            android:id="@+id/relThree"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <TextView
+                                android:id="@+id/relTxtThree"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_below="@+id/relImgThree"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="5dp"
+                                android:textAllCaps="false"
+                                android:layout_marginLeft="10dp"
+                                android:maxLines="1" />
+
+                            <ImageView
+                                android:id="@+id/relImgThree"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/first_seven">
+                        <RelativeLayout
+                            android:id="@+id/relFour"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="1dp">
+
+                            <TextView
+                                android:id="@+id/relTxtFour"
+                                style="@style/textstyleHomebutton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_below="@+id/relImgFour"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:textAllCaps="false"
+                                android:maxLines="1"/>
+
+                            <ImageView
+                                android:id="@+id/relImgFour"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_centerInParent="true" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/featureLinear"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:layout_weight="10"
+            android:weightSum="100">
+
+
+        </LinearLayout>
+        <!--<ImageView
+            android:id="@+id/logo_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/login_bg_logo" />-->
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

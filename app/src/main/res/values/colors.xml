@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="school_1">#B68D40</color>
+    <color name="school_2">#D70040</color>
+    <color name="school_3">#000080</color>
+    <color name="signin_text_color">#18498A</color>
+    <color name="btn_blue">#007DFF</color>
+    <color name="grey">#505050</color>
+    <color name="greyyy">#BDBDBD</color>
+
+    <color name="border_grey">#6B737A</color>
+    <color name="rel_two">#003156</color>
+    <color name="light_grey">#d8d8d8</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="grey_bottom">#7F8B93</color>
+    <color name="navyBlue">#002B7F</color>
+    <color name="greyy">#ACACAC</color>
+    <color name="background_color_c">#BDBDBD</color>
+    <color name="kings_blue">#001c53</color>
+    <color name="present">#4BB5C4</color>
+    <color name="logout_user"> #808080</color>
+    <color name="btnBackground">#e7e7e7</color>
+    <color name="cal_row_4">#1B3354</color>
+    <color name="timetableblue">#7AE2ED</color>
+    <color name="dark_grey1">#908C86</color>
+    <color name="red">#FB3445</color>
+
+    <color name="view">#121147</color>
+    <color name="notificationr">#DD627F</color>
+
+    <color name="colorPrimary">#7E57C2</color>
+    <color name="colorPrimaryDark">#673AB7</color>
+    <color name="colorAccent">#B39DDB</color>
+</resources>

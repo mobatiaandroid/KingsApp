@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/top_navigation_li"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    <ImageView
+        android:id="@+id/hambrgr_btn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:src="@drawable/burger_menu" />
+    <Switch
+        android:id="@+id/switchlang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:track="@drawable/switch_bg"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:thumb="@drawable/ic_baseline_circle_24"
+        android:textColor="@color/white"
+        android:layout_toLeftOf="@+id/student_profile"
+        android:showText="false"
+        android:enabled="true"
+        android:checked="true"
+        android:scaleX="1.5"
+        android:scaleY="1">
+
+    </Switch>
+
+
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/profile_photo"
+        android:id="@+id/student_profile"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="30dp"
+        android:background="@android:color/transparent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+
+   <!-- <LinearLayout
+        android:id="@+id/top_navigation_li"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:weightSum="1"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/hambrgr_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight=".1"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/burger_menu">
+        </ImageView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight=".7"
+            android:textColor="@color/teal_200"
+            android:gravity="center">
+        </TextView>
+        <Switch
+            android:id="@+id/switchlang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:track="@drawable/switch_bg"
+            android:thumb="@drawable/ic_baseline_circle_24"
+            android:textColor="@color/white"
+            android:layout_weight=".1"
+            android:showText="false"
+            android:scaleX="1"
+            android:scaleY="1">
+
+        </Switch>
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/student_profile"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/profile_photo"
+             />
+
+    </LinearLayout>-->
+
+
+    <!--<RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="28dp"
+        android:layout_alignParentRight="true">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/studentlistrec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>-->
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/studentlistrec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_navigation_li"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:visibility="visible">
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>
