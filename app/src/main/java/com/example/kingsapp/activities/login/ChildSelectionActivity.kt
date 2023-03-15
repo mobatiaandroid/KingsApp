@@ -3,18 +3,33 @@ package com.example.kingsapp.activities.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
+import com.example.kingsapp.activities.login.model.StudentList
+import com.example.kingsapp.activities.login.model.StudentListResponseModel
+import com.example.kingsapp.manager.PreferenceManager
+import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
+import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
+import com.mobatia.nasmanila.api.ApiClient
 import de.hdodenhof.circleimageview.CircleImageView
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
 
 class ChildSelectionActivity:AppCompatActivity() {
     lateinit var ncontext: Context
-    lateinit var circleImageView:CircleImageView
-    lateinit var circleImageView2:CircleImageView
-    lateinit var circleImageView3:CircleImageView
+    lateinit var circleImageView:RecyclerView
+    lateinit var student_name: ArrayList<StudentList>
     lateinit var imageView18:ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,24 +42,58 @@ class ChildSelectionActivity:AppCompatActivity() {
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
         initFn()
+        studentListApiCall()
+    }
+
+    private fun studentListApiCall() {
+        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
+                PreferenceManager().getAccessToken(ncontext).toString())
+        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
+            override fun onResponse(
+                call: Call<StudentListResponseModel>,
+                response: Response<StudentListResponseModel>
+            ) {
+                Log.e("Response",response.body().toString())
+                if (response.body()!!.status.equals("100"))
+                {
+                    student_name.addAll(response.body()!!.student_list)
+                    circleImageView!!.layoutManager = LinearLayoutManager(ncontext)
+                    val studentlist_adapter =
+                        ChildSelectionAdapter(ncontext, student_name)
+                    circleImageView!!.adapter = studentlist_adapter
+                }
+                else
+                {
+
+                }
+            }
+
+            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    ncontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
     private fun initFn() {
+        student_name= ArrayList()
         circleImageView=findViewById(R.id.circleImageView)
-        circleImageView2=findViewById(R.id.circleImageView2)
-        circleImageView3=findViewById(R.id.circleImageView3)
+
         imageView18=findViewById(R.id.imageView18)
         imageView18.setOnClickListener {
             startActivity(Intent(this, SigninyourAccountActivity::class.java))
         }
-        circleImageView.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-        circleImageView2.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-        circleImageView3.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+        circleImageView.addOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                startActivity(Intent(ncontext, MainActivity::class.java))
+            }
+
+        })
+
     }
 }

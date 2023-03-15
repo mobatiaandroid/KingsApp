@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
@@ -14,6 +15,10 @@ import com.example.kingsapp.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
+import com.mobatia.nasmanila.api.ApiClient
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
 
 class ForgetPasswordActivity:AppCompatActivity() {
     lateinit var ncontext: Context
@@ -70,6 +75,7 @@ class ForgetPasswordActivity:AppCompatActivity() {
             } else if (!emailPattern) {
                 Toast.makeText(ncontext, "Please enter the valid email !", Toast.LENGTH_SHORT).show()
             } else {
+                callForgetPasswd(passwordTextInputEditText.text.toString())
                 createacconttextview.setText("We have reset your password")
                 textView24.setText("We have send your username and password to your given email id")
                 signin.visibility = View.GONE
@@ -103,6 +109,30 @@ class ForgetPasswordActivity:AppCompatActivity() {
             }
         }
     }
+
+    private fun callForgetPasswd(email: String) {
+        val call: Call<ResponseBody> = ApiClient.getApiService().forgetpwsd(email)
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                Log.e("Response",response.body().toString())
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    ncontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+
     fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }

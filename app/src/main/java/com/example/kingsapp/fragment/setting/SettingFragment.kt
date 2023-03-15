@@ -1,19 +1,18 @@
 package com.example.kingsapp.fragment.setting
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,10 +21,16 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.RegisterAbsenceActivity
 import com.example.kingsapp.activities.login.CreateAccountActivity
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
+import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.mobatia.nasmanila.api.ApiClient
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
 
 class SettingFragment: Fragment() {
     lateinit var rootView: View
@@ -81,18 +86,67 @@ class SettingFragment: Fragment() {
 
         })
     }
+    @SuppressLint("MissingInflatedId")
     private fun showChangePasswordPopUp() {
 
         val dialog = BottomSheetDialog(mContext, R.style.CustomBottomSheetDialog)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_change_password, null)
-//        val title = view.findViewById<TextView>(R.id.selectTitle)
+        val current_passwrd = view.findViewById<TextInputEditText>(R.id.currentpasswd)
+        val new_passwrd = view.findViewById<TextInputEditText>(R.id.newpasswd)
+        val confirm_passwd = view.findViewById<TextInputEditText>(R.id.confirmpasswd)
+        val submit_button = view.findViewById<Button>(R.id.button)
 
         dialog.setCancelable(true)
         dialog.setContentView(view)
+
+        submit_button.setOnClickListener {
+            if(current_passwrd.text.isNullOrBlank())
+            {
+                Toast.makeText(mContext, "Please enter the field !", Toast.LENGTH_SHORT).show()
+
+            }
+            else if(new_passwrd.text.isNullOrBlank())
+            {
+                Toast.makeText(mContext, "Please enter the Password !", Toast.LENGTH_SHORT).show()
+
+            }
+            else if(confirm_passwd.text.isNullOrBlank())
+            {
+                Toast.makeText(mContext, "Please enter the Password !", Toast.LENGTH_SHORT).show()
+
+            }
+            else
+            {
+                callChangePasswdApi(current_passwrd.text.toString(),new_passwrd.text.toString(),confirm_passwd.text.toString())
+            }
+        }
         dialog.show()
     }
 
+    private fun callChangePasswdApi(currentpswd: String, newpswd: String, confrmpswd: String) {
+        val call: Call<ResponseBody> = ApiClient.getApiService().changepswd("Bearer "+
+            PreferenceManager().getAccessToken(mContext).toString(),
+            newpswd,confrmpswd,currentpswd)
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                Log.e("Response",response.body().toString())
 
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
 
 
     fun showSuccessAlert(context: Context,msgHead:String)
@@ -111,8 +165,8 @@ class SettingFragment: Fragment() {
         alertHead.text = msgHead
         btn_Ok.setOnClickListener()
         {
-            val intent = Intent(context, WelcomeActivity::class.java)
-            startActivity(intent)
+
+            callLogoutApi()
             dialog.dismiss()
         }
         btn_Cancel.setOnClickListener()
@@ -120,5 +174,31 @@ class SettingFragment: Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun callLogoutApi() {
+        val call: Call<ResponseBody> = ApiClient.getApiService().logout("Bearer "+PreferenceManager().getAccessToken(mContext)
+            .toString())
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                Log.e("Response",response.body().toString())
+                val intent = Intent(context, WelcomeActivity::class.java)
+            startActivity(intent)
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 }

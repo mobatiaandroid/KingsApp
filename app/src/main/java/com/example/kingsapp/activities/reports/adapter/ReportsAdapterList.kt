@@ -15,6 +15,8 @@ import com.example.kingsapp.activities.reports.model.ReportModel
 
 class ReportsAdapterList(private val mcontext: Context, private  val name:ArrayList<ReportModel>):
     RecyclerView.Adapter<ReportsAdapterList.MyViewHolder>() {
+    lateinit var detailArray:ArrayList<ReportModel>
+
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var accYr: TextView = view.findViewById(R.id.accYr)
         var recycler_view_list: RecyclerView = view.findViewById(R.id.recycler_view_list)
@@ -32,6 +34,7 @@ class ReportsAdapterList(private val mcontext: Context, private  val name:ArrayL
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val accYr = name[position]!!.date
         holder.accYr.setText(accYr)
+        detailArray=ArrayList()
         val reportlist= name[position].report_list
         val report_list_url=name[position].report_list_url
         Log.e("date",accYr)

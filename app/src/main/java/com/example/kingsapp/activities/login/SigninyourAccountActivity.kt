@@ -1,16 +1,16 @@
 package com.example.kingsapp.activities.login
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,8 +19,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.login.model.LoginResponseModel
+import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.mobatia.nasmanila.api.ApiClient
+import retrofit2.Call
+import retrofit2.Response
 
 class SigninyourAccountActivity:AppCompatActivity() {
     lateinit var ncontext: Context
@@ -79,7 +84,8 @@ class SigninyourAccountActivity:AppCompatActivity() {
             }
             else
             {
-                startActivity(Intent(this, ChildSelectionActivity::class.java))
+                callLoginApi(emailTextInputEditText.text.toString(),passwordTextInputEditText.text.toString())
+                //
 
             }
         }
@@ -93,6 +99,33 @@ class SigninyourAccountActivity:AppCompatActivity() {
             startActivity(Intent(this, WelcomeActivity::class.java))
         }
     }
+
+    private fun callLoginApi(username: String, paswwd: String) {
+        val call: Call<LoginResponseModel> = ApiClient.getApiService().login(username,paswwd,"1",
+            "uhshdhiohhfi6546fgwdgshgdshgds","123456789")
+        call.enqueue(object : retrofit2.Callback<LoginResponseModel> {
+            override fun onResponse(
+                call: Call<LoginResponseModel>,
+                response: Response<LoginResponseModel>
+            ) {
+
+                PreferenceManager().setAccessToken(ncontext,response.body()!!.token)
+                Log.e("token",PreferenceManager().getAccessToken(ncontext).toString())
+                startActivity(Intent(ncontext, ChildSelectionActivity::class.java))
+            }
+
+            override fun onFailure(call: Call<LoginResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    ncontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+
     fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
