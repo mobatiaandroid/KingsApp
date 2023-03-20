@@ -16,11 +16,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.model.Studentlist_model
-import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.timetable.adapter.TimeTableAllWeekSelectionAdapterNew
 import com.example.kingsapp.activities.timetable.adapter.TimeTableSingleWeekSelectionAdapter
 import com.example.kingsapp.activities.timetable.adapter.TimeTableWeekListAdapter
@@ -157,7 +155,7 @@ class TimeTableActivity:AppCompatActivity() {
         var weekk6= TimeTableApiListModel(7,"Economics","Arun","P6","02:15 PM")
         mSundayArrayList.add(weekk6)
         backarrow.setOnClickListener {
-            val intent = Intent(ncontext, MainActivity::class.java)
+            val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
     Log.e("mSundayArrayList", mSundayArrayList.toString())
@@ -335,10 +333,10 @@ class TimeTableActivity:AppCompatActivity() {
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
-        val studentlist_adapter =
+      /*  val studentlist_adapter =
             AbsenceStudentListAdapter(ncontext, student_name)
         recycler_view!!.adapter = studentlist_adapter
-
+*/
         crossicon.setOnClickListener {
             dialog.dismiss()
         }

@@ -16,10 +16,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.RegisterAbsenceActivity
-import com.example.kingsapp.activities.login.CreateAccountActivity
+import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -71,7 +70,7 @@ class SettingFragment: Fragment() {
         recyclerList.adapter = adapter
 
         menu.setOnClickListener {
-            val intent = Intent(com.example.kingsapp.fragment.mContext, MainActivity::class.java)
+            val intent = Intent(com.example.kingsapp.fragment.mContext, HomeActivity::class.java)
             startActivity(intent)
         }
         recyclerList.addOnItemClickListener(object : OnItemClickListener {
@@ -165,8 +164,14 @@ class SettingFragment: Fragment() {
         alertHead.text = msgHead
         btn_Ok.setOnClickListener()
         {
+            if(CommonClass.isInternetAvailable(mContext)) {
+                callLogoutApi()
+            }
+            else
+            {
+                Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
 
-            callLogoutApi()
+            }
             dialog.dismiss()
         }
         btn_Cancel.setOnClickListener()

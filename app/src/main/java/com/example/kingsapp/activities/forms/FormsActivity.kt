@@ -8,8 +8,8 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.parentessentials.adapter.ParentListAdapter
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
 import com.example.kingsapp.constants.PdfReaderActivity
@@ -80,7 +80,7 @@ class FormsActivity : AppCompatActivity() {
                 })
         )
         back.setOnClickListener {
-            val intent = Intent(mcontext, MainActivity::class.java)
+            val intent = Intent(mcontext, HomeActivity::class.java)
             startActivity(intent)
         }
     }

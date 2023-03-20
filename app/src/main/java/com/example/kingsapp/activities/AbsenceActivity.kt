@@ -12,10 +12,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.adapter.AbsenceListAdapter
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.model.Studentlist_model
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
@@ -33,6 +32,7 @@ class AbsenceActivity: AppCompatActivity() {
     var mListAdapter: AbsenceListAdapter? = null
     lateinit var name:ArrayList<String>
     lateinit var student_name:ArrayList<Studentlist_model>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -83,7 +83,7 @@ class AbsenceActivity: AppCompatActivity() {
 
 
         backarrow_absense.setOnClickListener {
-            val intent = Intent(ncontext, MainActivity::class.java)
+            val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
         studentName.setOnClickListener {
@@ -124,9 +124,9 @@ class AbsenceActivity: AppCompatActivity() {
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
-        val studentlist_adapter =
+        /*val studentlist_adapter =
             AbsenceStudentListAdapter(ncontext, student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view!!.adapter = studentlist_adapter*/
 
         crossicon.setOnClickListener {
             dialog.dismiss()

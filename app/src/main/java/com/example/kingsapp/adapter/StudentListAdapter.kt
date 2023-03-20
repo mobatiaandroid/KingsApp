@@ -12,12 +12,12 @@ import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.login.model.StudentList
 
-class StudentListAdapter(private val context: Context, private val parentassoictionlist: ArrayList<Int>, private  val name:Array<String>
-,private val recyclerView: RecyclerView) :
+class StudentListAdapter(private val context: Context, private val parentassoictionlist: ArrayList<StudentList>
+                         , private val recyclerView: RecyclerView) :
     RecyclerView.Adapter<StudentListAdapter.MyViewHolder>(){
     class MyViewHolder (view: View) : RecyclerView.ViewHolder(view){
         var stud_profile: ImageView = view.findViewById(R.id.stud_profile)
@@ -39,9 +39,9 @@ class StudentListAdapter(private val context: Context, private val parentassoict
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var flag:Boolean = true
         Log.e("list",parentassoictionlist.toString())
-        val list = parentassoictionlist[position]
-        val namelist = name[position]
-        holder.stud_profile .setImageResource(list)
+        val list = parentassoictionlist[position].fullname
+
+        holder.stud_profile .setImageResource(R.drawable.profile_photo)
         holder.stud_profile.setOnClickListener {
             recyclerView.visibility=View.GONE
 
@@ -54,7 +54,7 @@ class StudentListAdapter(private val context: Context, private val parentassoict
             override fun onAnimationStart(p0: Animation?) {
                 holder.relstudenttext.visibility= View.VISIBLE
                 holder.textview.visibility= View.VISIBLE
-                holder.textview.setText(namelist)
+                holder.textview.setText(list)
                 /* var animationlist=AnimationUtils.loadAnimation(context,R.anim.slide_down)
                  holder.textview.startAnimation(animationlist)*/
                 slideUp(holder.relstudenttext)
@@ -62,7 +62,7 @@ class StudentListAdapter(private val context: Context, private val parentassoict
 
             @SuppressLint("ResourceAsColor")
             override fun onAnimationEnd(p0: Animation?) {
-                Log.e("NameList",namelist)
+                Log.e("NameList",list)
 
 
 

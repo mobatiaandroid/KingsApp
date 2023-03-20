@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">KingsApp</string>
     <string name="SchoolCalender">School Calender</string>
-    <string name="StudentInfo">StudentInfo</string>
+    <string name="StudentInfo">Student Info</string>
     <string name="Canteen">Canteen</string>
     <string name="Payments">Payments</string>
     <string name="Timetable">Timetable</string>
@@ -51,6 +51,12 @@
     <string name="enter_your_subject_here">Enter your subject here...</string>
     <string name="enter_content">Enter content:</string>
     <string name="cancel">Cancel</string>
+
+    <string name="apps">Apps</string>
+    <string name="name">name</string>
+    <string name="classs">Class</string>
+    <string name="address">Address</string>
+
 
 
     <!--<string name="change_app_setting">Change App Settings</string>
@@ -150,6 +156,7 @@
 
     <string-array name="home_list_items">
         <item>  Home</item>
+        <item>  Student Information </item>
         <item>  School Calendar</item>
         <item>  Absence reporting</item>
         <item>  Time table</item>
@@ -169,7 +176,7 @@
         <!-- 1 -->
         <!--<item>@drawable/news</item>-->
         <item>@drawable/home4</item>
-
+        <item>@drawable/profile_photo</item>
         <!-- 2 -->
         <!-- 3 -->
         <!-- 4 -->

@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.AbsenceDeatilsActivity
-import com.example.kingsapp.activities.adapter.AbsenceListAdapter
-import com.example.kingsapp.activities.model.Studentlist_model
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.parentessentials.adapter.ParentListAdapter
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
 import com.example.kingsapp.constants.PdfReaderActivity
@@ -88,7 +84,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
         )
 
         back.setOnClickListener {
-            val intent = Intent(mcontext, MainActivity::class.java)
+            val intent = Intent(mcontext, HomeActivity::class.java)
             startActivity(intent)
         }
     }

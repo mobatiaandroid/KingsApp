@@ -8,9 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.model.Studentlist_model
 
-class AbsenceStudentListAdapter(private val context: Context, private  val student_name:ArrayList<Studentlist_model>): RecyclerView.Adapter<AbsenceStudentListAdapter.MyViewHolder>()  {
+class AbsenceStudentListAdapter(private val context: Context, private  val student_name:ArrayList<StudentList>): RecyclerView.Adapter<AbsenceStudentListAdapter.MyViewHolder>()  {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var studentName: TextView = view.findViewById(R.id.studentName)
@@ -28,7 +29,7 @@ class AbsenceStudentListAdapter(private val context: Context, private  val stude
     }
 
     override fun onBindViewHolder(holder: AbsenceStudentListAdapter.MyViewHolder, position: Int) {
-        val namelist = student_name[position].name
+        val namelist = student_name[position].fullname
         holder.studentName.setText(namelist)
         holder.check.setOnClickListener {
 

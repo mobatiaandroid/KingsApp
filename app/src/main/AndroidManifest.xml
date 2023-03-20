@@ -28,7 +28,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:icon, android:label, android:theme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.home.HomeActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
@@ -67,7 +67,11 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
        <!-- <activity android:name=".MainActivityForAnimation"
@@ -81,11 +85,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.login.CreateAccountActivity"
             android:exported="true"
@@ -137,6 +137,15 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"/>
+
+        <activity
+            android:name=".activities.student_info.StudentInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true">
+
+        </activity>
 
         <activity
             android:name=".constants.WebViewLoaderActivity"

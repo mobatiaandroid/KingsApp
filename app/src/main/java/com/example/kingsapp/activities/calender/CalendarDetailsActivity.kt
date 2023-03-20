@@ -7,9 +7,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceListAdapter
 import com.example.kingsapp.activities.calender.adapter.StudentRecyclerCalenderAdapter
 
 class CalendarDetailsActivity :AppCompatActivity(){

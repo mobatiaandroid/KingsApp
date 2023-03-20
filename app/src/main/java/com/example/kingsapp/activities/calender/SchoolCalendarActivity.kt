@@ -12,14 +12,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.AbsenceActivity
 import com.example.kingsapp.activities.calender.adapter.CustomLisAdapter
 import com.example.kingsapp.activities.calender.adapter.ListViewSpinnerAdapter
 import com.example.kingsapp.activities.calender.model.CalendarModel
 import com.example.kingsapp.activities.calender.model.ListViewSpinnerModel
-import com.example.kingsapp.activities.studentName
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import java.text.SimpleDateFormat
@@ -173,7 +171,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
         week_day=getResources().getStringArray(R.array.Weeks)
         setTextview()
         back.setOnClickListener {
-            val intent = Intent(mcontext, MainActivity::class.java)
+            val intent = Intent(mcontext, HomeActivity::class.java)
             startActivity(intent)
         }
         arrowUpImg.setOnClickListener {

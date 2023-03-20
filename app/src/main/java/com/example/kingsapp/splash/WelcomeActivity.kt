@@ -10,10 +10,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.CreateAccountActivity
-import com.example.kingsapp.activities.login.ForgetPasswordActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
-import com.example.kingsapp.MainActivity
 
 class WelcomeActivity : AppCompatActivity() {
     lateinit var mContext: Context
@@ -36,7 +35,7 @@ class WelcomeActivity : AppCompatActivity() {
         signInBtn = findViewById(R.id.signInBtn)
         joinGuestTxt = findViewById(R.id.joinGuestTxt)
         joinGuestTxt.setOnClickListener {
-            val intent = Intent(mContext, MainActivity::class.java)
+            val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
         }
         createAccountBtn.setOnClickListener(View.OnClickListener {

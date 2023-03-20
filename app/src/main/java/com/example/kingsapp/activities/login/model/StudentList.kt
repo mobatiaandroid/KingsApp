@@ -9,4 +9,5 @@ class StudentList (
     @SerializedName("gender") val gender: String,
     @SerializedName("class") val classs: String,
     @SerializedName("photo") val photo: String,
+    var isclicked:Boolean
     )

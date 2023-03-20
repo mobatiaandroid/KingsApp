@@ -10,8 +10,8 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.message.adapter.MessageListAdapter
 import com.example.kingsapp.activities.message.model.MessageListModel
 import com.example.kingsapp.fragment.*
@@ -33,7 +33,7 @@ class MessageFragment : Fragment() {
     ): View? {
         rootView= inflater.inflate(R.layout.fragment_message, container, false)
         mContext =requireContext()
-        homeActivity = activity as MainActivity
+        homeActivity = activity as HomeActivity
         appController = AppController()
         classNameConstants = NaisClassNameConstants()
         naisTabConstants = NaisTabConstants()
@@ -63,7 +63,7 @@ class MessageFragment : Fragment() {
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
 
         menu.setOnClickListener {
-            val intent = Intent(mContext, MainActivity::class.java)
+            val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
         }
         linearLayoutManager = LinearLayoutManager(mContext)

@@ -6,7 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -17,9 +17,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.login.model.LoginResponseModel
+import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.fragment.homeActivity
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -63,7 +64,7 @@ class SigninyourAccountActivity:AppCompatActivity() {
             showEmailHelpAlert(ncontext)
         }
         joinGuestTxt.setOnClickListener {
-            val intent = Intent(ncontext, MainActivity::class.java)
+            val intent = Intent(ncontext, homeActivity::class.java)
             startActivity(intent)
         }
         signInBtn.setOnClickListener {
@@ -84,8 +85,15 @@ class SigninyourAccountActivity:AppCompatActivity() {
             }
             else
             {
-                callLoginApi(emailTextInputEditText.text.toString(),passwordTextInputEditText.text.toString())
-                //
+                if(CommonClass.isInternetAvailable(ncontext)) {
+                    callLoginApi(
+                        emailTextInputEditText.text.toString(),
+                        passwordTextInputEditText.text.toString()
+                    )
+                }
+                else{
+                    Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+                }
 
             }
         }
@@ -101,8 +109,11 @@ class SigninyourAccountActivity:AppCompatActivity() {
     }
 
     private fun callLoginApi(username: String, paswwd: String) {
+        var androidID = Settings.Secure.getString(this.contentResolver,
+            Settings.Secure.ANDROID_ID)
+        Log.e("android_id",androidID)
         val call: Call<LoginResponseModel> = ApiClient.getApiService().login(username,paswwd,"1",
-            "uhshdhiohhfi6546fgwdgshgdshgds","123456789")
+            androidID,"123456789")
         call.enqueue(object : retrofit2.Callback<LoginResponseModel> {
             override fun onResponse(
                 call: Call<LoginResponseModel>,

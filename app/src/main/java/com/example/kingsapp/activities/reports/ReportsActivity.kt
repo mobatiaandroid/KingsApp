@@ -13,10 +13,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
-import com.example.kingsapp.activities.message.model.MessageListModel
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.model.Studentlist_model
 import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
@@ -66,7 +64,7 @@ class ReportsActivity:AppCompatActivity() {
         var reportmodel1=ReportModel("2019-2020","Test report cycle 2019-2020","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
         report_array.add(reportmodel1)
         backarrow.setOnClickListener {
-            val intent = Intent(ncontext, MainActivity::class.java)
+            val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
 
@@ -95,9 +93,9 @@ class ReportsActivity:AppCompatActivity() {
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
-        val studentlist_adapter =
+       /* val studentlist_adapter =
             AbsenceStudentListAdapter(ncontext, student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view!!.adapter = studentlist_adapter*/
 
         crossicon.setOnClickListener {
             dialog.dismiss()

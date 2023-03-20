@@ -13,7 +13,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="center"
-        android:weightSum="100">
+        android:weightSum="80">
 
         <RelativeLayout
             android:id="@+id/homeRel"
@@ -29,7 +29,7 @@
                 android:layout_marginLeft="6dp"
                 android:background="@drawable/home4"
                  />
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/homeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,8 +52,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="12dp"
-                android:src="@drawable/message4" />
-            <TextView
+                android:src="@drawable/message" />
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/messageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,51 +63,7 @@
                 android:text="@string/Message"
                 android:layout_below="@+id/messageImg"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/aboutRel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="20">
 
-            <RelativeLayout
-                android:id="@+id/cartCountRel"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginBottom="15dp"
-                android:visibility="gone"
-                android:background="@drawable/calender1" >
-
-                <TextView
-                    android:id="@+id/cartCountTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:text="112"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/aboutImg"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="20"
-                android:background="@drawable/about" />
-            <TextView
-                android:id="@+id/aboutText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/grey_bottom"
-                android:layout_marginTop="5dp"
-                android:text="@string/About"
-                android:layout_below="@+id/aboutImg"/>
-
-        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/profileRel"
             android:layout_width="0dp"
@@ -120,7 +76,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/contact" />
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/contactText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +99,7 @@
                 android:layout_weight="20"
                 android:background="@drawable/settings"
                 />
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/otherText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -16,11 +16,14 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.AbsenceActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.forms.FormsActivity
+import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.home.model.HomeUserResponseModel
+import com.example.kingsapp.activities.login.ChildSelectionActivity
+import com.example.kingsapp.activities.login.model.LoginResponseModel
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
 import com.example.kingsapp.activities.student_planner.StudentPlannerActivity
@@ -29,6 +32,9 @@ import com.example.kingsapp.manager.AppController
 import com.example.kingsapp.manager.NaisClassNameConstants
 import com.example.kingsapp.manager.NaisTabConstants
 import com.example.kingsapp.manager.PreferenceManager
+import com.mobatia.nasmanila.api.ApiClient
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 
 private var mTxtOne: TextView? = null
@@ -61,7 +67,7 @@ private var mRelSeven: RelativeLayout? = null
 
 var isDraggable: Boolean = false
 
-lateinit var homeActivity: MainActivity
+lateinit var homeActivity: HomeActivity
 lateinit var mSectionText: Array<String?>
 lateinit var mContext:Context
 lateinit var classNameConstants: NaisClassNameConstants
@@ -88,7 +94,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
     ): View? {
         rootView= inflater.inflate(R.layout.home_screen_fragments, container, false)
         mContext=requireContext()
-        homeActivity = activity as MainActivity
+        homeActivity = activity as HomeActivity
         appController = AppController()
         classNameConstants = NaisClassNameConstants()
         naisTabConstants = NaisTabConstants()
@@ -96,12 +102,15 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         mListImgArrays = mContext.resources.obtainTypedArray(R.array.home_list_reg_icons)
         mContext=requireContext()
         initFn()
+        callhomeuserApi()
         setListeners()
         setdraglisteners()
         getButtonBgAndTextImages()
 
+
         return rootView
     }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,6 +118,37 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
     }
 
+    private fun callhomeuserApi() {
+        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(mContext)
+            .toString())
+        call.enqueue(object : retrofit2.Callback<HomeUserResponseModel> {
+            override fun onResponse(
+                call: Call<HomeUserResponseModel>,
+                response: Response<HomeUserResponseModel>
+            ) {
+                Log.e("respon",response.body().toString())
+                if(response.body()!!.status.equals("100"))
+                {
+                    val username= response.body()!!.home.user_details.name
+                    PreferenceManager().setuser_id(mContext,username)
+                }
+               else{
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<HomeUserResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
 
     private fun setListeners() {
         mRelOne!!.setOnClickListener(this)
@@ -163,7 +203,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
     private fun CHECKINTENTVALUE(intentTabId: String) {
         TAB_ID = intentTabId
         var mFragment: Fragment? = null
-        Log.e("Student Id",PreferenceManager().getStudentID(mContext).toString())
+       // Log.e("Student Id",PreferenceManager().getStudentID(mContext).toString())
         Log.e("intentTabId",TAB_ID)
 
         // if(PreferenceManager().getStudentID(mContext).equals("")) {

@@ -7,6 +7,8 @@ import android.os.Handler
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.manager.PreferenceManager
 
 class SplashActivity: AppCompatActivity() {
     lateinit var mContext: Context
@@ -21,8 +23,17 @@ class SplashActivity: AppCompatActivity() {
         mContext = this
 
         Handler().postDelayed({
-            startActivity(Intent(this, WelcomeActivity::class.java))
-            finish()
+            if (PreferenceManager().getuser_id(mContext).equals(""))
+            {
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            }
+            else
+            {
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            }
+
         }, SPLASH_TIME_OUT)
     }
 

@@ -434,9 +434,9 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!! as ImageView
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(context)
-        val studentlist_adapter =
+        /*val studentlist_adapter =
             AbsenceStudentListAdapter(context, student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view!!.adapter = studentlist_adapter*/
         crossicon.setOnClickListener {
             dialog.dismiss()
         }

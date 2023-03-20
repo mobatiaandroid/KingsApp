@@ -11,18 +11,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
+import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.mobatia.nasmanila.api.ApiClient
-import de.hdodenhof.circleimageview.CircleImageView
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
@@ -42,7 +40,14 @@ class ChildSelectionActivity:AppCompatActivity() {
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
         initFn()
-        studentListApiCall()
+        if(CommonClass.isInternetAvailable(ncontext)) {
+            studentListApiCall()
+        }
+        else{
+            Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+        }
+
     }
 
     private fun studentListApiCall() {
@@ -57,6 +62,7 @@ class ChildSelectionActivity:AppCompatActivity() {
                 if (response.body()!!.status.equals("100"))
                 {
                     student_name.addAll(response.body()!!.student_list)
+
                     circleImageView!!.layoutManager = LinearLayoutManager(ncontext)
                     val studentlist_adapter =
                         ChildSelectionAdapter(ncontext, student_name)
@@ -90,7 +96,7 @@ class ChildSelectionActivity:AppCompatActivity() {
         }
         circleImageView.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                startActivity(Intent(ncontext, MainActivity::class.java))
+                startActivity(Intent(ncontext, HomeActivity::class.java))
             }
 
         })

@@ -8,7 +8,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.location.LocationListener
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -18,17 +17,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.model.Studentlist_model
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.constants.InternetCheckClass
 import com.example.kingsapp.fragment.contact.adapter.ContactusAdapter
 import com.example.kingsapp.fragment.contact.model.ContactsListDetailModel
@@ -237,7 +233,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
         contact_usrecyclerview.adapter = contactusAdapter
 
         menu.setOnClickListener {
-            val intent = Intent(mContext, MainActivity::class.java)
+            val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
         }
 

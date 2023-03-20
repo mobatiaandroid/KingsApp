@@ -1,4 +1,4 @@
-package com.example.kingsapp
+package com.example.kingsapp.activities.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -18,34 +18,37 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kingsapp.R
 import com.example.kingsapp.activities.AbsenceActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.forms.FormsActivity
+import com.example.kingsapp.activities.login.model.StudentList
+import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
 import com.example.kingsapp.activities.student_planner.StudentPlannerActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.adapter.StudentListAdapter
-import com.example.kingsapp.calender.CalenderActivity
+import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.HomeFragment
-import com.example.kingsapp.fragment.about_us.AboutusFragment
 import com.example.kingsapp.fragment.contact.ContactFragment
 import com.example.kingsapp.fragment.setting.SettingFragment
 import com.example.kingsapp.manager.MyDragShadowBuilder
 import com.example.kingsapp.manager.PreferenceManager
-import com.example.kingsapp.splash.WelcomeActivity
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
-import com.mobatia.bisad.fragment.contact_us.ContactUsFragment
+import com.mobatia.nasmanila.api.ApiClient
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
-class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
+class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
     val manager = supportFragmentManager
     lateinit var shadowBuilder: MyDragShadowBuilder
@@ -53,11 +56,8 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     lateinit var top_navigation_li : RelativeLayout
     lateinit var messageRel : RelativeLayout
     lateinit var settingRel  : RelativeLayout
-    lateinit var aboutRel  : RelativeLayout
     lateinit var homeRel : RelativeLayout
     lateinit var profileRel : RelativeLayout
-     lateinit var aboutImg : ImageView
-     lateinit var aboutText : TextView
      lateinit var otherImg : ImageView
      lateinit var otherText : TextView
      lateinit var messageImg : ImageView
@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     lateinit var name:Array<String>
     lateinit var linearLayoutManager: LinearLayoutManager
     var flag:Boolean = true
+    lateinit var student_name: ArrayList<StudentList>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,11 +96,12 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         loadLocate()
         initFn()
         showfragmenthome()
+
     }
 
     @SuppressLint("ResourceAsColor")
     private fun initFn() {
-
+        student_name = ArrayList()
         linearLayout = findViewById<View>(R.id.linearLayout) as LinearLayout
         drawerLayout = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         mHomeListView = findViewById<View>(R.id.homeList) as ListView
@@ -111,12 +113,9 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         messageImg = findViewById<View>(R.id.messageImg) as ImageView
         otherText = findViewById<View>(R.id.otherText) as TextView
         otherImg = findViewById<View>(R.id.otherImg) as ImageView
-        aboutText = findViewById<View>(R.id.aboutText) as TextView
-        aboutImg = findViewById<View>(R.id.aboutImg) as ImageView
         top_navigation_li = findViewById<View>(R.id.top_navigation_li) as RelativeLayout
         messageRel = findViewById<View>(R.id.messageRel) as RelativeLayout
         settingRel = findViewById<View>(R.id.settingRel) as RelativeLayout
-        aboutRel = findViewById<View>(R.id.aboutRel) as RelativeLayout
         homeRel = findViewById<View>(R.id.homeRel) as RelativeLayout
         profileRel = findViewById<View>(R.id.profileRel) as RelativeLayout
         profileImg = findViewById(R.id.profileImg)as ImageView
@@ -182,7 +181,6 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
             homeText.setText(R.string.Home)
             messageText.setText(R.string.Message)
-            aboutText.setText(R.string.About)
             otherText.setText(R.string.Settings)
             contactText.setText(R.string.Contact)
         }
@@ -191,7 +189,6 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
             homeText.setText(R.string.Home)
             messageText.setText(R.string.Message)
-            aboutText.setText(R.string.About)
             otherText.setText(R.string.Settings)
             contactText.setText(R.string.Contact)
 
@@ -204,8 +201,6 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             homeText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
             otherText.setTextColor(Color.parseColor("#7F8B93"));
-            aboutImg.setBackgroundResource(R.drawable.about)
-            aboutText.setTextColor(Color.parseColor("#7F8B93"));
             messageImg.setBackgroundResource(R.drawable.message4)
             messageText.setTextColor(Color.parseColor("#7F8B93"));
             contactText.setTextColor(Color.parseColor("#7F8B93"));
@@ -223,8 +218,6 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             messageText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
             otherText.setTextColor(Color.parseColor("#7F8B93"));
-            aboutImg.setBackgroundResource(R.drawable.about)
-            aboutText.setTextColor(Color.parseColor("#7F8B93"));
             homeImg.setBackgroundResource(R.drawable.home_icon_grey)
             homeText.setTextColor(Color.parseColor("#7F8B93"));
             contactText.setTextColor(Color.parseColor("#7F8B93"));
@@ -240,8 +233,6 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             otherText.setTextColor(Color.parseColor("#FFFFFFFF"));
             messageImg.setBackgroundResource(R.drawable.message4)
             messageText.setTextColor(Color.parseColor("#7F8B93"));
-            aboutImg.setBackgroundResource(R.drawable.about)
-            aboutText.setTextColor(Color.parseColor("#7F8B93"));
             homeImg.setBackgroundResource(R.drawable.home_icon_grey)
             homeText.setTextColor(Color.parseColor("#7F8B93"));
             contactText.setTextColor(Color.parseColor("#7F8B93"));
@@ -251,31 +242,12 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             initializeFragment(fragment)
         }
 
-        aboutRel.setOnClickListener {
-            top_navigation_li.visibility=View.GONE
-            studentListRecyclerview.visibility=View.GONE
-            aboutImg.setBackgroundResource(R.drawable.about_white)
-            aboutText.setTextColor(Color.parseColor("#FFFFFFFF"));
-            otherImg.setBackgroundResource(R.drawable.settings)
-            otherText.setTextColor(Color.parseColor("#7F8B93"));
-            messageImg.setBackgroundResource(R.drawable.message4)
-            messageText.setTextColor(Color.parseColor("#7F8B93"));
-            homeImg.setBackgroundResource(R.drawable.home_icon_grey)
-            homeText.setTextColor(Color.parseColor("#7F8B93"));
-            contactText.setTextColor(Color.parseColor("#7F8B93"));
 
-            // bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
-            fragment = AboutusFragment()
-            initializeFragment(fragment)
-
-        }
         profileRel.setOnClickListener {
             top_navigation_li.visibility=View.GONE
             studentListRecyclerview.visibility=View.GONE
             profileImg.setBackgroundResource(R.drawable.contact)
             contactText.setTextColor(Color.parseColor("#FFFFFFFF"));
-            aboutImg.setBackgroundResource(R.drawable.about)
-            aboutText.setTextColor(Color.parseColor("#7F8B93"));
             otherImg.setBackgroundResource(R.drawable.settings)
             otherText.setTextColor(Color.parseColor("#7F8B93"));
             messageImg.setBackgroundResource(R.drawable.message4)
@@ -301,10 +273,16 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             if(flag)
             {
                 studentListRecyclerview.visibility=View.VISIBLE
-                linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                studentListRecyclerview.layoutManager = linearLayoutManager
-                val studentAdapter = StudentListAdapter(mContext,list,name,studentListRecyclerview)
-                studentListRecyclerview.setAdapter(studentAdapter)
+
+                if(CommonClass.isInternetAvailable(mContext)) {
+                    student_name.clear()
+                    studentListApiCall()
+                }
+                else{
+                    Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+                }
+
             }
             else
             {
@@ -334,6 +312,46 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
 
 
+    }
+    private fun studentListApiCall() {
+        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
+                PreferenceManager().getAccessToken(mContext).toString())
+        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
+            override fun onResponse(
+                call: Call<StudentListResponseModel>,
+                response: Response<StudentListResponseModel>
+            ) {
+                Log.e("Response",response.body().toString())
+                if (response.body()!!.status.equals("100"))
+                {
+                    student_name.addAll(response.body()!!.student_list)
+
+                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                    studentListRecyclerview.layoutManager = linearLayoutManager
+                    val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview)
+                    studentListRecyclerview.setAdapter(studentAdapter)
+                    /*student_name.addAll(response.body()!!.student_list)
+                    circleImageView!!.layoutManager = LinearLayoutManager(mContext)
+                    val studentlist_adapter =
+                        ChildSelectionAdapter(ncontext, student_name)
+                    circleImageView!!.adapter = studentlist_adapter*/
+                }
+                else
+                {
+
+                }
+            }
+
+            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
     override fun onItemLongClick(parent: AdapterView<*>?, view: View?, position: Int, p3: Long): Boolean {
         Log.e("Success","Success")
@@ -401,7 +419,7 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             8 -> {
-               showEmailHelpAlert(mContext)
+                showEmailHelpAlert(mContext)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
@@ -516,7 +534,7 @@ class MainActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         setLocate(language.toString())
     }
     private fun restartActivity() {
-        val intent = Intent(mContext, MainActivity::class.java)
+        val intent = Intent(mContext, HomeActivity::class.java)
         startActivity(intent)
         finish()
         startActivity(intent)

@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.constants.CommonClass
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
@@ -75,7 +76,13 @@ class ForgetPasswordActivity:AppCompatActivity() {
             } else if (!emailPattern) {
                 Toast.makeText(ncontext, "Please enter the valid email !", Toast.LENGTH_SHORT).show()
             } else {
-                callForgetPasswd(passwordTextInputEditText.text.toString())
+                if(CommonClass.isInternetAvailable(ncontext)) {
+                    callForgetPasswd(passwordTextInputEditText.text.toString())
+                }
+                else{
+                    Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+                }
                 createacconttextview.setText("We have reset your password")
                 textView24.setText("We have send your username and password to your given email id")
                 signin.visibility = View.GONE

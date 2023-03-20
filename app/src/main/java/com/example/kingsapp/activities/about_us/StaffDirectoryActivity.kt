@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener

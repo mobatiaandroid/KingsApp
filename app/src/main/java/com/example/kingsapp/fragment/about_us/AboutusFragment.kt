@@ -10,11 +10,10 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kingsapp.MainActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.about_us.StaffDirectoryActivity
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
-import com.example.kingsapp.manager.IOnBackPressed
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 
@@ -58,7 +57,7 @@ class AboutusFragment: Fragment()  {
         recyclerList.adapter = adapter
 
         menu.setOnClickListener {
-            val intent = Intent(mContext, MainActivity::class.java)
+            val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
         }
         recyclerList.addOnItemClickListener(object : OnItemClickListener {

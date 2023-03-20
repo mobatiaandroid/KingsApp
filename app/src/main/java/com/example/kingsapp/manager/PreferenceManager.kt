@@ -139,7 +139,7 @@ class PreferenceManager {
         return pref.getString("password", "")
 
     }
-    fun setStudentID(context: Context, id: String?) {
+    fun setStudent_ID(context: Context, id: String?) {
         val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
         val editor = pref.edit()
         editor.putString("student_id", id)
@@ -147,7 +147,7 @@ class PreferenceManager {
     }
 
     /*GET STUDENT_ID*/
-    fun getStudentID(context: Context): String? {
+    fun getStudent_ID(context: Context): String? {
         val pref = context.getSharedPreferences(
             PREFSNAME, Context.MODE_PRIVATE
         )
