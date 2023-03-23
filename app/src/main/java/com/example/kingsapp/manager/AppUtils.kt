@@ -44,14 +44,15 @@ public class AppUtils {
         var mDate = ""
         try {
             val date: Date
-            val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
             date = formatter.parse(inputDate)
             //Subtracting 6 hours from selected time
             val time = date.time
 
             //SimpleDateFormat formatterFullDate = new SimpleDateFormat("dd MMMM yyyy");
-            val formatterFullDate = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+            val formatterFullDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             mDate = formatterFullDate.format(time)
+            Log.e("mDate",mDate)
         } catch (e: java.lang.Exception) {
             Log.d("Exception", "" + e)
         }
@@ -87,14 +88,14 @@ public class AppUtils {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-       // val icon = dialog.findViewById<View>(R.id.iconImageView) as ImageView
-      //  icon.setBackgroundResource(bgIcon)
-      //  icon.setImageResource(ico)
+        // val icon = dialog.findViewById<View>(R.id.iconImageView) as ImageView
+        //  icon.setBackgroundResource(bgIcon)
+        //  icon.setImageResource(ico)
         val text = dialog.findViewById<View>(R.id.text_dialog) as TextView
         val textHead = dialog.findViewById<View>(R.id.alertHead) as TextView
         text.text = msg
         textHead.text = msgHead
-        val dialogButton = dialog.findViewById<View>(R.id.btn_Ok) as Button
+        val dialogButton = dialog.findViewById<View>(R.id.btn_Ok) as TextView
         dialogButton.setOnClickListener { dialog.dismiss() }
         //		Button dialogButtonCancel = (Button) dialog.findViewById(R.id.btn_Cancel);
 //		dialogButtonCancel.setVisibility(View.GONE);

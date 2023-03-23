@@ -93,16 +93,16 @@
                     android:visibility="visible"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/kings_school_logo" />
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaBold
                     android:id="@+id/title_of_school"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/logoheading"
                     android:textColor="@color/white"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:textSize="28dp"
+                    android:textSize="23dp"
                     android:textStyle="bold"
                     android:layout_toRightOf="@+id/home_logo_image"/>
                 <ImageView
@@ -156,7 +156,7 @@
                                 android:layout_height="35dp"
                                 android:layout_centerInParent="true"
                                 android:gravity="center" />
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtOne"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -186,7 +186,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtFive"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -231,7 +231,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtTwo"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -266,7 +266,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtSeven"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -309,7 +309,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtEight"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -343,7 +343,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtThree"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -376,7 +376,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:id="@+id/relTxtFour"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"

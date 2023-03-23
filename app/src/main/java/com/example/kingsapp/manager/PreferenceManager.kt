@@ -191,7 +191,23 @@ class PreferenceManager {
         )
         return prefs.getString("student_photo", "")
     }
+    fun setAppversion(context: Context, name: String?) {
+        val prefs = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        editor.putString("app_version", name)
+        editor.apply()
+    }
 
+    /*GET STUDENT_NAME*/
+    fun getAppVersion(context: Context): String? {
+        val prefs = context.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        return prefs.getString("app_version", "")
+    }
     /*SET StudentClass*/
     fun setStudentClass(context: Context, name: String?) {
         val prefs = context.getSharedPreferences(
@@ -1000,6 +1016,27 @@ class PreferenceManager {
             Context.MODE_PRIVATE
         )
         b = prefs.getString("pta_booked_id", "").toString()
+        return b
+    }
+
+
+    fun setFromYearView(context: Context?, value: String) {
+        val prefs = context!!.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        editor.putString("value", value)
+        editor.commit()
+    }
+
+    fun getFromYearView(context: Context?): String {
+        var b = ""
+        val prefs = context!!.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        b = prefs.getString("value", "").toString()
         return b
     }
 }

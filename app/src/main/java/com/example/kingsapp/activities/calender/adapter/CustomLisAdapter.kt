@@ -8,13 +8,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.calender.model.CalendarList
 import com.example.kingsapp.activities.calender.model.CalendarModel
 
 
-class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<CalendarModel>) :
+class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<CalendarList>) :
     RecyclerView.Adapter<CustomLisAdapter.MyViewHolder>() {
 
-    private val eventArrayList: ArrayList<CalendarModel>
+    private val eventArrayList: ArrayList<CalendarList>
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var event: TextView
@@ -40,9 +41,9 @@ class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-            holder.event.setText(eventArrayList[position].enddate)
+            holder.event.setText(eventArrayList[position].title)
 
-        holder.eventDate.setText(eventArrayList[position].tittle)
+        holder.eventDate.setText(eventArrayList[position].description)
         // System.out.println("title::"+eventArrayList.get(position).getTittle());
     }
 

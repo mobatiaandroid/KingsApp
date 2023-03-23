@@ -22,8 +22,15 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.AbsenceActivity
+import com.example.kingsapp.activities.absence.AbsenceActivity
+import com.example.kingsapp.activities.absence.imagicon
+import com.example.kingsapp.activities.absence.studentImg
+import com.example.kingsapp.activities.absence.studentclass
+import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -31,7 +38,7 @@ import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
-import com.example.kingsapp.activities.student_planner.StudentPlannerActivity
+import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.adapter.StudentListAdapter
 import com.example.kingsapp.constants.CommonClass
@@ -40,6 +47,8 @@ import com.example.kingsapp.fragment.contact.ContactFragment
 import com.example.kingsapp.fragment.setting.SettingFragment
 import com.example.kingsapp.manager.MyDragShadowBuilder
 import com.example.kingsapp.manager.PreferenceManager
+import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
+import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
@@ -118,34 +127,37 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         settingRel = findViewById<View>(R.id.settingRel) as RelativeLayout
         homeRel = findViewById<View>(R.id.homeRel) as RelativeLayout
         profileRel = findViewById<View>(R.id.profileRel) as RelativeLayout
-        profileImg = findViewById(R.id.profileImg)as ImageView
+        profileImg = findViewById(R.id.profileImg) as ImageView
         bottomLinear = findViewById<View>(R.id.bottomLinear) as LinearLayout
         menu_btn = findViewById<View>(R.id.hambrgr_btn) as ImageView
         student_profile = findViewById<View>(R.id.student_profile) as ImageView
         studentListRecyclerview = findViewById<View>(R.id.studentlistrec) as RecyclerView
 
 
-       // studentListRecyclerViewArab = findViewById<View>(R.id.studentlistrecc) as RecyclerView
+        // studentListRecyclerViewArab = findViewById<View>(R.id.studentlistrecc) as RecyclerView
         lang_switch = findViewById<View>(R.id.switchlang) as Switch
-        list= ArrayList()
+        list = ArrayList()
 
         list.add(R.drawable.pic1)
         list.add(R.drawable.pic)
         list.add(R.drawable.pic3)
         name = mContext.resources.getStringArray(
-            R.array.student_list)
+            R.array.student_list
+        )
 
         studentListRecyclerview = findViewById(R.id.studentlistrec)
         linearLayoutManager = LinearLayoutManager(mContext)
 
-        top_navigation_li.visibility=View.VISIBLE
+        top_navigation_li.visibility = View.VISIBLE
         bottomLinear.visibility = View.VISIBLE
 
         mListItemArray = mContext.resources.getStringArray(
-            R.array.home_list_items)
+            R.array.home_list_items
+        )
         Log.e("home_list_items", mListItemArray.get(0).toString())
         mListImgArray = mContext!!.resources.obtainTypedArray(
-            R.array.home_list_reg_icons)
+            R.array.home_list_reg_icons
+        )
         val width = (resources.displayMetrics.widthPixels / 1.7).toInt()
         val params = linearLayout
             .layoutParams as DrawerLayout.LayoutParams
@@ -154,13 +166,15 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         linearLayout.layoutParams = params
 
         mListAdapter = HomeListAdapter(
-            mContext, mListItemArray,mListImgArray!!,
-            R.layout.custom_list_adapter, true)
+            mContext, mListItemArray, mListImgArray!!,
+            R.layout.custom_list_adapter, true
+        )
         mHomeListView.adapter = mListAdapter
         mHomeListView.setBackgroundColor(
             resources.getColor(
                 R.color.kings_blue
-            ))
+            )
+        )
 
         mHomeListView.onItemLongClickListener = this
         mHomeListView.setOnItemClickListener { parent, view, position, id ->
@@ -176,16 +190,13 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         toolbar.setContentInsetsAbsolute(0, 0)*/
 
         showChangeLang()
-        if(PreferenceManager().getLanguage(mContext).equals("ar"))
-        {
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
 
             homeText.setText(R.string.Home)
             messageText.setText(R.string.Message)
             otherText.setText(R.string.Settings)
             contactText.setText(R.string.Contact)
-        }
-        else
-        {
+        } else {
 
             homeText.setText(R.string.Home)
             messageText.setText(R.string.Message)
@@ -195,8 +206,8 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         }
 
         homeRel.setOnClickListener {
-            top_navigation_li.visibility=View.VISIBLE
-            studentListRecyclerview.visibility=View.VISIBLE
+            top_navigation_li.visibility = View.VISIBLE
+            studentListRecyclerview.visibility = View.VISIBLE
             homeImg.setBackgroundResource(R.drawable.home4)
             homeText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
@@ -210,8 +221,8 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         }
 
         messageRel.setOnClickListener {
-            top_navigation_li.visibility=View.GONE
-            studentListRecyclerview.visibility=View.GONE
+            top_navigation_li.visibility = View.GONE
+            studentListRecyclerview.visibility = View.GONE
 
             // bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
             messageImg.setBackgroundResource(R.drawable.message_white)
@@ -227,8 +238,8 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             //(mContext as MainActivity).overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up )
         }
         settingRel.setOnClickListener {
-            studentListRecyclerview.visibility=View.GONE
-            top_navigation_li.visibility=View.GONE
+            studentListRecyclerview.visibility = View.GONE
+            top_navigation_li.visibility = View.GONE
             otherImg.setBackgroundResource(R.drawable.setting_white)
             otherText.setTextColor(Color.parseColor("#FFFFFFFF"));
             messageImg.setBackgroundResource(R.drawable.message4)
@@ -244,8 +255,8 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
 
         profileRel.setOnClickListener {
-            top_navigation_li.visibility=View.GONE
-            studentListRecyclerview.visibility=View.GONE
+            top_navigation_li.visibility = View.GONE
+            studentListRecyclerview.visibility = View.GONE
             profileImg.setBackgroundResource(R.drawable.contact)
             contactText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
@@ -257,7 +268,22 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             fragment = ContactFragment()
             initializeFragment(fragment)
         }
-        //navView = findViewById(R.id.navView)
+        studentListRecyclerview.addOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+
+                Glide.with(mContext) //1
+                    .load(R.drawable.profile_photo)
+                    .placeholder(R.drawable.profile_photo)
+                    .error(R.drawable.profile_photo)
+                    .skipMemoryCache(true) //2
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                    .transform(CircleCrop()) //4
+                    .into(student_profile)
+
+            }
+
+        })
+
         menu_btn.setOnClickListener(){
             drawerLayout.openDrawer(linearLayout)
             if (drawerLayout.isDrawerOpen(linearLayout)) {
@@ -322,10 +348,12 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 response: Response<StudentListResponseModel>
             ) {
                 Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals("100"))
+                if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
-
+                    PreferenceManager().setStudent_ID(mContext,
+                        response.body()!!.student_list.get(0).id.toString()
+                    )
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     studentListRecyclerview.layoutManager = linearLayoutManager
                     val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview)
@@ -338,7 +366,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 }
                 else
                 {
-
+                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
             }
 
@@ -373,58 +401,76 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 replaceFragmentsSelected(position)
             }
             1 -> {
-                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+                val intent = Intent(mContext, StudentInfoActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
 
             }
             2 -> {
-                val intent = Intent(mContext, AbsenceActivity::class.java)
+                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
                 //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             3 -> {
-                val intent = Intent(mContext, TimeTableActivity::class.java)
-                startActivity(intent)
+                studentListRecyclerview.visibility=View.GONE
+                top_navigation_li.visibility=View.GONE
+                fragment = MessageFragment()
+                replaceFragmentsSelected(position)
                 drawerLayout.closeDrawer(linearLayout)
 
                 //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             4 -> {
-                val intent = Intent(mContext, ParentEssentialsActivity::class.java)
+                val intent = Intent(mContext, AbsenceActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
             }
             5 -> {
-                val intent = Intent(mContext, StudentPlannerActivity::class.java)
+                val intent = Intent(mContext, TimeTableActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             6 -> {
-                val intent = Intent(mContext, ReportsActivity::class.java)
+                val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
             }
             7 -> {
-                val intent = Intent(mContext, FormsActivity::class.java)
+                val intent = Intent(mContext, ReportsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             8 -> {
-                showEmailHelpAlert(mContext)
+                val intent = Intent(mContext, FormsActivity::class.java)
+                startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
+            9 -> {
+                val intent = Intent(mContext, AppsActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
 
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }
+            10 -> {
+                studentListRecyclerview.visibility=View.GONE
+                top_navigation_li.visibility=View.GONE
+                fragment = ContactFragment()
+                replaceFragmentsSelected(position)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     fun showfragmenthome() {

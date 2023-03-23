@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -62,8 +63,7 @@ class CreateAccountActivity:AppCompatActivity() {
         passwordTextInputEditText = findViewById(R.id.passwordTextInputEditText)
         image = findViewById(R.id.imageView)
         back_arrow = findViewById(R.id.imageView18)
-        val animZoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
-        val animZoomInP = AnimationUtils.loadAnimation(this, R.anim.zoom_in_progress)
+
         back_arrow.setOnClickListener {
             startActivity(Intent(this, WelcomeActivity::class.java))
         }
@@ -85,35 +85,7 @@ class CreateAccountActivity:AppCompatActivity() {
                     Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
 
                 }
-                createacconttextview.setText("Account created")
-                textView24.setText("We have send your username and password to your given email id")
-                signin.visibility = View.GONE
-                passwordTextInputLayout.visibility = View.GONE
-                Thread {
-                    while (pStatus <= 100) {
-                        handler.post {
-                            progressBar?.setProgress(pStatus)
-                            txtProgress?.setText("$pStatus %")
-                            while (pStatus == 100) {
-                                (image.getDrawable() as Animatable).start()
-                            }
-                        }
-                        try {
-                            Thread.sleep(25)
 
-                        } catch (e: InterruptedException) {
-                            e.printStackTrace()
-                        }
-                        pStatus++
-                    }
-                    /*while(pStatus==100){
-                    progressBar?.getProgressDrawable()?.setColorFilter(
-                        Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
-                }*/
-                }.start()
-
-                image.startAnimation(animZoomIn)
-                progressBar?.startAnimation(animZoomInP)
 
             }
 
@@ -121,17 +93,55 @@ class CreateAccountActivity:AppCompatActivity() {
     }
 
     private fun callSignUpApi(name: String) {
-        val call: Call<ResponseBody> = ApiClient.getApiService().signup(name)
-        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+        val call: Call<CommonResponse> = ApiClient.getApiService().signup(name)
+        call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
             ) {
-                Log.e("Response",response.body().toString())
+                if (response.body()!!.status.equals(100)) {
+                    Log.e("Response", response.body().toString())
+                    createacconttextview.setText("Account created")
+                    textView24.setText("We have send your username and password to your given email id")
+                    signin.visibility = View.GONE
+                    passwordTextInputLayout.visibility = View.GONE
+                    val animZoomIn = AnimationUtils.loadAnimation(ncontext, R.anim.zoom_in)
+                    val animZoomInP =
+                        AnimationUtils.loadAnimation(ncontext, R.anim.zoom_in_progress)
+                    Thread {
+                        while (pStatus <= 100) {
+                            handler.post {
+                                progressBar?.setProgress(pStatus)
+                                txtProgress?.setText("$pStatus %")
+                                while (pStatus == 100) {
+                                    (image.getDrawable() as Animatable).start()
+                                }
+                            }
+                            try {
+                                Thread.sleep(25)
 
+                            } catch (e: InterruptedException) {
+                                e.printStackTrace()
+                            }
+                            pStatus++
+                        }
+                        /*while(pStatus==100){
+                    progressBar?.getProgressDrawable()?.setColorFilter(
+                        Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+                }*/
+                    }.start()
+
+                    image.startAnimation(animZoomIn)
+                    progressBar?.startAnimation(animZoomInP)
+
+                }
+
+                else
+                {
+                    CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+                }
             }
-
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+            override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",

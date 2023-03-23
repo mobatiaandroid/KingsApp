@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,6 +18,21 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        android:id="@+id/titleTextView1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="baskcjshzdkvhjdkxf"
+        android:textSize="10sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"/>
 
     <ImageView
         android:id="@+id/imageView3"

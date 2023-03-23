@@ -48,7 +48,7 @@ class PdfReaderActivity: AppCompatActivity() {
         pdfviewer = findViewById(R.id.pdfview)
         // pdfprogress = findViewById(R.id.pdfprogress)
 
-//        PRDownloader.initialize(applicationContext)
+       PRDownloader.initialize(applicationContext)
         val fileName = "myFile.pdf"
 //        val intent = Intent(Intent.ACTION_VIEW)
 //        var url = "https://orange-benni-60.tiiny.site"
@@ -57,12 +57,11 @@ class PdfReaderActivity: AppCompatActivity() {
 //        startActivity(intent)
 //        finish()
 
-        pdfviewer.fromAsset("SampleKSD.pdf").load();
-        /*downloadPdfFromInternet(
+        downloadPdfFromInternet(
             urltoshow,
             getRootDirPath(this),
             fileName
-        )*/
+        )
         back.setOnClickListener {
             finish()
         }

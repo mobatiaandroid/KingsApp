@@ -15,6 +15,7 @@ class AbsenceStudentListAdapter(private val context: Context, private  val stude
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var studentName: TextView = view.findViewById(R.id.studentName)
+        var studentclass: TextView = view.findViewById(R.id.studentclass)
         var check : ImageView = view.findViewById(R.id.check)
 
     }
@@ -30,7 +31,9 @@ class AbsenceStudentListAdapter(private val context: Context, private  val stude
 
     override fun onBindViewHolder(holder: AbsenceStudentListAdapter.MyViewHolder, position: Int) {
         val namelist = student_name[position].fullname
+        val nameclass = student_name[position].classs
         holder.studentName.setText(namelist)
+        holder.studentclass.setText(nameclass)
         holder.check.setOnClickListener {
 
 

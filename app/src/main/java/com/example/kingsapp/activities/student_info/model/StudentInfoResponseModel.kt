@@ -4,6 +4,6 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.google.gson.annotations.SerializedName
 
 class StudentInfoResponseModel (
-    @SerializedName("status") val status: String,
+    @SerializedName("status") val status: Int,
     @SerializedName("student_info") val student_info: StudentInfo
         )

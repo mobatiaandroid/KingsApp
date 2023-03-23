@@ -10,7 +10,7 @@
 
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
     <string name="Home">Home</string>
-    <string name="Message">Message</string>
+    <string name="Message">Parent</string>
     <string name="About">About</string>
     <string name="Contact">Contact</string>
     <string name="Settings">Settings</string>
@@ -57,6 +57,9 @@
     <string name="classs">Class</string>
     <string name="address">Address</string>
 
+    <string name="loading">Loading&#8230;</string>
+    <string name="new_version_available">New Version Available</string>
+    <string name="force_update">There is a newer version available for download! Please update the app by visiting the Google Play Store</string>
 
 
     <!--<string name="change_app_setting">Change App Settings</string>
@@ -66,8 +69,9 @@
     <string-array name="setting_list">
     <item> Change App Settings</item>
     <item>Terms of Service</item>
-    <item> Email Us</item>
+    <item> Feedback </item>
     <item> Tutorial</item>
+        <item> Delete My Account</item>
     <item>Change Password</item>
         <item>Logout</item>
     </string-array>
@@ -158,13 +162,14 @@
         <item>  Home</item>
         <item>  Student Information </item>
         <item>  School Calendar</item>
+        <item>  Parent Comms</item>
         <item>  Absence reporting</item>
         <item>  Time table</item>
-    <item>  Parent Essentials</item>
-    <item>  Student Planner</item>
+       <item>  Parent Essentials</item>
         <item>  Reports </item>
         <item> Forms</item>
-        <item>  Email Help</item>
+        <item>  Apps</item>
+        <item>  Contact US</item>
     </string-array>
 
     <string name="null_value" translatable="false">
@@ -182,18 +187,19 @@
         <!-- 4 -->
         <!-- 4 -->
         <item>@drawable/calender4</item>
+        <item>@drawable/message_white</item>
         <item>@drawable/absence4</item>
         <item>@drawable/timetable4</item>
         <item>@drawable/parent</item>
         <!-- 5 -->
         <!-- 6 -->
 
-        <item>@drawable/planner</item>
         <item>@drawable/report_side</item>
 
         <!-- 7 -->
         <item>@drawable/forms</item>
-        <item>@drawable/help</item>
+        <item>@drawable/app</item>
+        <item>@drawable/contact</item>
         <!-- 8 -->
 
 

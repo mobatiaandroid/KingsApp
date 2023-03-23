@@ -3,23 +3,34 @@ package com.example.kingsapp.activities.parentessentials
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.forms.adapter.FormListAdapter
+import com.example.kingsapp.activities.forms.model.FormList
+import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.parentessentials.adapter.ParentListAdapter
+import com.example.kingsapp.activities.parentessentials.model.ParentModel
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
+import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
 import com.example.kingsapp.constants.WebViewLoaderActivity
+import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
+import com.mobatia.nasmanila.api.ApiClient
+import retrofit2.Call
+import retrofit2.Response
 
 
 class ParentEssentialsActivity: AppCompatActivity() {
    // lateinit var list_name:ArrayList<String>
-    lateinit var list_name:ArrayList<ParentessentialModel>
+    lateinit var list_name:ArrayList<FormList>
     lateinit var back: ImageView
 
     lateinit var parentList: RecyclerView
@@ -32,21 +43,54 @@ class ParentEssentialsActivity: AppCompatActivity() {
         setContentView(R.layout.activity_parentessentails)
         mcontext =this
         initFn()
+        if(CommonClass.isInternetAvailable(mcontext)) {
+            parrentessentialApiCall()
+        }
+        else{
+            Toast.makeText(mcontext,"Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    private fun parrentessentialApiCall() {
+        val call: Call<ParentModel> = ApiClient.getApiService().parentessentials("Bearer "+
+                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
+        call.enqueue(object : retrofit2.Callback<ParentModel> {
+            override fun onResponse(
+                call: Call<ParentModel>,
+                response: Response<ParentModel>
+            ) {
+                Log.e("Response",response.body().toString())
+                if (response.body()!!.status.equals("100"))
+                {
+                    list_name.addAll(response.body()!!.parent_essentials)
+                    parentList.layoutManager = linearLayoutManager
+                    val parentadapter = ParentListAdapter(mcontext,list_name)
+                    parentList.setAdapter(parentadapter)
+                }
+                else
+                {
+
+                }
+            }
+
+            override fun onFailure(call: Call<ParentModel?>, t: Throwable) {
+                Toast.makeText(
+                    mcontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
     private fun initFn() {
        // list_name = mcontext.resources.getStringArray(R.array.parent_list)
         list_name= ArrayList()
-        var model=ParentessentialModel("Term Dates","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
-        list_name.add(model)
-        var model1=ParentessentialModel("Uniform","https://kings-edu.com/")
-        list_name.add(model1)
-        var model2=ParentessentialModel("Kings Lunch Box Menu","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
-        list_name.add(model2)
-        var model3=ParentessentialModel("Bus Service","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
-        list_name.add(model3)
-        var model4=ParentessentialModel("Information","https://kings-edu.com/")
-        list_name.add(model4)
+
         back = findViewById(R.id.back)
 
         parentList =findViewById(R.id.parentessetialsrec)
@@ -54,8 +98,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
 
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         parentList.layoutManager = linearLayoutManager
-        val parentadapter = ParentListAdapter(mcontext,list_name)
-        parentList.setAdapter(parentadapter)
+
         parentList.addOnItemTouchListener(
             RecyclerItemListener(
                 mcontext, parentList,

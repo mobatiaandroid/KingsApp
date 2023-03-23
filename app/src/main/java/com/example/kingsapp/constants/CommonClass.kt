@@ -1,9 +1,18 @@
 package com.example.kingsapp.constants
 
+import android.app.Dialog
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import com.example.kingsapp.R
 
 class CommonClass {
     companion object{
@@ -36,7 +45,97 @@ class CommonClass {
             }
             return result
         }
+        fun checkApiStatusError(statusCode : Int,context: Context)
+        {
+            if (statusCode==101)
+            {
+                showErrorAlert(context,"Some error occured","Alert")
+            }
+            else if (statusCode==102)
 
+            {
+                showErrorAlert(context,"Internal server error","Alert")
+            }
+            else if (statusCode==103)
+            {
+
+                showErrorAlert(context,"Invalid username/password","Alert")
+            }
+            else if (statusCode==104)
+            {
+                showErrorAlert(context,"Verification code not match","Alert")
+            }
+            else if (statusCode==105)
+            {
+                showErrorAlert(context,"User not found in our database","Alert")
+            }
+            else if (statusCode==106)
+            {
+                showErrorAlert(context,"Token expired","Alert")
+            }
+            else if (statusCode==107)
+            {
+                showErrorAlert(context,"Invalid file access","Alert")
+            }
+            else if(statusCode==108)
+            {
+                showErrorAlert(context,"Route Not Found","Alert")
+            }
+            else if (statusCode==109)
+            {
+                showErrorAlert(context,"Student not found in our database","Alert")
+            }
+            else if (statusCode==110)
+            {
+                showErrorAlert(context,"DecryptException Error","Alert")
+            }
+            if (statusCode==111)
+            {
+                showErrorAlert(context,"No records found","Alert")
+
+            }
+            else if (statusCode==112)
+            {
+                showErrorAlert(context,"Already registered","Alert")
+
+            }
+            else if (statusCode==113)
+            {
+                showErrorAlert(context,"Account blocked","Alert")
+
+            }
+            else if (statusCode==114)
+            {
+                showErrorAlert(context, "Account deleted / not found in database","Alert")
+
+            } else if (statusCode==115)
+            {
+                showErrorAlert(context, "no student linking with this parent","Alert")
+
+            } else if (statusCode==116)
+            {
+                showErrorAlert(context, "Already exists in the given range","Alert")
+
+            }
+        }
+        fun showErrorAlert(context: Context,message : String,msgHead : String)
+        {
+            val dialog = Dialog(context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+            var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+            var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+            var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+            text_dialog.text = message
+            alertHead.text = msgHead
+            btn_Ok.setOnClickListener()
+            {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
 
 
     }

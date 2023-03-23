@@ -20,7 +20,7 @@
             android:layout_weight="1">
 
         </ImageView>
-        <TextView
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -77,7 +77,7 @@
                 android:orientation="vertical">
 
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaBold
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -91,7 +91,7 @@
                     android:textStyle="bold" />
 
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:id="@+id/studentclass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -129,7 +129,7 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="25 Nov 2022"
+                android:text=""
                 android:focusable="false"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
@@ -154,7 +154,7 @@
                 android:id="@+id/classs"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="25 Nov 2022"
+                android:text=" "
                 android:focusable="false"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
@@ -178,7 +178,7 @@
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="Fever"
+                android:text=" "
                 android:focusable="false"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />

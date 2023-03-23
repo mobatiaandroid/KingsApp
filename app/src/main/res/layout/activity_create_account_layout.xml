@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline16"
             tools:layout_editor_absoluteX="16dp">
 
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaBold
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/textView24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

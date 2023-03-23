@@ -14,7 +14,7 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="15dp" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/listTxtView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,16 +17,18 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.kingsapp.BuildConfig
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.AbsenceActivity
+import com.example.kingsapp.activities.absence.AbsenceActivity
+import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
-import com.example.kingsapp.activities.login.ChildSelectionActivity
-import com.example.kingsapp.activities.login.model.LoginResponseModel
+import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
+import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.student_planner.StudentPlannerActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.manager.AppController
@@ -78,7 +81,8 @@ lateinit var TouchedView: View
 private var TAB_ID: String = ""
 
 lateinit var appController: AppController
-
+var versionfromapi: String = ""
+var currentversion: String = ""
 @Suppress(
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS",
     "ControlFlowWithEmptyBody"
@@ -101,6 +105,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         mListItemArray = resources.getStringArray(R.array.home_list_items)
         mListImgArrays = mContext.resources.obtainTypedArray(R.array.home_list_reg_icons)
         mContext=requireContext()
+        currentversion = BuildConfig.VERSION_NAME
         initFn()
         callhomeuserApi()
         setListeners()
@@ -119,6 +124,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
     }
 
     private fun callhomeuserApi() {
+        Log.e("token", PreferenceManager().getAccessToken(mContext).toString())
         val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(mContext)
             .toString())
         call.enqueue(object : retrofit2.Callback<HomeUserResponseModel> {
@@ -131,6 +137,25 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 {
                     val username= response.body()!!.home.user_details.name
                     PreferenceManager().setuser_id(mContext,username)
+                    Log.e("Username", PreferenceManager().getuser_id(mContext).toString())
+                    val useremail=response.body()!!.home.user_details.email
+                    PreferenceManager().setUserCode(mContext,useremail)
+                    PreferenceManager().setAppversion(mContext, response.body()!!.home.android_version)
+                    versionfromapi =
+                        PreferenceManager().getAppVersion(mContext)!!.replace(".", "")
+                    currentversion = currentversion.replace(".", "")
+
+                    Log.e("APPVERSIONAPI:", versionfromapi)
+                    Log.e("CURRENTVERSION:", currentversion)
+
+
+                    if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
+                        if (versionfromapi > currentversion) {
+                            showforceupdate(mContext)
+
+                        }
+                    }
+
                 }
                else{
 
@@ -148,6 +173,40 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 Log.e("succ", t.message.toString())
             }
         })
+    }
+
+    fun showforceupdate(mContext: Context) {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_updateversion)
+        val btnUpdate =
+            dialog.findViewById<View>(R.id.btnUpdate) as Button
+
+        btnUpdate.setOnClickListener {
+            dialog.dismiss()
+            val appPackageName =
+                mContext.packageName
+            try {
+                mContext.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$appPackageName")
+                    )
+                )
+
+            } catch (e: android.content.ActivityNotFoundException) {
+                mContext.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
+            }
+
+        }
+        dialog.show()
     }
 
     private fun setListeners() {
@@ -209,12 +268,10 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         // if(PreferenceManager().getStudentID(mContext).equals("")) {
         when (intentTabId) {
             naisTabConstants.TAB_STUDENT_INFORMATION -> {
-                Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-               /* showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
+               // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                val intent = Intent(mContext, StudentInfoActivity::class.java)
+                startActivity(intent)
+                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
             }
 
             naisTabConstants.TAB_CALENDAR -> {
@@ -228,7 +285,6 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
             naisTabConstants.TAB_MESSAGES -> {
                // Toast.makeText(mContext, "frg3", Toast.LENGTH_SHORT).show()
-                Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
 
                 /*showSuccessAlert(
                     mContext,
@@ -247,7 +303,9 @@ class HomeFragment  : Fragment(),View.OnClickListener{
             }
             naisTabConstants.TAB_REPORT_ABSENCE -> {
                // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
-                Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                val intent = Intent(mContext, AbsenceActivity::class.java)
+                startActivity(intent)
+                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
                 /*showSuccessAlert(
                     mContext,
@@ -255,20 +313,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     "Alert"
                 )*/
             }
-            naisTabConstants.TAB_TEACHER_CONTACT -> {
-              //  Toast.makeText(mContext, "frg6", Toast.LENGTH_SHORT).show()
-               // mFragment = AbsenceFragment()
-               // fragmentIntent(mFragment)
-                val intent = Intent(mContext, AbsenceActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                //overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up )
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
+
             /*naisTabConstants.TAB_SOCIAL_MEDIA -> {
                 mFragment = SocialMediaFragment()
                 fragmentIntent(mFragment)
@@ -306,9 +351,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 //                }
             naisTabConstants.TAB_CONTACT_US -> {
               //  Toast.makeText(mContext, "frg9", Toast.LENGTH_SHORT).show()
-                val intent = Intent(mContext, FormsActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
 
 
                 /*showSuccessAlert(
@@ -317,34 +360,14 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     "Alert"
                 )*/
             }
-            naisTabConstants.TAB_TERM_DATES -> {
-               // Toast.makeText(mContext, "frg10", Toast.LENGTH_SHORT).show()
-                Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
 
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
-            naisTabConstants.EMAIL_HELP -> {
-                showEmailHelpAlert(mContext)
-            }
-            naisTabConstants.TAB_UPDATE -> {
-              //  Toast.makeText(mContext, "frg11", Toast.LENGTH_SHORT).show()
-                Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
 
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
+
 
             naisTabConstants.TAB_APPS -> {
               //  Toast.makeText(mContext, "frg12", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(mContext, StudentPlannerActivity::class.java)
+                val intent = Intent(mContext, AppsActivity::class.java)
                 startActivity(intent)
                 requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
@@ -355,7 +378,9 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 )*/
             }naisTabConstants.TAB_FORMS -> {
            // Toast.makeText(mContext, "frg13", Toast.LENGTH_SHORT).show()
-            Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            val intent = Intent(mContext, FormsActivity::class.java)
+            startActivity(intent)
+            requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
            /* showSuccessAlert(
                 mContext,
@@ -926,10 +951,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
 
                 }
 
-                textdata.equals(classNameConstants.EMAIL_HELP, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.EMAIL_HELP
 
-                }
                 textdata.equals(classNameConstants.PAYMENTS, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_MESSAGES
                 }
@@ -939,18 +961,14 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                /* textdata.equals(classNameConstants.REPORT_ABSENCE, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_REPORT_ABSENCE
                 }*/
-                textdata.equals(classNameConstants.ABSENCE_REPORTING, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_TEACHER_CONTACT
-                }
+
                 textdata.equals(classNameConstants.TIME_TABL, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_TIME_TABLE
                 }
                 textdata.equals(classNameConstants.PARENT_ESSENTIAL, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_COMMUNICATION
                 }
-                textdata.equals(classNameConstants.CANTEEN, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_TERM_DATES
-                }
+
 
                 textdata.equals(classNameConstants.FORMS, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_CONTACT_US
@@ -972,13 +990,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
 //                    TAB_ID = naisTabConstants.TAB_ATTENDANCE
 //
 //                }
-                textdata.equals(classNameConstants.CURRICULUM, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_CURRICULUM
 
-                } textdata.equals(classNameConstants.UPDATE_ACCOUNT_DETAILS, ignoreCase = true) -> {
-                TAB_ID = naisTabConstants.TAB_UPDATE
-
-            }
 
             }
 

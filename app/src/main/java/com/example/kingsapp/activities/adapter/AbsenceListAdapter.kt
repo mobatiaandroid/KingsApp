@@ -2,7 +2,6 @@ package com.example.kingsapp.activities.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +10,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.AbsenceDeatilsActivity
-import com.example.kingsapp.activities.RegisterAbsenceActivity
+import com.example.kingsapp.activities.absence.model.AbsenceList
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class AbsenceListAdapter(private val context: Context, private  val name:ArrayList<String>):
+class AbsenceListAdapter(private val context: Context, private  val name:ArrayList<AbsenceList>):
     RecyclerView.Adapter<AbsenceListAdapter.MyViewHolder>() {
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var textview: TextView = view.findViewById(R.id.listDate)
@@ -30,8 +32,28 @@ class AbsenceListAdapter(private val context: Context, private  val name:ArrayLi
     @SuppressLint("ResourceAsColor", "SuspiciousIndentation")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val namelist = name[position]
-       // Log.e("nameList",namelist)
-        var str = namelist.split("-")
+        Log.e("nameList", namelist.toString())
+
+        val fromDate=namelist.from_date
+        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val outputFormat: DateFormat = SimpleDateFormat("dd MMM yyyy")
+        val inputDateStr = fromDate
+        val date: Date = inputFormat.parse(inputDateStr)
+        val outputDateStr: String = outputFormat.format(date)
+
+        if (namelist.to_date!=""){
+            val toDate=namelist.to_date
+            val inputFormat1: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat1: DateFormat = SimpleDateFormat("dd MMM yyyy")
+            val inputDateStr1 = toDate
+            val date1: Date = inputFormat1.parse(inputDateStr1)
+            val outputDateStr1: String = outputFormat1.format(date1)
+            holder.textview.text = outputDateStr+" - "+outputDateStr1
+        }
+        else{
+            holder.textview.text = outputDateStr
+        }
+       /* var str = namelist.split("-")
         val str1 = str[0]
         val Str2 = str[0].split(" ")
 
@@ -65,7 +87,7 @@ class AbsenceListAdapter(private val context: Context, private  val name:ArrayLi
 
          Log.e("str1", str1)
         Log.e("str11", str11)
-
+*/
         // Log.e("Str222", Str22.toString())
     }
 

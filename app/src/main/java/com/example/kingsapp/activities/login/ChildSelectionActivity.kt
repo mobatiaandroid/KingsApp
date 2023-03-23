@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentList
@@ -59,18 +60,20 @@ class ChildSelectionActivity:AppCompatActivity() {
                 response: Response<StudentListResponseModel>
             ) {
                 Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals("100"))
+                if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
 
-                    circleImageView!!.layoutManager = LinearLayoutManager(ncontext)
+                    val llm = LinearLayoutManager(ncontext)
+                    llm.orientation = LinearLayoutManager.HORIZONTAL
+                    circleImageView!!.layoutManager = llm
                     val studentlist_adapter =
                         ChildSelectionAdapter(ncontext, student_name)
                     circleImageView!!.adapter = studentlist_adapter
                 }
                 else
                 {
-
+                    CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                 }
             }
 
@@ -96,6 +99,9 @@ class ChildSelectionActivity:AppCompatActivity() {
         }
         circleImageView.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
+                var id: Int = student_name.get(position).id
+                PreferenceManager().setStudent_ID(ncontext,id.toString())
+                Log.e("Childselid", PreferenceManager().getStudent_ID(ncontext).toString())
                 startActivity(Intent(ncontext, HomeActivity::class.java))
             }
 

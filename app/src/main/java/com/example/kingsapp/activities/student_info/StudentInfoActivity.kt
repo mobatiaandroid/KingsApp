@@ -58,8 +58,16 @@ class StudentInfoActivity:AppCompatActivity (){
         setContentView(R.layout.activity_student_info)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext = this
+        PreferenceManager().setStudent_ID(mContext,"")
         initFn()
-        studentListApiCall()
+        if(CommonClass.isInternetAvailable(mContext)) {
+            studentListApiCall()
+        }
+        else{
+            Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+        }
+
 
     }
 
@@ -71,9 +79,11 @@ class StudentInfoActivity:AppCompatActivity (){
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
+
                 Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals("100"))
+                if (response.body()!!.status.equals(100))
                 {
+
                     student_name.addAll(response.body()!!.student_list)
                     Log.e("StudentNameid", PreferenceManager().getStudent_ID(mContext).toString())
                     if ( PreferenceManager().getStudent_ID(mContext).equals(""))
@@ -87,6 +97,7 @@ class StudentInfoActivity:AppCompatActivity (){
                         PreferenceManager().setStudent_ID(mContext,studentId)
                         PreferenceManager().setStudentName(mContext,studentName)
                         PreferenceManager().setStudentPhoto(mContext,studentImg)
+                        PreferenceManager().setStudentClass(mContext,student_class)
                         studentName_Text.text=studentName
                         studentclass.text=student_class
                         if(!studentImg.equals(""))
@@ -109,9 +120,11 @@ class StudentInfoActivity:AppCompatActivity (){
 
                         studentName= PreferenceManager().getStudentName(mContext)!!
                         Log.e("StudentName",studentName)
+                        student_class=PreferenceManager().getStudentClass(mContext)!!
                         studentImg= PreferenceManager().getStudentPhoto(mContext)!!
                         studentId= PreferenceManager().getStudent_ID(mContext)!!
                         studentName_Text.text=studentName
+                        studentclass.text=student_class
                         if(!studentImg.equals(""))
                         {
                             Glide.with(mContext) //1
@@ -137,7 +150,7 @@ class StudentInfoActivity:AppCompatActivity (){
                 }
                 else
                 {
-
+                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
             }
 
@@ -153,7 +166,8 @@ class StudentInfoActivity:AppCompatActivity (){
         })
     }
     private fun studentInfoApiCall() {
-        val call: Call<StudentInfoResponseModel> = ApiClient.getApiService().studentinfo("Bearer 30|7hYRFCyhyQ5gUYht56qetYk3z49MaqAX5Il5AqJE",
+        val call: Call<StudentInfoResponseModel> = ApiClient.getApiService().studentinfo("Bearer "+
+                PreferenceManager().getAccessToken(mContext).toString(),
             PreferenceManager().getStudent_ID(mContext).toString()
         )
         call.enqueue(object : retrofit2.Callback<StudentInfoResponseModel> {
@@ -161,16 +175,16 @@ class StudentInfoActivity:AppCompatActivity (){
                 call: Call<StudentInfoResponseModel>,
                 response: Response<StudentInfoResponseModel>
             ) {
-               if (response.body()!!.status.equals("100"))
+               if (response.body()!!.status.equals(100))
                {
                    name.setText(response.body()!!.student_info.fullname)
                    address.setText(response.body()!!.student_info.address)
                    classs.setText(response.body()!!.student_info.classs)
 
                }
-else
+             else
                {
-
+                   CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                }
             }
 
@@ -228,8 +242,13 @@ else
 
                 var name: String = student_name.get(position).fullname
                 var classs: String = student_name.get(position).classs
+                var id: Int = student_name.get(position).id
                 studentName_Text.setText(name)
                 studentclass.text=classs
+                PreferenceManager().setStudent_ID(mContext,id.toString())
+
+                studentInfoApiCall()
+
                 dialog.dismiss()
             }
 

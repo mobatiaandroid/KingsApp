@@ -1,25 +1,31 @@
 package com.example.kingsapp.fragment.setting
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
+import com.example.kingsapp.fragment.setting.adapter.SettingAdapter
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -66,7 +72,7 @@ class SettingFragment: Fragment() {
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerList.layoutManager = llm
-        val adapter = CommonAdapter(mContext, stringList)
+        val adapter = SettingAdapter(mContext, stringList)
         recyclerList.adapter = adapter
 
         menu.setOnClickListener {
@@ -75,10 +81,25 @@ class SettingFragment: Fragment() {
         }
         recyclerList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
+                if(position==0)
+                {
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts("package", activity!!.packageName, null)
+                    intent.data = uri
+                    mContext.startActivity(intent)
+                }
+                if (position == 2){
+                    showEmailHelpAlert(mContext)
+                }
                 if (position == 4){
-                    showChangePasswordPopUp()
+                    showSuccessAlert(mContext,"Do you want to Delete Account?")
                 }
                 if (position == 5){
+                    showChangePasswordPopUp()
+                }
+
+                if (position == 6){
                     showSuccessAlert(mContext,"Do you want to Logout?")
                 }
             }
@@ -123,19 +144,28 @@ class SettingFragment: Fragment() {
     }
 
     private fun callChangePasswdApi(currentpswd: String, newpswd: String, confrmpswd: String) {
-        val call: Call<ResponseBody> = ApiClient.getApiService().changepswd("Bearer "+
+        val call: Call<CommonResponse> = ApiClient.getApiService().changepswd("Bearer "+
             PreferenceManager().getAccessToken(mContext).toString(),
             newpswd,confrmpswd,currentpswd)
-        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+        call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
             ) {
-                Log.e("Response",response.body().toString())
+                if (response.body()!!.status.equals(100))
+                {
+                    Log.e("Response",response.body().toString())
+                    CommonClass.showErrorAlert(mContext,"Successfully submitted your absence.","Success")
+                }
+               else{
+                    CommonClass.checkApiStatusError(response.body()!!.status,
+                        com.example.kingsapp.activities.absence.context
+                    )
+                }
 
             }
 
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+            override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",
@@ -190,8 +220,71 @@ class SettingFragment: Fragment() {
                 response: Response<ResponseBody>
             ) {
                 Log.e("Response",response.body().toString())
-                val intent = Intent(context, WelcomeActivity::class.java)
+                PreferenceManager().setuser_id(mContext,"")
+                val intent = Intent(mContext, WelcomeActivity::class.java)
             startActivity(intent)
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+    fun showEmailHelpAlert(context: Context) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_send_email_dialog)
+        //  var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        val dialogCancelButton = dialog.findViewById<View>(R.id.cancelButton) as TextView
+        val submitButton = dialog.findViewById<View>(R.id.submitButton) as TextView
+        val text_dialog = dialog.findViewById<View>(R.id.text_dialog) as EditText
+        val text_content = dialog.findViewById<View>(R.id.text_content) as EditText
+
+        //  text_dialog.text = message
+        // alertHead.text = msgHead
+        // iconImageView.setImageResource(R.color.white)
+
+        submitButton.setOnClickListener {
+            callSendMailApi(text_dialog.text.toString(),text_dialog.text.toString(),context,dialog)
+        }
+        dialogCancelButton.setOnClickListener { //   AppUtils.hideKeyBoard(mContext);
+            val imm =
+                com.example.kingsapp.fragment.mContext.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(text_dialog.windowToken, 0)
+            imm.hideSoftInputFromWindow(text_content.windowToken, 0)
+
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun callSendMailApi(
+        textDialog: String,
+        textContent: String,
+        context: Context,
+        dialog: Dialog
+    ) {
+        val call: Call<ResponseBody> = ApiClient.getApiService().feedback("Bearer "+PreferenceManager().getAccessToken(mContext)
+            .toString(),textDialog,textContent, PreferenceManager().getUserCode(context).toString(),
+            PreferenceManager().getuser_id(context).toString())
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                Log.e("Response",response.body().toString())
+                dialog.dismiss()
+                /*val intent = Intent(context, WelcomeActivity::class.java)
+                startActivity(intent)*/
 
             }
 

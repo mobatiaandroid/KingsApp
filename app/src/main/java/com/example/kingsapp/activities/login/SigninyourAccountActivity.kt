@@ -119,10 +119,16 @@ class SigninyourAccountActivity:AppCompatActivity() {
                 call: Call<LoginResponseModel>,
                 response: Response<LoginResponseModel>
             ) {
-
-                PreferenceManager().setAccessToken(ncontext,response.body()!!.token)
-                Log.e("token",PreferenceManager().getAccessToken(ncontext).toString())
-                startActivity(Intent(ncontext, ChildSelectionActivity::class.java))
+               if(response.body()!!.status.equals(100))
+               {
+                   PreferenceManager().setAccessToken(ncontext,response.body()!!.token)
+                   Log.e("token",PreferenceManager().getAccessToken(ncontext).toString())
+                   startActivity(Intent(ncontext, ChildSelectionActivity::class.java))
+               }
+                else
+               {
+                   CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+               }
             }
 
             override fun onFailure(call: Call<LoginResponseModel?>, t: Throwable) {
