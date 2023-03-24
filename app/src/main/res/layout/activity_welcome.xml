@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+    <com.example.kingsapp.manager.font.CustomVerdanaBold
         android:id="@+id/kingsEduTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
