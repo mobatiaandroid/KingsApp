@@ -10,7 +10,7 @@
 
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
     <string name="Home">Home</string>
-    <string name="Message">Parent</string>
+    <string name="Message">Comms</string>
     <string name="About">About</string>
     <string name="Contact">Contact</string>
     <string name="Settings">Settings</string>
@@ -43,7 +43,7 @@
     <string name="forms">Forms</string>
     <string name="reports">Reports</string>
 
-    <string name="timetable">TimeTable</string>
+    <string name="timetable">Time Table</string>
 
     <string name="student_planner">Student Planner</string>
 
@@ -154,22 +154,18 @@
         We are getting ready for the 2022/23 scholl year portraits.Photographers from Fotorex will be on campus nest weeek.</string>
 
 
-
-
-
-
     <string-array name="home_list_items">
         <item>  Home</item>
         <item>  Student Information </item>
         <item>  School Calendar</item>
         <item>  Parent Comms</item>
-        <item>  Absence reporting</item>
-        <item>  Time table</item>
-       <item>  Parent Essentials</item>
+        <item>  Absence Reporting</item>
+        <item>  Time Table</item>
+        <item>  Parent Essentials</item>
         <item>  Reports </item>
         <item> Forms</item>
         <item>  Apps</item>
-        <item>  Contact US</item>
+        <item>  Contact Us</item>
     </string-array>
 
     <string name="null_value" translatable="false">
@@ -209,7 +205,7 @@
     <string-array name="student_list">
         <item> Jane Mathewes</item>
         <item>Esther Mathews</item>
-        <item> Gay Mathewes</item>
+        <item> Guy Mathewes</item>
     </string-array>
 
     <string-array name="parent_list">

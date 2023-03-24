@@ -55,10 +55,9 @@
 
         <ImageView
             android:id="@+id/check"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="right|center"
-            android:layout_weight="10"
             android:background="@drawable/rectangle"
             android:src="@drawable/check"
             android:visibility="visible" />

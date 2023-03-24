@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,10 +17,8 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.model.Studentlist_model
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.manager.PreferenceManager
@@ -32,7 +27,6 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.mobatia.nasmanila.api.ApiClient
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
@@ -47,9 +41,10 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var studentImg: String
     lateinit var student_class: String
     lateinit var student_name: ArrayList<StudentList>
-    lateinit var imagicon:ImageView
-    lateinit var studentclass:TextView
-    lateinit var backarrow:ImageView
+    lateinit var imagicon: ImageView
+    lateinit var studentclass: TextView
+    lateinit var backarrow: ImageView
+    lateinit var studentLinear: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -203,19 +198,20 @@ class StudentInfoActivity:AppCompatActivity (){
     }
 
     fun initFn() {
-        student_name= ArrayList()
+        student_name = ArrayList()
+        studentLinear = findViewById(R.id.studentLinear)
         studentName_Text = findViewById(R.id.studentName)
-        imagicon=findViewById(R.id.imagicon)
-        name=findViewById(R.id.name)
-        classs=findViewById(R.id.classs)
-        address=findViewById(R.id.address)
-        studentclass=findViewById(R.id.studentclass)
-        backarrow=findViewById(R.id.backarrow)
+        imagicon = findViewById(R.id.imagicon)
+        name = findViewById(R.id.name)
+        classs = findViewById(R.id.classs)
+        address = findViewById(R.id.address)
+        studentclass = findViewById(R.id.studentclass)
+        backarrow = findViewById(R.id.backarrow)
         backarrow.setOnClickListener {
-             val intent = Intent(mContext, HomeActivity::class.java)
-             startActivity(intent)
+            val intent = Intent(mContext, HomeActivity::class.java)
+            startActivity(intent)
         }
-        studentName_Text.setOnClickListener {
+        studentLinear.setOnClickListener {
             studentlist_popup(student_name)
             /* val intent = Intent(mContext, StudentListActivity::class.java)
              startActivity(intent)*/
