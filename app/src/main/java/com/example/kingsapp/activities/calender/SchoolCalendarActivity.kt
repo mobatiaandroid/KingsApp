@@ -34,6 +34,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var mcontext: Context
@@ -76,7 +77,8 @@ class SchoolCalendarActivity:AppCompatActivity() {
         headerfnc()
         daysinweek()
 
-       // callCalendarListMonth()
+        callCalendarListMonth()
+        callCalendarList()
        // onclick()
     }
 
@@ -94,7 +96,40 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 {
                     mEventArrayListYear.addAll(response.body()!!.calendar)
                     Log.e("mEventArrayListYear", mEventArrayListYear.toString())
-                    filterYearlist(mEventArrayListYear)
+for(i in mEventArrayListYear.indices) {
+    val date: Date
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+
+    date = sdf.parse(mEventArrayListYear.get(i).start_date);
+    Log.e("date", date.toString())
+    val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
+    val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
+    val formatMMM = SimpleDateFormat("MMM", Locale.ENGLISH)
+    val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+    val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
+    val c = Calendar.getInstance().getTime()
+    val monthNumber = formatMM.format(date)
+    val dayOfTheWeek = formatEEE.format(date) // Thu
+    val days = formatdd.format(date) // 20
+    val monthString = formatMMM.format(date) // Jun
+    val year = formatyyyy.format(date)
+    val monthNumber1 = formatMM.format(date)
+
+    mEventArrayListYear.get(i).monthNumber=monthNumber1
+    mEventArrayListYear.get(i).dayOfTheWeekk=dayOfTheWeek
+    mEventArrayListYear.get(i).dayss=days
+    mEventArrayListYear.get(i).monthString=monthString
+    mEventArrayListYear.get(i).yearr=year
+    Log.e("monthNumber", monthNumber.toString())
+    Log.e("dayOfTheWeek", dayOfTheWeek.toString())
+    Log.e("days", days.toString())
+    Log.e("monthString", monthString.toString())
+    Log.e("year", year.toString())
+
+
+    //filterWeekArray(monthNumber,dayOfTheWeek,days,monthString,year,mEventArrayListYear)
+    // filterYearlist(mEventArrayListYear)
+}
                 }
                 else
                 {
@@ -114,8 +149,83 @@ class SchoolCalendarActivity:AppCompatActivity() {
         })
     }
 
+    private fun filterWeekArray(
+
+    ) {
+
+        mEventArrayListFilterListYear= ArrayList()
+        val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
+        val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+        val formatDD = SimpleDateFormat("dd", Locale.ENGLISH)
+        val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+
+        val dayOfTheWeek = arrayOfNulls<String>(7)
+        val month = arrayOfNulls<String>(7)
+        val year = arrayOfNulls<String>(7)
+        val dd = arrayOfNulls<String>(7)
+
+        val date = Date() // your date
+
+
+        val calendar = java.util.Calendar.getInstance()
+        calendar.time = date
+        calendar.firstDayOfWeek = java.util.Calendar.SUNDAY
+        calendar[java.util.Calendar.DAY_OF_WEEK] = java.util.Calendar.SUNDAY
+        println("calendar:" + calendar[java.util.Calendar.DAY_OF_MONTH] + ":" + calendar[java.util.Calendar.MONTH] + ":" + calendar[java.util.Calendar.YEAR])
+
+        val days = arrayOfNulls<String>(7)
+
+        for (i in 0..6) {
+            days[i] = sdf.format(calendar.time)
+            calendar.add(java.util.Calendar.DAY_OF_MONTH, 1)
+            calendar.firstDayOfWeek = java.util.Calendar.SUNDAY
+            calendar[java.util.Calendar.DAY_OF_WEEK] = i + 1
+            var msgDate = Date()
+            try {
+                msgDate = sdf.parse(
+                    calendar[java.util.Calendar.YEAR].toString() + "-" + currentMonth(
+                        calendar[java.util.Calendar.MONTH]
+                    ) + "-" + calendar[java.util.Calendar.DAY_OF_MONTH]
+                )
+            } catch (ex: ParseException) {
+                Log.e("Date", "Parsing error")
+            }
+            dayOfTheWeek[i] = formatEEE.format(msgDate) // Thu
+            year[i] = formatyyyy.format(msgDate) // yyyy
+            month[i] = formatMM.format(msgDate) // 15
+            dd[i] = formatDD.format(msgDate) // 15
+
+            Log.e("dxay", dayOfTheWeek[i].toString())
+            Log.e("year", year[i].toString())
+            Log.e("month", month[i].toString())
+            Log.e("dd", dd[i].toString())
+        }
+
+            for (i in dayOfTheWeek.indices) {
+                Log.e("size", mEventArrayListYear.size.toString())
+                        for (j in mEventArrayListYear.indices) {
+                            if(dd[i].equals(mEventArrayListYear.get(j).dayss)&& dayOfTheWeek[i].equals(mEventArrayListYear.get(j).dayOfTheWeekk)&&
+                                month[i].equals(mEventArrayListYear.get(j).monthNumber)&&
+                                year[i].equals(mEventArrayListYear.get(j).yearr))
+                            {
+                                mEventArrayListFilterListYear.add(mEventArrayListYear.get(j))
+
+
+                            }
+
+                        }
+                Log.e("arrayinside", mEventArrayListFilterListYear.size.toString())
+                val studentlist_adapter =
+                    CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
+                list!!.adapter = studentlist_adapter
+                    }
+        Log.e("array", mEventArrayListFilterListYear.size.toString())
+
+    }
+
     private fun callCalendarListMonth() {
-        mEventArrayListFilterListMonth.clear()
+        mEventArrayListYear.clear()
         Log.e("callcalList", PreferenceManager().getStudent_ID(mcontext).toString())
 
         val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendarList("Bearer "+
@@ -128,17 +238,44 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 if (response.body()!!.status.equals(100))
 
                 {
-                    mEventArrayListFilterListMonth.addAll(response.body()!!.calendar)
+                    mEventArrayListYear.addAll(response.body()!!.calendar)
 
-                    val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
-                    val c = Calendar.getInstance().getTime()
-                    val monthNumber = formatMM.format(c)
+                    /************************ end of end date new */
+                    for (i in mEventArrayListYear.indices )
+                    {
+                        val date:Date
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 
-                    Log.e("monthNumber", monthNumber.toString())
-                    Log.e("monthNumber", monthNumber.toString())
-                    Log.e("currentdate", c.toString())
+                        date=sdf.parse(mEventArrayListYear.get(i).start_date);
+                        Log.e("date", date.toString())
+                        val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
+                        val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
+                        val formatMMM = SimpleDateFormat("MMM", Locale.ENGLISH)
+                        val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+                        val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
+                        val c = Calendar.getInstance().getTime()
+                        val monthNumber = formatMM.format(c)
+                        val monthNumber1 = formatMM.format(date)
+                        val dayOfTheWeek = formatEEE.format(date) // Thu
+                        val days = formatdd.format(date) // 20
+                        val monthString = formatMMM.format(date) // Jun
+                        val year = formatyyyy.format(date)
+                        mEventArrayListYear.get(i).monthNumber=monthNumber1
+                        mEventArrayListYear.get(i).dayOfTheWeekk=dayOfTheWeek
+                        mEventArrayListYear.get(i).dayss=days
+                        mEventArrayListYear.get(i).monthString=monthString
+                        mEventArrayListYear.get(i).yearr=year
 
-                    filtermonthlist(monthNumber.toString(),mEventArrayListFilterListMonth)
+                        Log.e("monthNumber", monthNumber.toString())
+                        Log.e("dayOfTheWeek", dayOfTheWeek.toString())
+                        Log.e("days", days.toString())
+                        Log.e("monthString", monthString.toString())
+                        Log.e("year", year.toString())
+                       // filtermonthlist(monthNumber.toString(),mEventArrayListFilterListMonth)
+
+                    }
+
+
 
                 }
                 else
@@ -302,14 +439,14 @@ class SchoolCalendarActivity:AppCompatActivity() {
         week_day=getResources().getStringArray(R.array.Weeks)
         setTextview()
 
-        if (PreferenceManager().getFromYearView(mcontext).equals("1")){
+       /* if (PreferenceManager().getFromYearView(mcontext).equals("1")){
             Log.e("year","1")
 
             callCalendarList()
         }else{
             Log.e("year","0")
             callCalendarListMonth()
-        }
+        }*/
         back.setOnClickListener {
             val intent = Intent(mcontext, HomeActivity::class.java)
             startActivity(intent)
@@ -350,78 +487,23 @@ class SchoolCalendarActivity:AppCompatActivity() {
                         View.GONE
                     )
 
-                    val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
-                    val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
-                    val formatDD = SimpleDateFormat("dd", Locale.ENGLISH)
-                    val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
-                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-
-                    val dayOfTheWeek = arrayOfNulls<String>(7)
-                    val month = arrayOfNulls<String>(7)
-                    val year = arrayOfNulls<String>(7)
-                    val dd = arrayOfNulls<String>(7)
-
-                    val date = Date() // your date
 
 
-                    val calendar = java.util.Calendar.getInstance()
-                    calendar.time = date
-                    calendar.firstDayOfWeek = java.util.Calendar.SUNDAY
-                    calendar[java.util.Calendar.DAY_OF_WEEK] = java.util.Calendar.SUNDAY
-                    println("calendar:" + calendar[java.util.Calendar.DAY_OF_MONTH] + ":" + calendar[java.util.Calendar.MONTH] + ":" + calendar[java.util.Calendar.YEAR])
 
-                    val days = arrayOfNulls<String>(7)
+                   /* val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
+                    val formatMMM = SimpleDateFormat("MMM", Locale.ENGLISH)
+                    val c = Calendar.getInstance().getTime()
+                    val monthNumber = formatMM.format(c)
+                    val dayOfTheWeek1 = formatEEE.format(c) // Thu
+                    val days1 = formatdd.format(c) // 20
+                    val monthString = formatMMM.format(c) // Jun
+                    val year1 = formatyyyy.format(c)
+                    Log.e("monthNumber", monthNumber.toString())
+                    Log.e("monthNumber", monthNumber.toString())
+                    Log.e("currentdate", c.toString())*/
 
-                    for (i in 0..6) {
-                        days[i] = sdf.format(calendar.time)
-                        calendar.add(java.util.Calendar.DAY_OF_MONTH, 1)
-                        calendar.firstDayOfWeek = java.util.Calendar.SUNDAY
-                        calendar[java.util.Calendar.DAY_OF_WEEK] = i + 1
-                        var msgDate = Date()
-                        try {
-                            msgDate = sdf.parse(
-                                calendar[java.util.Calendar.YEAR].toString() + "-" + currentMonth(
-                                    calendar[java.util.Calendar.MONTH]
-                                ) + "-" + calendar[java.util.Calendar.DAY_OF_MONTH]
-                            )
-                        } catch (ex: ParseException) {
-                            Log.e("Date", "Parsing error")
-                        }
-                        dayOfTheWeek[i] = formatEEE.format(msgDate) // Thu
-                        year[i] = formatyyyy.format(msgDate) // yyyy
-                        month[i] = formatMM.format(msgDate) // 15
-                        dd[i] = formatDD.format(msgDate) // 15
-                    }
-                   /* for (i in dayOfTheWeek.indices) {
-                        for (j in mEventArrayListFilterListMonth.indices) {
-                            if (dd[i].equals(
-                                    mEventArrayListFilterListMonth.get(
-                                        j
-                                    ).getDay(), ignoreCase = true
-                                ) && dayOfTheWeek[i].equals(
-                                    mEventArrayListFilterListMonth.get(
-                                        j
-                                    ).getDayOfTheWeek(), ignoreCase = true
-                                ) && month[i].equals(
-                                    mEventArrayListFilterListMonth.get(
-                                        j
-                                    ).getMonthNumber(), ignoreCase = true
-                                ) && year[i].equals(
-                                    mEventArrayListFilterListMonth.get(
-                                        j
-                                    ).getYear(), ignoreCase = true
-                                )
-                            ) {
-                                eventarray.add(
-                                    mEventArrayListFilterListMonth.get(
-                                        j
-                                    )
-                                )
-                                //                                Collections.reverse(mEventArrayListFilterList);
-                            }
-                        }
-                    }*/
 
+                    filterWeekArray()
 
 
 
