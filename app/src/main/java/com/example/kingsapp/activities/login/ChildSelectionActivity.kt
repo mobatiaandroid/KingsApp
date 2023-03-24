@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentList

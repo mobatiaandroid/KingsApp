@@ -7,18 +7,20 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.*
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.model.Studentlist_model
+import com.example.kingsapp.activities.login.model.StudentList
+import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.timetable.adapter.TimeTableAllWeekSelectionAdapterNew
 import com.example.kingsapp.activities.timetable.adapter.TimeTableSingleWeekSelectionAdapter
 import com.example.kingsapp.activities.timetable.adapter.TimeTableWeekListAdapter
@@ -26,9 +28,14 @@ import com.example.kingsapp.activities.timetable.model.DayModel
 import com.example.kingsapp.activities.timetable.model.FieldModel
 import com.example.kingsapp.activities.timetable.model.TimeTableApiListModel
 import com.example.kingsapp.activities.timetable.model.WeekModel
+import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mobatia.nasmanila.api.ApiClient
+import retrofit2.Call
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,13 +52,13 @@ class TimeTableActivity:AppCompatActivity() {
     lateinit var linearlayoutstudentlist: LinearLayout
 
 
-    lateinit var mFieldModel : ArrayList<FieldModel>
-    lateinit var timeTableListS : ArrayList<DayModel>
-    lateinit var mSundayArrayList : ArrayList<TimeTableApiListModel>
-    lateinit var studentName : TextView
-    lateinit var student_name:ArrayList<Studentlist_model>
-    lateinit var backarrow : ImageView
-
+    lateinit var mFieldModel: ArrayList<FieldModel>
+    lateinit var timeTableListS: ArrayList<DayModel>
+    lateinit var mSundayArrayList: ArrayList<TimeTableApiListModel>
+    lateinit var studentNameTextView: TextView
+    lateinit var studentName: String
+    lateinit var student_name: ArrayList<StudentList>
+    lateinit var backarrow: ImageView
 
 
     var weekPosition = 0
@@ -83,28 +90,29 @@ class TimeTableActivity:AppCompatActivity() {
         weekListArrayString.add("WEDNESDAY")
         weekListArrayString.add("THURSDAY")
         weekListArrayString.add("FRIDAY")
-        studentName = findViewById(R.id.studentName)
-        linearlayoutstudentlist=findViewById(R.id.studentSpinner)
+        studentListApiCall()
+        studentNameTextView = findViewById(R.id.studentName)
+        linearlayoutstudentlist = findViewById(R.id.studentSpinner)
         backarrow = findViewById(R.id.back)
 
-        var modell=Studentlist_model("Jane Mathewes",false)
-        student_name.add(modell)
-        var xmodel=Studentlist_model("Esther Mathews",false)
-        student_name.add(xmodel)
-        var nmodel=Studentlist_model("Gay Mathewes",false)
-        student_name.add(nmodel)
-        var emodel=Studentlist_model("Jane Mathewes",false)
-        student_name.add(emodel)
+        /* var modell=Studentlist_model("Jane Mathewes",false)
+         student_name.add(modell)
+         var xmodel=Studentlist_model("Esther Mathews",false)
+         student_name.add(xmodel)
+         var nmodel=Studentlist_model("Gay Mathewes",false)
+         student_name.add(nmodel)
+         var emodel=Studentlist_model("Jane Mathewes",false)
+         student_name.add(emodel)*/
 
-        var model= FieldModel("TUT","10;30","11;30")
+        var model = FieldModel("TUT", "10;30", "11;30")
         mFieldModel.add(model)
-        var model1= FieldModel("P1","10;30","11;30")
+        var model1 = FieldModel("P1", "10;30", "11;30")
         mFieldModel.add(model1)
-        var model2= FieldModel("P2","10;30","11;30")
+        var model2 = FieldModel("P2", "10;30", "11;30")
         mFieldModel.add(model2)
-        var model11= FieldModel("Break","10;30","11;30")
+        var model11 = FieldModel("Break", "10;30", "11;30")
         mFieldModel.add(model11)
-        var model3= FieldModel("P3","10;30","11;30")
+        var model3 = FieldModel("P3", "10;30", "11;30")
         mFieldModel.add(model3)
         var model44= FieldModel("L1","10;30","11;30")
         mFieldModel.add(model44)
@@ -305,14 +313,15 @@ class TimeTableActivity:AppCompatActivity() {
                 else {
                     timeTableSingleRecycler.visibility = View.GONE
                     // timeTableAllRecycler.visibility = View.VISIBLE
-                   // tipContainer.visibility = View.VISIBLE
+                    // tipContainer.visibility = View.VISIBLE
 
                     card_viewAll.visibility = View.VISIBLE
 
-                        recyclerinitializer()
-                        timeTableAllRecycler.visibility = View.VISIBLE
-                        var mRecyclerAllAdapter = TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel,timeTableListS)
-                        timeTableAllRecycler.adapter = mRecyclerAllAdapter
+                    recyclerinitializer()
+                    timeTableAllRecycler.visibility = View.VISIBLE
+                    var mRecyclerAllAdapter =
+                        TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
+                    timeTableAllRecycler.adapter = mRecyclerAllAdapter
 
                 }
             }
@@ -320,16 +329,103 @@ class TimeTableActivity:AppCompatActivity() {
 
         })
     }
-    private fun studentlist_popup(student_name: ArrayList<Studentlist_model>) {
+
+    private fun studentListApiCall() {
+        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(ncontext).toString()
+        )
+        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
+            override fun onResponse(
+                call: Call<StudentListResponseModel>,
+                response: Response<StudentListResponseModel>
+            ) {
+                Log.e("Response", response.body().toString())
+                if (response.body()!!.status.equals(100)) {
+                    student_name.addAll(response.body()!!.student_list)
+                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(ncontext).toString())
+                    if (PreferenceManager().getStudent_ID(ncontext).equals("")) {
+                        studentName =
+                            student_name.get(0).fullname
+                        student_class = student_name.get(0).classs
+                        Log.e("StudentName", studentNameTextView.toString())
+                        Log.e("student_class", student_class)
+                        studentImg = student_name.get(0).photo
+                        studentId = student_name.get(0).id.toString()
+                        PreferenceManager().setStudent_ID(ncontext, studentId)
+                        PreferenceManager().setStudentName(
+                            ncontext,
+                            studentName
+                        )
+                        PreferenceManager().setStudentPhoto(ncontext, studentImg)
+                        PreferenceManager().setStudentClass(ncontext, student_class)
+                        studentNameTextView.text = studentName
+                        studentclass.text = student_class
+                        if (!studentImg.equals("")) {
+                            Glide.with(ncontext) //1
+                                .load(studentImg)
+                                .placeholder(R.drawable.profile_photo)
+                                .error(R.drawable.profile_photo)
+                                .skipMemoryCache(true) //2
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                                .transform(CircleCrop()) //4
+                                .into(imagicon)
+                        } else {
+                            imagicon.setImageResource(R.drawable.profile_photo)
+                        }
+
+                    } else {
+
+                        studentName = PreferenceManager().getStudentName(
+                            ncontext
+                        )!!
+                        Log.e("StudentName", studentName)
+                        student_class = PreferenceManager().getStudentClass(ncontext)!!
+                        studentImg = PreferenceManager().getStudentPhoto(ncontext)!!
+                        studentId = PreferenceManager().getStudent_ID(ncontext)!!
+                        studentNameTextView.text = studentName
+                        studentclass.text = student_class
+                        if (!studentImg.equals("")) {
+                            Glide.with(ncontext) //1
+                                .load(studentImg)
+                                .placeholder(R.drawable.profile_photo)
+                                .error(R.drawable.profile_photo)
+                                .skipMemoryCache(true) //2
+                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                                .transform(CircleCrop()) //4
+                                .into(imagicon)
+                        } else {
+                            imagicon.setImageResource(R.drawable.profile_photo)
+                        }
+                    }
+
+                } else {
+                    CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+                }
+            }
+
+            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    ncontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+
+    private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
         val dialog = BottomSheetDialog(ncontext)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)
-        dialog.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
         var rel = dialog.findViewById<RecyclerView>(R.id.rel2)!! as RelativeLayout
-        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!! as ImageView
+        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!!
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
@@ -344,11 +440,11 @@ class TimeTableActivity:AppCompatActivity() {
             override fun onItemClicked(position: Int, view: View) {
 
                 //var id: String = student_name.get(position).id.toString()
-                var name: String = student_name.get(position).name
+                var name: String = student_name.get(position).fullname
                 // PreferenceManager().setStudentname(nContext, name).toString()
                 // Log.e("recycler id", id.toString())
                 //leavelist(id)
-                studentName.setText(name)
+                studentNameTextView.setText(name)
                 dialog.dismiss()
             }
 

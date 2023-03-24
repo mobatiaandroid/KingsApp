@@ -25,7 +25,6 @@ import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.settings.TermsOfServiceActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
-import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
 import com.example.kingsapp.fragment.setting.adapter.SettingAdapter
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -164,7 +163,7 @@ class SettingFragment: Fragment() {
                 }
                else{
                     CommonClass.checkApiStatusError(response.body()!!.status,
-                        com.example.kingsapp.activities.absence.context
+                        mContext
                     )
                 }
 

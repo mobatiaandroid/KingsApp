@@ -19,16 +19,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.apps.adapter.AppsAdapter
 import com.example.kingsapp.activities.apps.model.AppsList
 import com.example.kingsapp.activities.apps.model.AppsModel
-import com.example.kingsapp.activities.forms.adapter.FormListAdapter
-import com.example.kingsapp.activities.forms.model.FormList
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
 import com.example.kingsapp.constants.WebViewLoaderActivity
@@ -36,7 +32,6 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.textfield.TextInputEditText
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
@@ -158,7 +153,7 @@ class AppsActivity:AppCompatActivity() {
                 }
                 else
                 {
-                    CommonClass.checkApiStatusError(response.body()!!.status, context)
+                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
             }
 
@@ -194,7 +189,7 @@ class AppsActivity:AppCompatActivity() {
                 }
                 else
                 {
-                    CommonClass.checkApiStatusError(response.body()!!.status, context)
+                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
             }
 

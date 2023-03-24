@@ -11,14 +11,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -29,8 +27,6 @@ import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.model.Studentlist_model
-import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.manager.AppUtils
@@ -41,10 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.mobatia.nasmanila.api.ApiClient
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import java.text.DateFormat
 import java.text.ParseException
@@ -59,7 +52,6 @@ lateinit var reasonforabsence : TextInputLayout
 lateinit var first_day_of_absencetext : TextInputLayout
 lateinit var return_absence_text : TextInputLayout
 lateinit var studentSpinner : LinearLayout
-lateinit var context: Context
 lateinit var student_Name:TextView
 lateinit var studentName: String
 lateinit var studentId: String
@@ -87,6 +79,8 @@ lateinit var student_name:ArrayList<StudentList>
 lateinit var backarrow_registerabsence : ImageView
 lateinit var relativieabsence:RelativeLayout
 class RegisterAbsenceActivity:AppCompatActivity() {
+    lateinit var context: Context
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
