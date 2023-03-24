@@ -38,7 +38,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/welcomeToTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/kingsEduTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="@+id/welcomeToTxt"
         app:layout_constraintTop_toBottomOf="@+id/welcomeToTxt" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/welcomeDescriptionTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         app:layout_constraintStart_toStartOf="@+id/createAccountBtn"
         app:layout_constraintTop_toBottomOf="@+id/createAccountBtn" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/joinGuestTxt"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
