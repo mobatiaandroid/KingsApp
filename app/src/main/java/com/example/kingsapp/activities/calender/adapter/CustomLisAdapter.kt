@@ -51,8 +51,9 @@ class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<
     }
 
     override fun getItemCount(): Int {
-        return eventArrayList.size
         Log.e("adapter size", eventArrayList.size.toString())
+        return eventArrayList.size
+
     }
 
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {

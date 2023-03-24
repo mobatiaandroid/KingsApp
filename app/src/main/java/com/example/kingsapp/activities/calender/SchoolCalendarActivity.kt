@@ -128,7 +128,7 @@ for(i in mEventArrayListYear.indices) {
 
 
     //filterWeekArray(monthNumber,dayOfTheWeek,days,monthString,year,mEventArrayListYear)
-    // filterYearlist(mEventArrayListYear)
+    //
 }
                 }
                 else
@@ -201,25 +201,29 @@ for(i in mEventArrayListYear.indices) {
             Log.e("month", month[i].toString())
             Log.e("dd", dd[i].toString())
         }
-
+        mEventArrayListFilterListYear=ArrayList()
             for (i in dayOfTheWeek.indices) {
                 Log.e("size", mEventArrayListYear.size.toString())
                         for (j in mEventArrayListYear.indices) {
+
                             if(dd[i].equals(mEventArrayListYear.get(j).dayss)&& dayOfTheWeek[i].equals(mEventArrayListYear.get(j).dayOfTheWeekk)&&
                                 month[i].equals(mEventArrayListYear.get(j).monthNumber)&&
                                 year[i].equals(mEventArrayListYear.get(j).yearr))
                             {
+
                                 mEventArrayListFilterListYear.add(mEventArrayListYear.get(j))
 
 
                             }
 
                         }
-                Log.e("arrayinside", mEventArrayListFilterListYear.size.toString())
-                val studentlist_adapter =
-                    CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
-                list!!.adapter = studentlist_adapter
+
                     }
+        Log.e("arrayinside", mEventArrayListFilterListYear.size.toString())
+        list!!.layoutManager = LinearLayoutManager(mcontext)
+        val studentlist_adapter =
+            CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
+        list!!.adapter = studentlist_adapter
         Log.e("array", mEventArrayListFilterListYear.size.toString())
 
     }
@@ -254,7 +258,9 @@ for(i in mEventArrayListYear.indices) {
                         val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
                         val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
                         val c = Calendar.getInstance().getTime()
+
                         val monthNumber = formatMM.format(c)
+                        PreferenceManager().setMonthView(mcontext,monthNumber)
                         val monthNumber1 = formatMM.format(date)
                         val dayOfTheWeek = formatEEE.format(date) // Thu
                         val days = formatdd.format(date) // 20
@@ -271,6 +277,7 @@ for(i in mEventArrayListYear.indices) {
                         Log.e("days", days.toString())
                         Log.e("monthString", monthString.toString())
                         Log.e("year", year.toString())
+
                        // filtermonthlist(monthNumber.toString(),mEventArrayListFilterListMonth)
 
                     }
@@ -480,6 +487,7 @@ for(i in mEventArrayListYear.indices) {
                     )
                     daySpinner.setText("Month View")
                     callCalendarListMonth()
+                    filtermonthlist(PreferenceManager().getMonthView(mcontext),mEventArrayListYear)
 
                 } else if (position == 2) {
                     txtMYW.setText("This Week")
@@ -505,14 +513,8 @@ for(i in mEventArrayListYear.indices) {
 
                     filterWeekArray()
 
-
-
                     daySpinner.setText("Week View")
-                    list!!.visibility=View.GONE
-                    emptyImg.visibility=View.VISIBLE
-
-
-
+                    emptyImg.visibility=View.GONE
 
                    /* list!!.layoutManager = LinearLayoutManager(mcontext)
                     val studentlist_adapter =
