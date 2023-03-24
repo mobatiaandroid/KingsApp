@@ -98,7 +98,6 @@ class ReportsActivity:AppCompatActivity() {
         }
 
 
-
         linearlayoutstudentlist.setOnClickListener {
             studentlist_popup(student_name)
             /* val intent = Intent(mContext, StudentListActivity::class.java)
