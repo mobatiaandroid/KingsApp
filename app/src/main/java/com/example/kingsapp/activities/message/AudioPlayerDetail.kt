@@ -24,7 +24,7 @@ import tv.danmaku.ijk.media.player.IMediaPlayer
 
 
 
-
+lateinit var player: GiraffePlayer
 class AudioPlayerDetail : AppCompatActivity() {
 
     lateinit var extras: Bundle
@@ -40,14 +40,14 @@ class AudioPlayerDetail : AppCompatActivity() {
     var updated_at: String = ""
     var url: String = ""
     private lateinit var progressDialog: RelativeLayout
-    lateinit var player: GiraffePlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player_detail)
         extras = intent.extras!!
 
         audio_title = extras.getString("url")!!
-
+        Log.e("url",audio_title)
         mContext = this
         player = GiraffePlayer(this)
         progressDialog = findViewById(R.id.progressDialog)
