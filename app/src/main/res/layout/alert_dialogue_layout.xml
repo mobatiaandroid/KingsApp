@@ -116,7 +116,6 @@
                     android:background="@color/kings_blue"
                     android:text="OK"
                     android:gravity="center_vertical|center_horizontal"
-
                     android:textColor="#ffffffff" />
             </LinearLayout>
 

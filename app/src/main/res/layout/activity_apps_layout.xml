@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/backarrow_absense"
             android:layout_width="0dp"
-            android:layout_height="14dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:src="@drawable/backarrow">

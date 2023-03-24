@@ -3,11 +3,9 @@ package com.example.kingsapp.activities.calender
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import android.webkit.WebChromeClient
@@ -21,9 +19,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.calender.adapter.StudentRecyclerCalenderAdapter
 import com.example.kingsapp.activities.calender.model.CalendarList
@@ -42,7 +37,7 @@ import java.util.*
 class CalendarDetailsActivity :AppCompatActivity(){
     var txtmsg: TextView? = null
     var mDateTv: TextView? = null
-    var mTimeTv: TextView? = null
+    lateinit var mTimeTv: TextView
     var img: ImageView? = null
     var studName: TextView? = null
     var home: ImageView? = null
@@ -70,6 +65,7 @@ class CalendarDetailsActivity :AppCompatActivity(){
     private var mErrorFlag = false
    lateinit var anim: RotateAnimation
    lateinit var studentRecycle:RecyclerView
+   lateinit var datee:TextView
     var extras: Bundle? = null
     lateinit var msgTitle: TextView
     var title:String=" "
@@ -256,6 +252,7 @@ lateinit var linearLayoutManager:LinearLayoutManager
         name.add("Esther Mathewes")*/
 
         back=findViewById(R.id.back)
+        datee=findViewById(R.id.datee)
         msgTitle = findViewById(R.id.msgTitle)
         add_cl = findViewById(R.id.add_cl)
         studName = findViewById(R.id.studName)
@@ -328,19 +325,24 @@ lateinit var linearLayoutManager:LinearLayoutManager
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val outputFormat: DateFormat = SimpleDateFormat("dd MMM yyyy")
         //val mdate: String = eventArraylist!![position].getDateCalendar()
-        val mEndDate: String = enddate
+
         var date: Date? = null
         var endDate: Date? = null
         try {
-           // date = inputFormat.parse(mdate)
-            endDate = inputFormat.parse(mEndDate)
+            date = inputFormat.parse(startdate)
+            endDate = inputFormat.parse(enddate)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
+        Log.e("date", date.toString())
+        Log.e("endDate", endDate.toString())
         //val outputDateStr = outputFormat.format(date)
+        val outputDateStr = outputFormat.format(date)
         val outputEndDateStr = outputFormat.format(endDate)
-
-        mDateTv!!.text = "2023-02-23"
+        Log.e("date", outputDateStr.toString())
+        Log.e("endDate", outputEndDateStr.toString())
+        datee.setText(outputEndDateStr)
+        //mDateTv!!.text = "2023-02-23"
 
        /* val startFormat: DateFormat = SimpleDateFormat("H:mm:ss")
         val newStart: DateFormat = SimpleDateFormat("h:mm a")
@@ -369,7 +371,8 @@ lateinit var linearLayoutManager:LinearLayoutManager
 
 
 
-                """$mLoadUrl<p class='date'>"2022-04-03" to $outputEndDateStr</p><p class='date'>"23"</p><p class='date'>${mTimeTv!!.text}</p></body>
+        mLoadUrl =
+            """$mLoadUrl<p class='date'>$outputDateStr </p><p class='date'>${mTimeTv.getText()}</p></body>
 </html>"""
         getWebViewSettings()
         }

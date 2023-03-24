@@ -13,7 +13,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.StrictMode
 import android.util.Log
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -25,47 +30,53 @@ import java.io.File
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATION")
 class PdfReaderActivity: AppCompatActivity() {
-    lateinit var back: ImageView
-    lateinit var downloadpdf: ImageView
-    lateinit var context: Context
     lateinit var pdfviewer: PDFView
-    var urltoshow: String = ""
-    var title: String = ""
+    lateinit var urltoshow: String
+    lateinit var progressBar: RelativeLayout
+    lateinit var btn_left: ImageView
+    lateinit var downloadpdf: ImageView
     private val STORAGE_PERMISSION_CODE: Int = 1000
+    private var title = " "
+    private lateinit var logoClickImgView: TextView
+    lateinit var context:Context
 
-    // lateinit var pdfprogress: ProgressBar {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pdfview_layout)
-        context = this
+        context=this
+        pdfviewer = findViewById(R.id.pdfView)
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
-        urltoshow = intent.getStringExtra("pdf_url").toString()
-        Log.e("pdf",urltoshow)
-        title = intent.getStringExtra("pdf_title").toString()
-        back = findViewById(R.id.back)
+        //progressBar = findViewById(R.id.progressDialog)
+        progressBar = findViewById(R.id.progressbar)
         downloadpdf = findViewById(R.id.downloadpdf)
-        pdfviewer = findViewById(R.id.pdfview)
-        // pdfprogress = findViewById(R.id.pdfprogress)
+        //sharepdf = findViewById(R.id.sharepdf)
+        logoClickImgView = findViewById(R.id.logoClickImgView)
 
-       PRDownloader.initialize(applicationContext)
+        btn_left = findViewById(R.id.btn_left)
+        urltoshow = intent.getStringExtra("pdf_url").toString()
+        title = intent.getStringExtra("pdf_title").toString()
+        logoClickImgView.setText(title)
+        progressBar.visibility = View.VISIBLE
+
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
+        progressBar.startAnimation(aniRotate)
+
+        btn_left.setOnClickListener {
+            finish()
+        }
+
+
+        PRDownloader.initialize(applicationContext)
         val fileName = "myFile.pdf"
-//        val intent = Intent(Intent.ACTION_VIEW)
-//        var url = "https://orange-benni-60.tiiny.site"
-//        intent.setDataAndType(Uri.parse(url), "application/pdf")
-//        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-//        startActivity(intent)
-//        finish()
 
         downloadPdfFromInternet(
             urltoshow,
             getRootDirPath(this),
             fileName
         )
-        back.setOnClickListener {
-            finish()
-        }
-
         downloadpdf.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -88,11 +99,24 @@ class PdfReaderActivity: AppCompatActivity() {
             }
         }
 
+
     }
+
+    private fun startdownloadingforshare() {
+        val request = DownloadManager.Request(Uri.parse(urltoshow))   //URL = URL to download
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+        request.setDestinationInExternalPublicDir(
+            Environment.DIRECTORY_DOWNLOADS, title + "docs.pdf"
+
+        )
+        val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        manager.enqueue(request)
+    }
+
     fun onDownloadComplete() {
         val onComplete = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                // pdfprogress.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show()
 
             }
@@ -109,7 +133,7 @@ class PdfReaderActivity: AppCompatActivity() {
         request.allowScanningByMediaScanner()
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$title.pdf")
-        //  pdfprogress.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
         val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manager.enqueue(request)
     }
@@ -121,17 +145,6 @@ class PdfReaderActivity: AppCompatActivity() {
         ).path
     }
 
-    fun getRootDirPath(context: Context): String {
-        return if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
-            val file: File = ContextCompat.getExternalFilesDirs(
-                context.applicationContext,
-                null
-            )[0]
-            file.absolutePath
-        } else {
-            context.applicationContext.filesDir.absolutePath
-        }
-    }
 
     private fun downloadPdfFromInternet(url: String, dirPath: String, fileName: String) {
         PRDownloader.download(
@@ -163,7 +176,22 @@ class PdfReaderActivity: AppCompatActivity() {
             .onPageError { page, _ ->
             }
             .load()
-        // pdfprogress.visibility = View.GONE
+        progressBar.visibility = View.GONE
+    }
 
+    fun getRootDirPath(context: Context): String {
+        return if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
+            val file: File = ContextCompat.getExternalFilesDirs(
+                context.applicationContext,
+                null
+            )[0]
+            file.absolutePath
+        } else {
+            context.applicationContext.filesDir.absolutePath
+        }
+    }
+
+    override fun onBackPressed() {
+        finish()
     }
 }

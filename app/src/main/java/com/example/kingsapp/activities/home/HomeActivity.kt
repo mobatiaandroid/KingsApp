@@ -271,6 +271,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         }
         studentListRecyclerview.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
+                Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
 
                 Glide.with(mContext) //1
                     .load(R.drawable.profile_photo)
@@ -355,6 +356,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                     PreferenceManager().setStudent_ID(mContext,
                         response.body()!!.student_list.get(0).id.toString()
                     )
+                    Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     studentListRecyclerview.layoutManager = linearLayoutManager
                     val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview)
