@@ -451,7 +451,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
             val str2:String=monthdate1[0]
             Log.e("str1", str1.toString())
             Log.e("str2", str2.toString())
-            if(str1.equals(monthNumber))
+            if(str1.equals(monthNumber)&&str2.equals("2023"))
             {
 
                 Log.e("Success",str1)
@@ -463,7 +463,15 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
 
             }
-
+           else if(str1.equals(monthNumber)&&str2.equals("2022"))
+            {
+                Log.e("Success",str1)
+                Log.e("Success",monthNumber)
+                list.visibility=View.VISIBLE
+                emptyImg.visibility=View.GONE
+                mEventArrayListFilterListYear.add(mEventArrayListYear.get(j))
+                Log.e("mEventArrayListFilterListYear", mEventArrayListFilterListYear.toString())
+            }
 
             if(mEventArrayListFilterListYear.size==0)
             {
