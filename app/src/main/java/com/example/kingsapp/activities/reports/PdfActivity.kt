@@ -41,12 +41,7 @@ class PdfActivity : AppCompatActivity() {
         }
 
     }
-    private fun getFilepath(filename: String): String? {
-        return File(
-            Environment.getExternalStorageDirectory().absolutePath,
-            "/Download/$filename"
-        ).path
-    }
+
 
 
 }
