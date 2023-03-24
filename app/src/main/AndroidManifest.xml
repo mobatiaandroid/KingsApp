@@ -181,6 +181,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activities.reports.PdfActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".calender.CalenderActivity"
             android:exported="true"
             android:screenOrientation="portrait"

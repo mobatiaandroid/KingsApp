@@ -10,12 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.reports.model.ReportDetailModel
 import com.example.kingsapp.activities.reports.model.ReportModel
+import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 
 
-class ReportsAdapterList(private val mcontext: Context, private  val name:ArrayList<ReportModel>):
+class ReportsAdapterList(private val mcontext: Context, private  val name:ArrayList<ReportModelFiltered>):
     RecyclerView.Adapter<ReportsAdapterList.MyViewHolder>() {
-    lateinit var detailArray:ArrayList<ReportModel>
+    lateinit var detailArray:ArrayList<ReportDetailModel>
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var accYr: TextView = view.findViewById(R.id.accYr)
@@ -34,19 +36,21 @@ class ReportsAdapterList(private val mcontext: Context, private  val name:ArrayL
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val accYr = name[position]!!.date
         holder.accYr.setText(accYr)
-        detailArray=ArrayList()
-        val reportlist= name[position].report_list
-        val report_list_url=name[position].report_list_url
-        Log.e("date",accYr)
-        Log.e("reportlist",reportlist)
-        Log.e("report_list_url",report_list_url)
+        if (name[position].report_list.contains(accYr)){
+            detailArray=ArrayList()
+            var nmodel=ReportDetailModel(name[position].report_list,name[position].report_list_url)
+            detailArray.add(nmodel)
+            /*val reportlist= name[position].report_list
+            val report_list_url=name[position].report_list_url*/
+
+            holder. recycler_view_list!!.layoutManager = LinearLayoutManager(mcontext)
+
+            val mRecyclerViewSubAdapter =
+                RecyclerViewSubAdapter(mcontext, detailArray)
+            holder.recycler_view_list.setAdapter(mRecyclerViewSubAdapter)
+        }
 
 
-        holder. recycler_view_list!!.layoutManager = LinearLayoutManager(mcontext)
-
-        val mRecyclerViewSubAdapter =
-            RecyclerViewSubAdapter(mcontext, reportlist, name.get(position)!!.report_list_url)
-        holder.recycler_view_list.setAdapter(mRecyclerViewSubAdapter)
 
     }
 
