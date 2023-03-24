@@ -73,9 +73,9 @@ dependencies {
     implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
 
 
-
-    implementation project(':giraffeplayer')
     implementation project(':ijkplayer-java')
+    implementation project(':giraffeplayer')
+
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'

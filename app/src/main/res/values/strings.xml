@@ -158,12 +158,12 @@
         <item>  Home</item>
         <item>  Student Information </item>
         <item>  School Calendar</item>
-        <item>  Parent Comms</item>
         <item>  Absence Reporting</item>
         <item>  Time Table</item>
         <item>  Parent Essentials</item>
         <item>  Reports </item>
         <item> Forms</item>
+        <item>  Parent Comms</item>
         <item>  Apps</item>
         <item>  Contact Us</item>
     </string-array>
@@ -183,7 +183,6 @@
         <!-- 4 -->
         <!-- 4 -->
         <item>@drawable/calender4</item>
-        <item>@drawable/message_white</item>
         <item>@drawable/absence4</item>
         <item>@drawable/timetable4</item>
         <item>@drawable/parent</item>
@@ -194,6 +193,7 @@
 
         <!-- 7 -->
         <item>@drawable/forms</item>
+        <item>@drawable/message_white</item>
         <item>@drawable/app</item>
         <item>@drawable/contact</item>
         <!-- 8 -->

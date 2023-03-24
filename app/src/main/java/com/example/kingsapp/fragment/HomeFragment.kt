@@ -69,7 +69,7 @@ private var mRelSix: RelativeLayout? = null
 private var mRelSeven: RelativeLayout? = null
 
 var isDraggable: Boolean = false
-
+var key:String=" "
 lateinit var homeActivity: HomeActivity
 lateinit var mSectionText: Array<String?>
 lateinit var mContext:Context
@@ -223,11 +223,13 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         if (v == mRelOne) {
 
             INTENT_TAB_ID = PreferenceManager().getbuttononetabid(mContext).toString()
+            Log.e("ErrorTAbild", PreferenceManager().getbuttonfourt_abid(mContext).toString())
             CHECKINTENTVALUE(INTENT_TAB_ID!!)
         }
         if (v == mRelTwo) {
 
             INTENT_TAB_ID = PreferenceManager().getbuttontwotabid(mContext).toString()
+            Log.e("ErrorTAbild", PreferenceManager().getbuttonfourt_abid(mContext).toString())
            CHECKINTENTVALUE(INTENT_TAB_ID!!)
         }
         if (v == mRelThree) {
@@ -244,16 +246,19 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         if (v == mRelFive) {
 
             INTENT_TAB_ID = PreferenceManager().getbuttonfivetabid(mContext).toString()
+            Log.e("ErrorTAbild", PreferenceManager().getbuttonfourt_abid(mContext).toString())
             CHECKINTENTVALUE(INTENT_TAB_ID!!)
         }
         if (v == mRelSix) {
 
             INTENT_TAB_ID = PreferenceManager().getbuttonsixtabid(mContext).toString()
+            Log.e("ErrorTAbild", PreferenceManager().getbuttonfourt_abid(mContext).toString())
             CHECKINTENTVALUE(INTENT_TAB_ID!!)
         }
         if (v == mRelSeven) {
 
             INTENT_TAB_ID = PreferenceManager().getbuttonseventabid(mContext).toString()
+            Log.e("ErrorTAbild", PreferenceManager().getbuttonfourt_abid(mContext).toString())
             CHECKINTENTVALUE(INTENT_TAB_ID!!)
         }
 
@@ -417,7 +422,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                         ignoreCase = true
                     )
                 ) {
-                    classNameConstants.STUDENT
+                    classNameConstants.STUDENT_INFORMATION
                 } else {
                     mListItemArray[PreferenceManager()
                         .getbuttononetextimage(mContext)!!.toInt()]
@@ -709,7 +714,8 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
     @Suppress("EqualsBetweenInconvertibleTypes")
     class DropListener : View.OnDragListener {
         override fun onDrag(v: View?, event: DragEvent?): Boolean {
-            Log.e("inside drag class","Success")
+            Log.e("inside drag class", event.toString())
+            Log.e("v", v.toString())
 
             when (event?.action) {
 
@@ -740,6 +746,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     mSectionText[5] = mTxtSix!!.text.toString()
                     mSectionText[6] = mTxtSeven!!.text.toString()
 
+
                     for (i in mSectionText.indices) {
                         isDraggable = true
                         if (mSectionText[i].equals(
@@ -747,7 +754,22 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                                 ignoreCase = true
                             )
                         ) {
+                            Log.e("position",mListItemArray[homeActivity.sPosition])
                             isDraggable = false
+                            key="0"
+                            break
+                        }
+                     else if(mListItemArray[homeActivity.sPosition].equals("Parent Comms"))
+                        {
+                            isDraggable = false
+                            key="1"
+                            break
+                        }
+
+                        else if(mListItemArray[homeActivity.sPosition].equals("Contact Us"))
+                        {
+                            isDraggable = false
+                            key="1"
                             break
                         }
                     }
@@ -756,8 +778,17 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
 
                     } else {
 
-                        Toast.makeText(mContext, "Item Already Exists !!!", Toast.LENGTH_SHORT)
-                            .show()
+                        if (key.equals("1"))
+                        {
+                            Toast.makeText(mContext, "This Features Cannot be added to the Home Screen !!!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        else
+                        {
+                            Toast.makeText(mContext, "Item Already Exists !!!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
                     }
 
                 }
@@ -938,7 +969,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
         }
 
         private fun getTabId(textdata: String) {
-            Log.e("TabSuccess","TabSuccess")
+            Log.e("TabSuccess",textdata)
             when {
 
                 textdata.equals(classNameConstants.STUDENT_INFORMATION) -> {
@@ -952,8 +983,8 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                 }
 
 
-                textdata.equals(classNameConstants.PAYMENTS, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_MESSAGES
+                textdata.equals(classNameConstants.ABSENCE_REPORTING, ignoreCase = true) -> {
+                    TAB_ID = naisTabConstants.TAB_REPORT_ABSENCE
                 }
                 textdata.equals(classNameConstants.SCHOOL_CALENDER, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_CALENDAR
@@ -971,17 +1002,13 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
 
 
                 textdata.equals(classNameConstants.FORMS, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_CONTACT_US
+                    TAB_ID = naisTabConstants.TAB_FORMS
 
                 }
-                textdata.equals(classNameConstants.STUDENT_PLANNER, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.
-                    TAB_APPS
+                textdata.equals(classNameConstants.APPS, ignoreCase = true) -> {
+                    TAB_ID = naisTabConstants.TAB_APPS
 
-                } textdata.equals(classNameConstants.STUDENT_INFO, ignoreCase = true) -> {
-                TAB_ID = naisTabConstants.TAB_FORMS
-
-            }
+                }
                 textdata.equals(classNameConstants.REPORTS, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_REPORTS
 

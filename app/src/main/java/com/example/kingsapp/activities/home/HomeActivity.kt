@@ -179,6 +179,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         mHomeListView.onItemLongClickListener = this
         mHomeListView.setOnItemClickListener { parent, view, position, id ->
             display(position)
+
         }
 
         /*supportActionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -415,45 +416,46 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             3 -> {
-                studentListRecyclerview.visibility=View.GONE
-                top_navigation_li.visibility=View.GONE
-                fragment = MessageFragment()
-                replaceFragmentsSelected(position)
-                drawerLayout.closeDrawer(linearLayout)
 
+
+                val intent = Intent(mContext, AbsenceActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
                 //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             4 -> {
-                val intent = Intent(mContext, AbsenceActivity::class.java)
+                val intent = Intent(mContext, TimeTableActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
             }
             5 -> {
-                val intent = Intent(mContext, TimeTableActivity::class.java)
+                val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             6 -> {
-                val intent = Intent(mContext, ParentEssentialsActivity::class.java)
+
+                val intent = Intent(mContext, ReportsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
             }
             7 -> {
-                val intent = Intent(mContext, ReportsActivity::class.java)
-                startActivity(intent)
-                drawerLayout.closeDrawer(linearLayout)
-
-                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            }
-            8 -> {
                 val intent = Intent(mContext, FormsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }
+            8 -> {
 
+                studentListRecyclerview.visibility=View.GONE
+                top_navigation_li.visibility=View.GONE
+                fragment = MessageFragment()
+                replaceFragmentsSelected(position)
+                drawerLayout.closeDrawer(linearLayout)
                 // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
             9 -> {

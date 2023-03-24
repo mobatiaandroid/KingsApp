@@ -135,6 +135,7 @@ class MessageFragment : Fragment() {
                     val intent = Intent(activity, MessageDetailsActivity::class.java)
                     intent.putExtra("id",message_array.get(position).id)
                     intent.putExtra("title",message_array.get(position).title)
+                    intent.putExtra("date",message_array.get(position).created_at)
                     activity?.startActivity(intent)
                 }
 
@@ -154,7 +155,7 @@ class MessageFragment : Fragment() {
                     {
                         val intent = Intent(activity, AudioPlayerDetail::class.java)
                         intent.putExtra("url", message_array[position].url)
-                        Log.e("url",message_array.get(position).url)
+                        Log.e("urll",message_array.get(position).url)
                         //intent.putExtra("audio_id", message_array[position].id)
 
                         activity?.startActivity(intent)

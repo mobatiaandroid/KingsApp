@@ -1,4 +1,4 @@
-include ':giraffeplayer'
-include ':ijkplayer-java'
 include ':app'
 rootProject.name = "KingsApp"
+include ':ijkplayer-java'
+include ':giraffeplayer'

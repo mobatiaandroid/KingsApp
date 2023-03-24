@@ -1,6 +1,7 @@
 package com.example.kingsapp.activities.calender.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
 
-class StudentRecyclerCalenderAdapter(private val context: Context, private  val name:ArrayList<String>):
+class StudentRecyclerCalenderAdapter(private val context: Context, private  val name:ArrayList<StudentList>):
     RecyclerView.Adapter<StudentRecyclerCalenderAdapter.MyViewHolder>() {
     class MyViewHolder (view: View) : RecyclerView.ViewHolder(view){
         var textview: TextView = view.findViewById(R.id.studName)
@@ -27,7 +29,7 @@ class StudentRecyclerCalenderAdapter(private val context: Context, private  val 
     }
 
     override fun onBindViewHolder(holder: StudentRecyclerCalenderAdapter.MyViewHolder, position: Int) {
-        holder.textview.text=name.get(position)
+        holder.textview.text=name.get(position).fullname
         /*if (PreferenceManager().getLanguage(context).equals("ar"))
         {
 
@@ -37,6 +39,7 @@ class StudentRecyclerCalenderAdapter(private val context: Context, private  val 
     }
 
     override fun getItemCount(): Int {
+        Log.e("error", name.size.toString())
         return name.size
     }
 }

@@ -56,11 +56,12 @@
             android:layout_marginRight="20dp"
             >
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/textview1"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-
                 android:gravity="center|left"
                 android:paddingTop="10dp"
                 android:textStyle="bold"
@@ -69,6 +70,7 @@
                 android:textSize="15sp"
                 android:text="13 Sep 2022"/>
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:id="@+id/timetextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

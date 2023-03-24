@@ -559,14 +559,14 @@ for(i in mEventArrayListFilterListMonth.indices) {
         list.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
-              /*  val intent = Intent(mcontext, CalendarDetailsActivity::class.java)
+                val intent = Intent(mcontext, CalendarDetailsActivity::class.java)
                 intent.putExtra("tittle", mEventArrayListFilterMonth.get(position).title)
                 intent.putExtra("des", mEventArrayListFilterMonth.get(position).description)
                 intent.putExtra("startdate", mEventArrayListFilterMonth.get(position).start_date)
                 intent.putExtra("enddate", mEventArrayListFilterMonth.get(position).end_date)
                 intent.putExtra("venu", mEventArrayListFilterMonth.get(position).venue)
 
-                startActivity(intent)*/
+                startActivity(intent)
             }
 
         })
