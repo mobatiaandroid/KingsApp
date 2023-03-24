@@ -1,9 +1,11 @@
 package com.example.kingsapp.manager
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
-import kotlin.contracts.Returns
+import com.example.kingsapp.activities.calender.model.CalendarList
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 class PreferenceManager {
     val PREFSNAME = "NAS"
@@ -1057,6 +1059,29 @@ class PreferenceManager {
         )
         b = prefs.getString("month", "").toString()
         return b
+    }
+
+    fun saveArrayList(context: Context, list: ArrayList<CalendarList>) {
+        val prefs = context.getSharedPreferences(
+            "NAS",
+            Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        val gson = Gson()
+        val json = gson.toJson(list)
+        editor.putString("list", json)
+        editor.apply()
+    }
+
+    fun getArrayList(context: Context): ArrayList<CalendarList> {
+        val prefs = context.getSharedPreferences(
+            "NAS",
+            Context.MODE_PRIVATE
+        )
+        val gson = Gson()
+        val json = prefs.getString("list", null)
+        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
+        return gson.fromJson(json, type)
     }
 }
 
