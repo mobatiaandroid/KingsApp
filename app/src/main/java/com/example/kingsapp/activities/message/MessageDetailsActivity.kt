@@ -45,6 +45,7 @@ class MessageDetailsActivity: AppCompatActivity() {
         val substr23: String = date.substring(11, 15)
         val substr3:String=date.substring(date.indexOf("T") + 8)
 
+        
         dateText.setText(substr)
         timeText.setText(substr3)
         message_backarrow.setOnClickListener(View.OnClickListener { finish() })
