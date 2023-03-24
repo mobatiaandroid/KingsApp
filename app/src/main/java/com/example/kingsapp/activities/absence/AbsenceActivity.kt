@@ -28,7 +28,6 @@ import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.model.Studentlist_model
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -36,22 +35,25 @@ import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobatia.nasmanila.api.ApiClient
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
 
 class AbsenceActivity: AppCompatActivity() {
-    lateinit var absencelist:RecyclerView
-    lateinit var ncontext:Context
-    lateinit var student_Name:TextView
+    lateinit var absencelist: RecyclerView
+    lateinit var ncontext: Context
+    lateinit var student_Name: TextView
     lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var registerabsence:RelativeLayout
-    lateinit var backarrow_absense : ImageView
+    lateinit var registerabsence: RelativeLayout
+    lateinit var backarrow_absense: ImageView
     var mListAdapter: AbsenceListAdapter? = null
-    lateinit var name:ArrayList<AbsenceList>
-    lateinit var student_name:ArrayList<StudentList>
+    lateinit var name: ArrayList<AbsenceList>
+    lateinit var student_name: ArrayList<StudentList>
     private lateinit var progressDialog: RelativeLayout
+    override fun onBackPressed() {
+        val intent = Intent(ncontext, HomeActivity::class.java)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +63,8 @@ class AbsenceActivity: AppCompatActivity() {
         )
         setContentView(R.layout.fragment_absence_main)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
-        ncontext=this
-        PreferenceManager().setStudent_ID(ncontext,"")
+        ncontext = this
+        PreferenceManager().setStudent_ID(ncontext, "")
 
         initFn()
         if(CommonClass.isInternetAvailable(ncontext)) {
@@ -98,6 +100,7 @@ class AbsenceActivity: AppCompatActivity() {
         backarrow_absense.setOnClickListener {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
+
         }
         student_Name.setOnClickListener {
             studentlist_popup(student_name)

@@ -19,16 +19,21 @@ class AbsenceDeatilsActivity:AppCompatActivity() {
     lateinit var ccontext:Context
     lateinit var backtolist : TextView
     lateinit var backarrow : ImageView
-    lateinit var firstdayofabsencetext:TextInputEditText
-    lateinit var returnabsencetext:TextInputEditText
-    lateinit var reason_for_absence_text:TextInputEditText
-    lateinit var studentNameText:TextView
-    lateinit var studentclass:TextView
-    var reason:String?=""
-    var studentName:String?=""
-    var studentClass:String?=""
-    var fromDate:String?=""
-    var toDate:String?=""
+    lateinit var firstdayofabsencetext: TextInputEditText
+    lateinit var returnabsencetext: TextInputEditText
+    lateinit var reason_for_absence_text: TextInputEditText
+    lateinit var studentNameText: TextView
+    lateinit var studentclass: TextView
+    var reason: String? = ""
+    var studentName: String? = ""
+    var studentClass: String? = ""
+    var fromDate: String? = ""
+    var toDate: String? = ""
+    override fun onBackPressed() {
+        val intent = Intent(ccontext, AbsenceActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -38,7 +43,7 @@ class AbsenceDeatilsActivity:AppCompatActivity() {
         setContentView(R.layout.absence_details_activity)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ccontext = this
-        reason=intent.getStringExtra("reason")
+        reason = intent.getStringExtra("reason")
         studentName=intent.getStringExtra("studentName")
         studentClass=intent.getStringExtra("studentClass")
         fromDate=intent.getStringExtra("fromDate")

@@ -2,13 +2,14 @@ package com.example.kingsapp.activities.about_us
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -17,12 +18,15 @@ class StaffDirectoryActivity : AppCompatActivity() {
     lateinit var recyclerList: RecyclerView
     lateinit var mContext: Context
     lateinit var imageView_staff : ImageView
-   // lateinit var menu : ImageView
-    lateinit var stringList:Array<String>
+
+    // lateinit var menu : ImageView
+    lateinit var stringList: Array<String>
+    lateinit var progressBarDialog: ProgressBarDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_staff_directory)
         mContext = this
+        progressBarDialog = ProgressBarDialog(mContext)
         initFn()
     }
 
