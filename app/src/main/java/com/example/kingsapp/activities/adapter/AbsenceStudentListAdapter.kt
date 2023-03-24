@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.login.model.StudentList
-import com.example.kingsapp.activities.model.Studentlist_model
 
 class AbsenceStudentListAdapter(private val context: Context, private  val student_name:ArrayList<StudentList>): RecyclerView.Adapter<AbsenceStudentListAdapter.MyViewHolder>()  {
 
@@ -34,27 +33,23 @@ class AbsenceStudentListAdapter(private val context: Context, private  val stude
         val nameclass = student_name[position].classs
         holder.studentName.setText(namelist)
         holder.studentclass.setText(nameclass)
-        holder.check.setOnClickListener {
+        holder.itemView.setOnClickListener {
 
 
             var foundPosition = -1
             var isFound: Boolean = false
 
-            for (i in 0..student_name.size-1)
-            {
-                if (student_name.get(i).isclicked)
-                {
-                    foundPosition=i
-                    isFound=true
+            for (i in 0..student_name.size - 1) {
+                if (student_name.get(i).isclicked) {
+                    foundPosition = i
+                    isFound = true
                 }
             }
 
-            if (isFound)
-            {
-                if (position==foundPosition)
-                {
+            if (isFound) {
+                if (position == foundPosition) {
                     // make it as false
-                    student_name.get(foundPosition).isclicked=false
+                    student_name.get(foundPosition).isclicked = false
                     notifyDataSetChanged()
                 }
                 else

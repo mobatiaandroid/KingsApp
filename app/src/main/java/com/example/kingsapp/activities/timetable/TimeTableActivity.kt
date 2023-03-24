@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.*
+import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
@@ -29,6 +29,7 @@ import com.example.kingsapp.activities.timetable.model.FieldModel
 import com.example.kingsapp.activities.timetable.model.TimeTableApiListModel
 import com.example.kingsapp.activities.timetable.model.WeekModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -50,10 +51,13 @@ class TimeTableActivity:AppCompatActivity() {
     lateinit var linearLayoutManagerVertical: LinearLayoutManager
     lateinit var linearLayoutManagerVertical1: LinearLayoutManager
     lateinit var linearlayoutstudentlist: LinearLayout
-
+    lateinit var progressBar: ProgressBarDialog
 
     lateinit var mFieldModel: ArrayList<FieldModel>
     lateinit var timeTableListS: ArrayList<DayModel>
+
+    //    lateinit var student1timetable: ArrayList<DayModel>
+//    lateinit var student2timetable: ArrayList<DayModel>
     lateinit var mSundayArrayList: ArrayList<TimeTableApiListModel>
     lateinit var studentNameTextView: TextView
     lateinit var studentName: String
@@ -61,6 +65,12 @@ class TimeTableActivity:AppCompatActivity() {
     lateinit var backarrow: ImageView
 
 
+    lateinit var studentId: String
+    lateinit var studentImg: String
+    lateinit var student_class: String
+    lateinit var imagicon: ImageView
+    lateinit var studentclass: TextView
+    lateinit var reasonAPI: String
     var weekPosition = 0
     lateinit var dayOfTheWeek: String
 
@@ -83,6 +93,7 @@ class TimeTableActivity:AppCompatActivity() {
         timeTableListS = ArrayList()
         weekListArrayString = ArrayList()
         mSundayArrayList = ArrayList()
+
         student_name = ArrayList()
         weekListArrayString.add("ALL")
         weekListArrayString.add("MONDAY")
@@ -90,10 +101,14 @@ class TimeTableActivity:AppCompatActivity() {
         weekListArrayString.add("WEDNESDAY")
         weekListArrayString.add("THURSDAY")
         weekListArrayString.add("FRIDAY")
-        studentListApiCall()
+        progressBar = ProgressBarDialog(ncontext)
         studentNameTextView = findViewById(R.id.studentName)
         linearlayoutstudentlist = findViewById(R.id.studentSpinner)
+        studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.back)
+        imagicon = findViewById(R.id.imagicon)
+        studentListApiCall()
+
 
         /* var modell=Studentlist_model("Jane Mathewes",false)
          student_name.add(modell)
@@ -125,6 +140,7 @@ class TimeTableActivity:AppCompatActivity() {
         var model6= FieldModel("P6","10;30","11;30")
         mFieldModel.add(model6)
 
+
         var sub= DayModel(0,"Tutor")
         timeTableListS.add(sub)
         var sub1= DayModel(1,"Mathematics")
@@ -137,13 +153,13 @@ class TimeTableActivity:AppCompatActivity() {
         timeTableListS.add(sub4)
         var sub5= DayModel(5,"History")
         timeTableListS.add(sub5)
-        var sub6= DayModel(6,"Mathematics")
+        var sub6 = DayModel(6, "History")
         timeTableListS.add(sub6)
         var sub7= DayModel(7,"Mathematics")
         timeTableListS.add(sub7)
-        var sub8= DayModel(8,"Mathematics")
+        var sub8 = DayModel(8, "Social Science")
         timeTableListS.add(sub8)
-        var sub9= DayModel(9,"Mathematics")
+        var sub9 = DayModel(9, "Extras")
         timeTableListS.add(sub9)
 
         var weekk= TimeTableApiListModel(0,"Tutor","Mark Tidball","TUT","07:45 AM")
@@ -162,11 +178,12 @@ class TimeTableActivity:AppCompatActivity() {
         mSundayArrayList.add(weekk5)
         var weekk6= TimeTableApiListModel(7,"Economics","Arun","P6","02:15 PM")
         mSundayArrayList.add(weekk6)
+
         backarrow.setOnClickListener {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
-    Log.e("mSundayArrayList", mSundayArrayList.toString())
+        Log.e("mSundayArrayList", mSundayArrayList.toString())
         linearlayoutstudentlist.setOnClickListener {
             studentlist_popup(student_name)
             /* val intent = Intent(mContext, StudentListActivity::class.java)
@@ -176,6 +193,8 @@ class TimeTableActivity:AppCompatActivity() {
         linearLayoutManagerVertical = LinearLayoutManager(ncontext)
         linearLayoutManagerVertical1 = LinearLayoutManager(ncontext)
 
+//        student1timetable = timeTableListS.shuffle() as ArrayList<DayModel>
+//        student2timetable = timeTableListS.shuffle() as ArrayList<DayModel>
         timeTableSingleRecycler = findViewById<RecyclerView>(R.id.timeTableSingleRecycler)
         linearLayoutManagerVertical1.orientation = LinearLayoutManager.VERTICAL
         timeTableSingleRecycler.layoutManager = linearLayoutManagerVertical1
@@ -261,6 +280,7 @@ class TimeTableActivity:AppCompatActivity() {
 //                buttonAnimator.start()
                 // Your logic
                 weekPosition = position
+
                 if (weekPosition < 3) {
                     weekRecyclerList.scrollToPosition(0)
                 } else {
@@ -288,23 +308,28 @@ class TimeTableActivity:AppCompatActivity() {
                     // timeTableAllRecycler.visibility = View.GONE
                     timeTableSingleRecycler.visibility = View.VISIBLE
                     if (weekPosition == 1) {
+
                         var mRecyclerViewMainAdapter =
                             TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     } else if (weekPosition == 2) {
+
                         var mRecyclerViewMainAdapter =
                             TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
 
                     } else if (weekPosition == 3) {
+
                         var mRecyclerViewMainAdapter =
                             TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     } else if (weekPosition == 4) {
+
                         var mRecyclerViewMainAdapter =
                             TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     } else if (weekPosition == 5) {
+
                         var mRecyclerViewMainAdapter =
                             TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
@@ -335,23 +360,25 @@ class TimeTableActivity:AppCompatActivity() {
             "Bearer " +
                     PreferenceManager().getAccessToken(ncontext).toString()
         )
+        progressBar.show()
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
+                progressBar.hide()
                 Log.e("Response", response.body().toString())
                 if (response.body()!!.status.equals(100)) {
                     student_name.addAll(response.body()!!.student_list)
                     Log.e("StudentNameid", PreferenceManager().getStudent_ID(ncontext).toString())
                     if (PreferenceManager().getStudent_ID(ncontext).equals("")) {
                         studentName =
-                            student_name.get(0).fullname
-                        student_class = student_name.get(0).classs
+                            student_name[0].fullname
+                        student_class = student_name[0].classs
                         Log.e("StudentName", studentNameTextView.toString())
                         Log.e("student_class", student_class)
-                        studentImg = student_name.get(0).photo
-                        studentId = student_name.get(0).id.toString()
+                        studentImg = student_name[0].photo
+                        studentId = student_name[0].id.toString()
                         PreferenceManager().setStudent_ID(ncontext, studentId)
                         PreferenceManager().setStudentName(
                             ncontext,
@@ -405,6 +432,7 @@ class TimeTableActivity:AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                progressBar.hide()
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",
@@ -429,10 +457,9 @@ class TimeTableActivity:AppCompatActivity() {
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
-      /*  val studentlist_adapter =
+        val studentlist_adapter =
             AbsenceStudentListAdapter(ncontext, student_name)
         recycler_view!!.adapter = studentlist_adapter
-*/
         crossicon.setOnClickListener {
             dialog.dismiss()
         }
@@ -445,12 +472,24 @@ class TimeTableActivity:AppCompatActivity() {
                 // Log.e("recycler id", id.toString())
                 //leavelist(id)
                 studentNameTextView.setText(name)
+                showTimeTable()
                 dialog.dismiss()
             }
 
         })
         dialog.show()
     }
+
+    private fun showTimeTable() {
+        timeTableListS.shuffle()
+        var mRecyclerAllAdapter =
+            TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
+        timeTableAllRecycler.adapter = mRecyclerAllAdapter
+
+//        timeTableListS.shuffle()
+
+    }
+
     fun recyclerinitializer() {
         timeTableAllRecycler = findViewById(R.id.timeTableAllRecycler) as RecyclerView
         linearLayoutManagerVertical.orientation = LinearLayoutManager.VERTICAL

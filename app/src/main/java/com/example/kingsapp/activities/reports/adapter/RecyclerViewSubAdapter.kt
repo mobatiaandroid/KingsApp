@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.reports.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.reports.model.DataModel
-import com.example.kingsapp.activities.reports.model.ReportModel
-import com.example.kingsapp.constants.PdfReaderActivity
+import com.example.kingsapp.activities.reports.PdfActivity
+import com.example.kingsapp.activities.reports.model.ReportDetailModel
+import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 
-class RecyclerViewSubAdapter(private val context: Context, private val name: String,private  val url : String):
+
+class RecyclerViewSubAdapter(private val context: Context, private val name: ArrayList<ReportDetailModel>):
     RecyclerView.Adapter<RecyclerViewSubAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -31,17 +35,20 @@ class RecyclerViewSubAdapter(private val context: Context, private val name: Str
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Log.e("name","Success")
 
-        val accYr = name
-        val url = url
-        Log.e("name",accYr)
+        //val accYr = name
+        val url = name[position].url
+        //Log.e("name",accYr)
         Log.e("url",url)
-        holder.titleTextView.setText(accYr)
+        holder.titleTextView.setText(name[position].title)
 
         holder.titleTextView.setOnClickListener {
-            context.startActivity(
+            val intent = Intent(context, PdfActivity::class.java)
+
+            context.startActivity(intent)
+            /*context.startActivity(
                 Intent(context, PdfReaderActivity::class.java).
                 putExtra("pdf_url",url).
-                putExtra("pdf_title",accYr))
+                putExtra("pdf_title",name[position].title))*/
         }
 
         /*val mRecyclerViewSubAdapter =
@@ -51,7 +58,7 @@ class RecyclerViewSubAdapter(private val context: Context, private val name: Str
     }
 
     override fun getItemCount(): Int {
-        return name!!.length
-        return url!!.length
+        return name!!.size
+
     }
 }

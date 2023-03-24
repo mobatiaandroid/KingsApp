@@ -93,7 +93,23 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <include
+                android:id="@+id/progressDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/custom_progress_layout"
+                android:visibility="visible" />
 
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reportrec"
             android:layout_width="0dp"

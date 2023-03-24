@@ -49,17 +49,18 @@ lateinit var firstdayofabsence : TextInputEditText
 lateinit var returnabsence : TextInputEditText
 lateinit var reason_for_absence : TextInputEditText
 lateinit var reasonforabsence : TextInputLayout
-lateinit var first_day_of_absencetext : TextInputLayout
-lateinit var return_absence_text : TextInputLayout
-lateinit var studentSpinner : LinearLayout
-lateinit var student_Name:TextView
+lateinit var first_day_of_absencetext: TextInputLayout
+lateinit var return_absence_text: TextInputLayout
+lateinit var studentSpinner: LinearLayout
+lateinit var student_Name: TextView
 lateinit var studentName: String
 lateinit var studentId: String
 lateinit var studentImg: String
 lateinit var student_class: String
-lateinit var imagicon:ImageView
-lateinit var studentclass:TextView
-lateinit var reasonAPI:String
+lateinit var imagicon: ImageView
+lateinit var studentclass: TextView
+lateinit var reasonAPI: String
+lateinit var context: Context
 
 var c: Calendar? = null
 var mYear = 0
@@ -69,7 +70,7 @@ var df: SimpleDateFormat? = null
 var formattedDate: String? = null
 var calendar: Calendar? = null
 var fromDate = ""
-var toDate:String? = ""
+var toDate: String? = ""
 var tomorrowAsString: String? = null
 lateinit var sdate: Date
 lateinit var edate:Date
@@ -79,7 +80,6 @@ lateinit var student_name:ArrayList<StudentList>
 lateinit var backarrow_registerabsence : ImageView
 lateinit var relativieabsence:RelativeLayout
 class RegisterAbsenceActivity:AppCompatActivity() {
-    lateinit var context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -520,6 +520,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
+            val intent = Intent(context, AbsenceActivity::class.java)
+            startActivity(intent)
             finish()
         }
         dialog.show()

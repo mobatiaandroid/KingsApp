@@ -19,6 +19,7 @@
         android:background="@drawable/curved_rectangle_top_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2">
 
         <LinearLayout
@@ -388,8 +389,6 @@
                 android:id="@+id/timeTableAllRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/submitBtn"
-                android:layout_below="@+id/textViewStudName"
                 android:layout_margin="5dp"
                 android:background="@color/white"
                 android:overScrollMode="never"
