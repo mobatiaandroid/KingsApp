@@ -89,22 +89,29 @@ class SettingFragment: Fragment() {
                     intent.data = uri
                     mContext.startActivity(intent)
                 }
-                if (position == 1){
+                if (position == 1) {
                     val intent = Intent(mContext, TermsOfServiceActivity::class.java)
                     startActivity(intent)
                 }
-                if (position == 2){
+                if (position == 2) {
                     showEmailHelpAlert(mContext)
                 }
-                if (position == 4){
-                    showSuccessAlert(mContext,"Do you want to Delete Account?")
+                if (position == 3) {
+                    Toast.makeText(
+                        mContext,
+                        "This feature will be available soon.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                if (position == 5){
+                if (position == 4) {
+                    showSuccessAlert(mContext, "Do you want to Delete Account?")
+                }
+                if (position == 5) {
                     showChangePasswordPopUp()
                 }
 
-                if (position == 6){
-                    showSuccessAlert(mContext,"Do you want to Logout?")
+                if (position == 6) {
+                    showSuccessAlert(mContext, "Do you want to Logout?")
                 }
             }
 

@@ -8,10 +8,7 @@ import android.view.View
 import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +20,7 @@ import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.apps.adapter.AppsAdapter
 import com.example.kingsapp.activities.apps.model.AppsList
 import com.example.kingsapp.activities.apps.model.AppsModel
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
@@ -45,11 +43,13 @@ class AppsActivity:AppCompatActivity() {
     lateinit var student_class: String
     lateinit var student_name: ArrayList<StudentList>
     lateinit var imagicon: ImageView
+    lateinit var backImage: ImageView
     lateinit var studentclass: TextView
     lateinit var parentList: RecyclerView
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var list_name: ArrayList<AppsList>
     private lateinit var progressDialog: RelativeLayout
+    lateinit var studentSpinner: LinearLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -207,31 +207,32 @@ class AppsActivity:AppCompatActivity() {
 
     private fun initFn() {
         student_name= ArrayList()
-        list_name= ArrayList()
+        list_name = ArrayList()
+        studentSpinner = findViewById(R.id.studentSpinner)
         studentName_Text = findViewById(R.id.studentName)
-        imagicon=findViewById(R.id.imagicon)
-
-        studentclass=findViewById(R.id.studentclass)
+        imagicon = findViewById(R.id.imagicon)
+        backImage = findViewById(R.id.backarrow_absense)
+        studentclass = findViewById(R.id.studentclass)
         progressDialog = findViewById(R.id.progressDialog)
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-        parentList =findViewById(R.id.absencelist)
+        parentList = findViewById(R.id.absencelist)
         linearLayoutManager = LinearLayoutManager(mContext)
 
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-
+        backImage.setOnClickListener {
+            val intent = Intent(mContext, HomeActivity::class.java)
+            startActivity(intent)
+        }
         parentList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                if(list_name.get(position).url.endsWith(".pdf"))
-                {
+                if (list_name.get(position).url.endsWith(".pdf")) {
                     val intent = Intent(mContext, PdfReaderActivity::class.java)
                     intent.putExtra("pdf_url", list_name[position].url)
                     intent.putExtra("pdf_title", list_name[position].title)
                     startActivity(intent)
-                }
-                else
-                {
+                } else {
                     val intent = Intent(mContext, WebViewLoaderActivity::class.java)
                     intent.putExtra("webview_url", list_name[position].url)
                     intent.putExtra("title", list_name[position].title)
@@ -241,7 +242,7 @@ class AppsActivity:AppCompatActivity() {
             }
 
         })
-        studentName_Text.setOnClickListener {
+        studentSpinner.setOnClickListener {
             studentlist_popup(student_name)
             /* val intent = Intent(mContext, StudentListActivity::class.java)
              startActivity(intent)*/

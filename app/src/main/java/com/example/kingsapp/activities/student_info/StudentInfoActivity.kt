@@ -21,6 +21,7 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -45,6 +46,7 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var studentclass: TextView
     lateinit var backarrow: ImageView
     lateinit var studentLinear: LinearLayout
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,7 @@ class StudentInfoActivity:AppCompatActivity (){
         setContentView(R.layout.activity_student_info)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext = this
+        progressBarDialog = ProgressBarDialog(mContext)
         PreferenceManager().setStudent_ID(mContext,"")
         initFn()
         if(CommonClass.isInternetAvailable(mContext)) {
@@ -71,15 +74,16 @@ class StudentInfoActivity:AppCompatActivity (){
     private fun studentListApiCall() {
         val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString())
+        progressBarDialog.show()
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
+                progressBarDialog.dismiss()
 
-                Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals(100))
-                {
+                Log.e("Response", response.body().toString())
+                if (response.body()!!.status.equals(100)) {
 
                     student_name.addAll(response.body()!!.student_list)
                     Log.e("StudentNameid", PreferenceManager().getStudent_ID(mContext).toString())
@@ -152,6 +156,7 @@ class StudentInfoActivity:AppCompatActivity (){
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                progressBarDialog.dismiss()
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",

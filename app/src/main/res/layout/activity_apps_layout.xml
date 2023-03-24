@@ -10,13 +10,14 @@
         android:layout_height="100dp"
         android:orientation="horizontal"
         android:weightSum="3">
+
         <ImageView
             android:id="@+id/backarrow_absense"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="14dp"
             android:layout_gravity="center"
-            android:src="@drawable/backarrow"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/backarrow">
 
         </ImageView>
         <com.example.kingsapp.manager.font.CustomVerdanaRegular
