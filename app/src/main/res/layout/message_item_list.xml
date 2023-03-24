@@ -11,7 +11,7 @@
         android:layout_marginLeft="7dp"
         android:background="@color/white">
 
-        <TextView
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,8 +24,6 @@
             android:text="iedeyiwydfiewuhyfiyehdfchydefhdfhcdsfh
             cksyfikysfysdhckdhsckhdskchkdshcdscfdskcydscdscsdfsdyfdsfc
             yxvdcvdsfvdsydsdsyvdsufvudsxffsu"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:textColor="@color/grey"
             android:textSize="15sp" />
         <TextView
@@ -59,7 +57,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="40dp"
             >
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +72,7 @@
                 android:textColor="@color/greyy"
                 android:textSize="15sp"
                 android:text="13 Sep 2022"/>
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

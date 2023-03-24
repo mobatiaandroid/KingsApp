@@ -108,14 +108,45 @@ class CalendarYearActivity : AppCompatActivity() {
                 val monthNumber = dataArray[position].toInt()
                 val monthName = monthNames[monthNumber]
                 val count1=monthNumber!!+1
-                val count= "0"+count1
+                Log.e("count1", count1.toString())
+                if (count1==10)
+                {
+                    PreferenceManager().setFromYearView(mcontext,"1")
+                    val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
+                    intent.putExtra("monthNumber",count1.toString())
+                    Log.e("monthNumber",count1.toString())
+                    startActivity(intent)
+                }
+                else if(count1==11)
+                {
+                    PreferenceManager().setFromYearView(mcontext,"1")
+                    val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
+                    intent.putExtra("monthNumber",count1.toString())
+                    Log.e("monthNumber",count1.toString())
+                    startActivity(intent)
+                }
+                else if (count1==12)
+                {
+                    Log.e("inside12", count1.toString())
+                    PreferenceManager().setFromYearView(mcontext,"1")
+                    val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
+                    intent.putExtra("monthNumber",count1.toString())
+                    Log.e("monthNumber",count1.toString())
+                    startActivity(intent)
+                }
+                else
+                {
+                    val count= "0"+count1
+                    PreferenceManager().setFromYearView(mcontext,"1")
+                    val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
+                    intent.putExtra("monthNumber",count)
+                    Log.e("monthNumber",count.toString())
+                    startActivity(intent)
+                }
+
                 /*Log.e("m number",monthNumber.toString())
                 Log.e("m name",monthName.toString())*/
-                PreferenceManager().setFromYearView(mcontext,"1")
-                val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
-                intent.putExtra("monthNumber",count)
-                Log.e("monthNumber",count.toString())
-                startActivity(intent)
+
 
 
 

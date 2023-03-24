@@ -33,7 +33,6 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var mcontext: Context
@@ -76,7 +75,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
         headerfnc()
         daysinweek()
 
-
+       // callCalendarListMonth()
        // onclick()
     }
 
@@ -302,10 +301,6 @@ class SchoolCalendarActivity:AppCompatActivity() {
         week_day=getResources().getStringArray(R.array.Weeks)
         setTextview()
 
-
-
-
-
         if (PreferenceManager().getFromYearView(mcontext).equals("1")){
             Log.e("year","1")
 
@@ -400,6 +395,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
             override fun onItemClicked(position: Int, view: View) {
 
                 val intent = Intent(mcontext, CalendarDetailsActivity::class.java)
+                intent.putExtra("tittle", mEventArrayListFilterMonth.get(position).title)
                 startActivity(intent)
             }
 
@@ -442,33 +438,43 @@ class SchoolCalendarActivity:AppCompatActivity() {
     fun filterYearlist(mEventArrayListYear: ArrayList<CalendarList>)
     {
         Log.e("Success", mEventArrayListYear.toString())
-        mEventArrayListFilterListYear.clear()
-        for(i in mEventArrayListYear.indices)
+        for(j in mEventArrayListYear.indices)
         {
+
             val monthdate:String
-            var monthNumber=intent.getStringExtra("monthNumber")
+            val monthNumber=intent.getStringExtra("monthNumber")
             Log.e("Yearmonth", monthNumber.toString())
-            monthdate=mEventArrayListYear.get(i).start_date
+            monthdate=mEventArrayListYear.get(j).start_date
             Log.e("Monthdate",monthdate)
             val monthdate1=monthdate.split("-")
-            val str1=monthdate1[1]
+            val str1:String=monthdate1[1]
+            val str2:String=monthdate1[0]
             Log.e("str1", str1.toString())
-            if(str1==monthNumber)
+            Log.e("str2", str2.toString())
+            if(str1.equals(monthNumber))
             {
+
                 Log.e("Success",str1)
                 Log.e("Success",monthNumber)
                 list.visibility=View.VISIBLE
                 emptyImg.visibility=View.GONE
-                mEventArrayListFilterListYear.add(mEventArrayListYear.get(i))
-                val studentlist_adapter =
-                    CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
-                list!!.adapter = studentlist_adapter
+                mEventArrayListFilterListYear.add(mEventArrayListYear.get(j))
+                Log.e("mEventArrayListFilterListYear", mEventArrayListFilterListYear.toString())
+
+
             }
-            else
+
+
+            if(mEventArrayListFilterListYear.size==0)
             {
                 list.visibility=View.GONE
                 emptyImg.visibility=View.VISIBLE
-
+            }
+            else
+            {
+                val studentlist_adapter =
+                    CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
+                list!!.adapter = studentlist_adapter
             }
         }
 

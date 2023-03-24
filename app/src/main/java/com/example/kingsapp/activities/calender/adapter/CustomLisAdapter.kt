@@ -1,6 +1,7 @@
 package com.example.kingsapp.activities.calender.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +43,10 @@ class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
             holder.event.setText(eventArrayList[position].title)
-
+           Log.e("titlie",eventArrayList[position].title)
         holder.eventDate.setText(eventArrayList[position].description)
+        Log.e("desc",eventArrayList[position].description)
+
         // System.out.println("title::"+eventArrayList.get(position).getTittle());
     }
 

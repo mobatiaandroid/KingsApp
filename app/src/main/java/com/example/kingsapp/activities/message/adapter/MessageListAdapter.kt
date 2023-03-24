@@ -32,13 +32,12 @@ class MessageListAdapter(private val context: Context, private  val name:ArrayLi
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val date = name[position].date
-        val time = name[position].time
-        val desc = name[position].desc
-        holder.date.setText(date)
-        holder.time.setText(time)
+
+        val desc = name[position].title
+       /* holder.date.setText(date)
+        holder.time.setText(time)*/
         holder.desc.setText(desc)
-        addReadMore(desc,holder.desc)
+       // addReadMore(desc,holder.desc)
     }
     private fun addReadMore(text: String, textView: TextView) {
         val ss = SpannableString(text.substring(0, 78) + "..")

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.settings.TermsOfServiceActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.setting.adapter.CommonAdapter
@@ -76,7 +77,7 @@ class SettingFragment: Fragment() {
         recyclerList.adapter = adapter
 
         menu.setOnClickListener {
-            val intent = Intent(com.example.kingsapp.fragment.mContext, HomeActivity::class.java)
+            val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
         }
         recyclerList.addOnItemClickListener(object : OnItemClickListener {
@@ -88,6 +89,10 @@ class SettingFragment: Fragment() {
                     val uri = Uri.fromParts("package", activity!!.packageName, null)
                     intent.data = uri
                     mContext.startActivity(intent)
+                }
+                if (position == 1){
+                    val intent = Intent(mContext, TermsOfServiceActivity::class.java)
+                    startActivity(intent)
                 }
                 if (position == 2){
                     showEmailHelpAlert(mContext)

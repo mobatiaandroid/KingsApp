@@ -19,6 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
@@ -48,6 +49,7 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var student_name: ArrayList<StudentList>
     lateinit var imagicon:ImageView
     lateinit var studentclass:TextView
+    lateinit var backarrow:ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -208,7 +210,11 @@ class StudentInfoActivity:AppCompatActivity (){
         classs=findViewById(R.id.classs)
         address=findViewById(R.id.address)
         studentclass=findViewById(R.id.studentclass)
-
+        backarrow=findViewById(R.id.backarrow)
+        backarrow.setOnClickListener {
+             val intent = Intent(mContext, HomeActivity::class.java)
+             startActivity(intent)
+        }
         studentName_Text.setOnClickListener {
             studentlist_popup(student_name)
             /* val intent = Intent(mContext, StudentListActivity::class.java)

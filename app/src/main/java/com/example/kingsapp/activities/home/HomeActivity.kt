@@ -408,6 +408,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
             }
             2 -> {
+                PreferenceManager().setFromYearView(mContext,"0")
                 val intent = Intent(mContext, SchoolCalendarActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)

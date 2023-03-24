@@ -55,7 +55,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             >
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -68,7 +68,7 @@
                 android:textColor="@color/greyy"
                 android:textSize="15sp"
                 android:text="13 Sep 2022"/>
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -81,7 +81,8 @@
                 android:textSize="15sp"
                 android:text="9:30 pm"/>
         </RelativeLayout>
-        <TextView
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:id="@+id/desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"

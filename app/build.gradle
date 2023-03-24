@@ -18,7 +18,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    configurations {
+        cleanedAnnotations
+        implementation.exclude group: 'org.jetbrains' , module:'annotations'
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -71,7 +74,8 @@ dependencies {
 
 
 
-
+    implementation project(':giraffeplayer')
+    implementation project(':ijkplayer-java')
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
