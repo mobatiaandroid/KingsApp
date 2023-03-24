@@ -28,6 +28,7 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -97,7 +98,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 }
                 else
                 {
-                    CommonClass.checkApiStatusError(response.body()!!.status, context)
+                    CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
                 }
             }
 
@@ -142,7 +143,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 }
                 else
                 {
-                    CommonClass.checkApiStatusError(response.body()!!.status, context)
+                    CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
                 }
             }
 
@@ -348,6 +349,82 @@ class SchoolCalendarActivity:AppCompatActivity() {
                     listSpinner.setVisibility(
                         View.GONE
                     )
+
+                    val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
+                    val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+                    val formatDD = SimpleDateFormat("dd", Locale.ENGLISH)
+                    val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+
+                    val dayOfTheWeek = arrayOfNulls<String>(7)
+                    val month = arrayOfNulls<String>(7)
+                    val year = arrayOfNulls<String>(7)
+                    val dd = arrayOfNulls<String>(7)
+
+                    val date = Date() // your date
+
+
+                    val calendar = java.util.Calendar.getInstance()
+                    calendar.time = date
+                    calendar.firstDayOfWeek = java.util.Calendar.SUNDAY
+                    calendar[java.util.Calendar.DAY_OF_WEEK] = java.util.Calendar.SUNDAY
+                    println("calendar:" + calendar[java.util.Calendar.DAY_OF_MONTH] + ":" + calendar[java.util.Calendar.MONTH] + ":" + calendar[java.util.Calendar.YEAR])
+
+                    val days = arrayOfNulls<String>(7)
+
+                    for (i in 0..6) {
+                        days[i] = sdf.format(calendar.time)
+                        calendar.add(java.util.Calendar.DAY_OF_MONTH, 1)
+                        calendar.firstDayOfWeek = java.util.Calendar.SUNDAY
+                        calendar[java.util.Calendar.DAY_OF_WEEK] = i + 1
+                        var msgDate = Date()
+                        try {
+                            msgDate = sdf.parse(
+                                calendar[java.util.Calendar.YEAR].toString() + "-" + currentMonth(
+                                    calendar[java.util.Calendar.MONTH]
+                                ) + "-" + calendar[java.util.Calendar.DAY_OF_MONTH]
+                            )
+                        } catch (ex: ParseException) {
+                            Log.e("Date", "Parsing error")
+                        }
+                        dayOfTheWeek[i] = formatEEE.format(msgDate) // Thu
+                        year[i] = formatyyyy.format(msgDate) // yyyy
+                        month[i] = formatMM.format(msgDate) // 15
+                        dd[i] = formatDD.format(msgDate) // 15
+                    }
+                   /* for (i in dayOfTheWeek.indices) {
+                        for (j in mEventArrayListFilterListMonth.indices) {
+                            if (dd[i].equals(
+                                    mEventArrayListFilterListMonth.get(
+                                        j
+                                    ).getDay(), ignoreCase = true
+                                ) && dayOfTheWeek[i].equals(
+                                    mEventArrayListFilterListMonth.get(
+                                        j
+                                    ).getDayOfTheWeek(), ignoreCase = true
+                                ) && month[i].equals(
+                                    mEventArrayListFilterListMonth.get(
+                                        j
+                                    ).getMonthNumber(), ignoreCase = true
+                                ) && year[i].equals(
+                                    mEventArrayListFilterListMonth.get(
+                                        j
+                                    ).getYear(), ignoreCase = true
+                                )
+                            ) {
+                                eventarray.add(
+                                    mEventArrayListFilterListMonth.get(
+                                        j
+                                    )
+                                )
+                                //                                Collections.reverse(mEventArrayListFilterList);
+                            }
+                        }
+                    }*/
+
+
+
+
                     daySpinner.setText("Week View")
                     list!!.visibility=View.GONE
                     emptyImg.visibility=View.VISIBLE
