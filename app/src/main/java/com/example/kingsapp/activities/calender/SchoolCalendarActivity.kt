@@ -28,12 +28,14 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var mcontext: Context
@@ -75,6 +77,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
         initFn()
         headerfnc()
         daysinweek()
+        holiday()
 
         //callCalendarListMonth()
        // callCalendarList()
@@ -220,17 +223,29 @@ for(i in mEventArrayListFilterListMonth.indices) {
                         }
 
                     }
-        Log.e("arrayinside", mEventArrayListFilterListYear.size.toString())
-        list!!.layoutManager = LinearLayoutManager(mcontext)
-        val studentlist_adapter =
-            CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
-        list!!.adapter = studentlist_adapter
-        Log.e("array", mEventArrayListFilterListYear.size.toString())
+        if(mEventArrayListFilterListYear.size==0)
+        {
+            Log.e("empty", mEventArrayListFilterListYear.size.toString())
+            list.visibility=View.GONE
+            emptyImg.visibility=View.VISIBLE
+        }
+        else
+        {
+            emptyImg.visibility=View.GONE
+            list.visibility=View.VISIBLE
+            Log.e("arrayinside", mEventArrayListFilterListYear.size.toString())
+            list!!.layoutManager = LinearLayoutManager(mcontext)
+            val studentlist_adapter =
+                CustomLisAdapter(mcontext, mEventArrayListFilterListYear)
+            list!!.adapter = studentlist_adapter
+            Log.e("array", mEventArrayListFilterListYear.size.toString())
+        }
+
 
     }
 
     private fun callCalendarListMonth() {
-
+        mEventArrayListYear= ArrayList()
         Log.e("callcalList", PreferenceManager().getStudent_ID(mcontext).toString())
 
         val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendarList("Bearer "+
@@ -250,6 +265,8 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     /************************ end of end date new */
                     for (i in mEventArrayListYear.indices )
                     {
+                        datesToPlot.add(mEventArrayListYear.get(i).start_date)
+                        holiday()
                         val date:Date
                         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 
@@ -344,8 +361,10 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 count_month = count_month!! - 1
                 val m = monthlist[count_month!!]
                 header.text = m + count_year
+                txtMYW.setText(header.text)
                 daysinweek()
                 setTextview()
+                holiday()
                 if(count_month==10)
                 {
                     Log.e("countmont", count_month.toString())
@@ -379,8 +398,10 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 val m = monthlist[11]
                 count_month = 11
                 header.text = m + count_year
+                txtMYW.setText(header.text)
                 daysinweek()
                 setTextview()
+                holiday()
 
                 //  holiday()
             }
@@ -391,8 +412,10 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 count_month = count_month!! + 1
                 val m = monthlist[count_month!!]
                 header.text = m + count_year
+                txtMYW.setText(header.text)
                 daysinweek()
                 setTextview()
+                holiday()
                 Log.e("countmont", count_month.toString())
                 Log.e("m", m.toString())
                 val count1=count_month!!+1
@@ -405,8 +428,10 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 val m = monthlist[0]
                 count_month = 0
                 header.text = m + count_year
+                txtMYW.setText(header.text)
                 daysinweek()
                 setTextview()
+                holiday()
                /* val count1=count_month!!+1
                 val count= "0"+count1
                 Log.e("new", count.toString())
@@ -423,6 +448,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
         mEventArrayListFilterListMonth = ArrayList()
         mEventArrayListFilterMonth = ArrayList()
         mEventArrayListFilterListYear = ArrayList()
+        datesToPlot = ArrayList()
 
         var modell= ListViewSpinnerModel("Year View"," ",",")
         mListViewArray.add(modell)
@@ -432,6 +458,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
         mListViewArray.add(nmodel)
         list = findViewById<RecyclerView>(R.id.mEventList)
         txtMYW=findViewById(R.id.txtMYW)
+        txtMYW.setText("This Month")
         daySpinner=findViewById(R.id.daySpinner)
         emptyImg=findViewById(R.id.alertRelative)
 
@@ -543,13 +570,16 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     daySpinSelect = true
                 }
             }
-        txtSpinner.setOnClickListener {
+        daySpinner.setOnClickListener {
+
             if (daySpinSelect==true)
             {
+                Log.e("true","click")
                 listSpinner.visibility=View.VISIBLE
                 daySpinSelect = false
             }
             else{
+                Log.e("false","click")
                 listSpinner.visibility=View.GONE
                 daySpinSelect = true
 
@@ -771,6 +801,41 @@ for(i in mEventArrayListFilterListMonth.indices) {
             11 -> currentMonth = "12"
         }
         return Integer.valueOf(currentMonth)
+    }
+    private fun holiday(){
+Log.e("datestoplot",datesToPlot.size.toString())
+        for (i in 0..datesToPlot.size-1){
+            var days_s=datesToPlot.get(i)
+            Log.e("days_s",days_s)
+            val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-M-d")
+            val inputDateStr = days_s
+            val date: Date = inputFormat.parse(inputDateStr)
+            val outputDateStr: String = outputFormat.format(date)
+            Log.e("days_sformat",outputDateStr)
+            for (i in 0..nums_Array.size-1) {
+
+                Log.e("td", month_total_days.toString())
+                var c_day=nums_Array.get(i)
+                var c_month= count_month!! +1
+                var c_year=count_year
+                var c_date=c_year.toString() + "-"+c_month+"-"+c_day
+                //var c_date=c_day+"/"+c_month+"/"+c_year
+                Log.e("c_date",c_date)
+
+                if (outputDateStr==c_date){
+
+                    Log.e("match","match")
+                    dateTextView[i]!!.setBackgroundResource(R.drawable.circle_calendar)
+
+                }
+
+                else{
+                    //Log.e("no_match","no_match")
+
+                }
+            }
+        }
     }
 
 }
