@@ -96,6 +96,13 @@ interface ApiService {
         @Header("Authorization") token:String
     ): Call<ResponseBody>
 
+
+    /*************Delete My Account****************/
+    @GET("api/v1/home-guest")
+    @Headers("Accept: application/json")
+    fun delete(
+        @Header("Authorization") token:String
+    ): Call<ResponseBody>
     /*************User****************/
     @GET("api/v1/home-user")
     @Headers("Accept: application/json")

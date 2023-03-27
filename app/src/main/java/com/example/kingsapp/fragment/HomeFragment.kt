@@ -107,7 +107,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         mContext=requireContext()
         currentversion = BuildConfig.VERSION_NAME
         initFn()
-        callhomeuserApi()
+
         setListeners()
         setdraglisteners()
         getButtonBgAndTextImages()
@@ -123,91 +123,8 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
     }
 
-    private fun callhomeuserApi() {
-        Log.e("token", PreferenceManager().getAccessToken(mContext).toString())
-        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(mContext)
-            .toString())
-        call.enqueue(object : retrofit2.Callback<HomeUserResponseModel> {
-            override fun onResponse(
-                call: Call<HomeUserResponseModel>,
-                response: Response<HomeUserResponseModel>
-            ) {
-                Log.e("respon",response.body().toString())
-                if(response.body()!!.status.equals("100"))
-                {
-                    val username= response.body()!!.home.user_details.name
-                    PreferenceManager().setuser_id(mContext,username)
-                    Log.e("Username", PreferenceManager().getuser_id(mContext).toString())
-                    val useremail=response.body()!!.home.user_details.email
-                    PreferenceManager().setUserCode(mContext,useremail)
-                    PreferenceManager().setAppversion(mContext, response.body()!!.home.android_version)
-                    versionfromapi =
-                        PreferenceManager().getAppVersion(mContext)!!.replace(".", "")
-                    currentversion = currentversion.replace(".", "")
-
-                    Log.e("APPVERSIONAPI:", versionfromapi)
-                    Log.e("CURRENTVERSION:", currentversion)
 
 
-                    if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
-                        if (versionfromapi > currentversion) {
-                            showforceupdate(mContext)
-
-                        }
-                    }
-
-                }
-               else{
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<HomeUserResponseModel?>, t: Throwable) {
-                Toast.makeText(
-                    mContext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                Log.e("succ", t.message.toString())
-            }
-        })
-    }
-
-    fun showforceupdate(mContext: Context) {
-        val dialog = Dialog(mContext)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_updateversion)
-        val btnUpdate =
-            dialog.findViewById<View>(R.id.btnUpdate) as Button
-
-        btnUpdate.setOnClickListener {
-            dialog.dismiss()
-            val appPackageName =
-                mContext.packageName
-            try {
-                mContext.startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$appPackageName")
-                    )
-                )
-
-            } catch (e: android.content.ActivityNotFoundException) {
-                mContext.startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                    )
-                )
-            }
-
-        }
-        dialog.show()
-    }
 
     private fun setListeners() {
         mRelOne!!.setOnClickListener(this)
@@ -270,83 +187,78 @@ class HomeFragment  : Fragment(),View.OnClickListener{
        // Log.e("Student Id",PreferenceManager().getStudentID(mContext).toString())
         Log.e("intentTabId",TAB_ID)
 
-        // if(PreferenceManager().getStudentID(mContext).equals("")) {
-        when (intentTabId) {
-            naisTabConstants.TAB_STUDENT_INFORMATION -> {
-               // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                val intent = Intent(mContext, StudentInfoActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-            }
+        if(PreferenceManager().getAccessToken(mContext).equals("")) {
+            when (intentTabId) {
+                naisTabConstants.TAB_STUDENT_INFORMATION -> {
+                    // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+                }
 
-            naisTabConstants.TAB_CALENDAR -> {
-                //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
-                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                /*Log.e("EmailHelp","EmailHelp")
-               */
-            }
+                naisTabConstants.TAB_CALENDAR -> {
+                    //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+                    /*Log.e("EmailHelp","EmailHelp")
+                   */
+                }
 
-            naisTabConstants.TAB_MESSAGES -> {
-               // Toast.makeText(mContext, "frg3", Toast.LENGTH_SHORT).show()
+                naisTabConstants.TAB_MESSAGES -> {
+                    // Toast.makeText(mContext, "frg3", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
+                naisTabConstants.TAB_COMMUNICATION -> {
+                    // Toast.makeText(mContext, "frg4", Toast.LENGTH_SHORT).show()
 
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
-            naisTabConstants.TAB_COMMUNICATION -> {
-               // Toast.makeText(mContext, "frg4", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+                    /* mFragment = CommunicationFragment()
+                     fragmentIntent(mFragment)*/
+                }
+                naisTabConstants.TAB_REPORT_ABSENCE -> {
+                    // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(mContext, ParentEssentialsActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-               /* mFragment = CommunicationFragment()
-                fragmentIntent(mFragment)*/
-            }
-            naisTabConstants.TAB_REPORT_ABSENCE -> {
-               // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
-                val intent = Intent(mContext, AbsenceActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
 
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
+                /*naisTabConstants.TAB_SOCIAL_MEDIA -> {
+                    mFragment = SocialMediaFragment()
+                    fragmentIntent(mFragment)
+                }*/
+                naisTabConstants.TAB_TIME_TABLE -> {
+                    // Toast.makeText(mContext, "frg7", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
 
-            /*naisTabConstants.TAB_SOCIAL_MEDIA -> {
-                mFragment = SocialMediaFragment()
-                fragmentIntent(mFragment)
-            }*/
-            naisTabConstants.TAB_TIME_TABLE -> {
-               // Toast.makeText(mContext, "frg7", Toast.LENGTH_SHORT).show()
-                 val intent = Intent(mContext, TimeTableActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-               /* showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
-            naisTabConstants.TAB_REPORTS -> {
-               // Toast.makeText(mContext, "frg8", Toast.LENGTH_SHORT).show()
-               // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                val intent = Intent(mContext, ReportsActivity::class.java)
-                startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }
+                    /* showSuccessAlert(
+                         mContext,
+                         "This feature is only available for registered users.",
+                         "Alert"
+                     )*/
+                }
+                naisTabConstants.TAB_REPORTS -> {
+                    // Toast.makeText(mContext, "frg8", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
 //                naisTabConstants.TAB_ATTENDANCE -> {
 //                    showSuccessAlert(
 //                        mContext,
@@ -354,46 +266,174 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 //                        "Alert"
 //                    )
 //                }
-            naisTabConstants.TAB_CONTACT_US -> {
-              //  Toast.makeText(mContext, "frg9", Toast.LENGTH_SHORT).show()
+                naisTabConstants.TAB_CONTACT_US -> {
+                    //  Toast.makeText(mContext, "frg9", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
 
 
 
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
+
+                naisTabConstants.TAB_APPS -> {
+                    //  Toast.makeText(mContext, "frg12", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }naisTabConstants.TAB_FORMS -> {
+                // Toast.makeText(mContext, "frg13", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext,"This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT).show()
+
+                /* showSuccessAlert(
+                     mContext,
+                     "This feature is only available for registered users.",
+                     "Alert"
+                 )*/
             }
+            }
+        }
+
+        else
+        {
+            when (intentTabId) {
+                naisTabConstants.TAB_STUDENT_INFORMATION -> {
+                    // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mContext, StudentInfoActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                }
+
+                naisTabConstants.TAB_CALENDAR -> {
+                    //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    /*Log.e("EmailHelp","EmailHelp")
+                   */
+                }
+
+                naisTabConstants.TAB_MESSAGES -> {
+                    // Toast.makeText(mContext, "frg3", Toast.LENGTH_SHORT).show()
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
+                naisTabConstants.TAB_COMMUNICATION -> {
+                    // Toast.makeText(mContext, "frg4", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(mContext, ParentEssentialsActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    /* mFragment = CommunicationFragment()
+                     fragmentIntent(mFragment)*/
+                }
+                naisTabConstants.TAB_REPORT_ABSENCE -> {
+                    // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mContext, AbsenceActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
+
+                /*naisTabConstants.TAB_SOCIAL_MEDIA -> {
+                    mFragment = SocialMediaFragment()
+                    fragmentIntent(mFragment)
+                }*/
+                naisTabConstants.TAB_TIME_TABLE -> {
+                    // Toast.makeText(mContext, "frg7", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mContext, TimeTableActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+                    /* showSuccessAlert(
+                         mContext,
+                         "This feature is only available for registered users.",
+                         "Alert"
+                     )*/
+                }
+                naisTabConstants.TAB_REPORTS -> {
+                    // Toast.makeText(mContext, "frg8", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mContext, ReportsActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
+//                naisTabConstants.TAB_ATTENDANCE -> {
+//                    showSuccessAlert(
+//                        mContext,
+//                        "This feature is only available for registered users.",
+//                        "Alert"
+//                    )
+//                }
+                naisTabConstants.TAB_CONTACT_US -> {
+                    //  Toast.makeText(mContext, "frg9", Toast.LENGTH_SHORT).show()
+
+
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
 
 
 
 
-            naisTabConstants.TAB_APPS -> {
-              //  Toast.makeText(mContext, "frg12", Toast.LENGTH_SHORT).show()
+                naisTabConstants.TAB_APPS -> {
+                    //  Toast.makeText(mContext, "frg12", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(mContext, AppsActivity::class.java)
+                    val intent = Intent(mContext, AppsActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }naisTabConstants.TAB_FORMS -> {
+                // Toast.makeText(mContext, "frg13", Toast.LENGTH_SHORT).show()
+                val intent = Intent(mContext, FormsActivity::class.java)
                 startActivity(intent)
                 requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
-                /*showSuccessAlert(
-                    mContext,
-                    "This feature is only available for registered users.",
-                    "Alert"
-                )*/
-            }naisTabConstants.TAB_FORMS -> {
-           // Toast.makeText(mContext, "frg13", Toast.LENGTH_SHORT).show()
-            val intent = Intent(mContext, FormsActivity::class.java)
-            startActivity(intent)
-            requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                /* showSuccessAlert(
+                     mContext,
+                     "This feature is only available for registered users.",
+                     "Alert"
+                 )*/
+            }
+            }
+        }
 
-           /* showSuccessAlert(
-                mContext,
-                "This feature is only available for registered users.",
-                "Alert"
-            )*/
-        }
-        }
         //}
 
     }

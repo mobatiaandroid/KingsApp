@@ -105,7 +105,7 @@
 
     <string name="placeholder_shortt">We are the only school in the United Arab Emirates to have achieved an ‘outstanding’ rating by the Dubai Schools Inspection Bureau every year since inspections began</string>
 
-    <string name="logoheading">KINGS\' SCHOOL DUBAI</string>
+    <string name="logoheading">KINGS EDUCATION</string>
 
     <string name="FirstDayOfAbsence">First Day Of Absence<font fgcolor='#FF0000'> * </font></string>
 
@@ -177,7 +177,7 @@
         <!-- 1 -->
         <!--<item>@drawable/news</item>-->
         <item>@drawable/home4</item>
-        <item>@drawable/profile_icon</item>
+        <item>@drawable/sidebar_student_information</item>
         <!-- 2 -->
         <!-- 3 -->
         <!-- 4 -->

@@ -458,7 +458,9 @@ class TimeTableActivity:AppCompatActivity() {
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
         val studentlist_adapter =
-            AbsenceStudentListAdapter(ncontext, student_name)
+            AbsenceStudentListAdapter(
+                ncontext,
+                student_name)
         recycler_view!!.adapter = studentlist_adapter
         crossicon.setOnClickListener {
             dialog.dismiss()

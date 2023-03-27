@@ -22,7 +22,6 @@ import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.model.Studentlist_model
 import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
@@ -216,7 +215,9 @@ class ReportsActivity:AppCompatActivity() {
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
         val studentlist_adapter =
-            AbsenceStudentListAdapter(ncontext, student_name)
+            AbsenceStudentListAdapter(
+                ncontext,
+                student_name)
         recycler_view!!.adapter = studentlist_adapter
 
         crossicon.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.example.kingsapp.activities.login
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -11,13 +12,15 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.home.HomeguestuserActivity
 import com.example.kingsapp.activities.login.model.LoginResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.homeActivity
@@ -25,6 +28,7 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.mobatia.nasmanila.api.ApiClient
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
@@ -38,6 +42,7 @@ class SigninyourAccountActivity:AppCompatActivity() {
     lateinit var passwordTextInputEditText:TextInputEditText
     lateinit var joinGuestTxt: TextView
     lateinit var emailSupport:TextView
+    private lateinit var progressDialog: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +65,13 @@ class SigninyourAccountActivity:AppCompatActivity() {
         backImg=findViewById(R.id.backImg)
         joinGuestTxt = findViewById(R.id.joinGuestTxt)
         emailSupport = findViewById(R.id.emailSupport)
+       progressDialog = findViewById(R.id.progressDialog)
+
         emailSupport.setOnClickListener {
             showEmailHelpAlert(ncontext)
         }
         joinGuestTxt.setOnClickListener {
-            val intent = Intent(ncontext, homeActivity::class.java)
+            val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
         signInBtn.setOnClickListener {
@@ -109,6 +116,10 @@ class SigninyourAccountActivity:AppCompatActivity() {
     }
 
     private fun callLoginApi(username: String, paswwd: String) {
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
+        progressDialog.startAnimation(aniRotate)
+        progressDialog.visibility = View.VISIBLE
         var androidID = Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
         Log.e("android_id",androidID)
@@ -119,7 +130,9 @@ class SigninyourAccountActivity:AppCompatActivity() {
                 call: Call<LoginResponseModel>,
                 response: Response<LoginResponseModel>
             ) {
-               if(response.body()!!.status.equals(100))
+                progressDialog.visibility = View.GONE
+
+                if(response.body()!!.status.equals(100))
                {
                    PreferenceManager().setAccessToken(ncontext,response.body()!!.token)
                    Log.e("token",PreferenceManager().getAccessToken(ncontext).toString())
@@ -161,11 +174,51 @@ class SigninyourAccountActivity:AppCompatActivity() {
         //  text_dialog.text = message
         // alertHead.text = msgHead
         // iconImageView.setImageResource(R.color.white)
+        submitButton.setOnClickListener {
+            dialog.dismiss()
+           // callSendMailApi(text_dialog.text.toString(),text_dialog.text.toString(),context,dialog)
+        }
         dialogCancelButton.setOnClickListener { //   AppUtils.hideKeyBoard(mContext);
-
+            val imm =
+                context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(text_dialog.windowToken, 0)
+            imm.hideSoftInputFromWindow(text_content.windowToken, 0)
 
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun callSendMailApi(
+        textDialog: String,
+        textContent: String,
+        context: Context,
+        dialog: Dialog
+    ) {
+        val call: Call<ResponseBody> = ApiClient.getApiService().feedback("Bearer "+PreferenceManager().getAccessToken(context)
+            .toString(),textDialog,textContent, PreferenceManager().getUserCode(context).toString(),
+            PreferenceManager().getuser_id(context).toString())
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                Log.e("Response",response.body().toString())
+                dialog.dismiss()
+                /*val intent = Intent(context, WelcomeActivity::class.java)
+                startActivity(intent)*/
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    context,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 }

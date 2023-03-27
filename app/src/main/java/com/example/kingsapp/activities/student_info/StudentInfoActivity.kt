@@ -15,10 +15,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
+import com.example.kingsapp.activities.student_info.adapter.StudentInfoAdapter
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
@@ -238,28 +238,21 @@ class StudentInfoActivity:AppCompatActivity (){
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(mContext)
         val studentlist_adapter =
-            AbsenceStudentListAdapter(mContext, student_name)
+            StudentInfoAdapter(mContext, student_name,studentName_Text,studentclass,name,address,classs,dialog)
         recycler_view!!.adapter = studentlist_adapter
-
+        dialog.dismiss()
         crossicon.setOnClickListener {
             dialog.dismiss()
         }
-        recycler_view.addOnItemClickListener(object : OnItemClickListener {
+       /* recycler_view.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
-                var name: String = student_name.get(position).fullname
-                var classs: String = student_name.get(position).classs
-                var id: Int = student_name.get(position).id
-                studentName_Text.setText(name)
-                studentclass.text=classs
-                PreferenceManager().setStudent_ID(mContext,id.toString())
 
-                studentInfoApiCall()
 
                 dialog.dismiss()
             }
 
-        })
+        })*/
         dialog.show()
     }
 }

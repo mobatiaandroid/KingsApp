@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.settings.TermsOfServiceActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
@@ -81,38 +82,81 @@ class SettingFragment: Fragment() {
         }
         recyclerList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                if(position==0)
+
+                if (PreferenceManager().getAccessToken(mContext).equals(""))
                 {
-                    val intent = Intent()
-                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    val uri = Uri.fromParts("package", activity!!.packageName, null)
-                    intent.data = uri
-                    mContext.startActivity(intent)
+
+                    if(position==0)
+                    {
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts("package", activity!!.packageName, null)
+                        intent.data = uri
+                        mContext.startActivity(intent)
+                    }
+                    if (position == 1) {
+                        Toast.makeText(mContext,"This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    if (position == 2) {
+                        Toast.makeText(mContext,"This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    if (position == 3) {
+                        Toast.makeText(mContext,"This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    if (position == 4) {
+                        Toast.makeText(mContext,"This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                    if (position == 5) {
+                        Toast.makeText(mContext,"This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+
+                    if (position == 6) {
+                        Toast.makeText(mContext,"This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+
                 }
-                if (position == 1) {
-                    val intent = Intent(mContext, TermsOfServiceActivity::class.java)
-                    startActivity(intent)
-                }
-                if (position == 2) {
-                    showEmailHelpAlert(mContext)
-                }
-                if (position == 3) {
-                    Toast.makeText(
-                        mContext,
-                        "This feature will be available soon.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                if (position == 4) {
-                    showSuccessAlert(mContext, "Do you want to Delete Account?")
-                }
-                if (position == 5) {
-                    showChangePasswordPopUp()
+                else
+                {
+                    if(position==0)
+                    {
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts("package", activity!!.packageName, null)
+                        intent.data = uri
+                        mContext.startActivity(intent)
+                    }
+                    if (position == 1) {
+                        val intent = Intent(mContext, TermsOfServiceActivity::class.java)
+                        startActivity(intent)
+                    }
+                    if (position == 2) {
+                        showEmailHelpAlert(mContext)
+                    }
+                    if (position == 3) {
+                        Toast.makeText(
+                            mContext,
+                            "This feature will be available soon.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (position == 4) {
+                        showSuccessAlert(mContext, "Do you want to Delete Account?")
+                    }
+                    if (position == 5) {
+                        showChangePasswordPopUp()
+                    }
+
+                    if (position == 6) {
+                        showSuccessAlert(mContext, "Do you want to Logout?")
+                    }
                 }
 
-                if (position == 6) {
-                    showSuccessAlert(mContext, "Do you want to Logout?")
-                }
             }
 
         })
@@ -232,6 +276,7 @@ class SettingFragment: Fragment() {
             ) {
                 Log.e("Response",response.body().toString())
                 PreferenceManager().setuser_id(mContext,"")
+                PreferenceManager().setAccessToken(mContext,"")
                 val intent = Intent(mContext, WelcomeActivity::class.java)
             startActivity(intent)
 

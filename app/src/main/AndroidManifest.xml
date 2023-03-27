@@ -24,7 +24,7 @@
         android:roundIcon="@drawable/kings_school_logo"
         android:supportsRtl="false"
         android:requestLegacyExternalStorage="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
@@ -38,6 +38,14 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+        </activity>
+
+        <activity
+            android:name=".activities.home.HomeguestuserActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".activities.absence.AbsenceActivity"
             android:exported="true"

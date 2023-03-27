@@ -263,7 +263,9 @@ class AppsActivity:AppCompatActivity() {
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(mContext)
         val studentlist_adapter =
-            AbsenceStudentListAdapter(mContext, student_name)
+            AbsenceStudentListAdapter(
+                mContext,
+                student_name)
         recycler_view!!.adapter = studentlist_adapter
 
         crossicon.setOnClickListener {

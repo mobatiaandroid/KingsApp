@@ -51,7 +51,7 @@
                 android:id="@+id/messageImg"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="8dp"
                 android:src="@drawable/message" />
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/messageText"
@@ -73,7 +73,7 @@
             <ImageView
                 android:id="@+id/profileImg"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="4dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/contact" />
             <com.example.kingsapp.manager.font.CustomVerdanaRegular

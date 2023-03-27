@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MessageDetailsActivity: AppCompatActivity() {
@@ -16,7 +18,7 @@ class MessageDetailsActivity: AppCompatActivity() {
     lateinit var timeText:TextView
     lateinit var stringList:Array<String>
     lateinit var desc:TextView
-    lateinit var date:String
+    lateinit var datee:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.message_details_activity)
@@ -26,7 +28,7 @@ class MessageDetailsActivity: AppCompatActivity() {
 
     private fun initFn() {
         title=intent.getStringExtra("title").toString()
-        date=intent.getStringExtra("date").toString()
+        datee=intent.getStringExtra("date").toString()
         dateText=findViewById(R.id.textview1)
         timeText=findViewById(R.id.timetextview)
 
@@ -34,20 +36,18 @@ class MessageDetailsActivity: AppCompatActivity() {
         desc=findViewById(R.id.desc)
         desc.setText(title)
 
-       /* val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSz")
+        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
         val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
-        val inputDateStr = date
+        val inputDateStr = datee
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)
-        val outputDateStr1: String = outputFormatdate.format(date)*/
-        val substr: String = date.substring(0, 9)
-        val substr23: String = date.substring(11, 15)
-        val substr3:String=date.substring(date.indexOf("T") + 8)
+        val outputDateStr1: String = outputFormatdate.format(date)
+
 
         
-        dateText.setText(substr)
-        timeText.setText(substr3)
+        dateText.setText(outputDateStr1)
+        timeText.setText(outputDateStr)
         message_backarrow.setOnClickListener(View.OnClickListener { finish() })
     }
 }

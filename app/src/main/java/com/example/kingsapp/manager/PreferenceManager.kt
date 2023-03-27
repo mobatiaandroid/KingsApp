@@ -1061,7 +1061,7 @@ class PreferenceManager {
         return b
     }
 
-    fun saveArrayList(context: Context, list: ArrayList<CalendarList>) {
+    /*fun saveArrayList(context: Context, list: ArrayList<CalendarList>) {
         val prefs = context.getSharedPreferences(
             "NAS",
             Context.MODE_PRIVATE
@@ -1082,6 +1082,26 @@ class PreferenceManager {
         val json = prefs.getString("list", null)
         val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
         return gson.fromJson(json, type)
+    }*/
+
+    fun setvalue(context: Context?, value: String) {
+        val prefs = context!!.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        editor.putString("value", value)
+        editor.commit()
+    }
+
+    fun getvalue(context: Context?): String {
+        var b = ""
+        val prefs = context!!.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        b = prefs.getString("value", "").toString()
+        return b
     }
 }
 

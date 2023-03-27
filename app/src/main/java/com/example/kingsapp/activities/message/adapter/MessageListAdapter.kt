@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.adapter.AbsenceListAdapter
 import com.example.kingsapp.activities.message.model.MessageListModel
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MessageListAdapter(private val context: Context, private  val name:ArrayList<MessageListModel>):
     RecyclerView.Adapter<MessageListAdapter.MyViewHolder>() {
@@ -37,7 +41,19 @@ class MessageListAdapter(private val context: Context, private  val name:ArrayLi
        /* holder.date.setText(date)
         holder.time.setText(time)*/
         holder.desc.setText(desc)
+        val datestring=name[position].created_at
        // addReadMore(desc,holder.desc)
+
+        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
+        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
+        val inputDateStr = datestring
+        val date: Date = inputFormat.parse(inputDateStr)
+        val outputDateStr: String = outputFormat.format(date)
+        val outputDateStr1: String = outputFormatdate.format(date)
+        holder.date.setText(outputDateStr1)
+        holder.time.setText(outputDateStr)
+
     }
     private fun addReadMore(text: String, textView: TextView) {
         val ss = SpannableString(text.substring(0, 78) + "..")
