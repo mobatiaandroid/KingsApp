@@ -281,6 +281,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
             naisTabConstants.TAB_CALENDAR -> {
                 //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
+                PreferenceManager().setFromYearView(mContext,"0")
                 val intent = Intent(mContext, SchoolCalendarActivity::class.java)
                 startActivity(intent)
                 requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);

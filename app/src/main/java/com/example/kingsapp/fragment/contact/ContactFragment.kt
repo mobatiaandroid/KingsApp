@@ -89,7 +89,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mContext = requireContext()
-        val locationPermissionRequest = registerForActivityResult(
+        /*val locationPermissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
             when {
@@ -102,16 +102,16 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                 // No location access granted.
             }
             }
-        }
+        }*/
 
 // ...
 
 // Before you perform the actual permission request, check whether your app
 // already has the permissions, and whether your app needs to show a permission
 // rationale dialog. For more details, see Request permissions.
-        locationPermissionRequest.launch(arrayOf(
+       /* locationPermissionRequest.launch(arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
+            Manifest.permission.ACCESS_COARSE_LOCATION))*/
         initFn()
         var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
         if (internetCheck)

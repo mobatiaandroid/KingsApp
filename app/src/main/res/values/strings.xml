@@ -61,7 +61,7 @@
     <string name="new_version_available">New Version Available</string>
     <string name="force_update">There is a newer version available for download! Please update the app by visiting the Google Play Store</string>
 
-
+    <string name="ContactUs">Contact Us</string>
     <!--<string name="change_app_setting">Change App Settings</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="email_us">Email Us</string>

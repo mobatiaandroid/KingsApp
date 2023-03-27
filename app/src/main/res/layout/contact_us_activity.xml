@@ -87,11 +87,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Contact"
+        android:text="@string/ContactUs"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:layout_marginBottom="22dp"

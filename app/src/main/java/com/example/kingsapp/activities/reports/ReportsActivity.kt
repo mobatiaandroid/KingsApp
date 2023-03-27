@@ -27,6 +27,7 @@ import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -48,6 +49,7 @@ class ReportsActivity:AppCompatActivity() {
     lateinit var imagicon:ImageView
     lateinit var backarrow : ImageView
     private lateinit var progressDialog: RelativeLayout
+    //lateinit var progressDialog: ProgressBarDialog
     var studentName:String=""
     var student_class:String=""
     var studentImg:String=""
@@ -63,6 +65,7 @@ class ReportsActivity:AppCompatActivity() {
         setContentView(R.layout.activity_report)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
+       // progressDialog = ProgressBarDialog(ncontext)
         PreferenceManager().setStudent_ID(ncontext,"")
         initFn()
         if(CommonClass.isInternetAvailable(ncontext)) {
@@ -106,7 +109,7 @@ class ReportsActivity:AppCompatActivity() {
         }
     }
     private fun studentListApiCall() {
-        progressDialog.visibility = View.VISIBLE
+        progressDialog.visibility=View.VISIBLE
         val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(ncontext).toString())
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
@@ -114,11 +117,12 @@ class ReportsActivity:AppCompatActivity() {
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
-                progressDialog.visibility = View.GONE
+                progressDialog.visibility=View.GONE
 
                 Log.e("Response",response.body().toString())
                 if (response.body()!!.status.equals(100))
                 {
+                    progressDialog.visibility=View.GONE
                     student_name.addAll(response.body()!!.student_list)
                     Log.e("StudentNameid", PreferenceManager().getStudent_ID(ncontext).toString())
                     if ( PreferenceManager().getStudent_ID(ncontext).equals(""))
@@ -187,11 +191,13 @@ class ReportsActivity:AppCompatActivity() {
                 }
                 else
                 {
+                    progressDialog.visibility=View.GONE
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                 }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                progressDialog.visibility=View.GONE
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",

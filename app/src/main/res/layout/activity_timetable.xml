@@ -60,7 +60,7 @@
                     android:orientation="vertical">
 
 
-                    <TextView
+                    <com.example.kingsapp.manager.font.CustomVerdanaRegular
                         android:id="@+id/studentName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -74,7 +74,7 @@
                         android:textStyle="bold" />
 
 
-                    <TextView
+                    <com.example.kingsapp.manager.font.CustomVerdanaRegular
                         android:id="@+id/studentclass"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -144,7 +144,7 @@
 
             </LinearLayout>-->
 
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
 
                 android:id="@+id/textViewYear"
                 android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
 
                 android:visibility="gone" />
 
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/enterTextView"
 
                 android:layout_width="wrap_content"
@@ -201,7 +201,7 @@
                         android:gravity="center"
                         android:src="@drawable/no_data" />
 
-                    <TextView
+                    <com.example.kingsapp.manager.font.CustomVerdanaRegular
                         android:id="@+id/noDataTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:id="@+id/alertText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -274,7 +274,7 @@
                         android:visibility="invisible"
                         android:orientation="vertical"
                         android:gravity="center">
-                        <TextView
+                        <com.example.kingsapp.manager.font.CustomVerdanaRegular
                             android:id="@+id/periodTxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -306,7 +306,7 @@
                             android:layout_marginLeft="1dp"
                             android:layout_marginRight="1dp">
 
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:layout_width="0dp"
                                 android:layout_weight="20"
                                 android:layout_height="match_parent"
@@ -316,7 +316,7 @@
                                 android:background="@color/kings_blue"
                                 android:gravity="center"
                                 android:textColor="@color/white" />
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:layout_width="0dp"
                                 android:layout_weight="20"
                                 android:layout_height="match_parent"
@@ -329,7 +329,7 @@
                                 android:background="@color/kings_blue"
 
                                 android:textColor="@color/white" />
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:layout_width="0dp"
                                 android:layout_weight="20"
                                 android:layout_height="match_parent"
@@ -342,7 +342,7 @@
                                 android:background="@color/kings_blue"
 
                                 android:textColor="@color/white" />
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:layout_width="0dp"
                                 android:layout_weight="20"
                                 android:layout_height="match_parent"
@@ -355,7 +355,7 @@
                                 android:background="@color/kings_blue"
 
                                 android:textColor="@color/white" />
-                            <TextView
+                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                                 android:layout_width="0dp"
                                 android:layout_weight="20"
                                 android:layout_height="match_parent"
@@ -408,7 +408,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
