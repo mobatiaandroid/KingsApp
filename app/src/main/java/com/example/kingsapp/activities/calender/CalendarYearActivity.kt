@@ -93,7 +93,13 @@ class CalendarYearActivity : AppCompatActivity() {
         val currentMonthName = month_date.format(cal.time)
         val currentMonthNumber = currentMonthName.toInt()
 
-        closeCalendarYear!!.setOnClickListener { onBackPressed() }
+        closeCalendarYear!!.setOnClickListener {
+            PreferenceManager().setFromYearView(mcontext,"0")
+            val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
+            startActivity(intent)
+            //finish()
+            //onBackPressed()
+        }
         var titleString = ""
         if (currentMonthNumber < 7) { // JAN - JUL
             titleString = (currentYearNumber - 1).toString() + " - " + currentYearNumber

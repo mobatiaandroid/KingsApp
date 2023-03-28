@@ -45,6 +45,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var monthlist:Array<String>
     lateinit var week_day:Array<String>
     lateinit var nums_Array:ArrayList<String>
+    private lateinit var progressDialog: RelativeLayout
     var month_total_days:Int?=null
     var count_month:Int?=null
     var count_year:Int?=null
@@ -85,7 +86,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
     }
 
     private fun callCalendarList() {
-
+progressDialog.visibility=View.VISIBLE
         mEventArrayListYear= ArrayList()
         Log.e("callcal", PreferenceManager().getStudent_ID(mcontext).toString())
         val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
@@ -95,6 +96,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
+                progressDialog.visibility=View.GONE
                 if (response.body()!!.status.equals(100))
                 {
                     mEventArrayListYear.addAll(response.body()!!.calendar)
@@ -143,6 +145,7 @@ for(i in mEventArrayListYear.indices) {
             }
 
             override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
+                progressDialog.visibility=View.GONE
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -247,6 +250,7 @@ for(i in mEventArrayListYear.indices) {
     }
 
     private fun callCalendarListMonth() {
+        progressDialog.visibility=View.VISIBLE
         mEventArrayListYear= ArrayList()
         Log.e("callcalList", PreferenceManager().getStudent_ID(mcontext).toString())
 
@@ -257,6 +261,7 @@ for(i in mEventArrayListYear.indices) {
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
+                progressDialog.visibility=View.GONE
                 if (response.body()!!.status.equals(100))
 
                 {
@@ -314,6 +319,7 @@ for(i in mEventArrayListYear.indices) {
             }
 
             override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
+                progressDialog.visibility=View.GONE
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -465,6 +471,7 @@ for(i in mEventArrayListYear.indices) {
         mListViewArray.add(xmodel)
         var nmodel= ListViewSpinnerModel("Week View"," "," ")
         mListViewArray.add(nmodel)
+        progressDialog = findViewById(R.id.progressDialog)
         list = findViewById<RecyclerView>(R.id.mEventList)
         txtMYW=findViewById(R.id.txtMYW)
         txtMYW.setText("This Month")
