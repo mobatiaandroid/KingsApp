@@ -165,11 +165,12 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                             .draggable(true)
                             .title("KINGS")
                     )
+                    map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
 
 
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng))
 
-                    map.animateCamera(CameraUpdateFactory.zoomTo(13f))
+                    map.animateCamera(CameraUpdateFactory.zoomTo(10f))
                     map.setOnInfoWindowClickListener {
 
                         if (!isGPSEnabled!!) {
@@ -237,12 +238,12 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                         this
                     )
 
-                    location =
-                        locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!!
-                    if (location != null) {
-                        lat = location.latitude
-                        long = location.longitude
-                    }
+//                    location =
+//                        locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!!
+//                    if (location != null) {
+//                        lat = location.latitude
+//                        long = location.longitude
+//                    }
                 }
             }
             if (isGPSEnabled as Boolean) {
