@@ -29,7 +29,7 @@ class ImageMessageActivity : AppCompatActivity(){
     var id:String=""
     var title:String=""
     var idApi:String=""
-    var titleApi:String=""
+    var createdate:String=""
     var message:String=""
     var url:String=""
     var date:String=""
@@ -49,6 +49,7 @@ class ImageMessageActivity : AppCompatActivity(){
        // id=intent.getStringExtra("id").toString()
         title=intent.getStringExtra("title").toString()
         url=intent.getStringExtra("url").toString()
+        createdate=intent.getStringExtra("createdate").toString()
         initUI()
         callMessageDetailAPI()
         getSettings()
@@ -73,53 +74,52 @@ class ImageMessageActivity : AppCompatActivity(){
     }
     fun callMessageDetailAPI()
     {
-        /*date="2023-03-24"
-                    val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
-                    val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
-                    val inputDateStr = date
-                    val date: Date = inputFormat.parse(inputDateStr)
-                    val outputDateStr: String = outputFormat.format(date)
-                    val outputDateStr1: String = outputFormatdate.format(date)*/
+        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
+        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
+        val inputDateStr = createdate
+        val date: Date = inputFormat.parse(inputDateStr)
+        val outputDateStr: String = outputFormat.format(date)
+        val outputDateStr1: String = outputFormatdate.format(date)
                     var pushNotificationDetail="<!DOCTYPE html>\n"+
                             "<html>\n" +
                             "<head>\n" +
                             "<style>\n" +
                             "\n" +
                             "@font-face {\n" +
-                            "font-family: SourceSansPro-Semibold;" +
-                            "src: url(SourceSansPro-Semibold.ttf);" +
+                            "font-family: verdana_regular;" +
+                            "src: url(verdana_regular.ttf);" +
 
-                            "font-family: SourceSansPro-Regular;" +
-                            "src: url(SourceSansPro-Regular.ttf);" +
+                            "font-family:verdana_regular;" +
+                            "src: url(verdana_regular.ttf);" +
                             "}" +
-                            ".date {\n" +
-                            "font-family: SourceSansPro-Regular;\n" +
-                            "font-size:12px;\n" +
-                            "text-align:right;\n" +
-                            "color: #001c53;\n" +
-                            "text-align: ####TEXT_ALIGN####;\n" +
+                            ".date {" +
+                            "font-family:verdana_regular;" +
+                            "font-size:12px;" +
+                            "text-align:right;" +
+                            "color: #ACACAC;" +
+                            "text-align: ####TEXT_ALIGN####;" +
                             "}"+
                             ".title {" +
-                            "font-family: SourceSansPro-Semibold;" +
+                            "font-family: verdana_regular;" +
                             "font-size:16px;" +
                             "text-align:left;" +
-                            "color:	#46C1D0;" +
+                            "color:	#001c53;" +
                             "text-align: ####TEXT_ALIGN####;" +
                             "}" +
                             ".description {" +
-                            "font-family: SourceSansPro-Semibold;" +
+                            "font-family:verdana_regular;" +
                             "text-align:justify;" +
                             "font-size:14px;" +
-                            "color: #000000;" +
+                            "color: #001c53;" +
                             "text-align: ####TEXT_ALIGN####;" +
                             "}" +
                             "</style>\n" + "</head>" +
                             "<body>" +
                             "<p class='title'>"+title
 
-                    pushNotificationDetail=pushNotificationDetail+"<p class='date'>"+""+ "</p>"+"<hr>"+ "<p class='description'>" +message+ "</p>"
-                    if (!url.equals(""))
+        pushNotificationDetail=pushNotificationDetail+"<p class='date'>"+outputDateStr1 +" "+outputDateStr+ "</p>"+"<hr>"+ "<p class='description'>" +message+ "</p>"
+        if (!url.equals(""))
                     {
                         pushNotificationDetail=pushNotificationDetail+"<center><img src='" + url + "'width='100%', height='auto'>"
                     }
@@ -127,7 +127,7 @@ class ImageMessageActivity : AppCompatActivity(){
                     var htmlData=pushNotificationDetail
                     Log.e("HTML DATA",htmlData)
                     //  webView.loadData(htmlData,"text/html; charset=utf-8","utf-8")
-                    webView.loadDataWithBaseURL("file:///android_asset/fonts/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
+                    webView.loadDataWithBaseURL("file:///android_asset/font/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
 
 
 

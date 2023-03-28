@@ -725,6 +725,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 }
                 else
                 {
+
                     studentListRecyclerview.visibility=View.GONE
                     top_navigation_li.visibility=View.GONE
                     fragment = ContactFragment()

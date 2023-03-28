@@ -195,6 +195,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                         Toast.LENGTH_SHORT).show()
                 }
 
+
                 naisTabConstants.TAB_CALENDAR -> {
                     //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
                     Toast.makeText(mContext,"This feature is only available for registered users.",
@@ -202,6 +203,17 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     /*Log.e("EmailHelp","EmailHelp")
                    */
                 }
+
+            naisTabConstants.TAB_CALENDAR -> {
+                //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
+                PreferenceManager().setFromYearView(mContext,"0")
+                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+                startActivity(intent)
+                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                /*Log.e("EmailHelp","EmailHelp")
+               */
+            }
+
 
                 naisTabConstants.TAB_MESSAGES -> {
                     // Toast.makeText(mContext, "frg3", Toast.LENGTH_SHORT).show()
@@ -319,6 +331,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
                 naisTabConstants.TAB_CALENDAR -> {
                     //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
+                    PreferenceManager().setFromYearView(mContext,"0")
                     val intent = Intent(mContext, SchoolCalendarActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);

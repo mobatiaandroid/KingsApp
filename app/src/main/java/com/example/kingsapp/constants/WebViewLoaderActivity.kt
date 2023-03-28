@@ -8,9 +8,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.webkit.*
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +31,8 @@ class WebViewLoaderActivity: AppCompatActivity() {
 
     lateinit var logoclick: ImageView
     lateinit var titleTextView: TextView
-    @SuppressLint("SetJavaScriptEnabled")
+    private lateinit var progressDialog: RelativeLayout
+    @SuppressLint("SetJavaScriptEnabled", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview_loader)
@@ -39,6 +43,10 @@ class WebViewLoaderActivity: AppCompatActivity() {
         titleToShow = intent.getStringExtra("title").toString()
         back = findViewById(R.id.back)
         titleTextView.text = titleToShow
+        progressDialog = findViewById(R.id.progressDialog)
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
+        progressDialog.startAnimation(aniRotate)
         // downloadpdf = findViewById(R.id.downloadpdf)
         webview = findViewById(R.id.webview)
         webview.settings.javaScriptEnabled = true
@@ -64,9 +72,9 @@ class WebViewLoaderActivity: AppCompatActivity() {
         webview.webChromeClient = object : WebChromeClient() {
 
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-               // progressbar.progress = newProgress
+                progressDialog.visibility = View.VISIBLE
                 if (newProgress == 100) {
-                    //progressbar.visibility = View.GONE
+                    progressDialog.visibility = View.GONE
                     back.visibility = View.VISIBLE
 
                 }

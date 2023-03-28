@@ -74,7 +74,7 @@ class AppsActivity:AppCompatActivity() {
     }
 
     private fun studentListApiCall() {
-        progressDialog.visibility = View.VISIBLE
+
         val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString())
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
@@ -170,6 +170,8 @@ class AppsActivity:AppCompatActivity() {
     }
 
     private fun appsInfoApiCall() {
+        list_name = ArrayList()
+        progressDialog.visibility = View.VISIBLE
         val call: Call<AppsModel> = ApiClient.getApiService().apps("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString(),
             PreferenceManager().getStudent_ID(mContext).toString()
@@ -179,6 +181,8 @@ class AppsActivity:AppCompatActivity() {
                 call: Call<AppsModel>,
                 response: Response<AppsModel>
             ) {
+                progressDialog.visibility = View.GONE
+
                 if (response.body()!!.status.equals(100))
                 {
                     list_name.addAll(response.body()!!.apps)

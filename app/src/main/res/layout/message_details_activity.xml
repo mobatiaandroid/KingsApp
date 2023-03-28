@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/li"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:weightSum="3">
         <ImageView
@@ -19,7 +19,7 @@
             android:layout_weight="1">
 
         </ImageView>
-        <TextView
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -40,10 +40,10 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/li"
         android:layout_marginTop="1dp"
-        android:background="@drawable/bg"
+        android:background="@color/white"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/timeanddateli"
@@ -67,7 +67,7 @@
                 android:textStyle="bold"
                 android:paddingBottom="10dp"
                 android:textColor="@color/greyy"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:text="13 Sep 2022"/>
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/timetextview"
@@ -80,7 +80,7 @@
                 android:textStyle="bold"
                 android:paddingBottom="10dp"
                 android:textColor="@color/greyy"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:text="9:30 pm"/>
         </RelativeLayout>
         <com.example.kingsapp.manager.font.CustomVerdanaRegular
@@ -90,7 +90,7 @@
             android:layout_marginRight="20dp"
             android:textColor="@color/grey"
             android:text="@string/placeholder_long"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
 </RelativeLayout>

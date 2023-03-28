@@ -140,7 +140,10 @@ class CalendarYearActivity : AppCompatActivity() {
                     PreferenceManager().setFromYearView(mcontext,"1")
                     val intent = Intent(mcontext, SchoolCalendarActivity::class.java)
                     intent.putExtra("monthNumber",count)
+                    intent.putExtra("monthName",monthName.toString())
                     Log.e("monthNumber",count.toString())
+
+
                     startActivity(intent)
                 }
 

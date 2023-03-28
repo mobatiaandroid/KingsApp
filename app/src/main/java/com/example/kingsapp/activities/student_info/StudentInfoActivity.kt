@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
@@ -23,8 +22,6 @@ import com.example.kingsapp.activities.student_info.model.StudentInfoResponseMod
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
-import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
-import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.mobatia.nasmanila.api.ApiClient
@@ -238,9 +235,9 @@ class StudentInfoActivity:AppCompatActivity (){
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(mContext)
         val studentlist_adapter =
-            StudentInfoAdapter(mContext, student_name,studentName_Text,studentclass,name,address,classs,dialog)
+            StudentInfoAdapter(mContext, student_name,studentName_Text,studentclass,name,address,classs,dialog,crossicon)
         recycler_view!!.adapter = studentlist_adapter
-        dialog.dismiss()
+
         crossicon.setOnClickListener {
             dialog.dismiss()
         }

@@ -47,7 +47,9 @@ class AbsenceActivity: AppCompatActivity() {
     lateinit var registerabsence: RelativeLayout
     lateinit var backarrow_absense: ImageView
     var mListAdapter: AbsenceListAdapter? = null
-    lateinit var name: ArrayList<AbsenceList>
+    lateinit var absenceList: ArrayList<AbsenceList>
+    lateinit var studentInfoCopy :ArrayList<AbsenceList>
+
     lateinit var student_name: ArrayList<StudentList>
     private lateinit var progressDialog: RelativeLayout
     override fun onBackPressed() {
@@ -78,7 +80,7 @@ class AbsenceActivity: AppCompatActivity() {
     }
 
     private fun initFn() {
-        name= ArrayList()
+        absenceList= ArrayList()
         student_name = ArrayList()
         studentclass=findViewById(R.id.studentclass)
         imagicon=findViewById(R.id.imagicon)
@@ -118,9 +120,9 @@ class AbsenceActivity: AppCompatActivity() {
                         val intent = Intent(ncontext, AbsenceDeatilsActivity::class.java)
                         intent.putExtra("studentName",PreferenceManager().getStudentName(ncontext))
                         intent.putExtra("studentClass",PreferenceManager().getStudentClass(ncontext))
-                        intent.putExtra("fromDate",name.get(position).from_date)
-                        intent.putExtra("toDate",name.get(position).to_date)
-                        intent.putExtra("reason",name.get(position).reason)
+                        intent.putExtra("fromDate",absenceList.get(position).from_date)
+                        intent.putExtra("toDate",absenceList.get(position).to_date)
+                        intent.putExtra("reason",absenceList.get(position).reason)
                         startActivity(intent)
                     }
 
@@ -203,6 +205,7 @@ class AbsenceActivity: AppCompatActivity() {
                         }
                     }
                     if(CommonClass.isInternetAvailable(ncontext)) {
+                        progressDialog.visibility = View.VISIBLE
                         callStudentLeaveInfo()
                     }
                     else{
@@ -229,7 +232,12 @@ class AbsenceActivity: AppCompatActivity() {
     }
 
     private fun callStudentLeaveInfo() {
-        name.clear()
+        progressDialog.visibility = View.VISIBLE
+        studentInfoCopy=ArrayList<AbsenceList>()
+        absenceList.clear()
+        absencelist.visibility=View.GONE
+        val abseneadapter = AbsenceListAdapter(ncontext,absenceList)
+        absencelist.setAdapter(abseneadapter)
         val studentbody= AbsenceLeaveApiModel(PreferenceManager().getStudent_ID(ncontext)!!,0,20)
         val call: Call<AbsenceListModel> = ApiClient.getApiService().absenceList("Bearer "+
                 PreferenceManager().getAccessToken(ncontext).toString(),
@@ -240,16 +248,28 @@ class AbsenceActivity: AppCompatActivity() {
                 call: Call<AbsenceListModel>,
                 response: Response<AbsenceListModel>
             ) {
+                progressDialog.visibility = View.GONE
                 if (response.body()!!.status.equals(100))
                 {
-                    name.addAll(response.body()!!.leave_requests)
-                    Log.e("name", name.toString())
-                    val abseneadapter = AbsenceListAdapter(ncontext,name)
-                    absencelist.setAdapter(abseneadapter)
+                    absenceList.addAll(response.body()!!.leave_requests)
+                    studentInfoCopy=absenceList
+                    if (studentInfoCopy.size>0)
+                    {
+                        absencelist.visibility=View.VISIBLE
+                        Log.e("name", absenceList.toString())
+                        val abseneadapter = AbsenceListAdapter(ncontext,absenceList)
+                        absencelist.setAdapter(abseneadapter)
+                    }
+                    else
+                    {
+                        Toast.makeText(ncontext, "No Registered Absence Found", Toast.LENGTH_SHORT).show()
+                        absencelist.visibility=View.GONE
+                    }
+
                 }
                 else
                 {
-
+                    CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                 }
 
 
@@ -292,6 +312,7 @@ class AbsenceActivity: AppCompatActivity() {
         }
         recycler_view.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
+Log.e("view", view.toString())
 
                 var name: String = student_name.get(position).fullname
                 var classs: String = student_name.get(position).classs
@@ -300,6 +321,7 @@ class AbsenceActivity: AppCompatActivity() {
                 studentclass.text=classs
                 PreferenceManager().setStudent_ID(ncontext,id.toString())
                 PreferenceManager().setStudentName(ncontext,name)
+                progressDialog.visibility = View.VISIBLE
 
                 callStudentLeaveInfo()
                 dialog.dismiss()

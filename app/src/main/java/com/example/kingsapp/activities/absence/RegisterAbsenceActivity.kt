@@ -14,6 +14,8 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -79,6 +81,8 @@ var outputFormats: SimpleDateFormat? = null
 lateinit var student_name:ArrayList<StudentList>
 lateinit var backarrow_registerabsence : ImageView
 lateinit var relativieabsence:RelativeLayout
+private lateinit var progressDialog: RelativeLayout
+
 class RegisterAbsenceActivity:AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -205,7 +209,9 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         backarrow_registerabsence = findViewById(R.id.backarrow_registerabsence)
         calendar = Calendar.getInstance()
        // outputFormats = SimpleDateFormat("yyyy-MM-dd", Locale("ar"))
-
+        progressDialog = findViewById(R.id.progressDialog)
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
         if (PreferenceManager().getLanguage(context).equals("ar"))
 
         {
@@ -318,6 +324,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
     }
 
     private fun callAbsenceSubmitApi(from: String, tDate: String, reasonAPI: String) {
+        //progressDialog.visibility = View.VISIBLE
+
         var devicename:String= (Build.MANUFACTURER
                 + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                 + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT]
@@ -333,6 +341,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+                //progressDialog.visibility = View.GONE
                 if(response.body()!!.status.equals(100))
                 {
                     showErrorAlert(context,"Successfully submitted your absence.","Success")

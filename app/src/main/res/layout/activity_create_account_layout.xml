@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="Create account"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="24dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -108,6 +108,9 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:textColorHint="@color/border_grey"
+                app:boxStrokeColor="@color/border_grey"
+                app:hintTextColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/textView24">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -115,6 +118,8 @@
                     android:layout_width="match_parent"
                     android:singleLine="true"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/border_grey"
                     android:hint="Email-ID" />
 
             </com.google.android.material.textfield.TextInputLayout>

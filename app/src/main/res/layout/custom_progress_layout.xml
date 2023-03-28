@@ -35,6 +35,7 @@
         android:layout_centerVertical="true"
         android:visibility="gone"
         android:layout_alignLeft="@+id/imageView"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        />
 
 </RelativeLayout>

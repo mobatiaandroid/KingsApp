@@ -49,9 +49,9 @@ class AbsenceStudentListAdapter(
         val nameclass = student_name[position].classs
         holder.studentName.setText(namelist)
         holder.studentclass.setText(nameclass)
-        holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener() {
 
-
+Log.e("Suceess","Success")
             var foundPosition = -1
             var isFound: Boolean = false
 

@@ -48,15 +48,14 @@
     <string-array name="setting_list">
         <item> تغيير إعدادات التطبيق</item>
         <item>شروط الخدمة</item>
-        <item> ارسل لنا عبر البريد الإلكتروني</item>
+        <item> تعليق</item>
         <item> درس تعليمي</item>
+        <item>احذف حسابي</item>
         <item>تغيير كلمة المرور</item>
         <item>تسجيل خروج</item>
 
-
-
-
     </string-array>
+
 
     <string-array name="about_us_list">
         <item> دليل الموظفين</item>
@@ -132,14 +131,16 @@
     <string-array name="home_list_items">
 
         <item>  بيت </item>
-        <item>  التقويم المدرسي </item>
+        <item>  بيانات الطالب </item>
+        <item>  التقويم المدرسي</item>
         <item>  الإبلاغ عن الغياب</item>
         <item>  الجدول الزمني</item>
-        <item>  أساسيات الوالدين</item>
-        <item>  مخطط الطالب</item>
-        <item>  التقارير </item>
+        <item> أساسيات الوالدين</item>
+        <item> التقارير </item>
         <item>  نماذج</item>
-        <item>  تعليمات البريد الإلكتروني</item>
+        <item>  مراسلات الوالديني</item>
+        <item>  تطبيقاتي</item>
+        <item>اتصل بناي</item>
 
     </string-array>
     <string-array name="student_list">

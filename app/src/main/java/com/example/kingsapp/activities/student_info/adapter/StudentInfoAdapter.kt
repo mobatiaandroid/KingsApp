@@ -31,7 +31,8 @@ internal class StudentInfoAdapter(
     private val name: TextInputEditText,
     private val address: TextInputEditText,
     private val classs: TextInputEditText,
-    private val dialog: BottomSheetDialog
+    private val dialog: BottomSheetDialog,
+    private val crossicon: ImageView
 ) :
     RecyclerView.Adapter<StudentInfoAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {

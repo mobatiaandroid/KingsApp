@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.settings.TermsOfServiceActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
@@ -146,7 +145,7 @@ class SettingFragment: Fragment() {
                         ).show()
                     }
                     if (position == 4) {
-                        showSuccessAlert(mContext, "Do you want to Delete Account?")
+                        showSuccessAlertForDelete(mContext, "Do you want to Delete Account?")
                     }
                     if (position == 5) {
                         showChangePasswordPopUp()
@@ -264,6 +263,65 @@ class SettingFragment: Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+fun showSuccessAlertForDelete(mContext: Context, s: String)
+{
+    val dialog = Dialog(mContext)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    dialog.setCancelable(false)
+    dialog.setContentView(R.layout.alert_dialogue_layout)
+    var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+
+    var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+    var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+    var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+    var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
+    alertHead.text = s
+    btn_Ok.setOnClickListener()
+    {
+        if(CommonClass.isInternetAvailable(this.mContext)) {
+           callDeleteApicall()
+        }
+        else
+        {
+            Toast.makeText(this.mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+        }
+        dialog.dismiss()
+    }
+    btn_Cancel.setOnClickListener()
+    {
+        dialog.dismiss()
+    }
+    dialog.show()
+}
+
+    private fun callDeleteApicall() {
+        val call: Call<ResponseBody> = ApiClient.getApiService().delete("Bearer "+PreferenceManager().getAccessToken(mContext)
+            .toString())
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                Log.e("Response",response.body().toString())
+                PreferenceManager().setuser_id(mContext,"")
+                PreferenceManager().setAccessToken(mContext,"")
+
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
     private fun callLogoutApi() {

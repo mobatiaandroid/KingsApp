@@ -98,7 +98,7 @@ interface ApiService {
 
 
     /*************Delete My Account****************/
-    @GET("api/v1/home-guest")
+    @GET("api/v1/delete-account")
     @Headers("Accept: application/json")
     fun delete(
         @Header("Authorization") token:String

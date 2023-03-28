@@ -223,6 +223,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                         }
 
                     }
+        Log.e("empty1", mEventArrayListFilterListYear.size.toString())
         if(mEventArrayListFilterListYear.size==0)
         {
             Log.e("empty", mEventArrayListFilterListYear.size.toString())
@@ -545,7 +546,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     filterWeekArray()
 
                     daySpinner.setText("Week View")
-                    emptyImg.visibility=View.GONE
+                   // emptyImg.visibility=View.GONE
 
                    /* list!!.layoutManager = LinearLayoutManager(mcontext)
                     val studentlist_adapter =
@@ -556,6 +557,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     listSpinner.setVisibility(
                         View.GONE
                     )
+                    daySpinner.setText("Year View")
 
                     val intent = Intent(mcontext, CalendarYearActivity::class.java)
                     //intent.putExtra("BUNDLE", AppController.holidayArrayListYear as Serializable)
@@ -646,7 +648,9 @@ for(i in mEventArrayListFilterListMonth.indices) {
     fun filterYearlist(mEventArrayListYear: ArrayList<CalendarList>)
     {
         mEventArrayListFilterListYear= ArrayList()
-        Log.e("Success", mEventArrayListYear.toString())
+        val Monthname=intent.getStringExtra("monthName")
+        var dateyear:String="2023"
+        header.text = Monthname+" " +dateyear
         for(j in mEventArrayListYear.indices)
         {
 

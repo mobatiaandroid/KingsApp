@@ -46,7 +46,7 @@ class CalendarYearAdapter (context: Context, data:ArrayList<String>):
 
         init {
             titleLabel = itemView.findViewById<TextView>(R.id.titleLabel)
-            for (i in 0..41) {
+            for (i in 0..49) {
                 val resID: Int =
                     mContext.resources.getIdentifier("label_$i", "id", mContext.packageName)
                 Log.e("res",resID.toString())
@@ -62,6 +62,7 @@ class CalendarYearAdapter (context: Context, data:ArrayList<String>):
              }*/
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -130,10 +131,10 @@ class CalendarYearAdapter (context: Context, data:ArrayList<String>):
         holder.titleLabel!!.setText(monthName)
 
 
-        /*for (i in 1..49) {
+        for (i in 1..49) {
 
             holder.dateTextView[i]!!.setText("")
-        }*/
+        }
 
         var lastDayOfThisMonth = 30
         val c = Calendar.getInstance()

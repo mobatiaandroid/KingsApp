@@ -19,9 +19,9 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/listStatus"
             android:text="welcome kings"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/grey"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
         <TextView
             android:id="@+id/listStatus"
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/chevron_right" />
         <RelativeLayout
             android:id="@+id/timeanddateli"
@@ -65,7 +65,7 @@
                 android:textStyle="bold"
                 android:paddingBottom="10dp"
                 android:textColor="@color/greyy"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:text="13 Sep 2022"/>
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/time"
@@ -80,7 +80,7 @@
                 android:textStyle="bold"
                 android:paddingBottom="10dp"
                 android:textColor="@color/greyy"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:text="9:30 pm"/>
         </RelativeLayout>
         <View

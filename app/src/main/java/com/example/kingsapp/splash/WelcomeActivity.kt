@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -19,6 +20,7 @@ class WelcomeActivity : AppCompatActivity() {
     lateinit var createAccountBtn: Button
     lateinit var signInBtn:AppCompatButton
     lateinit var joinGuestTxt: TextView
+    lateinit var guestBgImg:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)// will hide title
@@ -34,6 +36,11 @@ class WelcomeActivity : AppCompatActivity() {
         createAccountBtn=findViewById(R.id.createAccountBtn)
         signInBtn = findViewById(R.id.signInBtn)
         joinGuestTxt = findViewById(R.id.joinGuestTxt)
+        guestBgImg = findViewById(R.id.guestBgImg)
+        guestBgImg.setOnClickListener {
+            val intent = Intent(mContext, HomeActivity::class.java)
+            startActivity(intent)
+        }
         joinGuestTxt.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)

@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +40,7 @@ class MessageFragment : Fragment() {
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var menu : ImageView
     lateinit var message_array:ArrayList<MessageListModel>
+    private lateinit var progressDialog: RelativeLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +68,7 @@ class MessageFragment : Fragment() {
     }
 
     private fun NotificationApiCall() {
+        progressDialog.visibility = View.VISIBLE
         message_array.clear()
         val studentbody= AbsenceLeaveApiModel(PreferenceManager().getStudent_ID(mContext)!!,0,20)
         val call: Call<NotificationModel> = ApiClient.getApiService().notification("Bearer "+
@@ -75,6 +80,8 @@ class MessageFragment : Fragment() {
                 call: Call<NotificationModel>,
                 response: Response<NotificationModel>
             ) {
+                progressDialog.visibility = View.GONE
+
                 if (response.body()!!.status.equals(100))
                 {
                     message_array.addAll(response.body()!!.notifications)
@@ -116,7 +123,10 @@ class MessageFragment : Fragment() {
 
         messagerec = (rootView.findViewById<View>(R.id.messagerec) as? RecyclerView)!!
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
-
+        progressDialog = rootView.findViewById(R.id.progressDialog)
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
+        progressDialog.startAnimation(aniRotate)
         menu.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
@@ -145,6 +155,7 @@ class MessageFragment : Fragment() {
                     intent.putExtra("id",message_array.get(position).id)
                     intent.putExtra("title",message_array.get(position).title)
                     intent.putExtra("url",message_array.get(position).url)
+                    intent.putExtra("createdate",message_array.get(position).created_at)
                     Log.e("image",message_array.get(position).title)
                     Log.e("url",message_array.get(position).url)
                     activity?.startActivity(intent)
