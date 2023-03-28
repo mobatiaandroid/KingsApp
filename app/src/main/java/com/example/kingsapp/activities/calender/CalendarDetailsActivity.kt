@@ -275,8 +275,9 @@ lateinit var linearLayoutManager:LinearLayoutManager
   linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
         back.setOnClickListener {
-            val intent = Intent(mContext, SchoolCalendarActivity::class.java)
-            startActivity(intent)
+            finish()
+          /*  val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+            startActivity(intent)*/
         }
 
         mLoadUrl =

@@ -833,7 +833,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
 
                         if (key.equals("1"))
                         {
-                            Toast.makeText(mContext, "This Features Cannot be added to the Home Screen !!!", Toast.LENGTH_SHORT)
+                            Toast.makeText(mContext, "This Feature cannot be added to the Home Screen !!!", Toast.LENGTH_SHORT)
                                 .show()
                         }
                         else
