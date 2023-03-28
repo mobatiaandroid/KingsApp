@@ -1103,6 +1103,25 @@ class PreferenceManager {
         b = prefs.getString("value", "").toString()
         return b
     }
+    fun setMonthSelected(context: Context?, month: String) {
+        val prefs = context!!.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        editor.putString("month", month)
+        editor.commit()
+    }
+
+    fun getMonthSelected(context: Context?): String {
+        var b = ""
+        val prefs = context!!.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        b = prefs.getString("month", "").toString()
+        return b
+    }
 }
 
 

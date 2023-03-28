@@ -354,7 +354,9 @@ for(i in mEventArrayListFilterListMonth.indices) {
         var dateYear = simpleDateFormat2.format(month.time).toString()
         count_month=dateMonth.toInt()-1
         count_year=dateYear.toInt()
+        //PreferenceManager().setMonthSelected(mcontext,month_tt)
         header.text = month_tt +" " +count_year
+        //header.text=PreferenceManager().getMonthSelected(mcontext)
      Log.e("count_month", count_month.toString())
         arrow_prev.setOnClickListener() {
             nums_Array = ArrayList()
@@ -373,6 +375,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     val count1=count_month!!+1
                     Log.e("new", count1.toString())
                     filtermonthlist(count1.toString(),mEventArrayListYear)
+                    //filterYearlist(mEventArrayListFilterListMonth)
                 }
                 else if(count_month==9)
                 {
@@ -381,6 +384,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     val count1=count_month!!+1
                     Log.e("new", count1.toString())
                     filtermonthlist(count1.toString(),mEventArrayListYear)
+                    //filterYearlist(mEventArrayListFilterListMonth)
                 }
 
                 else
@@ -391,6 +395,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                     val count= "0"+count1
                     Log.e("new", count.toString())
                     filtermonthlist(count.toString(),mEventArrayListYear)
+                    //filterYearlist(mEventArrayListFilterListMonth)
                 }
 
                 //  holiday()
@@ -423,6 +428,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 val count= "0"+count1
                 Log.e("new", count.toString())
                 filtermonthlist(count.toString(),mEventArrayListYear)
+                //filterYearlist(mEventArrayListFilterListMonth)
                 // holiday()
             } else {
                 count_year = count_year!! + 1
@@ -433,10 +439,11 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 daysinweek()
                 setTextview()
                 holiday()
-               /* val count1=count_month!!+1
+                //filtermonthlist(count.toString(),mEventArrayListYear)
+                val count1=count_month!!+1
                 val count= "0"+count1
                 Log.e("new", count.toString())
-                filtermonthlist(count.toString(),mEventArrayListFilterListMonth)*/
+                filtermonthlist(count.toString(),mEventArrayListFilterListMonth)
                 // holiday()
             }
         }
@@ -590,7 +597,8 @@ for(i in mEventArrayListFilterListMonth.indices) {
 
         list.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-
+Log.e("detailarray",mEventArrayListFilterMonth.size.toString())
+Log.e("detailarray",mEventArrayListFilterMonth[position].title)
                 val intent = Intent(mcontext, CalendarDetailsActivity::class.java)
                 intent.putExtra("tittle", mEventArrayListFilterMonth.get(position).title)
                 intent.putExtra("des", mEventArrayListFilterMonth.get(position).description)
@@ -650,13 +658,19 @@ for(i in mEventArrayListFilterListMonth.indices) {
         mEventArrayListFilterListYear= ArrayList()
         val Monthname=intent.getStringExtra("monthName")
         var dateyear:String="2023"
-        header.text = Monthname+" " +dateyear
+       // header.text = Monthname+" " +dateyear
         for(j in mEventArrayListYear.indices)
         {
 
             val monthdate:String
             val monthNumber=intent.getStringExtra("monthNumber")
+            var monthName=intent.getStringExtra("monthName")
+            var yearValue=intent.getStringExtra("yearValue")
+
             Log.e("Yearmonth", monthNumber.toString())
+            Log.e("yearValue", yearValue.toString())
+            txtMYW.setText(monthName+"  " +yearValue)
+            header.text =monthName+"  " +yearValue
             monthdate=mEventArrayListYear.get(j).start_date
             Log.e("Monthdate",monthdate)
             val monthdate1=monthdate.split("-")
@@ -664,7 +678,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
             val str2:String=monthdate1[0]
             Log.e("str1", str1.toString())
             Log.e("str2", str2.toString())
-            if(str1.equals(monthNumber))
+            if(str1.equals(monthNumber)&&str2.equals("2023"))
             {
 
                 Log.e("Success",str1)
@@ -672,7 +686,7 @@ for(i in mEventArrayListFilterListMonth.indices) {
                 list.visibility=View.VISIBLE
                 emptyImg.visibility=View.GONE
                 mEventArrayListFilterListYear.add(mEventArrayListYear.get(j))
-                Log.e("mEventArrayListFilterListYear", mEventArrayListFilterListYear.toString())
+                Log.e("mEventArrayListFilterListYear if", mEventArrayListFilterListYear.toString())
 
 
             }
@@ -680,10 +694,10 @@ for(i in mEventArrayListFilterListMonth.indices) {
             {
                 Log.e("Success",str1)
                 Log.e("Success",monthNumber)
-                list.visibility=View.VISIBLE
-                emptyImg.visibility=View.GONE
+                list.visibility=View.GONE
+                emptyImg.visibility=View.VISIBLE
                 mEventArrayListFilterListYear.add(mEventArrayListYear.get(j))
-                Log.e("mEventArrayListFilterListYear", mEventArrayListFilterListYear.toString())
+                Log.e("mEventArrayListFilterListYear elseif", mEventArrayListFilterListYear.toString())
             }
 
 

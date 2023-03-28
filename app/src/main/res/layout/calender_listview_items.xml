@@ -39,6 +39,8 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginRight="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_toLeftOf="@+id/arrowImg"
                 android:text="message1" />
             <RelativeLayout

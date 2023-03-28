@@ -1,11 +1,13 @@
 package com.example.kingsapp.activities.home
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.TypedArray
 import android.graphics.Color
@@ -19,6 +21,8 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -320,11 +324,30 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             }
             else
             {
-                top_navigation_li.visibility = View.GONE
-                studentListRecyclerview.visibility = View.GONE
+                if (ActivityCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.CALL_PHONE
+                    ) != PackageManager.PERMISSION_GRANTED
+                )
+                {
+                    checkPermissionContactUs()
 
-                fragment = ContactFragment()
-                initializeFragment(fragment)
+
+                }
+                else {
+                    top_navigation_li.visibility = View.GONE
+                    studentListRecyclerview.visibility = View.GONE
+
+                    fragment = ContactFragment()
+                    initializeFragment(fragment)
+                }
+
             }
         }
         studentListRecyclerview.addOnItemClickListener(object : OnItemClickListener {
@@ -725,19 +748,56 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 }
                 else
                 {
+                    if (ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.CALL_PHONE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    )
+                    {
+                        checkPermissionContactUs()
 
-                    studentListRecyclerview.visibility=View.GONE
-                    top_navigation_li.visibility=View.GONE
-                    fragment = ContactFragment()
-                    replaceFragmentsSelected(position)
-                    drawerLayout.closeDrawer(linearLayout)
+
+                    }
+                    else {
+                        studentListRecyclerview.visibility=View.GONE
+                        top_navigation_li.visibility=View.GONE
+                        fragment = ContactFragment()
+                        replaceFragmentsSelected(position)
+                        drawerLayout.closeDrawer(linearLayout)
+                    }
+
+
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
             }
 
         }
-
+    private fun checkPermissionContactUs() {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
+//            || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_NOTIFICATION_POLICY) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.CALL_PHONE
+//                    ,
+//                    Manifest.permission.ACCESS_NOTIFICATION_POLICY
+                ),
+                123
+            )
+        }
+    }
     fun showfragmenthome() {
         val transaction = manager.beginTransaction()
         val fragment = HomeFragment()
