@@ -24,11 +24,10 @@
 
             <ImageView
                 android:id="@+id/homeImg"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
-                android:background="@drawable/home4"
-                 />
+                android:background="@drawable/home_clicked" />
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/homeText"
                 android:layout_width="wrap_content"
@@ -49,10 +48,10 @@
 
             <ImageView
                 android:id="@+id/messageImg"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:src="@drawable/message" />
+                android:src="@drawable/email" />
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/messageText"
                 android:layout_width="wrap_content"
@@ -70,12 +69,14 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:layout_weight="20">
+
             <ImageView
                 android:id="@+id/profileImg"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="4dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/contact" />
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/chatting" />
+
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/contactText"
                 android:layout_width="wrap_content"
@@ -93,14 +94,14 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:layout_weight="20">
+
             <ImageView
                 android:id="@+id/otherImg"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="20"
-                android:background="@drawable/settings"
-                />
+                android:background="@drawable/settings" />
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/otherText"
                 android:layout_width="wrap_content"

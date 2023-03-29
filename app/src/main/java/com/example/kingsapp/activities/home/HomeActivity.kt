@@ -21,6 +21,7 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -68,21 +69,22 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     val manager = supportFragmentManager
     lateinit var shadowBuilder: MyDragShadowBuilder
     lateinit var drawerLayout: DrawerLayout
-    lateinit var top_navigation_li : RelativeLayout
-    lateinit var messageRel : RelativeLayout
-    lateinit var settingRel  : RelativeLayout
-    lateinit var homeRel : RelativeLayout
-    lateinit var profileRel : RelativeLayout
-     lateinit var otherImg : ImageView
-     lateinit var otherText : TextView
-     lateinit var messageImg : ImageView
-     lateinit var messageText : TextView
-     lateinit var profileImg : ImageView
-     lateinit var contactText : TextView
-     lateinit var homeImg : ImageView
+    lateinit var top_navigation_li: RelativeLayout
+    lateinit var messageRel: ConstraintLayout
+    lateinit var settingRel: ConstraintLayout
+    lateinit var homeRel: ConstraintLayout
+    lateinit var profileRel: ConstraintLayout
+    lateinit var otherImg: ImageView
+    lateinit var otherText: TextView
+    lateinit var messageImg: ImageView
+    lateinit var messageText: TextView
+    lateinit var profileImg: ImageView
+    lateinit var contactText: TextView
+    lateinit var homeImg: ImageView
 
-     lateinit var homeText : TextView
-    lateinit var bottomLinear : LinearLayout
+    lateinit var homeText: TextView
+    lateinit var bottomLinear: ConstraintLayout
+
     //private lateinit var navView: NavigationView
     lateinit var menu_btn: ImageView
     lateinit var student_profile : ImageView
@@ -141,12 +143,12 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         otherText = findViewById<View>(R.id.otherText) as TextView
         otherImg = findViewById<View>(R.id.otherImg) as ImageView
         top_navigation_li = findViewById<View>(R.id.top_navigation_li) as RelativeLayout
-        messageRel = findViewById<View>(R.id.messageRel) as RelativeLayout
-        settingRel = findViewById<View>(R.id.settingRel) as RelativeLayout
-        homeRel = findViewById<View>(R.id.homeRel) as RelativeLayout
-        profileRel = findViewById<View>(R.id.profileRel) as RelativeLayout
+        messageRel = findViewById<View>(R.id.messageRel) as ConstraintLayout
+        settingRel = findViewById<View>(R.id.settingRel) as ConstraintLayout
+        homeRel = findViewById<View>(R.id.homeRel) as ConstraintLayout
+        profileRel = findViewById<View>(R.id.profileRel) as ConstraintLayout
         profileImg = findViewById(R.id.profileImg) as ImageView
-        bottomLinear = findViewById<View>(R.id.bottomLinear) as LinearLayout
+        bottomLinear = findViewById<View>(R.id.bottomLinear) as ConstraintLayout
         menu_btn = findViewById<View>(R.id.hambrgr_btn) as ImageView
         student_profile = findViewById<View>(R.id.student_profile) as ImageView
         studentListRecyclerview = findViewById<View>(R.id.studentlistrec) as RecyclerView
@@ -225,14 +227,15 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         }
 
         homeRel.setOnClickListener {
-            PreferenceManager().setvalue(mContext,"")
-            homeImg.setBackgroundResource(R.drawable.home4)
+            PreferenceManager().setvalue(mContext, "")
+            homeImg.setBackgroundResource(R.drawable.home_clicked)
             homeText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
             otherText.setTextColor(Color.parseColor("#7F8B93"));
-            messageImg.setBackgroundResource(R.drawable.message4)
+            messageImg.setBackgroundResource(R.drawable.email)
             messageText.setTextColor(Color.parseColor("#7F8B93"));
             contactText.setTextColor(Color.parseColor("#7F8B93"));
+            profileImg.setBackgroundResource(R.drawable.chatting)
 
             fragment = HomeFragment()
             initializeFragment(fragment)
@@ -244,22 +247,20 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
 
             // bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
-            messageImg.setBackgroundResource(R.drawable.message_white)
+            messageImg.setBackgroundResource(R.drawable.email_clicked)
             messageText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
             otherText.setTextColor(Color.parseColor("#7F8B93"));
-            homeImg.setBackgroundResource(R.drawable.home_icon_grey)
+            homeImg.setBackgroundResource(R.drawable.home)
             homeText.setTextColor(Color.parseColor("#7F8B93"));
             contactText.setTextColor(Color.parseColor("#7F8B93"));
-            if (PreferenceManager().getAccessToken(mContext).equals(""))
-            {
-                if (PreferenceManager().getvalue(mContext).equals("0"))
-                {
+            profileImg.setBackgroundResource(R.drawable.chatting)
+
+            if (PreferenceManager().getAccessToken(mContext).equals("")) {
+                if (PreferenceManager().getvalue(mContext).equals("0")) {
                     studentListRecyclerview.visibility = View.GONE
                     top_navigation_li.visibility = View.GONE
-                }
-                else
-                {
+                } else {
                     studentListRecyclerview.visibility = View.VISIBLE
                     top_navigation_li.visibility = View.VISIBLE
                 }
@@ -278,16 +279,18 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             //(mContext as MainActivity).overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up )
         }
         settingRel.setOnClickListener {
-            PreferenceManager().setvalue(mContext,"0")
+            PreferenceManager().setvalue(mContext, "0")
             studentListRecyclerview.visibility = View.GONE
             top_navigation_li.visibility = View.GONE
-            otherImg.setBackgroundResource(R.drawable.setting_white)
+            otherImg.setBackgroundResource(R.drawable.settings_clicked)
             otherText.setTextColor(Color.parseColor("#FFFFFFFF"));
-            messageImg.setBackgroundResource(R.drawable.message4)
+            messageImg.setBackgroundResource(R.drawable.email)
             messageText.setTextColor(Color.parseColor("#7F8B93"));
-            homeImg.setBackgroundResource(R.drawable.home_icon_grey)
+            homeImg.setBackgroundResource(R.drawable.home)
             homeText.setTextColor(Color.parseColor("#7F8B93"));
             contactText.setTextColor(Color.parseColor("#7F8B93"));
+            profileImg.setBackgroundResource(R.drawable.chatting)
+
 
             //  bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
             fragment = SettingFragment()
@@ -298,13 +301,13 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
         profileRel.setOnClickListener {
 
-            profileImg.setBackgroundResource(R.drawable.contact)
+            profileImg.setBackgroundResource(R.drawable.chatting_clicked)
             contactText.setTextColor(Color.parseColor("#FFFFFFFF"));
             otherImg.setBackgroundResource(R.drawable.settings)
             otherText.setTextColor(Color.parseColor("#7F8B93"));
-            messageImg.setBackgroundResource(R.drawable.message4)
+            messageImg.setBackgroundResource(R.drawable.email)
             messageText.setTextColor(Color.parseColor("#7F8B93"));
-            homeImg.setBackgroundResource(R.drawable.home_icon_grey)
+            homeImg.setBackgroundResource(R.drawable.home)
             homeText.setTextColor(Color.parseColor("#7F8B93"));
 
 
