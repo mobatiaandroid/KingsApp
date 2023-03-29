@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
@@ -464,14 +463,14 @@ class TimeTableActivity:AppCompatActivity() {
                         if (!studentImg.equals("")) {
                             Glide.with(ncontext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
+                                .placeholder(R.drawable.profile_icon_grey)
+                                .error(R.drawable.profile_icon_grey)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         } else {
-                            imagicon.setImageResource(R.drawable.profile_photo)
+                            imagicon.setImageResource(R.drawable.profile_icon_grey)
                         }
 
                     } else {
@@ -488,14 +487,14 @@ class TimeTableActivity:AppCompatActivity() {
                         if (!studentImg.equals("")) {
                             Glide.with(ncontext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
+                                .placeholder(R.drawable.profile_icon_grey)
+                                .error(R.drawable.profile_icon_grey)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         } else {
-                            imagicon.setImageResource(R.drawable.profile_photo)
+                            imagicon.setImageResource(R.drawable.profile_icon_grey)
                         }
                     }
 

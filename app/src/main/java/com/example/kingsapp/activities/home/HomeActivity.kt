@@ -359,9 +359,9 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
 
                 Glide.with(mContext) //1
-                    .load(R.drawable.profile_photo)
-                    .placeholder(R.drawable.profile_photo)
-                    .error(R.drawable.profile_photo)
+                    .load(R.drawable.profile_icon_grey)
+                    .placeholder(R.drawable.profile_icon_grey)
+                    .error(R.drawable.profile_icon_grey)
                     .skipMemoryCache(true) //2
                     .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                     .transform(CircleCrop()) //4

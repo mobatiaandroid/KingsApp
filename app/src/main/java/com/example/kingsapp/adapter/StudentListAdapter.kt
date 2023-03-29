@@ -41,9 +41,9 @@ class StudentListAdapter(private val context: Context, private val parentassoict
         Log.e("list",parentassoictionlist.toString())
         val list = parentassoictionlist[position].fullname
 
-        holder.stud_profile .setImageResource(R.drawable.profile_photo)
+        holder.stud_profile.setImageResource(R.drawable.profile_icon_grey)
         holder.stud_profile.setOnClickListener {
-            recyclerView.visibility=View.GONE
+            recyclerView.visibility = View.GONE
 
         }
         Log.e("studentlistimages", list.toString())

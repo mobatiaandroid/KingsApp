@@ -35,7 +35,7 @@
         android:layout_height="35dp"
         android:gravity="center"
         android:scaleType="fitCenter"
-        android:src="@drawable/profile_photo"
+        android:src="@drawable/profile_icon_grey"
         android:layout_toRightOf="@id/relstudenttext" />
 
 

@@ -110,15 +110,15 @@ class StudentInfoActivity:AppCompatActivity (){
                         {
                             Glide.with(mContext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
+                                .placeholder(R.drawable.profile_icon_grey)
+                                .error(R.drawable.profile_icon_grey)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         }
                         else{
-                            imagicon.setImageResource(R.drawable.profile_photo)
+                            imagicon.setImageResource(R.drawable.profile_icon_grey)
                         }
 
                     }
@@ -135,15 +135,15 @@ class StudentInfoActivity:AppCompatActivity (){
                         {
                             Glide.with(mContext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
+                                .placeholder(R.drawable.profile_icon_grey)
+                                .error(R.drawable.profile_icon_grey)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         }
                         else{
-                            imagicon.setImageResource(R.drawable.profile_photo)
+                            imagicon.setImageResource(R.drawable.profile_icon_grey)
                         }
                     }
                     if(CommonClass.isInternetAvailable(mContext)) {

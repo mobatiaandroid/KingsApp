@@ -26,17 +26,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.AbsenceActivity
-import com.example.kingsapp.activities.apps.AppsActivity
-import com.example.kingsapp.activities.calender.SchoolCalendarActivity
-import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.MessageFragment
-import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
-import com.example.kingsapp.activities.reports.ReportsActivity
-import com.example.kingsapp.activities.student_info.StudentInfoActivity
-import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.adapter.StudentListAdapter
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.HomeFragment
@@ -51,7 +43,6 @@ import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.system.exitProcess
 
 class HomeguestuserActivity: AppCompatActivity(),AdapterView.OnItemLongClickListener {
@@ -270,9 +261,9 @@ class HomeguestuserActivity: AppCompatActivity(),AdapterView.OnItemLongClickList
                 Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
 
                 Glide.with(mContext) //1
-                    .load(R.drawable.profile_photo)
-                    .placeholder(R.drawable.profile_photo)
-                    .error(R.drawable.profile_photo)
+                    .load(R.drawable.profile_icon_grey)
+                    .placeholder(R.drawable.profile_icon_grey)
+                    .error(R.drawable.profile_icon_grey)
                     .skipMemoryCache(true) //2
                     .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                     .transform(CircleCrop()) //4
