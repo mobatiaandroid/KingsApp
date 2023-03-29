@@ -21,6 +21,7 @@ import com.example.kingsapp.activities.apps.adapter.AppsAdapter
 import com.example.kingsapp.activities.apps.model.AppsList
 import com.example.kingsapp.activities.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
@@ -84,6 +85,7 @@ class AppsActivity:AppCompatActivity() {
             ) {
                 progressDialog.visibility = View.GONE
                 Log.e("Response",response.body().toString())
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
@@ -155,6 +157,11 @@ class AppsActivity:AppCompatActivity() {
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
@@ -182,7 +189,7 @@ class AppsActivity:AppCompatActivity() {
                 response: Response<AppsModel>
             ) {
                 progressDialog.visibility = View.GONE
-
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     list_name.addAll(response.body()!!.apps)
@@ -194,6 +201,11 @@ class AppsActivity:AppCompatActivity() {
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

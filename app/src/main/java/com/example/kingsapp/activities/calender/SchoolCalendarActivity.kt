@@ -21,7 +21,9 @@ import com.example.kingsapp.activities.calender.model.CalendarList
 import com.example.kingsapp.activities.calender.model.CalendarListModel
 import com.example.kingsapp.activities.calender.model.ListViewSpinnerModel
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -97,6 +99,7 @@ progressDialog.visibility=View.VISIBLE
                 response: Response<CalendarListModel>
             ) {
                 progressDialog.visibility=View.GONE
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     mEventArrayListYear.addAll(response.body()!!.calendar)
@@ -141,6 +144,11 @@ for(i in mEventArrayListYear.indices) {
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
+                }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 
@@ -262,6 +270,7 @@ for(i in mEventArrayListYear.indices) {
                 response: Response<CalendarListModel>
             ) {
                 progressDialog.visibility=View.GONE
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
 
                 {
@@ -315,6 +324,11 @@ for(i in mEventArrayListYear.indices) {
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
+                }
+                }
+                else{
+                    val intent = Intent(mcontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

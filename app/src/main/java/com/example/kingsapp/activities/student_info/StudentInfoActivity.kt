@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
@@ -85,6 +86,8 @@ class StudentInfoActivity:AppCompatActivity (){
 
 
                 Log.e("Response", response.body().toString())
+
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100)) {
 
                     student_name.addAll(response.body()!!.student_list)
@@ -155,6 +158,11 @@ class StudentInfoActivity:AppCompatActivity (){
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
@@ -181,6 +189,7 @@ class StudentInfoActivity:AppCompatActivity (){
                 response: Response<StudentInfoResponseModel>
             ) {
                 progressDialog.visibility=View.GONE
+                if (response.body() != null) {
                if (response.body()!!.status.equals(100))
                {
                    name.setText(response.body()!!.student_info.fullname)
@@ -192,6 +201,11 @@ class StudentInfoActivity:AppCompatActivity (){
                {
                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
             override fun onFailure(call: Call<StudentInfoResponseModel?>, t: Throwable) {

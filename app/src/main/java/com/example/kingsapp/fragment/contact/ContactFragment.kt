@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
+import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.InternetCheckClass
 import com.example.kingsapp.fragment.contact.adapter.ContactusAdapter
 import com.example.kingsapp.fragment.contact.model.ContactsListDetailModel
@@ -132,7 +134,8 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                 response: Response<ContactusModel>
             ) {
                 Log.e("respon",response.body().toString())
-                if(response.body()!!.status.equals("100"))
+                if (response.body() != null) {
+                if(response.body()!!.status.equals(100))
                 {
 
                 contactusdescription.addAll(response.body()!!.contactus)
@@ -150,8 +153,14 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                     Log.e("Username", PreferenceManager().getuser_id(com.example.kingsapp.fragment.mContext).toString())
 */
                 }
+                else
+                {
+                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                }
+                }
                 else{
-
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
                 mapFragment.getMapAsync { googleMap ->
                     Log.d("Map Working", "good")

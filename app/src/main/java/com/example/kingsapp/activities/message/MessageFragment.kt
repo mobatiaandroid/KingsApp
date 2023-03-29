@@ -19,6 +19,7 @@ import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
 import com.example.kingsapp.activities.apps.adapter.AppsAdapter
 import com.example.kingsapp.activities.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.message.adapter.MessageListAdapter
 import com.example.kingsapp.activities.message.model.MessageListModel
 import com.example.kingsapp.activities.message.model.NotificationModel
@@ -81,7 +82,7 @@ class MessageFragment : Fragment() {
                 response: Response<NotificationModel>
             ) {
                 progressDialog.visibility = View.GONE
-
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     message_array.addAll(response.body()!!.notifications)
@@ -100,6 +101,11 @@ class MessageFragment : Fragment() {
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status,mContext)
                 }
+                }
+                    else{
+                        val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                        startActivity(intent)
+                    }
             }
 
             override fun onFailure(call: Call<NotificationModel?>, t: Throwable) {

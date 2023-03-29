@@ -18,12 +18,14 @@ import com.example.kingsapp.activities.forms.adapter.FormListAdapter
 import com.example.kingsapp.activities.forms.model.FormList
 import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.parentessentials.adapter.ParentListAdapter
 import com.example.kingsapp.activities.parentessentials.model.ParentModel
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
 import com.example.kingsapp.constants.WebViewLoaderActivity
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
 import com.mobatia.nasmanila.api.ApiClient
@@ -68,8 +70,9 @@ class ParentEssentialsActivity: AppCompatActivity() {
                 response: Response<ParentModel>
             ) {
                 progressDialog.visibility = View.GONE
+                if (response.body() != null) {
                 Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals("100"))
+                if (response.body()!!.status.equals(100))
                 {
                     list_name.addAll(response.body()!!.parent_essentials)
                     parentList.layoutManager = linearLayoutManager
@@ -78,7 +81,12 @@ class ParentEssentialsActivity: AppCompatActivity() {
                 }
                 else
                 {
-
+                    CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
+                }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

@@ -32,6 +32,7 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.AppUtils
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -114,6 +115,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 response: Response<StudentListResponseModel>
             ) {
                 Log.e("Response",response.body().toString())
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
@@ -182,6 +184,11 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, context)
+                }
+                }
+                else{
+                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 
@@ -275,7 +282,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             }
         }
         studentSpinner.setOnClickListener {
-            Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
+
             studentlist_popup(student_name)
         }
         firstdayofabsence.setOnClickListener {
@@ -369,6 +376,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 response: Response<CommonResponse>
             ) {
                 //progressDialog.visibility = View.GONE
+                if (response.body() != null) {
                 if(response.body()!!.status.equals(100))
                 {
                     showErrorAlert(context,"Successfully submitted your absence.","Success")
@@ -381,6 +389,11 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, context)
+                }
+                }
+                else{
+                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 
