@@ -45,7 +45,6 @@ class TimeTableWeekListAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.weekTxt.setText(mWeekList[position].weekName)
         Log.e("Size", mWeekList[position].positionSelected.toString())
-
         if (mWeekList[position].positionSelected !== -1){
             holder.weekTxt.setTextColor(mContext.resources.getColor(R.color.kings_blue))
            // holder.lineImage.visibility = View.VISIBLE

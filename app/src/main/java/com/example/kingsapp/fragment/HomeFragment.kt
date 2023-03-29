@@ -510,7 +510,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                         ignoreCase = true
                     )
                 ) {
-                    classNameConstants.STUDENT
+                    classNameConstants.STUDENT_INFORMATION
                 } else {
                     mListItemArray[PreferenceManager()
                         .getbuttontwotextimage(mContext)!!.toInt()]
@@ -545,7 +545,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     ignoreCase = true
                 )
             ) {
-                classNameConstants.STUDENT
+                classNameConstants.STUDENT_INFORMATION
             } else {
                 mListItemArray[PreferenceManager()
                     .getbuttonthreetextimage(mContext)!!.toInt()]
@@ -582,7 +582,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     ignoreCase = true
                 )
             ) {
-                classNameConstants.STUDENT
+                classNameConstants.STUDENT_INFORMATION
             } else {
                 mListItemArray[PreferenceManager()
                     .getbuttonfourtextimage(mContext)!!.toInt()]
@@ -619,7 +619,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     ignoreCase = true
                 )
             ) {
-                classNameConstants.STUDENT
+                classNameConstants.STUDENT_INFORMATION
             } else {
                 mListItemArray[PreferenceManager()
                     .getbuttonfivetextimage(mContext)!!.toInt()]
@@ -652,7 +652,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     ignoreCase = true
                 )
             ) {
-                classNameConstants.STUDENT
+                classNameConstants.STUDENT_INFORMATION
             } else {
                 mListItemArray[PreferenceManager()
                     .getbuttonsixtextimage(mContext)!!.toInt()]
@@ -865,7 +865,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }
@@ -884,7 +884,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }
@@ -899,7 +899,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }
@@ -917,7 +917,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }
@@ -932,7 +932,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }
@@ -948,7 +948,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }
@@ -963,7 +963,7 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                     if (mListItemArray[sPosition] == "CCAs") {
                         relstring = "CCAS"
                     } else if (mListItemArray[sPosition] == "Student Information") {
-                        relstring = "STUDENT INFORMATION"
+                        relstring = "Student Information"
                     } else {
                         relstring = mListItemArray[sPosition]
                     }

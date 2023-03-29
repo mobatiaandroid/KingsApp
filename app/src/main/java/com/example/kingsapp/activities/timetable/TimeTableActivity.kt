@@ -205,7 +205,7 @@ class TimeTableActivity:AppCompatActivity() {
 
         weekListArray = ArrayList()
         Log.e("weekListArrayString", weekListArrayString.toString())
-        for (i in 0..weekListArrayString.size - 1) {
+        for (i in weekListArrayString.indices) {
             var weekModel =
                 WeekModel(
                     weekListArrayString.get(i).toString(),
@@ -251,19 +251,19 @@ class TimeTableActivity:AppCompatActivity() {
         dayOfTheWeek = sdf.format(d)
         Log.e("daofweek",dayOfTheWeek)
         when (dayOfTheWeek) {
-            "Sunday" -> {
+            "Monday" -> {
                 weekPosition = 1
             }
-            "Monday" -> {
+            "Tuesday" -> {
                 weekPosition = 2
             }
-            "Tuesday" -> {
+            "Wednesday" -> {
                 weekPosition = 3
             }
-            "Wednesday" -> {
+            "Thursday" -> {
                 weekPosition = 4
             }
-            "Thursday" -> {
+            "Friday" -> {
                 weekPosition = 5
             }
 
@@ -279,7 +279,10 @@ class TimeTableActivity:AppCompatActivity() {
             weekRecyclerList.scrollToPosition(5)
         }
         for (i in 0 until weekListArray.size) {
+           // Log.e("i", i.toString())
+
             if (i == weekPosition) {
+
                 weekListArray.get(i).positionSelected = i
 
             } else {

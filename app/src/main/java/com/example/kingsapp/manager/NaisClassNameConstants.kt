@@ -13,6 +13,6 @@ class NaisClassNameConstants {
     var APPS = "Apps"
     var CONTACTUS = "Contact Us"
     var CCAS = "CCAS "
-    var STUDENT = "STUDENT "
+   // var STUDENT = "STUDENT "
 
 }

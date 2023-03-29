@@ -243,6 +243,18 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             startActivity(intent)
         }
         relativieabsence.setOnClickListener {
+
+            if(firstdayofabsence.text.toString().trim().equals(""))
+            {
+                Toast.makeText(context, "Please select First day of absence", Toast.LENGTH_SHORT).show()
+            }
+
+            else{
+                if (reason_for_absence.text.toString().trim().equals("")){
+                    Toast.makeText(context, "Please enter reason for your absence", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
             reasonAPI=reason_for_absence.text.toString().trim()
             Log.e("Pass Value",fromDate+"  "+toDate+"   "+reasonAPI)
             val inputFormat2: DateFormat = SimpleDateFormat("d-m-yyyy")
@@ -259,6 +271,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             val t_date: String = outputFormat3.format(date3)
             Log.e("fd",t_date)
             callAbsenceSubmitApi(f_date,t_date,reasonAPI)
+                }
+            }
         }
         studentSpinner.setOnClickListener {
             Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
@@ -297,7 +311,12 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         }
 
         returnabsence.setOnClickListener {
-
+            if(firstdayofabsence.text.toString().trim().equals(""))
+            {
+                Toast.makeText(context, "Please select First day of absence", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
             val mcurrentTime = android.icu.util.Calendar.getInstance()
             val year = mcurrentTime.get(android.icu.util.Calendar.YEAR)
             val month = mcurrentTime.get(android.icu.util.Calendar.MONTH)
@@ -326,6 +345,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             dpd1.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(R.color.navyBlue);
 
         }
+        }
+
 
     }
 
