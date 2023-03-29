@@ -65,8 +65,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/kings_blue"
+        android:layout_height="10dp"
         android:layout_below="@+id/studentSpinner"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"/>
