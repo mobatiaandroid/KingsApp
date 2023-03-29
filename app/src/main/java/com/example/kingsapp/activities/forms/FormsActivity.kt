@@ -18,6 +18,7 @@ import com.example.kingsapp.activities.forms.adapter.FormListAdapter
 import com.example.kingsapp.activities.forms.model.FormList
 import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.parentessentials.adapter.ParentListAdapter
@@ -25,6 +26,7 @@ import com.example.kingsapp.activities.parentessentials.model.ParentessentialMod
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
 import com.example.kingsapp.constants.WebViewLoaderActivity
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
 import com.mobatia.nasmanila.api.ApiClient
@@ -68,7 +70,8 @@ class FormsActivity : AppCompatActivity() {
                 progressDialog.visibility = View.GONE
 
                 Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals("100"))
+                if (response.body() != null) {
+                if (response.body()!!.status.equals(100))
                 {
                     list_name.addAll(response.body()!!.forms)
                     parentList.layoutManager = linearLayoutManager
@@ -77,7 +80,12 @@ class FormsActivity : AppCompatActivity() {
                 }
                 else
                 {
-
+                    CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
+                }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

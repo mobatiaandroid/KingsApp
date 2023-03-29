@@ -448,6 +448,8 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 response: Response<HomeUserResponseModel>
             ) {
                 Log.e("respon",response.body().toString())
+                if (response.body() != null) {
+
                 if(response.body()!!.status.equals("100"))
                 {
                     val username= response.body()!!.home.user_details.name
@@ -471,16 +473,22 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                         }
                     }
 
-                }
+
                 else if(response.body()!!.status.equals("106"))
                 {
                     val intent = Intent(mContext, SigninyourAccountActivity::class.java)
                     startActivity(intent)
                 }
+
+                }
                 else{
                    // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
-
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
             override fun onFailure(call: Call<HomeUserResponseModel?>, t: Throwable) {

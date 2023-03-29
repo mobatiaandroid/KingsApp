@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.calender.adapter.StudentRecyclerCalenderAdapter
 import com.example.kingsapp.activities.calender.model.CalendarList
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
@@ -106,6 +107,7 @@ lateinit var linearLayoutManager:LinearLayoutManager
             ) {
 
                 Log.e("Response",response.body().toString())
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100)) {
 
                     student_name.addAll(response.body()!!.student_list)
@@ -118,6 +120,11 @@ lateinit var linearLayoutManager:LinearLayoutManager
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
+                }
+                    else{
+                        val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                        startActivity(intent)
+                    }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {

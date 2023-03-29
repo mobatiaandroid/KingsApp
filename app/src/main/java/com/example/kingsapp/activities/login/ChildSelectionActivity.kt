@@ -59,6 +59,7 @@ class ChildSelectionActivity:AppCompatActivity() {
                 response: Response<StudentListResponseModel>
             ) {
                 Log.e("Response",response.body().toString())
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
@@ -73,6 +74,11 @@ class ChildSelectionActivity:AppCompatActivity() {
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+                }
+                }
+                else{
+                    val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
             }
 

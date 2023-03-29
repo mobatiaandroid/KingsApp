@@ -20,6 +20,7 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.*
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
@@ -119,6 +120,8 @@ class ReportsActivity:AppCompatActivity() {
                 progressDialog.visibility=View.GONE
 
                 Log.e("Response",response.body().toString())
+
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     progressDialog.visibility=View.GONE
@@ -193,6 +196,11 @@ class ReportsActivity:AppCompatActivity() {
                     progressDialog.visibility=View.GONE
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                 }
+                }
+                    else{
+                        val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                        startActivity(intent)
+                    }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {

@@ -30,6 +30,7 @@ import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
@@ -147,6 +148,7 @@ class AbsenceActivity: AppCompatActivity() {
                 progressDialog.visibility = View.GONE
 
                 Log.e("Response",response.body().toString())
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
@@ -223,6 +225,12 @@ class AbsenceActivity: AppCompatActivity() {
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                 }
+
+            }
+            else{
+                val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                startActivity(intent)
+            }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
@@ -255,6 +263,7 @@ class AbsenceActivity: AppCompatActivity() {
                 response: Response<AbsenceListModel>
             ) {
                 progressDialog.visibility = View.GONE
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     absenceList.addAll(response.body()!!.leave_requests)
@@ -283,8 +292,11 @@ class AbsenceActivity: AppCompatActivity() {
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                 }
-
-
+                }
+                    else{
+                        val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                        startActivity(intent)
+                    }
               //  showErrorAlert(ncontext,"Successfully submitted your absence.","Success")
             }
 
