@@ -60,10 +60,7 @@ class AbsenceDeatilsActivity:AppCompatActivity() {
         studentNameText = findViewById(R.id.studentName)
         backtolist = findViewById(R.id.backtolist)
         backarrow = findViewById(R.id.backarrow)
-        backarrow.setOnClickListener {
-            val intent = Intent(ccontext, AbsenceActivity::class.java)
-            startActivity(intent)
-        }
+
         backtolist.setOnClickListener {
             val intent = Intent(ccontext, AbsenceActivity::class.java)
             startActivity(intent)

@@ -242,13 +242,14 @@ class TimeTableActivity:AppCompatActivity() {
         card_viewAll.visibility = View.VISIBLE
 
         recyclerinitializer()
-        timeTableAllRecycler.visibility = View.VISIBLE
-        var mRecyclerAllAdapter = TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel,timeTableListS)
-        timeTableAllRecycler.adapter = mRecyclerAllAdapter
+
+
 
         var sdf = SimpleDateFormat("EEEE")
         var d = Date()
+        Log.e("size", d.toString())
         dayOfTheWeek = sdf.format(d)
+        Log.e("daofweek",dayOfTheWeek)
         when (dayOfTheWeek) {
             "Sunday" -> {
                 weekPosition = 1
@@ -269,6 +270,74 @@ class TimeTableActivity:AppCompatActivity() {
             else -> {
                 weekPosition = 0
             }
+        }
+       // weekPosition = dayOfTheWeek.length
+        Log.e("weekposition", weekPosition.toString())
+       if (weekPosition < 3) {
+            weekRecyclerList.scrollToPosition(0)
+        } else {
+            weekRecyclerList.scrollToPosition(5)
+        }
+        for (i in 0 until weekListArray.size) {
+            if (i == weekPosition) {
+                weekListArray.get(i).positionSelected = i
+
+            } else {
+                weekListArray.get(i).positionSelected = -1
+            }
+        }
+        if (weekPosition != 0) {
+            timeTableAllRecycler.visibility = View.GONE
+            card_viewAll.visibility = View.GONE
+            //  timeTableAllRecycler.visibility=View.GONE
+            // tipContainer.visibility = View.GONE
+            timeTableSingleRecycler.visibility = View.VISIBLE
+//                    if (mRangeModel.size>0)
+//                    {
+            //card_viewAll.visibility = View.GONE
+            // timeTableAllRecycler.visibility = View.GONE
+            timeTableSingleRecycler.visibility = View.VISIBLE
+        timeTableAllRecycler.visibility = View.VISIBLE
+
+            if (weekPosition == 1) {
+
+
+            } else if (weekPosition == 2) {
+
+                var mRecyclerViewMainAdapter =
+                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+
+            } else if (weekPosition == 3) {
+            Log.e("Success","Successs")
+                var mRecyclerViewMainAdapter =
+                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+            } else if (weekPosition == 4) {
+                Log.e("Failed","Successs")
+                var mRecyclerViewMainAdapter =
+                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+            } else if (weekPosition == 5) {
+
+                var mRecyclerViewMainAdapter =
+                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+            }
+        }
+        else {
+            timeTableSingleRecycler.visibility = View.GONE
+            // timeTableAllRecycler.visibility = View.VISIBLE
+            // tipContainer.visibility = View.VISIBLE
+
+            card_viewAll.visibility = View.VISIBLE
+
+            recyclerinitializer()
+            timeTableAllRecycler.visibility = View.VISIBLE
+            var mRecyclerAllAdapter =
+                TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
+            timeTableAllRecycler.adapter = mRecyclerAllAdapter
+
         }
         weekRecyclerList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
@@ -309,9 +378,7 @@ class TimeTableActivity:AppCompatActivity() {
                     timeTableSingleRecycler.visibility = View.VISIBLE
                     if (weekPosition == 1) {
 
-                        var mRecyclerViewMainAdapter =
-                            TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
-                        timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+
                     } else if (weekPosition == 2) {
 
                         var mRecyclerViewMainAdapter =

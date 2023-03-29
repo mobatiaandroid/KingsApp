@@ -44,17 +44,35 @@ class SettingAdapter (
             holder.imageView3.visibility= View.GONE
             holder.imageView4.visibility= View.VISIBLE
         }
+        if (PreferenceManager().getAccessToken(context).equals(""))
 
-        if (position==6)
         {
+            if (position==6)
+            {
 
-            holder.txtUser.visibility=View.VISIBLE
-            holder.txtUser.text = "("+PreferenceManager().getUserCode(context)+")"
-        }
-        else{
+                holder.txtUser.visibility=View.VISIBLE
+                holder.txtUser.text = "(Guest)"
+            }
+            else{
 
-            holder.txtUser.visibility=View.GONE
+                holder.txtUser.visibility=View.GONE
+            }
         }
+        else
+        {
+            if (position==6)
+            {
+
+                holder.txtUser.visibility=View.VISIBLE
+                holder.txtUser.text = "("+PreferenceManager().getUserCode(context)+")"
+            }
+            else{
+
+                holder.txtUser.visibility=View.GONE
+            }
+        }
+
+
     }
 
     override fun getItemCount(): Int {

@@ -39,7 +39,7 @@ internal class StudentInfoAdapter(
         var studentSpinner: LinearLayout = view.findViewById(R.id.studentSpinner)
         var studentName: TextView = view.findViewById(R.id.studentName)
         var studentclass: TextView = view.findViewById(R.id.studentclass)
-        var check : ImageView = view.findViewById(R.id.check)
+       // var check : ImageView = view.findViewById(R.id.check)
     }
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -88,7 +88,7 @@ internal class StudentInfoAdapter(
         if (student_name.get(position).isclicked)
         {
             Log.e("true", student_name.get(position).isclicked.toString())
-            holder.check.setBackgroundResource(R.drawable.rectangle1)
+          //  holder.check.setBackgroundResource(R.drawable.rectangle1)
 
             var name: String = student_name.get(position).fullname
             var classs: String = student_name.get(position).classs
@@ -102,7 +102,7 @@ internal class StudentInfoAdapter(
         }
         else
         {
-            holder.check.setBackgroundResource(R.drawable.rectangle)
+          //  holder.check.setBackgroundResource(R.drawable.rectangle)
         }
 
     }

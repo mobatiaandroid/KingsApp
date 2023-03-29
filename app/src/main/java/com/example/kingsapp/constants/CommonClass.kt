@@ -117,6 +117,11 @@ class CommonClass {
                 showErrorAlert(context, "Already exists in the given range","Alert")
 
             }
+            else if (statusCode==300)
+            {
+                showErrorAlert(context, "Validation Error","Alert")
+
+            }
         }
         fun showErrorAlert(context: Context,message : String,msgHead : String)
         {
@@ -128,6 +133,8 @@ class CommonClass {
             var alertHead = dialog.findViewById(R.id.alertHead) as TextView
             var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
             var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+            var iconImageView=dialog.findViewById(R.id.iconImageView) as ImageView
+            iconImageView.setImageResource(R.drawable.ic_baseline_clear_24)
             text_dialog.text = message
             alertHead.text = msgHead
             btn_Ok.setOnClickListener()

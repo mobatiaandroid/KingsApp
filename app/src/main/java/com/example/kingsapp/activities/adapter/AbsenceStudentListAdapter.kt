@@ -31,7 +31,7 @@ class AbsenceStudentListAdapter(
         var studentSpinner: LinearLayout = view.findViewById(R.id.studentSpinner)
         var studentName: TextView = view.findViewById(R.id.studentName)
         var studentclass: TextView = view.findViewById(R.id.studentclass)
-        var check : ImageView = view.findViewById(R.id.check)
+        //var check : ImageView = view.findViewById(R.id.check)
 
     }
     override fun onCreateViewHolder(
@@ -49,7 +49,7 @@ class AbsenceStudentListAdapter(
         val nameclass = student_name[position].classs
         holder.studentName.setText(namelist)
         holder.studentclass.setText(nameclass)
-        holder.itemView.setOnClickListener() {
+        /*holder.itemView.setOnClickListener() {
 
 Log.e("Suceess","Success")
             var foundPosition = -1
@@ -90,7 +90,7 @@ Log.e("Suceess","Success")
         else
         {
             holder.check.setBackgroundResource(R.drawable.rectangle)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {

@@ -182,6 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:inputType="textPersonName"
+                android:textCursorDrawable="@color/kings_blue"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>

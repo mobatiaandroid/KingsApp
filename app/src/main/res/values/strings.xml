@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">KingsApp</string>
     <string name="SchoolCalender">School Calender</string>
-    <string name="StudentInfo">Student Info</string>
+    <string name="StudentInformation">Student Information</string>
     <string name="Canteen">Canteen</string>
     <string name="Payments">Payments</string>
     <string name="Timetable">Timetable</string>
@@ -29,7 +29,7 @@
     <string name="about_us">About Us</string>
     <string name="Select_Child">Select Child</string>
 
-    <string name="absence">Absence</string>
+    <string name="absence">Absence Reporting</string>
     <string name="registernewabsence">Register New Absence</string>
     <string name="registerabsence">Register Absence</string>
     <string name="absencedetails">Absence Details</string>
@@ -296,8 +296,10 @@
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
 
+    <string name="do_you_want_account">Do you want to Logout?</string>
+    <string name="ok">Ok</string>
 
+    <string name="parentcomms"> Parent Comms</string>
 
-
-
+    Parent Comms
 </resources>

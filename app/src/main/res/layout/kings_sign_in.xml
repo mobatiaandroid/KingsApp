@@ -109,6 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email-ID"
+                    android:textCursorDrawable="@color/kings_blue"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/border_grey"/>
@@ -134,6 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
+                    android:textCursorDrawable="@color/kings_blue"
                     android:singleLine="false"
                     android:textColor="@color/black"
                     android:inputType="textPassword"

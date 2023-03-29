@@ -1,14 +1,15 @@
 package com.example.kingsapp.activities.timetable.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.timetable.model.WeekModel
+import java.util.*
 
 class TimeTableWeekListAdapter(
     private val mContext: Context,
@@ -18,16 +19,15 @@ class TimeTableWeekListAdapter(
     RecyclerView.Adapter<TimeTableWeekListAdapter.MyViewHolder>() {
     private val mWeekList: ArrayList<WeekModel>
     var weekPosition = 0
+    lateinit var dayOfTheWeek: String
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var weekTxt: TextView
-        var lineImage: ImageView
-        var downArrowImage: ImageView
+
 
         init {
             weekTxt = view.findViewById<View>(R.id.weekTxt) as TextView
-            lineImage = view.findViewById<View>(R.id.lineImage) as ImageView
-            downArrowImage = view.findViewById<View>(R.id.downArrowImage) as ImageView
+
         }
     }
 
@@ -44,15 +44,17 @@ class TimeTableWeekListAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.weekTxt.setText(mWeekList[position].weekName)
-        if (mWeekList[position].positionSelected !== -1) {
+        Log.e("Size", mWeekList[position].positionSelected.toString())
+
+        if (mWeekList[position].positionSelected !== -1){
             holder.weekTxt.setTextColor(mContext.resources.getColor(R.color.kings_blue))
            // holder.lineImage.visibility = View.VISIBLE
            // holder.downArrowImage.visibility = View.VISIBLE
         } else {
             holder.weekTxt.setTextColor(mContext.resources.getColor(R.color.dark_grey1))
-            holder.lineImage.visibility = View.INVISIBLE
-            holder.downArrowImage.visibility = View.INVISIBLE
+
         }
+
     }
 
     override fun getItemCount(): Int {

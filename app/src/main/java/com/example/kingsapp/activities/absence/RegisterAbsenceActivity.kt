@@ -27,6 +27,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.common.CommonResponse
@@ -172,6 +173,11 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                         }
                     }
 
+                }
+                else if(response.body()!!.status.equals(106))
+                {
+                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
                 else
                 {
@@ -345,6 +351,11 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 if(response.body()!!.status.equals(100))
                 {
                     showErrorAlert(context,"Successfully submitted your absence.","Success")
+                }
+                else if(response.body()!!.status.equals(106))
+                {
+                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
                 else
                 {

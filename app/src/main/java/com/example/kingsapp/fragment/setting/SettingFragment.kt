@@ -21,8 +21,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.settings.TermsOfServiceActivity
+import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.setting.adapter.SettingAdapter
@@ -115,8 +118,8 @@ class SettingFragment: Fragment() {
                     }
 
                     if (position == 6) {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
+
+                        showSuccessAlertGuest(mContext, "Do you want to Logout?")
                     }
 
                 }
@@ -160,6 +163,33 @@ class SettingFragment: Fragment() {
 
         })
     }
+
+    private fun showSuccessAlertGuest(mContext: Context, s: String) {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_layout)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+        var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
+        alertHead.text = s
+        btn_Ok.setOnClickListener()
+        {
+
+            val intent = Intent(mContext, WelcomeActivity::class.java)
+            startActivity(intent)
+        }
+        btn_Cancel.setOnClickListener()
+        {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
     @SuppressLint("MissingInflatedId")
     private fun showChangePasswordPopUp() {
 
@@ -192,6 +222,7 @@ class SettingFragment: Fragment() {
             else
             {
                 callChangePasswdApi(current_passwrd.text.toString(),new_passwrd.text.toString(),confirm_passwd.text.toString())
+                dialog.dismiss()
             }
         }
         dialog.show()
@@ -206,18 +237,31 @@ class SettingFragment: Fragment() {
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+           Log.e("responsedata",response.body().toString())
+                if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
                     Log.e("Response",response.body().toString())
-                    CommonClass.showErrorAlert(mContext,"Successfully submitted your absence.","Success")
+                    showErrorAlert(mContext,"Successfully submitted your password","Success")
                 }
-               else{
-                    CommonClass.checkApiStatusError(response.body()!!.status,
-                        mContext
-                    )
+              else if(response.body()!!.status.equals(106))
+                {
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
                 }
 
-            }
+               else{
+                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                }
+
+                }
+                else
+                {
+                    Log.e("failed","Failed")
+                    CommonClass.checkApiStatusError(300, mContext
+                    )
+                }
+                }
 
             override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
                 Toast.makeText(
@@ -230,7 +274,25 @@ class SettingFragment: Fragment() {
             }
         })
     }
-
+    fun showErrorAlert(context: Context,message : String,msgHead : String)
+    {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+        var iconImageView=dialog.findViewById(R.id.iconImageView) as ImageView
+        text_dialog.text = message
+        alertHead.text = msgHead
+        btn_Ok.setOnClickListener()
+        {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
 
     fun showSuccessAlert(context: Context,msgHead:String)
     {
@@ -308,7 +370,8 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
                 Log.e("Response",response.body().toString())
                 PreferenceManager().setuser_id(mContext,"")
                 PreferenceManager().setAccessToken(mContext,"")
-
+                val intent = Intent(mContext, WelcomeActivity::class.java)
+                startActivity(intent)
 
             }
 

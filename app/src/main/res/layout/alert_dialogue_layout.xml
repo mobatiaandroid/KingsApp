@@ -114,7 +114,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/kings_blue"
-                    android:text="OK"
+                    android:text="@string/ok"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="#ffffffff" />
             </LinearLayout>

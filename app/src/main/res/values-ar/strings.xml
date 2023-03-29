@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">KingsApp</string>
     <string name="SchoolCalender">التقويم المدرسي</string>
-    <string name="StudentInfo">بيانات الطالب</string>
+    <string name="StudentInformation">بيانات الطالب</string>
     <string name="Canteen">مقصف</string>
     <string name="Payments">المدفوعات</string>
     <string name="Timetable">الجدول الزمني</string>
@@ -179,6 +179,12 @@
 
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
+    <string name="do_you_want_account">"هل ترغب بالخروج؟</string>
+    <string name="ok">نعم</string>
 
+
+    <string name="apps">تطبيقات</string>
+    <string name="ContactUs">اتصل بنا</string>
+    <string name="parentcomms"> مراسلات الوالدين</string>
 
 </resources>

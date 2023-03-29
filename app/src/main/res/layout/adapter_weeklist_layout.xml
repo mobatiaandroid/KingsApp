@@ -30,23 +30,8 @@
             android:text="WEDDAY"
             android:layout_marginTop="14sp"
             android:textColor="@color/grey"
-            android:textSize="17sp" />
-        <ImageView
-            android:id="@+id/lineImage"
-            android:layout_width="wrap_content"
-            android:layout_alignLeft="@+id/weekTxt"
-            android:layout_alignRight="@+id/weekTxt"
-            android:layout_below="@+id/weekTxt"
-            android:layout_height="wrap_content"
-            android:background="@drawable/list_divider"/>
-        <ImageView
-            android:id="@+id/downArrowImage"
-            android:layout_width="wrap_content"
-            android:layout_alignLeft="@+id/lineImage"
-            android:layout_alignRight="@+id/lineImage"
-            android:layout_below="@+id/lineImage"
-            android:layout_height="wrap_content"
-            android:src="@drawable/down_arrow"/>
+            android:textSize="13sp" />
+
 
 
 

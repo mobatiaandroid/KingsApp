@@ -68,7 +68,12 @@ class SigninyourAccountActivity:AppCompatActivity() {
        progressDialog = findViewById(R.id.progressDialog)
 
         emailSupport.setOnClickListener {
-            showEmailHelpAlert(ncontext)
+            val intent = Intent(Intent.ACTION_SEND)
+            val recipients = arrayOf("info@kings-edu.com")
+            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+            intent.type = "text/html"
+            intent.setPackage("com.google.android.gm")
+            startActivity(Intent.createChooser(intent, "Send mail"))
         }
         joinGuestTxt.setOnClickListener {
             val intent = Intent(ncontext, HomeActivity::class.java)

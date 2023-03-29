@@ -119,6 +119,7 @@
                     android:singleLine="true"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textCursorDrawable="@color/kings_blue"
                     android:textColorHint="@color/border_grey"
                     android:hint="Email-ID" />
 

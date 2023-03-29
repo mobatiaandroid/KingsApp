@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
@@ -22,6 +26,8 @@ import com.example.kingsapp.activities.student_info.model.StudentInfoResponseMod
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
+import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
+import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.mobatia.nasmanila.api.ApiClient
@@ -43,7 +49,7 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var studentclass: TextView
     lateinit var backarrow: ImageView
     lateinit var studentLinear: LinearLayout
-    lateinit var progressBarDialog: ProgressBarDialog
+    private lateinit var progressDialog: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +60,7 @@ class StudentInfoActivity:AppCompatActivity (){
         setContentView(R.layout.activity_student_info)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext = this
-        progressBarDialog = ProgressBarDialog(mContext)
+
         PreferenceManager().setStudent_ID(mContext,"")
         initFn()
         if(CommonClass.isInternetAvailable(mContext)) {
@@ -69,15 +75,16 @@ class StudentInfoActivity:AppCompatActivity (){
     }
 
     private fun studentListApiCall() {
+
         val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString())
-        progressBarDialog.show()
+
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
-                progressBarDialog.dismiss()
+
 
                 Log.e("Response", response.body().toString())
                 if (response.body()!!.status.equals(100)) {
@@ -153,7 +160,7 @@ class StudentInfoActivity:AppCompatActivity (){
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
-                progressBarDialog.dismiss()
+
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",
@@ -165,6 +172,7 @@ class StudentInfoActivity:AppCompatActivity (){
         })
     }
     private fun studentInfoApiCall() {
+        progressDialog.visibility=View.VISIBLE
         val call: Call<StudentInfoResponseModel> = ApiClient.getApiService().studentinfo("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString(),
             PreferenceManager().getStudent_ID(mContext).toString()
@@ -174,6 +182,7 @@ class StudentInfoActivity:AppCompatActivity (){
                 call: Call<StudentInfoResponseModel>,
                 response: Response<StudentInfoResponseModel>
             ) {
+                progressDialog.visibility=View.GONE
                if (response.body()!!.status.equals(100))
                {
                    name.setText(response.body()!!.student_info.fullname)
@@ -201,7 +210,7 @@ class StudentInfoActivity:AppCompatActivity (){
 
     fun initFn() {
         student_name = ArrayList()
-        studentLinear = findViewById(R.id.studentLinear)
+        studentLinear = findViewById(R.id.studentSpinner)
         studentName_Text = findViewById(R.id.studentName)
         imagicon = findViewById(R.id.imagicon)
         name = findViewById(R.id.name)
@@ -209,6 +218,10 @@ class StudentInfoActivity:AppCompatActivity (){
         address = findViewById(R.id.address)
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.backarrow)
+        progressDialog = findViewById(R.id.progressDialog)
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
+        progressDialog.startAnimation(aniRotate)
         backarrow.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
@@ -235,21 +248,30 @@ class StudentInfoActivity:AppCompatActivity (){
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(mContext)
         val studentlist_adapter =
-            StudentInfoAdapter(mContext, student_name,studentName_Text,studentclass,name,address,classs,dialog,crossicon)
+            AbsenceStudentListAdapter(
+                mContext,
+                student_name)
         recycler_view!!.adapter = studentlist_adapter
 
         crossicon.setOnClickListener {
             dialog.dismiss()
         }
-       /* recycler_view.addOnItemClickListener(object : OnItemClickListener {
+        recycler_view.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
+                var name: String = student_name.get(position).fullname
+                var classs: String = student_name.get(position).classs
+                var id: Int = student_name.get(position).id
+                studentName_Text.setText(name)
+                studentclass.setText(classs)
+                PreferenceManager().setStudent_ID(mContext,id.toString())
 
+                studentInfoApiCall()
 
                 dialog.dismiss()
             }
 
-        })*/
+        })
         dialog.show()
     }
 }

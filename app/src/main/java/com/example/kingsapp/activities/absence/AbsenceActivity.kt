@@ -26,6 +26,7 @@ import com.example.kingsapp.activities.absence.model.AbsenceListModel
 import com.example.kingsapp.activities.adapter.AbsenceListAdapter
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
@@ -213,6 +214,11 @@ class AbsenceActivity: AppCompatActivity() {
 
                     }
                 }
+                else if(response.body()!!.status.equals(106))
+                {
+                    val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
@@ -267,6 +273,12 @@ class AbsenceActivity: AppCompatActivity() {
                     }
 
                 }
+                else if(response.body()!!.status.equals(106))
+                {
+                    val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
+
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, ncontext)

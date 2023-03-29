@@ -37,6 +37,7 @@ import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.MessageFragment
@@ -468,8 +469,13 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                     }
 
                 }
+                else if(response.body()!!.status.equals("106"))
+                {
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
                 else{
-
+                   // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
 
             }

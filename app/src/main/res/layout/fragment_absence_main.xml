@@ -41,8 +41,8 @@
     <LinearLayout
         android:layout_below="@id/li"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg"
+        android:layout_height="match_parent"
+        android:background="@drawable/curved_rectangle_top_white"
         android:orientation="vertical">
 
         <LinearLayout
