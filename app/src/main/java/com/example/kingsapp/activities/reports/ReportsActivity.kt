@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.*
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -26,7 +25,6 @@ import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 import com.example.kingsapp.constants.CommonClass
-import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -209,7 +207,7 @@ class ReportsActivity:AppCompatActivity() {
     }
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
-        val dialog = BottomSheetDialog(ncontext)
+        val dialog = BottomSheetDialog(ncontext, R.style.AppBottomSheetDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)

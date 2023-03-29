@@ -21,10 +21,8 @@ import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.student_info.adapter.StudentInfoAdapter
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
-import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -236,7 +234,7 @@ class StudentInfoActivity:AppCompatActivity (){
     }
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
-        val dialog = BottomSheetDialog(mContext)
+        val dialog = BottomSheetDialog(mContext, R.style.AppBottomSheetDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)

@@ -516,7 +516,7 @@ class TimeTableActivity:AppCompatActivity() {
 
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
-        val dialog = BottomSheetDialog(ncontext)
+        val dialog = BottomSheetDialog(ncontext, R.style.AppBottomSheetDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)

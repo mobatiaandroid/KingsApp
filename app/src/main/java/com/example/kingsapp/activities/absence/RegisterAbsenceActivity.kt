@@ -569,7 +569,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
     }
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
-        val dialog = BottomSheetDialog(context)
+        val dialog = BottomSheetDialog(context, R.style.AppBottomSheetDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.student_list_popup)
