@@ -68,6 +68,7 @@ class ReportsActivity:AppCompatActivity() {
         if(CommonClass.isInternetAvailable(ncontext)) {
            // studentListApiCall()
             //reportslisting()
+            progressDialog.visibility=View.GONE
             reportslisting()
         }
         else{
