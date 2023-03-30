@@ -8,18 +8,17 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceListAdapter
 import com.example.kingsapp.activities.message.model.MessageListModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MessageListAdapter(private val context: Context, private  val name:ArrayList<MessageListModel>):
     RecyclerView.Adapter<MessageListAdapter.MyViewHolder>() {
@@ -49,9 +48,19 @@ class MessageListAdapter(private val context: Context, private  val name:ArrayLi
         val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
         val inputDateStr = datestring
         val date: Date = inputFormat.parse(inputDateStr)
+        val datetring:String= date.toString()
+        Log.e("date", date.toString())
         val outputDateStr: String = outputFormat.format(date)
         val outputDateStr1: String = outputFormatdate.format(date)
-        holder.date.setText(outputDateStr1)
+        val substr: String = datetring.substring(8, 10)
+        val substr1: String = datetring.substring(4, 7)
+        val substr2: String = datetring.substring(30, 34)
+       Log.e("datestring",substr)
+        Log.e("substr1",substr1)
+        Log.e("substr2",substr2)
+
+val finaldate:String=substr+"-"+substr1+"-"+substr2
+        holder.date.setText(finaldate)
         holder.time.setText(outputDateStr)
 
     }

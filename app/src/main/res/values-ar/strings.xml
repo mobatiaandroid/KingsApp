@@ -164,6 +164,7 @@
     <string name="reports">التقارير</string>
 
 
+    <string name="logoheading1">الملوك\' \nالتعليم</string>
 
 
 
@@ -180,6 +181,9 @@
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
     <string name="do_you_want_account">"هل ترغب بالخروج؟</string>
+    <string name="please_enter_the_subject"> "الرجاء إدخال الموضوع"</string>
+    <string name="no_data_found"> لاتوجد بيانات</string>
+
     <string name="ok">نعم</string>
 
 

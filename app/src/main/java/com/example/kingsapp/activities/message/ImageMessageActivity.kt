@@ -43,7 +43,7 @@ class ImageMessageActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_text_message_detail)
+        setContentView(R.layout.activity_text_image_message_detail)
         mContext=this
 
        // id=intent.getStringExtra("id").toString()
@@ -62,7 +62,7 @@ class ImageMessageActivity : AppCompatActivity(){
         progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
        // backRelative = findViewById(R.id.backRelative)
-        heading.text = "Messages"
+        heading.setText(getResources().getString(R.string.Message))
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })

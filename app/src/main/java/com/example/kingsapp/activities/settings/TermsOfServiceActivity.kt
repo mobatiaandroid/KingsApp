@@ -30,7 +30,9 @@ class TermsOfServiceActivity : AppCompatActivity(){
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
-    private lateinit var webView: WebView
+    private lateinit var webView: TextView
+    private lateinit var webView1: TextView
+
     var myFormatCalende:String="yyyy-MM-dd HH:mm:ss"
     private lateinit var progressDialog: RelativeLayout
     override fun onCreate(savedInstanceState: Bundle?)
@@ -40,8 +42,8 @@ class TermsOfServiceActivity : AppCompatActivity(){
         mContext=this
 
         initUI()
-        callMessageDetailAPI()
-        getSettings()
+       // callMessageDetailAPI()
+        //getSettings()
 
     }
     fun initUI() {
@@ -50,19 +52,24 @@ class TermsOfServiceActivity : AppCompatActivity(){
         btn_left = findViewById(R.id.btn_info)
        // backRelative = findViewById(R.id.backRelative)
       //  logoClickImgView = findViewById(R.id.logoClickImgView)
-        progressDialog = findViewById(R.id.progressDialog)
+     //   progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
+        webView1 = findViewById(R.id.webView1)
         heading.text = "Terms of Services"
+        var termsTitle="Intellectual Property"
+        webView1.text=termsTitle
+        var termsDescription="The design of this website and its content is © Kings Education Limited , all rights are reserved. Nothing in this website should be taken as conferring any licence or right to use any trademark displayed on this website without the prior written approval of the trademark owner. You may print off or download content as permitted under the fair dealing provisions of the Copyright Designs and Patents Act 1988 (as amended) (sections 28 to 30) for the purposes of viewing it on your computer, research for non-commercial purposes, private study, criticism, review and news reporting, provided that you do not alter it in any way and acknowledge us as the source of the content and the copyright owners. All other use or copying of any of the contents of this site, other than as expressly permitted by us or permitted by law, is prohibited."
+        webView.text=termsDescription
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
 
 
-        val aniRotate: Animation =
+       /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
     }
-    fun callMessageDetailAPI()
+    /*fun callMessageDetailAPI()
     {
 
                     var termsTitle="Intellectual Property"
@@ -105,9 +112,9 @@ class TermsOfServiceActivity : AppCompatActivity(){
                     webView.loadDataWithBaseURL("file:///android_asset/fonts/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
 
 
-    }
+    }*/
 
-    fun getSettings()
+    /*fun getSettings()
     {
         webView.settings.javaScriptEnabled = true
         webView.settings.setSupportZoom(false)
@@ -135,6 +142,6 @@ class TermsOfServiceActivity : AppCompatActivity(){
                 }
             }
         }
-    }
+    }*/
 }
 

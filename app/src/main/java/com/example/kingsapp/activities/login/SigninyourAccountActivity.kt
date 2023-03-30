@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.Settings
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -18,12 +20,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.home.HomeguestuserActivity
 import com.example.kingsapp.activities.login.model.LoginResponseModel
 import com.example.kingsapp.constants.CommonClass
-import com.example.kingsapp.fragment.homeActivity
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -31,6 +32,8 @@ import com.mobatia.nasmanila.api.ApiClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
+import java.util.logging.Logger.global
+
 
 class SigninyourAccountActivity:AppCompatActivity() {
     lateinit var ncontext: Context
@@ -42,7 +45,11 @@ class SigninyourAccountActivity:AppCompatActivity() {
     lateinit var passwordTextInputEditText:TextInputEditText
     lateinit var joinGuestTxt: TextView
     lateinit var emailSupport:TextView
+    lateinit var haveaccount:TextView
+    lateinit var donthaveaccount:TextView
+    lateinit var rememeberMeImg:ImageView
     private lateinit var progressDialog: RelativeLayout
+    var flag:Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +66,50 @@ class SigninyourAccountActivity:AppCompatActivity() {
     private fun initFn() {
         createAccountTxt=findViewById(R.id.createAccountTxt)
         signInBtn=findViewById(R.id.signInBtn)
+        haveaccount=findViewById(R.id.haveaccount)
         forgetPassword=findViewById(R.id.forgetPassword)
+        donthaveaccount=findViewById(R.id.donthaveaccount)
+        rememeberMeImg=findViewById(R.id.rememeberMeImg)
         emailTextInputEditText=findViewById(R.id.emailTextInputEditText)
         passwordTextInputEditText=findViewById(R.id.passwordTextInputEditText)
         backImg=findViewById(R.id.backImg)
         joinGuestTxt = findViewById(R.id.joinGuestTxt)
         emailSupport = findViewById(R.id.emailSupport)
        progressDialog = findViewById(R.id.progressDialog)
+        rememeberMeImg.setOnClickListener(View.OnClickListener {
+            if(flag)
+            {
+if(passwordTextInputEditText.text.toString().trim().equals(""))
+{
 
+    Toast.makeText(ncontext, "Please enter the Password !", Toast.LENGTH_SHORT).show()
+
+
+}
+    else
+{
+    rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.ic_baseline_check_24))
+    //passwordTextInputEditText.setTransformationMethod(PasswordTransformationMethod.getInstance())
+
+    passwordTextInputEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance())
+}
+
+}
+            else
+            {
+                passwordTextInputEditText.setTransformationMethod(PasswordTransformationMethod.getInstance())
+                rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.check))
+            }
+            flag = !flag
+        })
+        haveaccount.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            val recipients = arrayOf("info@kings-edu.com")
+            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+            intent.type = "text/html"
+            intent.setPackage("com.google.android.gm")
+            startActivity(Intent.createChooser(intent, "Send mail"))
+        }
         emailSupport.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             val recipients = arrayOf("info@kings-edu.com")
@@ -108,6 +151,10 @@ class SigninyourAccountActivity:AppCompatActivity() {
                 }
 
             }
+        }
+        donthaveaccount.setOnClickListener {
+            startActivity(Intent(this, CreateAccountActivity::class.java))
+
         }
         createAccountTxt.setOnClickListener {
             startActivity(Intent(this, CreateAccountActivity::class.java))

@@ -140,7 +140,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="30"
+                        android:layout_weight="35"
                         android:background="@drawable/first_one">
                         <RelativeLayout
                             android:id="@+id/relOne"
@@ -163,10 +163,11 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="10dp"
+                                android:ellipsize="none"
+                                android:singleLine="true"
                                 android:gravity="center"
-                                android:textAllCaps="false"
-                                android:maxLines="1" />
+                                android:textSize="11dp"
+                                android:textAllCaps="false"/>
 
 
                         </RelativeLayout>
@@ -175,7 +176,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="60"
+                        android:layout_weight="55"
                         android:layout_marginLeft="4dp"
                         android:background="@drawable/first_two">
                         <RelativeLayout
@@ -195,6 +196,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
+                                android:textSize="11dp"
                                 android:textAllCaps="false"                                android:maxLines="1" />
 
                             <ImageView
@@ -241,6 +243,7 @@
                                 android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="10dp"
                                 android:textAllCaps="false"
+                                android:textSize="11dp"
                                 android:maxLines="2"/>
 
                             <ImageView
@@ -274,9 +277,10 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
-                                android:layout_marginLeft="10dp"
-                                android:textAllCaps="false"
-                                android:maxLines="1" />
+                                android:ellipsize="none"
+                                android:singleLine="true"
+                                android:textSize="10dp"
+                                android:textAllCaps="false" />
 
                             <ImageView
                                 android:id="@+id/relImgSeven"
@@ -316,9 +320,10 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:maxLines="1"
+                                android:ellipsize="none"
+                                android:singleLine="true"
+                                android:textSize="10dp"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginLeft="10dp"
                                 android:textAllCaps="false" />
 
                             <ImageView
@@ -352,8 +357,10 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
                                 android:textAllCaps="false"
-                                android:layout_marginLeft="10dp"
-                                android:maxLines="1" />
+                                android:textSize="10dp"
+                                android:ellipsize="none"
+                                android:singleLine="true"
+                                 />
 
                             <ImageView
                                 android:id="@+id/relImgThree"
@@ -379,14 +386,15 @@
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:layout_below="@+id/relImgFour"
                                 android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="3dp"
+                                android:ellipsize="none"
+                                android:gravity="center"
+                                android:singleLine="true"
                                 android:textAllCaps="false"
-                                android:maxLines="1"/>
+                                android:textSize="10dp" />
 
                             <ImageView
                                 android:id="@+id/relImgFour"

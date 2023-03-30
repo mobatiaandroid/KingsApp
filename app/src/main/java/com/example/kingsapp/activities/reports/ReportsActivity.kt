@@ -143,15 +143,15 @@ class ReportsActivity:AppCompatActivity() {
                         {
                             Glide.with(ncontext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_icon_grey)
-                                .error(R.drawable.profile_icon_grey)
+                                .placeholder(R.drawable.profile_photo)
+                                .error(R.drawable.profile_photo)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         }
                         else{
-                            imagicon.setImageResource(R.drawable.profile_icon_grey)
+                            imagicon.setImageResource(R.drawable.profile_photo)
                         }
 
 

@@ -487,14 +487,14 @@ class TimeTableActivity:AppCompatActivity() {
                         if (!studentImg.equals("")) {
                             Glide.with(ncontext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_icon_grey)
-                                .error(R.drawable.profile_icon_grey)
+                                .placeholder(R.drawable.profile_photo)
+                                .error(R.drawable.profile_photo)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         } else {
-                            imagicon.setImageResource(R.drawable.profile_icon_grey)
+                            imagicon.setImageResource(R.drawable.profile_photo)
                         }
                     }
 
@@ -547,9 +547,11 @@ class TimeTableActivity:AppCompatActivity() {
 
                 //var id: String = student_name.get(position).id.toString()
                 var name: String = student_name.get(position).fullname
+                var classs:String=student_name.get(position).classs
                 // PreferenceManager().setStudentname(nContext, name).toString()
                 // Log.e("recycler id", id.toString())
                 //leavelist(id)
+                studentclass.setText(classs)
                 studentNameTextView.setText(name)
                 showTimeTable()
                 dialog.dismiss()

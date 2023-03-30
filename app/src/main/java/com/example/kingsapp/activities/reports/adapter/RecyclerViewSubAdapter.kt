@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.reports.PdfActivity
@@ -22,6 +23,8 @@ class RecyclerViewSubAdapter(private val context: Context, private val name: Arr
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var titleTextView: TextView = view.findViewById(R.id.titleTextView)
+        var relativelayout: ConstraintLayout = view.findViewById(R.id.relativelayout)
+
 //        var recycler_view_list: RecyclerView = view.findViewById(R.id.recycler_view_list)
         // var desc: TextView = view.findViewById(R.id.desc)
     }
@@ -41,9 +44,8 @@ class RecyclerViewSubAdapter(private val context: Context, private val name: Arr
         Log.e("url",url)
         holder.titleTextView.setText(name[position].title)
 
-        holder.titleTextView.setOnClickListener {
+        holder.relativelayout.setOnClickListener {
             val intent = Intent(context, PdfActivity::class.java)
-
             context.startActivity(intent)
             /*context.startActivity(
                 Intent(context, PdfReaderActivity::class.java).

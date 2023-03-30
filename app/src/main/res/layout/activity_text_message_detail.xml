@@ -32,18 +32,35 @@
             android:visibility="visible"/>
 
     </RelativeLayout>
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <com.example.kingsapp.manager.font.CustomVerdanaBold
+        android:id="@+id/webView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/relativeHeader"
+        android:textColor="@color/kings_blue"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:overScrollMode="never"
         android:scrollbars="none" />
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        android:id="@+id/webView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="5dp"
+        android:layout_gravity="left|right"
+        android:gravity="left|right"
+        android:layout_below="@+id/webView1"
+        android:justificationMode="inter_word"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -56,6 +73,6 @@
             android:layout_height="match_parent"
             android:visibility="visible" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>

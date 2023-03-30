@@ -106,6 +106,7 @@
     <string name="placeholder_shortt">We are the only school in the United Arab Emirates to have achieved an ‘outstanding’ rating by the Dubai Schools Inspection Bureau every year since inspections began</string>
 
     <string name="logoheading">KINGS\' EDUCATION</string>
+    <string name="logoheading1">Kings\'\nEducation</string>
 
     <string name="FirstDayOfAbsence">First Day Of Absence<font fgcolor='#FF0000'> * </font></string>
 
@@ -158,12 +159,12 @@
         <item>  Home</item>
         <item>  Student Information </item>
         <item>  School Calendar</item>
+        <item>  Parent Comms</item>
         <item>  Absence Reporting</item>
         <item>  Time Table</item>
         <item>  Parent Essentials</item>
         <item>  Reports </item>
         <item> Forms</item>
-        <item>  Parent Comms</item>
         <item>  Apps</item>
         <item>  Contact Us</item>
     </string-array>
@@ -183,6 +184,7 @@
         <!-- 4 -->
         <!-- 4 -->
         <item>@drawable/calender4</item>
+        <item>@drawable/message_white</item>
         <item>@drawable/absence4</item>
         <item>@drawable/timetable4</item>
         <item>@drawable/parent</item>
@@ -193,9 +195,9 @@
 
         <!-- 7 -->
         <item>@drawable/forms</item>
-        <item>@drawable/message_white</item>
+
         <item>@drawable/app</item>
-        <item>@drawable/contact</item>
+        <item>@drawable/chatting_clicked</item>
         <!-- 8 -->
 
 
@@ -296,10 +298,12 @@
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
 
-    <string name="do_you_want_account">Do you want to Logout?</string>
+    <string name="do_you_want_account">Do you want to Exit?</string>
     <string name="ok">Ok</string>
 
     <string name="parentcomms"> Parent Comms</string>
 
-    Parent Comms
+    <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
+    <string name="no_data_found"> No data found</string>
+
 </resources>

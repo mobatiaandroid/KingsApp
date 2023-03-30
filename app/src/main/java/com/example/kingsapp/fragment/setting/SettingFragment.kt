@@ -431,7 +431,28 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
         // iconImageView.setImageResource(R.color.white)
 
         submitButton.setOnClickListener {
-            callSendMailApi(text_dialog.text.toString(),text_dialog.text.toString(),context,dialog)
+            if(text_dialog.text.toString().trim().equals(""))
+            {
+                Toast.makeText(mContext,"Please Enter The Subject ",Toast.LENGTH_SHORT).show()
+            }
+            else if(text_content.text.toString().trim().equals(""))
+            {
+                Toast.makeText(mContext,getResources().getString(R.string.please_enter_the_subject),Toast.LENGTH_SHORT).show()
+
+            }
+            else
+            {
+                if(CommonClass.isInternetAvailable(mContext)) {
+                    callSendMailApi(text_dialog.text.toString(),text_content.text.toString(),context,dialog)
+                }
+                else
+                {
+                    Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+                }
+
+            }
+
         }
         dialogCancelButton.setOnClickListener { //   AppUtils.hideKeyBoard(mContext);
             val imm =

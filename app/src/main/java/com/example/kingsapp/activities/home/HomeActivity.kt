@@ -103,7 +103,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     lateinit var linearLayoutManager: LinearLayoutManager
     var flag:Boolean = true
     lateinit var student_name: ArrayList<StudentList>
-
+lateinit var menuicon:ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,7 +134,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         linearLayout = findViewById<View>(R.id.linearLayout) as LinearLayout
         drawerLayout = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         mHomeListView = findViewById<View>(R.id.homeList) as ListView
-
+        menuicon =  findViewById<View>(R.id.menuicon) as ImageView
         contactText = findViewById<View>(R.id.contactText) as TextView
         homeText = findViewById<View>(R.id.homeText) as TextView
         homeImg = findViewById<View>(R.id.homeImg) as ImageView
@@ -214,13 +214,13 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
 
             homeText.setText(R.string.Home)
-            messageText.setText(R.string.Message)
+            messageText.setText(R.string.parentcomms)
             otherText.setText(R.string.Settings)
             contactText.setText(R.string.Contact)
         } else {
 
             homeText.setText(R.string.Home)
-            messageText.setText(R.string.Message)
+            messageText.setText(R.string.parentcomms)
             otherText.setText(R.string.Settings)
             contactText.setText(R.string.Contact)
 
@@ -371,6 +371,15 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
         })
 
+        menuicon.setOnClickListener(){
+            drawerLayout.openDrawer(linearLayout)
+            if (drawerLayout.isDrawerOpen(linearLayout)) {
+
+                drawerLayout.closeDrawer(linearLayout)
+            } else {
+                drawerLayout.openDrawer(linearLayout)
+            }
+        }
         menu_btn.setOnClickListener(){
             drawerLayout.openDrawer(linearLayout)
             if (drawerLayout.isDrawerOpen(linearLayout)) {
@@ -708,51 +717,57 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 }
                 else if(position==3)
                 {
-
-
-                    val intent = Intent(mContext, AbsenceActivity::class.java)
-                    startActivity(intent)
+                    studentListRecyclerview.visibility=View.GONE
+                    top_navigation_li.visibility=View.GONE
+                    fragment = MessageFragment()
+                    replaceFragmentsSelected(position)
                     drawerLayout.closeDrawer(linearLayout)
+
+
                     //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
                 else if(position==4)
                 {
-                    val intent = Intent(mContext, TimeTableActivity::class.java)
+
+                    val intent = Intent(mContext, AbsenceActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
+
 
                 }
                 else if(position==5)
                 {
-                    val intent = Intent(mContext, ParentEssentialsActivity::class.java)
+
+                    val intent = Intent(mContext, TimeTableActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
+
 
                     //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
                 else if(position==6)
                 {
 
-                    val intent = Intent(mContext, ReportsActivity::class.java)
+                    val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
+
 
                 }
                 else if(position==7)
                 {
-                    val intent = Intent(mContext, FormsActivity::class.java)
+                    val intent = Intent(mContext, ReportsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
+
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
                 else if(position==8)
                 {
-
-                    studentListRecyclerview.visibility=View.GONE
-                    top_navigation_li.visibility=View.GONE
-                    fragment = MessageFragment()
-                    replaceFragmentsSelected(position)
+                    val intent = Intent(mContext, FormsActivity::class.java)
+                    startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
+
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
                 else if(position==9)
@@ -970,7 +985,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                         }
                         else
                         {
-                            showSuccessAlert(mContext,"Do you want to exit?")
+                            showSuccessAlert(mContext,getResources().getString(R.string.do_you_want_account))
                         }
 
                     } else if (currentFragment

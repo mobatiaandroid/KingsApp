@@ -152,7 +152,7 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_weight="0.25"
-                    android:src="@drawable/remember_me"
+                    android:background="@drawable/remember_me"
                     android:layout_margin="5dp"/>
                 <TextView
                     android:layout_width="0dp"
@@ -201,6 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.75"
                     android:layout_marginTop="10dp"
+                    android:id="@+id/donthaveaccount"
                     android:textStyle="bold"
                     android:gravity="right"
                     android:text="Don\'t have an account?"/>
@@ -247,6 +248,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.75"
                     android:layout_marginTop="5dp"
+                    android:id="@+id/haveaccount"
                     android:gravity="right"
                     android:text="If you have any trouble"/>
                 <com.example.kingsapp.manager.font.CustomVerdanaRegular

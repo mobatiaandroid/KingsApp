@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -47,6 +48,7 @@ class AbsenceActivity: AppCompatActivity() {
     lateinit var student_Name: TextView
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var registerabsence: RelativeLayout
+    lateinit var studentSpinner:LinearLayout
     lateinit var backarrow_absense: ImageView
     var mListAdapter: AbsenceListAdapter? = null
     lateinit var absenceList: ArrayList<AbsenceList>
@@ -86,6 +88,7 @@ class AbsenceActivity: AppCompatActivity() {
         student_name = ArrayList()
         studentclass=findViewById(R.id.studentclass)
         imagicon=findViewById(R.id.imagicon)
+        studentSpinner=findViewById(R.id.studentSpinner)
         progressDialog = findViewById(R.id.progressDialog)
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
@@ -106,7 +109,7 @@ class AbsenceActivity: AppCompatActivity() {
             startActivity(intent)
 
         }
-        student_Name.setOnClickListener {
+        studentSpinner.setOnClickListener {
             studentlist_popup(student_name)
            /* val intent = Intent(mContext, StudentListActivity::class.java)
             startActivity(intent)*/
@@ -171,15 +174,15 @@ class AbsenceActivity: AppCompatActivity() {
                         {
                             Glide.with(ncontext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_icon_grey)
-                                .error(R.drawable.profile_icon_grey)
+                                .placeholder(R.drawable.profile_photo)
+                                .error(R.drawable.profile_photo)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         }
                         else{
-                            imagicon.setImageResource(R.drawable.profile_icon_grey)
+                            imagicon.setImageResource(R.drawable.profile_photo)
                         }
 
                     }
@@ -196,15 +199,15 @@ class AbsenceActivity: AppCompatActivity() {
                         {
                             Glide.with(ncontext) //1
                                 .load(studentImg)
-                                .placeholder(R.drawable.profile_icon_grey)
-                                .error(R.drawable.profile_icon_grey)
+                                .placeholder(R.drawable.profile_photo)
+                                .error(R.drawable.profile_photo)
                                 .skipMemoryCache(true) //2
                                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                                 .transform(CircleCrop()) //4
                                 .into(imagicon)
                         }
                         else{
-                            imagicon.setImageResource(R.drawable.profile_icon_grey)
+                            imagicon.setImageResource(R.drawable.profile_photo)
                         }
                     }
                     if(CommonClass.isInternetAvailable(ncontext)) {

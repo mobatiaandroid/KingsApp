@@ -6,10 +6,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.Window
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.home.model.HomeUserResponseModel
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
+import com.example.kingsapp.fragment.currentversion
+import com.example.kingsapp.fragment.versionfromapi
 import com.example.kingsapp.manager.PreferenceManager
+import com.mobatia.nasmanila.api.ApiClient
+import retrofit2.Call
+import retrofit2.Response
 
 class SplashActivity: AppCompatActivity() {
     lateinit var mContext: Context
@@ -25,18 +33,58 @@ class SplashActivity: AppCompatActivity() {
 
         Handler().postDelayed({
             Log.e("Username", PreferenceManager().getuser_id(mContext).toString())
-            if (PreferenceManager().getuser_id(mContext).equals(""))
+            if (PreferenceManager().getAccessToken(mContext).equals(""))
             {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
             else
             {
-                startActivity(Intent(this, HomeActivity::class.java))
-                finish()
+                Log.e("Failed","Success")
+                callhomeuserApi()
             }
 
         }, SPLASH_TIME_OUT)
     }
+    private fun callhomeuserApi() {
+        Log.e("token", PreferenceManager().getAccessToken(mContext).toString())
+        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(
+            mContext
+        )
+            .toString())
+        call.enqueue(object : retrofit2.Callback<HomeUserResponseModel> {
+            override fun onResponse(
+                call: Call<HomeUserResponseModel>,
+                response: Response<HomeUserResponseModel>
+            ) {
+                Log.e("respon",response.body().toString())
+                if (response.body() != null) {
 
+                    if(response.body()!!.status.equals("100"))
+                    {
+                        val intent = Intent(mContext, HomeActivity::class.java)
+                        startActivity(intent)
+
+                    }
+                    else{
+                        // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                    }
+                }
+                else{
+                    val intent = Intent(mContext, WelcomeActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<HomeUserResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
 }

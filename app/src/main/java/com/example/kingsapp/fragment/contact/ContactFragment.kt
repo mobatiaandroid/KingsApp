@@ -147,6 +147,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                     val contactusAdapter = ContactusAdapter(aboutusdescription)
                     latitude = response.body()!!.contactus.get(0).latitude
                     longitude = response.body()!!.contactus.get(0).longitude
+                    descriptiontext.text=response.body()!!.contactus.get(0).description
                     contact_usrecyclerview.adapter = contactusAdapter
                 /*val username= response.body()!!.home.user_details.name
                     PreferenceManager().setuser_id(com.example.kingsapp.fragment.mContext,username)

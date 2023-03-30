@@ -29,12 +29,13 @@
 
             <ImageView
                 android:id="@+id/homeImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/home_clicked"
                 app:layout_constraintBottom_toTopOf="@+id/homeText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,8 +46,9 @@
                 android:layout_below="@+id/homeImg"
                 android:gravity="center"
                 android:text="@string/Home"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/homeImg" />
@@ -64,9 +66,10 @@
 
             <ImageView
                 android:id="@+id/messageImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/email"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/messageText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,10 +80,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/messageImg"
-                android:gravity="center"
-                android:text="@string/Message"
+                android:text="@string/parentcomms"
+                android:singleLine="true"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:ellipsize="none"
                 android:textColor="@color/grey_bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/messageImg" />
@@ -98,9 +104,10 @@
 
             <ImageView
                 android:id="@+id/profileImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/chatting"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/contactText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -115,8 +122,9 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/Contact"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/grey_bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,10 +143,11 @@
 
             <ImageView
                 android:id="@+id/otherImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_weight="20"
                 android:background="@drawable/settings"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/otherText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -152,8 +161,9 @@
                 android:layout_below="@+id/otherImg"
                 android:gravity="center"
                 android:text="@string/Settings"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/grey_bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/otherImg" />

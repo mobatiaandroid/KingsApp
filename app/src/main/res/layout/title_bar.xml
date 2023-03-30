@@ -44,9 +44,9 @@
 
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/profile_icon_grey"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/profile_photo"
         android:id="@+id/student_profile"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="30dp"
