@@ -108,7 +108,7 @@ class TimeTableActivity:AppCompatActivity() {
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.back)
         imagicon = findViewById(R.id.imagicon)
-        studentListApiCall()
+       // studentListApiCall()
 
 
         /* var modell=Studentlist_model("Jane Mathewes",false)
@@ -185,12 +185,12 @@ class TimeTableActivity:AppCompatActivity() {
             startActivity(intent)
         }
         Log.e("mSundayArrayList", mSundayArrayList.toString())
-        linearlayoutstudentlist.setOnClickListener {
+        /*linearlayoutstudentlist.setOnClickListener {
             studentlist_popup(student_name)
-            /* val intent = Intent(mContext, StudentListActivity::class.java)
-             startActivity(intent)*/
+            *//* val intent = Intent(mContext, StudentListActivity::class.java)
+             startActivity(intent)*//*
 
-        }
+        }*/
         linearLayoutManagerVertical = LinearLayoutManager(ncontext)
         linearLayoutManagerVertical1 = LinearLayoutManager(ncontext)
 

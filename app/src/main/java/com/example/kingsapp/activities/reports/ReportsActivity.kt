@@ -64,11 +64,11 @@ class ReportsActivity:AppCompatActivity() {
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
        // progressDialog = ProgressBarDialog(ncontext)
-        PreferenceManager().setStudent_ID(ncontext,"")
         initFn()
         if(CommonClass.isInternetAvailable(ncontext)) {
-            studentListApiCall()
+           // studentListApiCall()
             //reportslisting()
+            reportslisting()
         }
         else{
             Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",
@@ -92,19 +92,34 @@ class ReportsActivity:AppCompatActivity() {
             AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
 
-
+        student_Name.text=PreferenceManager().getStudentName(ncontext)
+        studentclass.text=PreferenceManager().getStudentClass(ncontext)
+        if(!PreferenceManager().getStudentPhoto(ncontext).equals(""))
+        {
+            Glide.with(ncontext) //1
+                .load(studentImg)
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .skipMemoryCache(true) //2
+                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                .transform(CircleCrop()) //4
+                .into(imagicon)
+        }
+        else{
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
         backarrow.setOnClickListener {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
 
 
-        linearlayoutstudentlist.setOnClickListener {
+       /* linearlayoutstudentlist.setOnClickListener {
             studentlist_popup(student_name)
-            /* val intent = Intent(mContext, StudentListActivity::class.java)
-             startActivity(intent)*/
+            *//* val intent = Intent(mContext, StudentListActivity::class.java)
+             startActivity(intent)*//*
 
-        }
+        }*/
     }
     private fun studentListApiCall() {
         progressDialog.visibility=View.VISIBLE
@@ -181,7 +196,7 @@ class ReportsActivity:AppCompatActivity() {
                         }
                     }
                     if(CommonClass.isInternetAvailable(ncontext)) {
-                        reportslisting()
+
                     }
                     else{
                         Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",
@@ -265,7 +280,9 @@ class ReportsActivity:AppCompatActivity() {
         /*var reportmodel3=ReportModel(2,"2022-2023","Test report information 2022-2023","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
         report_array.add(reportmodel3)*/
         report_array_filtered=ArrayList()
-        if (PreferenceManager().getStudent_ID(ncontext)==student_name[0].id.toString()){
+        Log.e("id", PreferenceManager().getStudent_ID(ncontext).toString())
+        if (PreferenceManager().getStudent_ID(ncontext)!!.equals("1")){
+            Log.e("Sucesee","successs")
             for (i in report_array.indices){
                 if (report_array[i].student==1){
                     var nmodel=ReportModelFiltered(report_array[i].date,report_array[i].report_list,
@@ -274,6 +291,7 @@ class ReportsActivity:AppCompatActivity() {
                 }
             }
         }else{
+            Log.e("Sucesee","failed")
             for (i in report_array.indices){
                 if (report_array[i].student==2){
                     var nmodel=ReportModelFiltered(report_array[i].date,report_array[i].report_list,

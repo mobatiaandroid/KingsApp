@@ -106,7 +106,7 @@
                 android:layout_height="25dp"
                 android:layout_gravity="right|center"
                 android:layout_weight="12"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 

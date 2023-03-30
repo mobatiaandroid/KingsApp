@@ -60,11 +60,12 @@ class AppsActivity:AppCompatActivity() {
 
         setContentView(R.layout.activity_apps_layout)
         mContext = this
-        PreferenceManager().setStudent_ID(mContext,"")
+
 
         initFn()
         if(CommonClass.isInternetAvailable(mContext)) {
-            studentListApiCall()
+            appsInfoApiCall()
+           // studentListApiCall()
         }
         else{
             Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",
@@ -236,6 +237,23 @@ class AppsActivity:AppCompatActivity() {
         parentList = findViewById(R.id.absencelist)
         linearLayoutManager = LinearLayoutManager(mContext)
 
+        studentName_Text.text=PreferenceManager().getStudentName(mContext)
+        studentclass.text=PreferenceManager().getStudentClass(mContext)
+        if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
+        {
+            Glide.with(mContext) //1
+                .load(studentImg)
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .skipMemoryCache(true) //2
+                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                .transform(CircleCrop()) //4
+                .into(imagicon)
+        }
+        else{
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
+
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         backImage.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
@@ -258,12 +276,12 @@ class AppsActivity:AppCompatActivity() {
             }
 
         })
-        studentSpinner.setOnClickListener {
+       /* studentSpinner.setOnClickListener {
             studentlist_popup(student_name)
-            /* val intent = Intent(mContext, StudentListActivity::class.java)
-             startActivity(intent)*/
+            *//* val intent = Intent(mContext, StudentListActivity::class.java)
+             startActivity(intent)*//*
 
-        }
+        }*/
     }
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE

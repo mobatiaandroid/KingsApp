@@ -97,7 +97,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         context = this
         initFn()
         if(CommonClass.isInternetAvailable(context)) {
-            studentListApiCall()
+            //studentListApiCall()
         }
         else{
             Toast.makeText(context,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
@@ -224,6 +224,24 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         progressDialog = findViewById(R.id.progressDialog)
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
+
+
+        student_Name.text=PreferenceManager().getStudentName(context)
+        studentclass.text=PreferenceManager().getStudentClass(context)
+        if(!PreferenceManager().getStudentPhoto(context).equals(""))
+        {
+            Glide.with(context) //1
+                .load(studentImg)
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .skipMemoryCache(true) //2
+                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                .transform(CircleCrop()) //4
+                .into(imagicon)
+        }
+        else{
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
         if (PreferenceManager().getLanguage(context).equals("ar"))
 
         {
@@ -280,10 +298,10 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 }
             }
         }
-        studentSpinner.setOnClickListener {
+       /* studentSpinner.setOnClickListener {
 
             studentlist_popup(student_name)
-        }
+        }*/
         firstdayofabsence.setOnClickListener {
 
             val mcurrentTime = android.icu.util.Calendar.getInstance()

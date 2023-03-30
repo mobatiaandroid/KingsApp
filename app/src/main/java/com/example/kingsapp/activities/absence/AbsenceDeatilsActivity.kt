@@ -8,7 +8,11 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
+import com.example.kingsapp.manager.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import java.text.DateFormat
 import java.text.SimpleDateFormat

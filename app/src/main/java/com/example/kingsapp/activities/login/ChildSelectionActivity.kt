@@ -104,9 +104,14 @@ class ChildSelectionActivity:AppCompatActivity() {
         }
         circleImageView.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                var id: Int = student_name.get(position).id
-                PreferenceManager().setStudent_ID(ncontext,id.toString())
+               /* var id: Int = student_name.get(position).id
+                PreferenceManager().setStudent_ID(ncontext,id.toString())*/
+                PreferenceManager().setStudentName(ncontext, student_name[position].fullname.toString())
+                PreferenceManager().setStudent_ID(ncontext, student_name[position].id.toString())
+                PreferenceManager().setStudentClass(ncontext, student_name[position].classs.toString())
+                PreferenceManager().setStudentPhoto(ncontext, student_name[position].photo.toString())
                 Log.e("Childselid", PreferenceManager().getStudent_ID(ncontext).toString())
+
                 startActivity(Intent(ncontext, HomeActivity::class.java))
             }
 

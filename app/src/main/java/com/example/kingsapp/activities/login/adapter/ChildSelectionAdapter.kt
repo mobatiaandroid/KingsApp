@@ -1,6 +1,7 @@
 package com.example.kingsapp.activities.login.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.model.Studentlist_model
+import com.example.kingsapp.manager.PreferenceManager
 
-class ChildSelectionAdapter(private val context: Context,
+class ChildSelectionAdapter(private val mcontext: Context,
                             private  val student_name:ArrayList<StudentList>):
     RecyclerView.Adapter<ChildSelectionAdapter.MyViewHolder>()  {
 
@@ -32,6 +34,12 @@ class ChildSelectionAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val namelist = student_name[position].fullname
+
+        Log.e("name",
+            PreferenceManager().setStudentName(mcontext, student_name[position].fullname)
+                .toString()
+        )
+
         holder.studentName.setText(namelist)
 
     }

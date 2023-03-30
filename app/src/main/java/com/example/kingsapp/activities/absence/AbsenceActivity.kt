@@ -70,11 +70,11 @@ class AbsenceActivity: AppCompatActivity() {
         setContentView(R.layout.fragment_absence_main)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
-        PreferenceManager().setStudent_ID(ncontext, "")
 
         initFn()
         if(CommonClass.isInternetAvailable(ncontext)) {
-            studentListApiCall()
+           // studentListApiCall()
+            callStudentLeaveInfo()
         }
         else{
             Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",
@@ -103,18 +103,33 @@ class AbsenceActivity: AppCompatActivity() {
         absencelist.layoutManager = linearLayoutManager
 
 
-
+        student_Name.text=PreferenceManager().getStudentName(mContext)
+        studentclass.text=PreferenceManager().getStudentClass(mContext)
+        if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
+        {
+            Glide.with(mContext) //1
+                .load(studentImg)
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .skipMemoryCache(true) //2
+                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                .transform(CircleCrop()) //4
+                .into(imagicon)
+        }
+        else{
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
         backarrow_absense.setOnClickListener {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
 
         }
-        studentSpinner.setOnClickListener {
+        /*studentSpinner.setOnClickListener {
             studentlist_popup(student_name)
-           /* val intent = Intent(mContext, StudentListActivity::class.java)
-            startActivity(intent)*/
+           *//* val intent = Intent(mContext, StudentListActivity::class.java)
+            startActivity(intent)*//*
 
-        }
+        }*/
         //mAbsenceListView.setLayoutManager(recyclerViewLayoutManager);
         absencelist.addOnItemTouchListener(
             RecyclerItemListener(

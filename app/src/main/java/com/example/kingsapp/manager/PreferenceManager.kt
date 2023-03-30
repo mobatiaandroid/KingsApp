@@ -289,7 +289,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_threetabid", "3")
+        return prefs.getString("button_threetabid", "9")
     }
 
     fun setbuttonfourtabid(context: Context, id: String?) {
@@ -483,7 +483,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_threetextimage", "3")
+        return prefs.getString("button_threetextimage", "9")
     }
 
     fun setbuttonfourtextimage(context: Context, id: String?) {

@@ -60,10 +60,11 @@ class StudentInfoActivity:AppCompatActivity (){
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         mContext = this
 
-        PreferenceManager().setStudent_ID(mContext,"")
+
         initFn()
         if(CommonClass.isInternetAvailable(mContext)) {
-            studentListApiCall()
+           // studentListApiCall()
+            studentInfoApiCall()
         }
         else{
             Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
@@ -147,7 +148,7 @@ class StudentInfoActivity:AppCompatActivity (){
                         }
                     }
                     if(CommonClass.isInternetAvailable(mContext)) {
-                        studentInfoApiCall()
+
                     }
                     else{
                         Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
@@ -238,12 +239,28 @@ class StudentInfoActivity:AppCompatActivity (){
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
         }
-        studentLinear.setOnClickListener {
-            studentlist_popup(student_name)
-            /* val intent = Intent(mContext, StudentListActivity::class.java)
-             startActivity(intent)*/
-
+        studentName_Text.text=PreferenceManager().getStudentName(mContext)
+        studentclass.text=PreferenceManager().getStudentClass(mContext)
+        if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
+        {
+            Glide.with(mContext) //1
+                .load(studentImg)
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .skipMemoryCache(true) //2
+                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                .transform(CircleCrop()) //4
+                .into(imagicon)
         }
+        else{
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
+        /*studentLinear.setOnClickListener {
+            studentlist_popup(student_name)
+            *//* val intent = Intent(mContext, StudentListActivity::class.java)
+             startActivity(intent)*//*
+
+        }*/
 
     }
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
