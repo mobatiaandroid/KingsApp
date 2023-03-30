@@ -180,6 +180,24 @@ class TimeTableActivity:AppCompatActivity() {
         var weekk6= TimeTableApiListModel(7,"Economics","Arun","P6","02:15 PM")
         mSundayArrayList.add(weekk6)
 
+
+
+        studentNameTextView.text=PreferenceManager().getStudentName(ncontext)
+        studentclass.text=PreferenceManager().getStudentClass(ncontext)
+        if(!PreferenceManager().getStudentPhoto(ncontext).equals(""))
+        {
+            Glide.with(ncontext) //1
+                .load(studentImg)
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .skipMemoryCache(true) //2
+                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                .transform(CircleCrop()) //4
+                .into(imagicon)
+        }
+        else{
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
         backarrow.setOnClickListener {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
@@ -338,6 +356,7 @@ class TimeTableActivity:AppCompatActivity() {
 
             recyclerinitializer()
             timeTableAllRecycler.visibility = View.VISIBLE
+            timeTableListS.shuffle()
             var mRecyclerAllAdapter =
                 TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
             timeTableAllRecycler.adapter = mRecyclerAllAdapter

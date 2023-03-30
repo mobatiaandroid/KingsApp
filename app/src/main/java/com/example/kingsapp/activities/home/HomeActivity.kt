@@ -358,15 +358,20 @@ lateinit var menuicon:ImageView
             override fun onItemClicked(position: Int, view: View) {
                 Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
 
-                Glide.with(mContext) //1
-                    .load(R.drawable.profile_icon_grey)
-                    .placeholder(R.drawable.profile_icon_grey)
-                    .error(R.drawable.profile_icon_grey)
-                    .skipMemoryCache(true) //2
-                    .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                    .transform(CircleCrop()) //4
-                    .into(student_profile)
-
+                /*if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
+                {
+                    Glide.with(mContext) //1
+                        .load(" ")
+                        .placeholder(R.drawable.profile_photo)
+                        .error(R.drawable.profile_photo)
+                        .skipMemoryCache(true) //2
+                        .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+                        .transform(CircleCrop()) //4
+                        .into(student_profile)
+                }
+                else{
+                    student_profile.setImageResource(R.drawable.profile_photo)
+                }*/
             }
 
         })
@@ -524,10 +529,7 @@ lateinit var menuicon:ImageView
                 if (response.body()!!.status.equals(100))
                 {
                     student_name.addAll(response.body()!!.student_list)
-                    PreferenceManager().setStudent_ID(mContext,
-                        response.body()!!.student_list.get(0).id.toString()
-                    )
-                    Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
+
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     studentListRecyclerview.layoutManager = linearLayoutManager
                     val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview)

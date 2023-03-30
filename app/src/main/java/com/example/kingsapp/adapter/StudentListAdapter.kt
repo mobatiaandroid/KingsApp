@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.login.model.StudentList
+import com.example.kingsapp.manager.PreferenceManager
 
 class StudentListAdapter(private val context: Context, private val parentassoictionlist: ArrayList<StudentList>
                          , private val recyclerView: RecyclerView) :
@@ -43,6 +44,10 @@ class StudentListAdapter(private val context: Context, private val parentassoict
 
         holder.stud_profile.setImageResource(R.drawable.profile_photo)
         holder.stud_profile.setOnClickListener {
+            PreferenceManager().setStudentName(context, parentassoictionlist[position].fullname.toString())
+            PreferenceManager().setStudent_ID(context, parentassoictionlist[position].id.toString())
+            PreferenceManager().setStudentClass(context, parentassoictionlist[position].classs.toString())
+            PreferenceManager().setStudentPhoto(context, parentassoictionlist[position].photo.toString())
             recyclerView.visibility = View.GONE
 
         }

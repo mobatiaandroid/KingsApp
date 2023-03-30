@@ -90,7 +90,7 @@
                     android:layout_gravity="right|center"
                     android:layout_weight="12"
                     android:src="@drawable/chevron_right"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
             </LinearLayout>
             <!--<LinearLayout
