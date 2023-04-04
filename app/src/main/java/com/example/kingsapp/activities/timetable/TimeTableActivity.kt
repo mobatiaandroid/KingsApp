@@ -323,7 +323,9 @@ class TimeTableActivity:AppCompatActivity() {
 
             if (weekPosition == 1) {
 
-
+                var mRecyclerViewMainAdapter =
+                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
             } else if (weekPosition == 2) {
 
                 var mRecyclerViewMainAdapter =

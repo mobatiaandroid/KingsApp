@@ -8,6 +8,7 @@ import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.apps.model.AppsModel
 import com.example.kingsapp.activities.calender.model.CalendarListModel
 import com.example.kingsapp.activities.forms.model.FormsModel
+import com.example.kingsapp.activities.home.model.HomeGuestrResponseModel
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
 
 import com.example.kingsapp.activities.login.model.LoginResponseModel
@@ -91,10 +92,7 @@ interface ApiService {
 
     /*************Guest user****************/
     @GET("api/v1/home-guest")
-    @Headers("Accept: application/json")
-    fun homeguest(
-        @Header("Authorization") token:String
-    ): Call<ResponseBody>
+    fun homeguest(): Call<HomeGuestrResponseModel>
 
 
     /*************Delete My Account****************/

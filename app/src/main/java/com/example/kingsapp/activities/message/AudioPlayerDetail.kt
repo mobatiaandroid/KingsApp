@@ -39,22 +39,20 @@ class AudioPlayerDetail : AppCompatActivity() {
     var message: String = ""
     var updated_at: String = ""
     var url: String = ""
-    private lateinit var progressDialog: RelativeLayout
+   // private lateinit var progressDialog: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player_detail)
-        extras = intent.extras!!
-
-
-        mContext = this
-        audio_title = extras.getString("url")!!
+       // extras = intent.extras!!
+        audio_title =  extras.getString("url")!!
         Log.e("url",audio_title)
+        mContext = this
         player = GiraffePlayer(this)
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+       // progressDialog = findViewById(R.id.progressDialog)
+       /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
 
         player!!.play(audio_title)
         player!!.onComplete {

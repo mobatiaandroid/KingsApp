@@ -129,7 +129,7 @@ class CalendarYearActivity : AppCompatActivity() {
                 val monthNumber = dataArray[position].toInt()
                 val monthName = monthNamesTitle[monthNumber]
                 val count1=monthNumber!!+1
-                if(count1.toString()=="08"||count1.toString()=="09"||count1.toString()=="10"
+                if(count1.toString()=="8"||count1.toString()=="9"||count1.toString()=="10"
                     ||count1.toString()=="11"||count1.toString()=="12"){
                     yearValue="2022"
             }else{

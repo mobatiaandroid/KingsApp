@@ -37,6 +37,7 @@ import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.forms.FormsActivity
+import com.example.kingsapp.activities.home.model.HomeGuestrResponseModel
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -59,6 +60,7 @@ import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
 import com.mobatia.nasmanila.api.ApiClient
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -110,6 +112,7 @@ lateinit var menuicon:ImageView
         setContentView(R.layout.new_activity)
 
         mContext=this
+        PreferenceManager().setvalue(mContext, "")
         loadLocate()
         initFn()
         showfragmenthome()
@@ -245,7 +248,7 @@ lateinit var menuicon:ImageView
 
         messageRel.setOnClickListener {
 
-
+Log.e("setvalue",PreferenceManager().getvalue(mContext))
             // bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
             messageImg.setBackgroundResource(R.drawable.email_clicked)
             messageText.setTextColor(Color.parseColor("#FFFFFFFF"));
@@ -500,12 +503,72 @@ lateinit var menuicon:ImageView
                 }
                 }
                 else{
+                    callguestApiCall()
                     val intent = Intent(mContext, SigninyourAccountActivity::class.java)
                     startActivity(intent)
+
                 }
             }
 
             override fun onFailure(call: Call<HomeUserResponseModel?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+
+    private fun callguestApiCall() {
+        val call: Call<HomeGuestrResponseModel> = ApiClient.getApiService().homeguest()
+        call.enqueue(object : retrofit2.Callback<HomeGuestrResponseModel> {
+            override fun onResponse(
+                call: Call<HomeGuestrResponseModel>,
+                response: Response<HomeGuestrResponseModel>
+            ) {
+                Log.e("respon",response.body().toString())
+                if (response.body() != null) {
+
+                    if(response.body()!!.status.equals("100"))
+                    {
+                        PreferenceManager().setAccessToken(mContext,"")
+                        PreferenceManager().setAppversion(mContext, response.body()!!.home.android_version)
+                        versionfromapi =
+                            PreferenceManager().getAppVersion(mContext)!!.replace(".", "")
+                        currentversion = currentversion.replace(".", "")
+
+                        Log.e("APPVERSIONAPI:", versionfromapi)
+                        Log.e("CURRENTVERSION:", currentversion)
+
+
+                        if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
+                            if (versionfromapi > currentversion) {
+                                showforceupdate(mContext)
+
+                            }
+                        }
+
+
+                        else if(response.body()!!.status.equals("106"))
+                        {
+                            val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                    }
+                    else{
+                        // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                    }
+                }
+                else{
+                   // callguestApiCall()
+                }
+            }
+
+            override fun onFailure(call: Call<HomeGuestrResponseModel?>, t: Throwable) {
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",

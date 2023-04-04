@@ -173,6 +173,8 @@ class MessageFragment : Fragment() {
                         val intent = Intent(activity, AudioPlayerDetail::class.java)
                         intent.putExtra("url", message_array[position].url)
                         Log.e("urll",message_array.get(position).url)
+                        intent.putExtra("createdate",message_array.get(position).created_at)
+
                         //intent.putExtra("audio_id", message_array[position].id)
 
                         activity?.startActivity(intent)
@@ -183,6 +185,7 @@ class MessageFragment : Fragment() {
                         intent.putExtra("id",message_array.get(position).id)
                         intent.putExtra("title",message_array.get(position).title)
                         intent.putExtra("url",message_array.get(position).url)
+                        intent.putExtra("createdate",message_array.get(position).created_at)
                         Log.e("image",message_array.get(position).title)
                         Log.e("url",message_array.get(position).url)
                         activity?.startActivity(intent)

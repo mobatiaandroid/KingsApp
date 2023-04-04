@@ -40,6 +40,7 @@ class WebViewLoaderActivity: AppCompatActivity() {
         titleTextView = findViewById(R.id.titleTextView)
         logoclick = findViewById(R.id.logoclick)
         urltoshow = intent.getStringExtra("webview_url").toString()
+        Log.e("urltoshow",urltoshow)
         titleToShow = intent.getStringExtra("title").toString()
         back = findViewById(R.id.back)
         titleTextView.text = titleToShow

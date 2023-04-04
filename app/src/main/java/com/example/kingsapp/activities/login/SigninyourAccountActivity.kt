@@ -60,6 +60,7 @@ class SigninyourAccountActivity:AppCompatActivity() {
         setContentView(R.layout.kings_sign_in)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
+        PreferenceManager().setAccessToken(ncontext,"")
         initFn()
     }
 

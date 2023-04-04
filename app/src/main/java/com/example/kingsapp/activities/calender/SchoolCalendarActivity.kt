@@ -216,12 +216,13 @@ for(i in mEventArrayListYear.indices) {
             Log.e("year", year[i].toString())
             Log.e("month", month[i].toString())
             Log.e("dd", dd[i].toString())
+
         }
         mEventArrayListFilterListYear=ArrayList()
             for (i in dayOfTheWeek.indices) {
                 Log.e("size", mEventArrayListYear.size.toString())
                         for (j in mEventArrayListYear.indices) {
-
+                            Log.e("dayscall",mEventArrayListYear.get(j).dayss)
                             if(dd[i].equals(mEventArrayListYear.get(j).dayss)&& dayOfTheWeek[i].equals(mEventArrayListYear.get(j).dayOfTheWeekk)&&
                                 month[i].equals(mEventArrayListYear.get(j).monthNumber)&&
                                 year[i].equals(mEventArrayListYear.get(j).yearr))
@@ -279,6 +280,8 @@ for(i in mEventArrayListYear.indices) {
                     //   Log.e("ArrayAudioFile2", String.valueOf(audiofile.get(1)));
 
                     /************************ end of end date new */
+                    if (mEventArrayListYear.size>0)
+                    {
                     for (i in mEventArrayListYear.indices )
                     {
                         datesToPlot.add(mEventArrayListYear.get(i).start_date)
@@ -319,12 +322,113 @@ for(i in mEventArrayListYear.indices) {
                     }
 
                     filtermonthlist(PreferenceManager().getMonthView(mcontext),mEventArrayListYear)
-
+                    }
+                    else
+                    {
+                        callfiltermonthApi()
+                        /*list.visibility=View.GONE
+                        emptyImg.visibility=View.VISIBLE*/
+                    }
                 }
                 else
                 {
                     CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
                 }
+                }
+                else{
+                    val intent = Intent(mcontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
+                progressDialog.visibility=View.GONE
+                Toast.makeText(
+                    mcontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+
+    private fun callfiltermonthApi() {
+        progressDialog.visibility=View.VISIBLE
+        mEventArrayListYear= ArrayList()
+        Log.e("callcalList", PreferenceManager().getStudent_ID(mcontext).toString())
+
+        val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
+                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
+        call.enqueue(object : retrofit2.Callback<CalendarListModel> {
+            override fun onResponse(
+                call: Call<CalendarListModel>,
+                response: Response<CalendarListModel>
+            ) {
+                progressDialog.visibility=View.GONE
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals(100))
+
+                    {
+                        mEventArrayListYear.addAll(response.body()!!.calendar)
+                        //  Log.e("ArrayAudioFile1", String.valueOf(audiofile.get(0)));
+                        //   Log.e("ArrayAudioFile2", String.valueOf(audiofile.get(1)));
+
+                        /************************ end of end date new */
+                        if (mEventArrayListYear.size>0)
+                        {
+                            for (i in mEventArrayListYear.indices )
+                            {
+                                datesToPlot.add(mEventArrayListYear.get(i).start_date)
+                                holiday()
+                                val date:Date
+                                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+
+                                date=sdf.parse(mEventArrayListYear.get(i).start_date);
+                                Log.e("date", date.toString())
+                                val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
+                                val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
+                                val formatMMM = SimpleDateFormat("MMM", Locale.ENGLISH)
+                                val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+                                val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
+                                val c = Calendar.getInstance().getTime()
+
+                                val monthNumber = formatMM.format(c)
+                                PreferenceManager().setMonthView(mcontext,monthNumber)
+                                val monthNumber1 = formatMM.format(date)
+                                val dayOfTheWeek = formatEEE.format(date) // Thu
+                                val days = formatdd.format(date) // 20
+                                val monthString = formatMMM.format(date) // Jun
+                                val year = formatyyyy.format(date)
+                                mEventArrayListYear.get(i).monthNumber=monthNumber1
+                                mEventArrayListYear.get(i).dayOfTheWeekk=dayOfTheWeek
+                                mEventArrayListYear.get(i).dayss=days
+                                mEventArrayListYear.get(i).monthString=monthString
+                                mEventArrayListYear.get(i).yearr=year
+
+                                Log.e("monthNumber", monthNumber.toString())
+                                Log.e("dayOfTheWeek", dayOfTheWeek.toString())
+                                Log.e("days", days.toString())
+                                Log.e("monthString", monthString.toString())
+                                Log.e("year", year.toString())
+
+                                // filtermonthlist(monthNumber.toString(),mEventArrayListFilterListMonth)
+
+                            }
+
+                            filtermonthlist(PreferenceManager().getMonthView(mcontext),mEventArrayListYear)
+                        }
+                        else
+                        {
+                            list.visibility=View.GONE
+                            emptyImg.visibility=View.VISIBLE
+                        }
+                    }
+                    else
+                    {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
+                    }
                 }
                 else{
                     val intent = Intent(mcontext, SigninyourAccountActivity::class.java)
@@ -395,7 +499,10 @@ for(i in mEventArrayListYear.indices) {
                     Log.e("m", m.toString())
                     val count1=count_month!!+1
                     Log.e("new", count1.toString())
-                    filtermonthlist(count1.toString(),mEventArrayListYear)
+                   // filtermonthlist(count1.toString(),mEventArrayListYear)
+                    callCalendeyearApi(count1.toString(),count_year.toString())
+
+                  //
                     //filterYearlist(mEventArrayListFilterListMonth)
                 }
                 else if(count_month==9)
@@ -404,7 +511,10 @@ for(i in mEventArrayListYear.indices) {
                     Log.e("m", m.toString())
                     val count1=count_month!!+1
                     Log.e("new", count1.toString())
-                    filtermonthlist(count1.toString(),mEventArrayListYear)
+                    callCalendeyearApi(count1.toString(),count_year.toString())
+
+                   // filterYearmonthList(count1.toString(),mEventArrayListYear)
+                    //  filtermonthlist(count1.toString(),mEventArrayListYear)
                     //filterYearlist(mEventArrayListFilterListMonth)
                 }
 
@@ -415,7 +525,10 @@ for(i in mEventArrayListYear.indices) {
                     val count1=count_month!!+1
                     val count= "0"+count1
                     Log.e("new", count.toString())
-                    filtermonthlist(count.toString(),mEventArrayListYear)
+                    callCalendeyearApi(count.toString(),count_year.toString())
+
+                    //filterYearmonthList(count1.toString(),mEventArrayListYear)
+                    //filtermonthlist(count.toString(),mEventArrayListYear)
                     //filterYearlist(mEventArrayListFilterListMonth)
                 }
 
@@ -434,6 +547,7 @@ for(i in mEventArrayListYear.indices) {
             }
         }
         arrow_nxt.setOnClickListener() {
+
             nums_Array = ArrayList()
             if (count_month != 11) {
                 count_month = count_month!! + 1
@@ -448,7 +562,9 @@ for(i in mEventArrayListYear.indices) {
                 val count1=count_month!!+1
                 val count= "0"+count1
                 Log.e("new", count.toString())
-                filtermonthlist(count.toString(),mEventArrayListYear)
+                callCalendeyearApi(count.toString(),count_year.toString())
+               // filterYearmonthList(count1.toString(),mEventArrayListYear)
+                // filtermonthlist(count.toString(),mEventArrayListYear)
                 //filterYearlist(mEventArrayListFilterListMonth)
                 // holiday()
             } else {
@@ -464,10 +580,151 @@ for(i in mEventArrayListYear.indices) {
                 val count1=count_month!!+1
                 val count= "0"+count1
                 Log.e("new", count.toString())
-                filtermonthlist(count.toString(),mEventArrayListFilterListMonth)
+                callCalendeyearApi(count.toString(),count_year.toString())
+                //filterYearmonthList(count1.toString(),mEventArrayListYear)
+
+                // filtermonthlist(count.toString(),mEventArrayListFilterListMonth)
                 // holiday()
             }
         }
+    }
+
+    private fun filterYearmonthList(month: String, mEventArrayListYear: ArrayList<CalendarList>,count_year:String) {
+        mEventArrayListFilterMonth= ArrayList()
+        Log.e("Success", "Success")
+        Log.e("Monthdate", mEventArrayListYear.toString())
+        Log.e("size", mEventArrayListYear.size.toString())
+        for(i in mEventArrayListYear.indices)
+        {
+            val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+            val c = Calendar.getInstance().getTime()
+
+            val monthNumber = formatMM.format(c)
+            val monthdate:String
+            monthdate=mEventArrayListYear.get(i).start_date
+            Log.e("Monthdate",monthdate)
+            Log.e("monthNumber",month)
+            val monthdate1=monthdate.split("-")
+            val str1=monthdate1[1]
+            val str2=monthdate1[0]
+            Log.e("str1", str1.toString())
+            Log.e("str2", str2.toString())
+            Log.e("count_year", count_year.toString())
+            if(str1.equals(month)&&str2.equals(count_year))
+            {
+                Log.e("Success",str1)
+                Log.e("Success",month)
+                list.visibility=View.VISIBLE
+                emptyImg.visibility=View.GONE
+                mEventArrayListFilterMonth.add(mEventArrayListYear.get(i))
+                Log.e("array", mEventArrayListFilterMonth.toString())
+
+            }
+            else
+            {
+                list.visibility=View.GONE
+                emptyImg.visibility=View.VISIBLE
+
+            }
+            /*if(month.equals(mEventArrayListFilterListMonth.get(i).start_date))
+            mEventArrayListFilterMonth.addAll()*/
+            Log.e("array2", mEventArrayListFilterMonth.toString())
+        }
+        if(mEventArrayListFilterMonth.size==0)
+        {
+            Log.e("empty","empty")
+            list.visibility=View.GONE
+            emptyImg.visibility=View.VISIBLE
+        }
+        else
+        {
+            Log.e("full","full")
+            list.visibility=View.VISIBLE
+            emptyImg.visibility=View.GONE
+            val studentlist_adapter =
+                CustomLisAdapter(mcontext, mEventArrayListFilterMonth)
+            list!!.adapter = studentlist_adapter
+        }
+
+    }
+
+    private fun callCalendeyearApi(month:String,count_year:String) {
+        Log.e("monthnumbernew",month)
+        progressDialog.visibility=View.VISIBLE
+        mEventArrayListYear= ArrayList()
+        Log.e("callcal", PreferenceManager().getStudent_ID(mcontext).toString())
+        val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
+                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
+        call.enqueue(object : retrofit2.Callback<CalendarListModel> {
+            override fun onResponse(
+                call: Call<CalendarListModel>,
+                response: Response<CalendarListModel>
+            ) {
+                progressDialog.visibility=View.GONE
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals(100))
+                    {
+                        mEventArrayListYear.addAll(response.body()!!.calendar)
+                        Log.e("mEventArrayListYear", mEventArrayListYear.toString())
+                        for(i in mEventArrayListYear.indices) {
+                            val date: Date
+                            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+
+                            date = sdf.parse(mEventArrayListYear.get(i).start_date);
+
+                            Log.e("date", date.toString())
+                            val formatEEE = SimpleDateFormat("EEE", Locale.ENGLISH)
+                            val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
+                            val formatMMM = SimpleDateFormat("MMM", Locale.ENGLISH)
+                            val formatMM = SimpleDateFormat("MM", Locale.ENGLISH)
+                            val formatyyyy = SimpleDateFormat("yyyy", Locale.ENGLISH)
+                            val c = Calendar.getInstance().getTime()
+                            val monthNumber = formatMM.format(date)
+                            val dayOfTheWeek = formatEEE.format(date) // Thu
+                            val days = formatdd.format(date) // 20
+                            val monthString = formatMMM.format(date) // Jun
+                            val year = formatyyyy.format(date)
+                            val monthNumber1 = formatMM.format(date)
+
+                            mEventArrayListYear.get(i).monthNumber=monthNumber1
+                            mEventArrayListYear.get(i).dayOfTheWeekk=dayOfTheWeek
+                            mEventArrayListYear.get(i).dayss=days
+                            mEventArrayListYear.get(i).monthString=monthString
+                            mEventArrayListYear.get(i).yearr=year
+                            Log.e("monthNumber", monthNumber.toString())
+                            Log.e("dayOfTheWeek", dayOfTheWeek.toString())
+                            Log.e("days", days.toString())
+                            Log.e("monthString", monthString.toString())
+                            Log.e("year", year.toString())
+
+
+                            //filterWeekArray(monthNumber,dayOfTheWeek,days,monthString,year,mEventArrayListYear)
+                            //
+                        }
+                        filterYearmonthList(month,mEventArrayListYear,count_year)
+                    }
+                    else
+                    {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mcontext)
+                    }
+                }
+                else{
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
+                progressDialog.visibility=View.GONE
+                Toast.makeText(
+                    mcontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
     private fun initFn() {
@@ -512,7 +769,7 @@ for(i in mEventArrayListYear.indices) {
 
         }else{
             Log.e("year","0")
-            callCalendarListMonth()
+            callfiltermonthApi()
 
         }
         back.setOnClickListener {
@@ -669,10 +926,20 @@ Log.e("detailarray",mEventArrayListFilterMonth[position].title)
             /*if(month.equals(mEventArrayListFilterListMonth.get(i).start_date))
             mEventArrayListFilterMonth.addAll()*/
         }
+        if(mEventArrayListFilterMonth.size==0)
+        {
+            list.visibility=View.GONE
+            emptyImg.visibility=View.VISIBLE
+        }
+        else
+        {
+            list.visibility=View.VISIBLE
+            emptyImg.visibility=View.GONE
+            val studentlist_adapter =
+                CustomLisAdapter(mcontext, mEventArrayListFilterMonth)
+            list!!.adapter = studentlist_adapter
+        }
 
-        val studentlist_adapter =
-            CustomLisAdapter(mcontext, mEventArrayListFilterMonth)
-        list!!.adapter = studentlist_adapter
     }
 
     fun filterYearlist(mEventArrayListYear: ArrayList<CalendarList>)
@@ -716,8 +983,8 @@ Log.e("detailarray",mEventArrayListFilterMonth[position].title)
             {
                 Log.e("Success",str1)
                 Log.e("Success",monthNumber)
-                list.visibility=View.GONE
-                emptyImg.visibility=View.VISIBLE
+                list.visibility=View.VISIBLE
+                emptyImg.visibility=View.GONE
                 mEventArrayListFilterMonth.add(mEventArrayListYear.get(j))
                 Log.e("mEventArrayListFilterListYear elseif", mEventArrayListFilterMonth.toString())
             }

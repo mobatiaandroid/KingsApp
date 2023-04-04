@@ -34,8 +34,10 @@
             android:id="@+id/iconImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:src="@drawable/kings_school_logo"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:background="@drawable/curved_circle_alert_bg"
             android:scaleType="fitCenter" />
     </RelativeLayout>
 
@@ -47,7 +49,7 @@
         android:background="@drawable/dialoguebottomcurve">
 
 
-        <TextView
+       <!-- <TextView
 
             android:id="@+id/alertHead"
             android:layout_width="wrap_content"
@@ -60,22 +62,20 @@
             android:gravity="center_horizontal"
             android:text="Alert"
             android:textColor="#ff000000"
-            android:textSize="18sp" />
+            android:textSize="18sp" />-->
 
-        <TextView
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
 
             android:id="@+id/text_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/alertHead"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
-            android:textColor="#ff000000" />
+            android:textColor="@color/greyy" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,16 +89,17 @@
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
                 android:layout_weight="50">
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaBold
                     android:id="@+id/btn_Cancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/greyy"
+                    android:background="@drawable/curved_cancel_bg"
                     android:text="@string/cancel"
-                    android:gravity="center"
+                    android:gravity="center_vertical|center_horizontal"
                     android:clickable="true"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:textColor="#ffffffff" />
             </LinearLayout>
             <LinearLayout
@@ -106,14 +107,14 @@
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="50">
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaBold
                     android:id="@+id/btn_Ok"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@color/kings_blue"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/curved_ok_bg"
                     android:text="@string/ok"
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="#ffffffff" />
