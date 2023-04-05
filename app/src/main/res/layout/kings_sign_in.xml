@@ -67,27 +67,28 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical" >
 
-            <com.example.kingsapp.manager.font.CustomVerdanaBold
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/signInTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="Sign in your" />
-            <com.example.kingsapp.manager.font.CustomVerdanaBold
+                android:text="Sign in to" />
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/accountTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:text="account" />
+                android:text="your account" />
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/signInDescTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please provide username and password to sign in your account" />
+                android:textColor="@color/greyy"
+                android:text="Please provide username and password to sign in to your account" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -99,20 +100,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView24"
-                android:textColorHint="@color/border_grey"
-                app:boxStrokeColor="@color/border_grey"
+                android:textColorHint="@color/greyy"
+                app:boxStrokeColor="@color/greyy"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 app:endIconMode="custom"
-                app:hintTextColor="@color/black">
+                app:hintTextColor="@color/greyy">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailTextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email-ID"
+                    android:hint="User name"
                     android:textCursorDrawable="@color/kings_blue"
                     android:singleLine="true"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/border_grey"/>
+                    android:textColorHint="@color/greyy"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,10 +130,11 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textColorHint="@color/border_grey"
-                app:boxStrokeColor="@color/border_grey"
+                android:textColorHint="@color/greyy"
+                app:boxStrokeColor="@color/greyy"
                 app:endIconMode="custom"
-                app:hintTextColor="@color/black"
+                app:endIconDrawable="@drawable/ic_baseline_remove_red_eye_24"
+                app:hintTextColor="@color/greyy"
                 app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -137,9 +144,10 @@
                     android:hint="Password"
                     android:textCursorDrawable="@color/kings_blue"
                     android:singleLine="false"
+                    android:clickable="true"
                     android:textColor="@color/black"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/border_grey"/>
+                    android:textColorHint="@color/greyy"/>
 
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
@@ -150,31 +158,33 @@
                 <ImageView
                     android:id="@+id/rememeberMeImg"
                     android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:layout_weight="0.25"
+                    android:layout_height="15dp"
+                    android:layout_weight="0.2"
                     android:background="@drawable/remember_me"
                     android:layout_margin="5dp"/>
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.25"
+                    android:layout_weight="1.5"
                     android:gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    android:textColor="@color/greyy"
                     android:layout_gravity="center_vertical"
                     android:text="Remember Me"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.05"/>
-                <TextView
+                    android:layout_weight="0.5"/>
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:id="@+id/forgetPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="right"
-                    android:layout_weight="1.70"
+                    android:textSize="13dp"
+                    android:layout_weight="2"
                     android:textColor="@color/red"
-                    android:text="Forget Password"
+                    android:text="Forget Password?"
                     android:layout_marginRight="20dp"
                     />
             </LinearLayout>
@@ -202,15 +212,16 @@
                     android:layout_weight="1.75"
                     android:layout_marginTop="10dp"
                     android:id="@+id/donthaveaccount"
-                    android:textStyle="bold"
+                    android:textColor="@color/greyy"
                     android:gravity="right"
                     android:text="Don\'t have an account?"/>
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:id="@+id/createAccountTxt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.25"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
                     android:textStyle="bold"
                     android:textColor="@color/kings_blue"
                     android:text="Create Account"/>
@@ -249,6 +260,7 @@
                     android:layout_weight="1.75"
                     android:layout_marginTop="5dp"
                     android:id="@+id/haveaccount"
+                    android:textColor="@color/greyy"
                     android:gravity="right"
                     android:text="If you have any trouble"/>
                 <com.example.kingsapp.manager.font.CustomVerdanaRegular

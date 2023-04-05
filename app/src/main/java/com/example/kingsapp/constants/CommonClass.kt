@@ -130,13 +130,13 @@ class CommonClass {
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.setCancelable(false)
             dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-            var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+           // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
             var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
             var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
             var iconImageView=dialog.findViewById(R.id.iconImageView) as ImageView
-            iconImageView.setImageResource(R.drawable.ic_baseline_clear_24)
+           // iconImageView.setImageResource(R.drawable.ic_baseline_clear_24)
             text_dialog.text = message
-            alertHead.text = msgHead
+           // alertHead.text = msgHead
             btn_Ok.setOnClickListener()
             {
                 dialog.dismiss()

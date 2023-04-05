@@ -24,6 +24,7 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -48,7 +49,8 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var studentclass: TextView
     lateinit var backarrow: ImageView
     lateinit var studentLinear: LinearLayout
-    private lateinit var progressDialog: RelativeLayout
+   // private lateinit var progressDialog: RelativeLayout
+   lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,7 +181,7 @@ class StudentInfoActivity:AppCompatActivity (){
         })
     }
     private fun studentInfoApiCall() {
-        progressDialog.visibility=View.VISIBLE
+        progressBarDialog.show()
         val call: Call<StudentInfoResponseModel> = ApiClient.getApiService().studentinfo("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString(),
             PreferenceManager().getStudent_ID(mContext).toString()
@@ -189,7 +191,7 @@ class StudentInfoActivity:AppCompatActivity (){
                 call: Call<StudentInfoResponseModel>,
                 response: Response<StudentInfoResponseModel>
             ) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                if (response.body()!!.status.equals(100))
                {
@@ -210,6 +212,8 @@ class StudentInfoActivity:AppCompatActivity (){
             }
 
             override fun onFailure(call: Call<StudentInfoResponseModel?>, t: Throwable) {
+                progressBarDialog.hide()
+
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",
@@ -231,10 +235,10 @@ class StudentInfoActivity:AppCompatActivity (){
         address = findViewById(R.id.address)
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.backarrow)
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+        progressBarDialog = ProgressBarDialog(mContext)
+       /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
         backarrow.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)

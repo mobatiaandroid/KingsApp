@@ -11,11 +11,13 @@ import android.provider.Settings
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,7 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.LoginResponseModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -35,7 +38,7 @@ import retrofit2.Response
 import java.util.logging.Logger.global
 
 
-class SigninyourAccountActivity:AppCompatActivity() {
+class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
     lateinit var ncontext: Context
     lateinit var createAccountTxt:TextView
     lateinit var signInBtn:AppCompatButton
@@ -48,7 +51,9 @@ class SigninyourAccountActivity:AppCompatActivity() {
     lateinit var haveaccount:TextView
     lateinit var donthaveaccount:TextView
     lateinit var rememeberMeImg:ImageView
-    private lateinit var progressDialog: RelativeLayout
+   // private lateinit var progressDialog: RelativeLayout
+   lateinit var progressBarDialog: ProgressBarDialog
+
     var flag:Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,9 +81,46 @@ class SigninyourAccountActivity:AppCompatActivity() {
         backImg=findViewById(R.id.backImg)
         joinGuestTxt = findViewById(R.id.joinGuestTxt)
         emailSupport = findViewById(R.id.emailSupport)
-       progressDialog = findViewById(R.id.progressDialog)
+        progressBarDialog = ProgressBarDialog(ncontext)
+
+       // emailTextInputEditText.setOnTouchListener(this)
+       // passwordTextInputEditText.setOnTouchListener(this)
+       /* emailTextInputEditText.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                emailTextInputEditText?.isFocusable=false
+                emailTextInputEditText?.isFocusableInTouchMode=false
+                false
+            } else {
+                emailTextInputEditText?.isFocusable=false
+                emailTextInputEditText?.isFocusableInTouchMode=false
+                false
+            }
+        }*/
+
+        //Keyboard done button click password
+       /* passwordTextInputEditText.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                passwordTextInputEditText.isFocusable =false
+                passwordTextInputEditText.isFocusableInTouchMode =false
+                false
+            } else {
+                passwordTextInputEditText?.isFocusable=false
+                passwordTextInputEditText?.isFocusableInTouchMode=false
+                false
+            }
+        }*/
         rememeberMeImg.setOnClickListener(View.OnClickListener {
-            if(flag)
+            rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.ic_baseline_check_24))
+if(PreferenceManager().getUsernametext(ncontext).equals("")&&PreferenceManager().getUserpasswrdtext(ncontext).equals(""))
+{
+   Toast.makeText(ncontext, "Please enter the field !", Toast.LENGTH_SHORT).show()
+}
+            else
+{
+    emailTextInputEditText.setText(PreferenceManager().getUsernametext(ncontext))
+    passwordTextInputEditText.setText(PreferenceManager().getUserpasswrdtext(ncontext))
+}
+   /*         if(flag)
             {
 if(passwordTextInputEditText.text.toString().trim().equals(""))
 {
@@ -101,7 +143,7 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
                 passwordTextInputEditText.setTransformationMethod(PasswordTransformationMethod.getInstance())
                 rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.check))
             }
-            flag = !flag
+            flag = !flag*/
         })
         haveaccount.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
@@ -141,6 +183,9 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
             }
             else
             {
+                PreferenceManager().setUsernametext(ncontext, emailTextInputEditText.text.toString())
+                PreferenceManager().setUserpasswrdtext(ncontext, passwordTextInputEditText.text.toString())
+
                 if(CommonClass.isInternetAvailable(ncontext)) {
                     callLoginApi(
                         emailTextInputEditText.text.toString(),
@@ -171,8 +216,9 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
     private fun callLoginApi(username: String, paswwd: String) {
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
-        progressDialog.visibility = View.VISIBLE
+      //  progressDialog.startAnimation(aniRotate)
+        progressBarDialog.show()
+
         var androidID = Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
         Log.e("android_id",androidID)
@@ -183,7 +229,7 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
                 call: Call<LoginResponseModel>,
                 response: Response<LoginResponseModel>
             ) {
-                progressDialog.visibility = View.GONE
+                progressBarDialog.hide()
 
                 if(response.body()!!.status.equals(100))
                {
@@ -198,6 +244,8 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
             }
 
             override fun onFailure(call: Call<LoginResponseModel?>, t: Throwable) {
+                progressBarDialog.hide()
+
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",
@@ -273,5 +321,37 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
                 Log.e("succ", t.message.toString())
             }
         })
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        when (v) {
+            emailTextInputEditText -> {
+                when (event!!.action){
+                    MotionEvent.ACTION_DOWN -> {
+                        emailTextInputEditText?.isFocusable=true
+                        emailTextInputEditText?.isFocusableInTouchMode=true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        v.performClick()
+                        emailTextInputEditText?.isFocusable=true
+                        emailTextInputEditText?.isFocusableInTouchMode=true
+                    }
+                }
+            }
+            passwordTextInputEditText -> {
+                when (event!!.action){
+                    MotionEvent.ACTION_DOWN -> {
+                        passwordTextInputEditText?.isFocusable=true
+                        passwordTextInputEditText?.isFocusableInTouchMode=true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        v.performClick()
+                        passwordTextInputEditText?.isFocusable=true
+                        passwordTextInputEditText?.isFocusableInTouchMode=true
+                    }
+                }
+            }
+        }
+        return false
     }
 }

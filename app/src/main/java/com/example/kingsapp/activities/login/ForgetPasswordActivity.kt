@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
@@ -40,6 +41,7 @@ class ForgetPasswordActivity:AppCompatActivity() {
     lateinit var createacconttextview: TextView
     lateinit var textView24: TextView
     lateinit var back_arrow:ImageView
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class ForgetPasswordActivity:AppCompatActivity() {
         txtProgress = findViewById(R.id.textView);
         passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout)
         passwordTextInputEditText = findViewById(R.id.passwordTextInputEditText)
+        progressBarDialog = ProgressBarDialog(ncontext)
 
         image = findViewById(R.id.imageView)
         back_arrow = findViewById(R.id.imageView18)
@@ -90,12 +93,14 @@ class ForgetPasswordActivity:AppCompatActivity() {
     }
 
     private fun callForgetPasswd(email: String) {
+        progressBarDialog.show()
         val call: Call<CommonResponse> = ApiClient.getApiService().forgetpwsd(email)
         call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+                progressBarDialog.hide()
                 if (response.body()!!.status.equals(100)) {
                     Log.e("Response", response.body().toString())
                     val animZoomIn = AnimationUtils.loadAnimation(ncontext, R.anim.zoom_in)
@@ -138,6 +143,7 @@ class ForgetPasswordActivity:AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
+                progressBarDialog.hide()
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",

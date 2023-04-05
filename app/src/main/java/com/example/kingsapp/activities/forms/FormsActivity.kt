@@ -25,6 +25,7 @@ import com.example.kingsapp.activities.parentessentials.adapter.ParentListAdapte
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.constants.WebViewLoaderActivity
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
@@ -40,7 +41,8 @@ class FormsActivity : AppCompatActivity() {
     lateinit var parentList: RecyclerView
     lateinit var mcontext: Context
     lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var progressDialog: RelativeLayout
+    //private lateinit var progressDialog: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ class FormsActivity : AppCompatActivity() {
     }
 
     private fun formListApiCall() {
-        progressDialog.visibility = View.VISIBLE
+        progressBarDialog.show()
         val call: Call<FormsModel> = ApiClient.getApiService().forms("Bearer "+
                 PreferenceManager().getAccessToken(mcontext).toString(), PreferenceManager().getStudent_ID(mcontext).toString())
         call.enqueue(object : retrofit2.Callback<FormsModel> {
@@ -67,7 +69,7 @@ class FormsActivity : AppCompatActivity() {
                 call: Call<FormsModel>,
                 response: Response<FormsModel>
             ) {
-                progressDialog.visibility = View.GONE
+                progressBarDialog.hide()
 
                 Log.e("Response",response.body().toString())
                 if (response.body() != null) {
@@ -90,6 +92,8 @@ class FormsActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<FormsModel?>, t: Throwable) {
+                progressBarDialog.hide()
+
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -111,10 +115,11 @@ class FormsActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(mcontext)
 
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+        progressBarDialog = ProgressBarDialog(mcontext)
+
+       /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mcontext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
         parentList.addOnItemTouchListener(
             RecyclerItemListener(
                 mcontext, parentList,

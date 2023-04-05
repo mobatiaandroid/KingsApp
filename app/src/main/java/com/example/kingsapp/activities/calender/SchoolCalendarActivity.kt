@@ -23,6 +23,7 @@ import com.example.kingsapp.activities.calender.model.ListViewSpinnerModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -47,7 +48,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var monthlist:Array<String>
     lateinit var week_day:Array<String>
     lateinit var nums_Array:ArrayList<String>
-    private lateinit var progressDialog: RelativeLayout
+   // private lateinit var progressDialog: RelativeLayout
     var month_total_days:Int?=null
     var count_month:Int?=null
     var count_year:Int?=null
@@ -71,6 +72,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var back:ImageView
     lateinit var txtMYW:TextView
     lateinit var daySpinner:TextView
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +90,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
     }
 
     private fun callCalendarList() {
-progressDialog.visibility=View.VISIBLE
+        progressBarDialog.show()
         mEventArrayListYear= ArrayList()
         Log.e("callcal", PreferenceManager().getStudent_ID(mcontext).toString())
         val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
@@ -98,7 +100,7 @@ progressDialog.visibility=View.VISIBLE
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
@@ -153,7 +155,7 @@ for(i in mEventArrayListYear.indices) {
             }
 
             override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -259,7 +261,7 @@ for(i in mEventArrayListYear.indices) {
     }
 
     private fun callCalendarListMonth() {
-        progressDialog.visibility=View.VISIBLE
+        progressBarDialog.show()
         mEventArrayListYear= ArrayList()
         Log.e("callcalList", PreferenceManager().getStudent_ID(mcontext).toString())
 
@@ -270,7 +272,7 @@ for(i in mEventArrayListYear.indices) {
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
 
@@ -342,7 +344,7 @@ for(i in mEventArrayListYear.indices) {
             }
 
             override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -355,7 +357,7 @@ for(i in mEventArrayListYear.indices) {
     }
 
     private fun callfiltermonthApi() {
-        progressDialog.visibility=View.VISIBLE
+        progressBarDialog.show()
         mEventArrayListYear= ArrayList()
         Log.e("callcalList", PreferenceManager().getStudent_ID(mcontext).toString())
 
@@ -366,7 +368,7 @@ for(i in mEventArrayListYear.indices) {
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals(100))
 
@@ -437,7 +439,7 @@ for(i in mEventArrayListYear.indices) {
             }
 
             override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -650,7 +652,7 @@ for(i in mEventArrayListYear.indices) {
 
     private fun callCalendeyearApi(month:String,count_year:String) {
         Log.e("monthnumbernew",month)
-        progressDialog.visibility=View.VISIBLE
+        progressBarDialog.show()
         mEventArrayListYear= ArrayList()
         Log.e("callcal", PreferenceManager().getStudent_ID(mcontext).toString())
         val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
@@ -660,7 +662,7 @@ for(i in mEventArrayListYear.indices) {
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals(100))
                     {
@@ -715,7 +717,7 @@ for(i in mEventArrayListYear.indices) {
             }
 
             override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
-                progressDialog.visibility=View.GONE
+                progressBarDialog.hide()
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -736,13 +738,15 @@ for(i in mEventArrayListYear.indices) {
         mEventArrayListFilterListYear = ArrayList()
         datesToPlot = ArrayList()
 
+
         var modell= ListViewSpinnerModel("Year View"," ",",")
         mListViewArray.add(modell)
         var xmodel= ListViewSpinnerModel("Month View"," "," ")
         mListViewArray.add(xmodel)
         var nmodel= ListViewSpinnerModel("Week View"," "," ")
         mListViewArray.add(nmodel)
-        progressDialog = findViewById(R.id.progressDialog)
+        progressBarDialog = ProgressBarDialog(mcontext)
+       // progressDialog = findViewById(R.id.progressDialog)
         list = findViewById<RecyclerView>(R.id.mEventList)
         txtMYW=findViewById(R.id.txtMYW)
         txtMYW.setText("This Month")

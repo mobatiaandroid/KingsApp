@@ -30,6 +30,7 @@ import com.example.kingsapp.activities.home.model.HomeUserResponseModel
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.InternetCheckClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.fragment.contact.adapter.ContactusAdapter
 import com.example.kingsapp.fragment.contact.model.ContactsListDetailModel
 import com.example.kingsapp.fragment.contact.model.ContactusModel
@@ -59,11 +60,12 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
     lateinit var titleTextView: TextView
     lateinit var mContext: Context
      lateinit var menu: ImageView
-    lateinit var progressDialog: RelativeLayout
+  //  lateinit var progressDialog: RelativeLayout
     lateinit var contact_usrecyclerview: RecyclerView
     lateinit var description: String
     var aboutusdescription = ArrayList<ContactsListDetailModel>()
     var contactusdescription = ArrayList<ContactusResponseArray>()
+    lateinit var progressBarDialog: ProgressBarDialog
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var descriptiontext: TextView
@@ -126,6 +128,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
     }
 
     private fun getcontactdetails() {
+        progressBarDialog.show()
         val call: Call<ContactusModel> = ApiClient.getApiService().contactus("Bearer "+PreferenceManager().getAccessToken(
             mContext).toString(),PreferenceManager().getStudent_ID(mContext).toString())
         call.enqueue(object : retrofit2.Callback<ContactusModel> {
@@ -133,6 +136,8 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                 call: Call<ContactusModel>,
                 response: Response<ContactusModel>
             ) {
+                progressBarDialog.hide()
+
                 Log.e("respon",response.body().toString())
                 if (response.body() != null) {
                 if(response.body()!!.status.equals(100))
@@ -203,6 +208,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
             }
 
             override fun onFailure(call: Call<ContactusModel?>, t: Throwable) {
+                progressBarDialog.hide()
                 Toast.makeText(
                     com.example.kingsapp.fragment.mContext,
                     "Fail to get the data..",
@@ -287,6 +293,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
         contact_usrecyclerview = view?.findViewById(R.id.contact_usrecyclerview) as RecyclerView
         descriptiontext = view?.findViewById(R.id.descriptiontext) as TextView
         mapFragment = childFragmentManager.findFragmentById(R.id.googleMap) as SupportMapFragment
+        progressBarDialog = ProgressBarDialog(mContext)
 
         linearLayoutManager = LinearLayoutManager(mContext)
         contact_usrecyclerview.layoutManager = linearLayoutManager

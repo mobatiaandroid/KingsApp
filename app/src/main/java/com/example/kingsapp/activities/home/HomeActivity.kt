@@ -1241,11 +1241,11 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
         dialog.setContentView(R.layout.alert_dialogue_layout)
         var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
 
-        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+       // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
-        alertHead.text = msgHead
+        text_dialog.text = msgHead
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()

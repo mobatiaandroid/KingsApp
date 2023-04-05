@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline16"
             tools:layout_editor_absoluteX="16dp">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaBold
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,6 +57,7 @@
                 android:id="@+id/textView24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/greyy"
                 android:text="Please enter the mail id provided by the school"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView23" />

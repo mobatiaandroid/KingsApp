@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.apps.adapter.AppsAdapter
 import com.example.kingsapp.activities.apps.model.AppsList
@@ -26,6 +27,7 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.constants.WebViewLoaderActivity
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -49,7 +51,9 @@ class AppsActivity:AppCompatActivity() {
     lateinit var parentList: RecyclerView
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var list_name: ArrayList<AppsList>
-    private lateinit var progressDialog: RelativeLayout
+    //private lateinit var progressDialog: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
+
     lateinit var studentSpinner: LinearLayout
 
 
@@ -84,7 +88,7 @@ class AppsActivity:AppCompatActivity() {
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
-                progressDialog.visibility = View.GONE
+              //  progressDialog.visibility = View.GONE
                 Log.e("Response",response.body().toString())
                 if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
@@ -179,7 +183,7 @@ class AppsActivity:AppCompatActivity() {
 
     private fun appsInfoApiCall() {
         list_name = ArrayList()
-        progressDialog.visibility = View.VISIBLE
+       progressBarDialog.show()
         val call: Call<AppsModel> = ApiClient.getApiService().apps("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString(),
             PreferenceManager().getStudent_ID(mContext).toString()
@@ -189,7 +193,8 @@ class AppsActivity:AppCompatActivity() {
                 call: Call<AppsModel>,
                 response: Response<AppsModel>
             ) {
-                progressDialog.visibility = View.GONE
+             progressBarDialog.hide()
+
                 if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
@@ -211,6 +216,8 @@ class AppsActivity:AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<AppsModel?>, t: Throwable) {
+                progressBarDialog.hide()
+
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",
@@ -230,10 +237,10 @@ class AppsActivity:AppCompatActivity() {
         imagicon = findViewById(R.id.imagicon)
         backImage = findViewById(R.id.backarrow_absense)
         studentclass = findViewById(R.id.studentclass)
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+        progressBarDialog = ProgressBarDialog(mContext)
+        /*val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
         parentList = findViewById(R.id.absencelist)
         linearLayoutManager = LinearLayoutManager(mContext)
 

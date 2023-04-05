@@ -17,6 +17,7 @@ import com.example.kingsapp.activities.login.adapter.ChildSelectionAdapter
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -29,6 +30,7 @@ class ChildSelectionActivity:AppCompatActivity() {
     lateinit var circleImageView:RecyclerView
     lateinit var student_name: ArrayList<StudentList>
     lateinit var imageView18:ImageView
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,7 @@ class ChildSelectionActivity:AppCompatActivity() {
     }
 
     private fun studentListApiCall() {
+        progressBarDialog.show()
         val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(ncontext).toString())
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
@@ -58,6 +61,8 @@ class ChildSelectionActivity:AppCompatActivity() {
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
+                progressBarDialog.hide()
+
                 Log.e("Response",response.body().toString())
                 if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
@@ -83,6 +88,7 @@ class ChildSelectionActivity:AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+                progressBarDialog.hide()
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",
@@ -99,6 +105,8 @@ class ChildSelectionActivity:AppCompatActivity() {
         circleImageView=findViewById(R.id.circleImageView)
 
         imageView18=findViewById(R.id.imageView18)
+        progressBarDialog = ProgressBarDialog(ncontext)
+
         imageView18.setOnClickListener {
             startActivity(Intent(this, SigninyourAccountActivity::class.java))
         }

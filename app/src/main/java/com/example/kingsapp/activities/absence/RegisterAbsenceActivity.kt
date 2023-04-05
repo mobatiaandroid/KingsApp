@@ -32,6 +32,7 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.AppUtils
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -82,7 +83,7 @@ var outputFormats: SimpleDateFormat? = null
 lateinit var student_name:ArrayList<StudentList>
 lateinit var backarrow_registerabsence : ImageView
 lateinit var relativieabsence:RelativeLayout
-private lateinit var progressDialog: RelativeLayout
+lateinit var progressBarDialog: ProgressBarDialog
 
 class RegisterAbsenceActivity:AppCompatActivity() {
 
@@ -221,7 +222,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         backarrow_registerabsence = findViewById(R.id.backarrow_registerabsence)
         calendar = Calendar.getInstance()
        // outputFormats = SimpleDateFormat("yyyy-MM-dd", Locale("ar"))
-        progressDialog = findViewById(R.id.progressDialog)
+        progressBarDialog = ProgressBarDialog(context)
+
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
 
@@ -376,7 +378,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
 
     private fun callAbsenceSubmitApi(from: String, tDate: String, reasonAPI: String) {
         //progressDialog.visibility = View.VISIBLE
-
+        progressBarDialog.show()
         var devicename:String= (Build.MANUFACTURER
                 + " " + Build.MODEL + " " + Build.VERSION.RELEASE
                 + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT]
@@ -392,6 +394,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+                progressBarDialog.hide()
                 //progressDialog.visibility = View.GONE
                 if (response.body() != null) {
                 if(response.body()!!.status.equals(100))
@@ -415,6 +418,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
+                progressBarDialog.hide()
+
                 Toast.makeText(
                     context,
                     "Fail to get the data..",
@@ -583,11 +588,11 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+      //  var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         text_dialog.text = message
-        alertHead.text = msgHead
+        //alertHead.text = msgHead
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()

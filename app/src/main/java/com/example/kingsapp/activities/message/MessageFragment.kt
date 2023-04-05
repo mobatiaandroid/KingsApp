@@ -24,6 +24,7 @@ import com.example.kingsapp.activities.message.adapter.MessageListAdapter
 import com.example.kingsapp.activities.message.model.MessageListModel
 import com.example.kingsapp.activities.message.model.NotificationModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.fragment.*
 import com.example.kingsapp.manager.AppController
 import com.example.kingsapp.manager.NaisClassNameConstants
@@ -41,7 +42,9 @@ class MessageFragment : Fragment() {
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var menu : ImageView
     lateinit var message_array:ArrayList<MessageListModel>
-    private lateinit var progressDialog: RelativeLayout
+    //private lateinit var progressDialog: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,7 +72,7 @@ class MessageFragment : Fragment() {
     }
 
     private fun NotificationApiCall() {
-        progressDialog.visibility = View.VISIBLE
+        progressBarDialog.show()
         message_array.clear()
         val studentbody= AbsenceLeaveApiModel(PreferenceManager().getStudent_ID(mContext)!!,0,20)
         val call: Call<NotificationModel> = ApiClient.getApiService().notification("Bearer "+
@@ -81,7 +84,7 @@ class MessageFragment : Fragment() {
                 call: Call<NotificationModel>,
                 response: Response<NotificationModel>
             ) {
-                progressDialog.visibility = View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                 if (response.body()!!.status.equals(100))
                 {
@@ -109,6 +112,8 @@ class MessageFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<NotificationModel?>, t: Throwable) {
+                progressBarDialog.hide()
+
                 Toast.makeText(
                     mContext,
                     "Fail to get the data..",
@@ -129,10 +134,10 @@ class MessageFragment : Fragment() {
 
         messagerec = (rootView.findViewById<View>(R.id.messagerec) as? RecyclerView)!!
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
-        progressDialog = rootView.findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+        progressBarDialog = ProgressBarDialog(mContext)
+        /*val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
         menu.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)

@@ -127,6 +127,36 @@ class PreferenceManager {
         val prefs = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
         return prefs.getString("user_code", "")
     }
+
+
+    fun setUsernametext(context: Context, usercode: String?) {
+        val prefs = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("user_name_text", usercode)
+        editor.apply()
+    }
+    fun getUsernametext(context: Context): String? {
+        val prefs = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        return prefs.getString("user_name_text", "")
+    }
+
+
+
+    fun setUserpasswrdtext(context: Context, usercode: String?) {
+        val prefs = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("user_paswd_text", usercode)
+        editor.apply()
+    }
+    fun getUserpasswrdtext(context: Context): String? {
+        val prefs = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        return prefs.getString("user_paswd_text", "")
+    }
+
+
+
+
+
     fun setLoginPassword(context: Context, password: String) {
         val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
         val editor = pref.edit()

@@ -31,7 +31,9 @@ class WebViewLoaderActivity: AppCompatActivity() {
 
     lateinit var logoclick: ImageView
     lateinit var titleTextView: TextView
-    private lateinit var progressDialog: RelativeLayout
+    //private lateinit var progressDialog: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
+
     @SuppressLint("SetJavaScriptEnabled", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +46,10 @@ class WebViewLoaderActivity: AppCompatActivity() {
         titleToShow = intent.getStringExtra("title").toString()
         back = findViewById(R.id.back)
         titleTextView.text = titleToShow
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+        progressBarDialog = ProgressBarDialog(context)
+        /*val aniRotate: Animation =
             AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
         // downloadpdf = findViewById(R.id.downloadpdf)
         webview = findViewById(R.id.webview)
         webview.settings.javaScriptEnabled = true
@@ -73,9 +75,9 @@ class WebViewLoaderActivity: AppCompatActivity() {
         webview.webChromeClient = object : WebChromeClient() {
 
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-                progressDialog.visibility = View.VISIBLE
+                progressBarDialog.show()
                 if (newProgress == 100) {
-                    progressDialog.visibility = View.GONE
+                    progressBarDialog.hide()
                     back.visibility = View.VISIBLE
 
                 }

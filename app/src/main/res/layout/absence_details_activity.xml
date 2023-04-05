@@ -19,7 +19,7 @@
             android:layout_weight="1">
 
         </ImageView>
-        <TextView
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"

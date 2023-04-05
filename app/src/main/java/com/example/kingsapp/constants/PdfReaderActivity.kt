@@ -32,13 +32,14 @@ import java.io.File
 class PdfReaderActivity: AppCompatActivity() {
     lateinit var pdfviewer: PDFView
     lateinit var urltoshow: String
-    lateinit var progressBar: RelativeLayout
+   // lateinit var progressBar: RelativeLayout
     lateinit var btn_left: ImageView
     lateinit var downloadpdf: ImageView
     private val STORAGE_PERMISSION_CODE: Int = 1000
     private var title = " "
     private lateinit var logoClickImgView: TextView
     lateinit var context:Context
+    lateinit var progressBarDialog: ProgressBarDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +50,9 @@ class PdfReaderActivity: AppCompatActivity() {
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
         //progressBar = findViewById(R.id.progressDialog)
-        progressBar = findViewById(R.id.progressbar)
+       // progressBar = findViewById(R.id.progressbar)
+        progressBarDialog = ProgressBarDialog(context)
+
         downloadpdf = findViewById(R.id.downloadpdf)
         //sharepdf = findViewById(R.id.sharepdf)
         logoClickImgView = findViewById(R.id.logoClickImgView)
@@ -58,11 +61,11 @@ class PdfReaderActivity: AppCompatActivity() {
         urltoshow = intent.getStringExtra("pdf_url").toString()
         title = intent.getStringExtra("pdf_title").toString()
         logoClickImgView.setText(title)
-        progressBar.visibility = View.VISIBLE
+        progressBarDialog.show()
 
-        val aniRotate: Animation =
+       /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
-        progressBar.startAnimation(aniRotate)
+        progressBar.startAnimation(aniRotate)*/
 
         btn_left.setOnClickListener {
             finish()
@@ -116,7 +119,7 @@ class PdfReaderActivity: AppCompatActivity() {
     fun onDownloadComplete() {
         val onComplete = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                progressBar.visibility = View.GONE
+                progressBarDialog.hide()
                 Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show()
 
             }
@@ -133,7 +136,7 @@ class PdfReaderActivity: AppCompatActivity() {
         request.allowScanningByMediaScanner()
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$title.pdf")
-        progressBar.visibility = View.VISIBLE
+        progressBarDialog.show()
         val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         manager.enqueue(request)
     }
@@ -176,7 +179,7 @@ class PdfReaderActivity: AppCompatActivity() {
             .onPageError { page, _ ->
             }
             .load()
-        progressBar.visibility = View.GONE
+        progressBarDialog.hide()
     }
 
     fun getRootDirPath(context: Context): String {

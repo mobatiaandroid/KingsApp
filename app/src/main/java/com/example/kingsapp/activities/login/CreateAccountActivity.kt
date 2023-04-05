@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -40,6 +41,7 @@ class CreateAccountActivity:AppCompatActivity() {
     lateinit var textView24:TextView
     lateinit var passwordTextInputEditText:TextInputEditText
     lateinit var back_arrow:ImageView
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +60,12 @@ class CreateAccountActivity:AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar);
         createacconttextview = findViewById(R.id.textView23)
         textView24 = findViewById(R.id.textView24)
-        txtProgress = findViewById(R.id.textView);
+        txtProgress = findViewById(R.id.textView)
         passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout)
         passwordTextInputEditText = findViewById(R.id.passwordTextInputEditText)
         image = findViewById(R.id.imageView)
         back_arrow = findViewById(R.id.imageView18)
+        progressBarDialog = ProgressBarDialog(ncontext)
 
         back_arrow.setOnClickListener {
             startActivity(Intent(this, WelcomeActivity::class.java))
@@ -93,12 +96,14 @@ class CreateAccountActivity:AppCompatActivity() {
     }
 
     private fun callSignUpApi(name: String) {
+        progressBarDialog.show()
         val call: Call<CommonResponse> = ApiClient.getApiService().signup(name)
         call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
                 call: Call<CommonResponse>,
                 response: Response<CommonResponse>
             ) {
+                progressBarDialog.hide()
                 if (response.body()!!.status.equals(100)) {
                     Log.e("Response", response.body().toString())
                     createacconttextview.setText("Account created")
@@ -142,6 +147,7 @@ class CreateAccountActivity:AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
+                progressBarDialog.hide()
                 Toast.makeText(
                     ncontext,
                     "Fail to get the data..",

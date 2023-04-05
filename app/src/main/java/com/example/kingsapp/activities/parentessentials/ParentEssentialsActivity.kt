@@ -24,6 +24,7 @@ import com.example.kingsapp.activities.parentessentials.model.ParentModel
 import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.constants.WebViewLoaderActivity
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
@@ -41,7 +42,8 @@ class ParentEssentialsActivity: AppCompatActivity() {
     lateinit var parentList: RecyclerView
     lateinit var mcontext:Context
     lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var progressDialog: RelativeLayout
+   // private lateinit var progressDialog: RelativeLayout
+   lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
         mcontext =this
         initFn()
         if(CommonClass.isInternetAvailable(mcontext)) {
-            progressDialog.visibility = View.VISIBLE
+           // progressDialog.visibility = View.VISIBLE
             parrentessentialApiCall()
         }
         else{
@@ -61,7 +63,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
     }
 
     private fun parrentessentialApiCall() {
-        progressDialog.visibility = View.VISIBLE
+        progressBarDialog.show()
         val call: Call<ParentModel> = ApiClient.getApiService().parentessentials("Bearer "+
                 PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
         call.enqueue(object : retrofit2.Callback<ParentModel> {
@@ -69,7 +71,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
                 call: Call<ParentModel>,
                 response: Response<ParentModel>
             ) {
-                progressDialog.visibility = View.GONE
+                progressBarDialog.hide()
                 if (response.body() != null) {
                 Log.e("Response",response.body().toString())
                 if (response.body()!!.status.equals(100))
@@ -91,6 +93,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ParentModel?>, t: Throwable) {
+                progressBarDialog.hide()
                 Toast.makeText(
                     mcontext,
                     "Fail to get the data..",
@@ -110,10 +113,10 @@ class ParentEssentialsActivity: AppCompatActivity() {
 
         parentList =findViewById(R.id.parentessetialsrec)
         linearLayoutManager = LinearLayoutManager(mcontext)
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
+        progressBarDialog = ProgressBarDialog(mcontext)
+       /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mcontext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressDialog.startAnimation(aniRotate)*/
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         parentList.layoutManager = linearLayoutManager
 

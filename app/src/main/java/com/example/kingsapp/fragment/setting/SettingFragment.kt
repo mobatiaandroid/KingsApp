@@ -281,12 +281,12 @@ class SettingFragment: Fragment() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+       // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         var iconImageView=dialog.findViewById(R.id.iconImageView) as ImageView
         text_dialog.text = message
-        alertHead.text = msgHead
+       // alertHead.text = msgHead
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
@@ -343,6 +343,7 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
     var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
     var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
     text_dialog.text = s
+    btn_Ok.text="Delete"
     btn_Ok.setOnClickListener()
     {
         if(CommonClass.isInternetAvailable(this.mContext)) {
