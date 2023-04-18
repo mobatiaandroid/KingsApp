@@ -1,6 +1,7 @@
 package com.example.kingsapp.fragment.setting.adapter
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,11 @@ class SettingAdapter (
 
             holder.imageView3.visibility= View.GONE
             holder.imageView4.visibility= View.VISIBLE
+                val face: Typeface =
+                    Typeface.createFromAsset(context.getAssets(), "font/times_new_roman.ttf")
+            holder. titleTextView.setTypeface(face);
+           // holder. txtUser.setTypeface(face);
+
         }
         if (PreferenceManager().getAccessToken(context).equals(""))
 

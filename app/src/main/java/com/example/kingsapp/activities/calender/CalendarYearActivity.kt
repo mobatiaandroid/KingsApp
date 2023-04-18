@@ -112,7 +112,8 @@ class CalendarYearActivity : AppCompatActivity() {
         //val data = arrayOf("7", "8", "9", "10", "11", "0", "1", "2", "3", "4", "5", "6")
         //Bundle args = intent.getBundleExtra("BUNDLE");
         //Bundle args = intent.getBundleExtra("BUNDLE");
-        val holidaysArray = intent.getSerializableExtra("BUNDLE") as ArrayList<String>?
+
+        Log.e("holidaysArray", PreferenceManager().getArrayList(mcontext).toString())
 
         val recyclerView = findViewById<View>(R.id.rvNumbers) as RecyclerView
         //recyclerView.setAlpha(0.0f);

@@ -3,6 +3,7 @@ package com.example.kingsapp.activities.message
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.manager.PreferenceManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,6 +65,11 @@ class ImageMessageActivity : AppCompatActivity(){
         webView = findViewById(R.id.webView)
        // backRelative = findViewById(R.id.backRelative)
         heading.setText(getResources().getString(R.string.Message))
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            heading.setTypeface(face);
+        }
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })

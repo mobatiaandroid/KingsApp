@@ -3,6 +3,7 @@ package com.example.kingsapp.activities.calender
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -73,6 +74,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var txtMYW:TextView
     lateinit var daySpinner:TextView
     lateinit var progressBarDialog: ProgressBarDialog
+    lateinit var textView:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -287,6 +289,8 @@ for(i in mEventArrayListYear.indices) {
                     for (i in mEventArrayListYear.indices )
                     {
                         datesToPlot.add(mEventArrayListYear.get(i).start_date)
+                        PreferenceManager().saveArrayList(mcontext,datesToPlot)
+                        Log.e("datesToPlot1", PreferenceManager().getArrayList(mcontext).toString())
                         holiday()
                         val date:Date
                         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
@@ -383,6 +387,8 @@ for(i in mEventArrayListYear.indices) {
                             for (i in mEventArrayListYear.indices )
                             {
                                 datesToPlot.add(mEventArrayListYear.get(i).start_date)
+                                PreferenceManager().saveArrayList(mcontext,datesToPlot)
+                                Log.e("datesToPlot2", PreferenceManager().getArrayList(mcontext).toString())
                                 holiday()
                                 val date:Date
                                 val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
@@ -739,17 +745,17 @@ for(i in mEventArrayListYear.indices) {
         datesToPlot = ArrayList()
 
 
-        var modell= ListViewSpinnerModel("Year View"," ",",")
+        var modell= ListViewSpinnerModel(getResources().getString(R.string.yearview)," ",",")
         mListViewArray.add(modell)
-        var xmodel= ListViewSpinnerModel("Month View"," "," ")
+        var xmodel= ListViewSpinnerModel(getResources().getString(R.string.monthview)," "," ")
         mListViewArray.add(xmodel)
-        var nmodel= ListViewSpinnerModel("Week View"," "," ")
+        var nmodel= ListViewSpinnerModel(getResources().getString(R.string.weekview)," "," ")
         mListViewArray.add(nmodel)
         progressBarDialog = ProgressBarDialog(mcontext)
        // progressDialog = findViewById(R.id.progressDialog)
         list = findViewById<RecyclerView>(R.id.mEventList)
         txtMYW=findViewById(R.id.txtMYW)
-        txtMYW.setText("This Month")
+        txtMYW.setText(getResources().getString(R.string.thismonth))
         daySpinner=findViewById(R.id.daySpinner)
         emptyImg=findViewById(R.id.alertRelative)
 
@@ -763,6 +769,13 @@ for(i in mEventArrayListYear.indices) {
         arrowUpImg=findViewById(R.id.arrowUpImg)
         arrowDwnImg=findViewById(R.id.arrowDwnImg)
         rel_calendar_title=findViewById(R.id.rel_calendar_title)
+
+        textView=findViewById(R.id.textView)
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
         monthlist=getResources().getStringArray(R.array.Months)
         week_day=getResources().getStringArray(R.array.Weeks)
         setTextview()
@@ -803,16 +816,16 @@ for(i in mEventArrayListYear.indices) {
 
                 // TODO Auto-generated method stub
                 if (position == 1) {
-                    txtMYW.setText("This Month")
+                    txtMYW.setText(getResources().getString(R.string.thismonth))
                     listSpinner.setVisibility(
                         View.GONE
                     )
-                    daySpinner.setText("Month View")
+                    daySpinner.setText(getResources().getString(R.string.monthview))
 
                     callCalendarListMonth()
 
                 } else if (position == 2) {
-                    txtMYW.setText("This Week")
+                    txtMYW.setText(getResources().getString(R.string.thisweek))
                     listSpinner.setVisibility(
                         View.GONE
                     )
@@ -835,7 +848,7 @@ for(i in mEventArrayListYear.indices) {
 
                     filterWeekArray()
 
-                    daySpinner.setText("Week View")
+                    daySpinner.setText(getResources().getString(R.string.weekview))
                    // emptyImg.visibility=View.GONE
 
                    /* list!!.layoutManager = LinearLayoutManager(mcontext)
@@ -847,10 +860,10 @@ for(i in mEventArrayListYear.indices) {
                     listSpinner.setVisibility(
                         View.GONE
                     )
-                    daySpinner.setText("Year View")
+                    daySpinner.setText(getResources().getString(R.string.yearview))
 
                     val intent = Intent(mcontext, CalendarYearActivity::class.java)
-                    //intent.putExtra("BUNDLE", AppController.holidayArrayListYear as Serializable)
+                  //  intent.putExtra("BUNDLE", AppController().datesToPlot as Serializable)
                     startActivity(intent)
 
 
@@ -1089,12 +1102,36 @@ Log.e("detailarray",mEventArrayListFilterMonth[position].title)
         for (i in 0..41) {
             val resID: Int =
                 mcontext.resources.getIdentifier("textview_$i", "id", mcontext.packageName)
-            dateTextView[i] = findViewById(resID)
+            Log.e("textview",resID.toString())
+            Log.e("i", i.toString())
+            if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+                calendararabictextview(i,resID)
+            }
+            else
+            {
+                dateTextView[i] = findViewById(resID)
+                dateTextView[i]!!.setBackgroundColor(Color.WHITE)
+                dateTextView[i]!!.setTextColor(Color.BLACK)
+            }
+
+        }
+
+    }
+
+    private fun calendararabictextview(i: Int, resID: Int)
+    {
+        if(i==1)
+        {
+            val str:String=getResources().getString(R.string.one)
+            val str1:Int=str.toInt()
+            Log.e("arbicdigits", str1.toString())
+            dateTextView[str1] = findViewById(resID)
             dateTextView[i]!!.setBackgroundColor(Color.WHITE)
             dateTextView[i]!!.setTextColor(Color.BLACK)
         }
 
     }
+
     fun currentMonth(month: Int): Int {
         var currentMonth = "01"
         when (month) {

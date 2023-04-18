@@ -1,11 +1,10 @@
 package com.example.kingsapp.manager
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.calender.model.CalendarList
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 class PreferenceManager {
     val PREFSNAME = "NAS"
@@ -1151,6 +1150,48 @@ class PreferenceManager {
         )
         b = prefs.getString("month", "").toString()
         return b
+    }
+
+    fun getFCMToken(context: Context): String? {
+        val text: String?
+        val settings: SharedPreferences = context.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        text = settings.getString("fcm_token", "")
+        return text
+    }
+
+    fun setFCMToken(context: Context, text: String) {
+        val settings: SharedPreferences = context.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        val editor: SharedPreferences.Editor = settings.edit()
+        editor.putString("fcm_token", text)
+        editor.apply()
+    }
+    fun saveArrayList(context: Context, list: ArrayList<String>) {
+        val prefs = context.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        val gson = Gson()
+        val json = gson.toJson(list)
+        editor.putString("list", json)
+        editor.apply()
+    }
+
+    fun getArrayList(context: Context): ArrayList<String> {
+        val prefs = context.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        val gson = Gson()
+        val json = prefs.getString("list", null)
+        val type = object : TypeToken<ArrayList<String?>?>() {}.type
+        return gson.fromJson(json, type)
     }
 }
 

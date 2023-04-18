@@ -210,7 +210,7 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:backgroundTint="@color/white"
-                android:text="SUN" />
+                android:text="@string/sun" />
 
             <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/secondday"
@@ -219,7 +219,7 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="MON"
+                android:text="@string/mon"
                 android:textSize="12dp"
                 android:textColor="@color/white"
                 android:layout_marginRight="5dp"
@@ -229,7 +229,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="TUE"
+                android:text="@string/tue"
                 android:textSize="12dp"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -241,7 +241,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="WED"
+                android:text="@string/wed"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="12dp"
@@ -253,7 +253,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="THU"
+                android:text="@string/thu"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="12dp"
@@ -265,7 +265,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="FRI"
+                android:text="@string/fri"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="12dp"
@@ -277,7 +277,7 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:text="SAT"
+                android:text="@string/sat"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="12dp"
@@ -799,7 +799,7 @@
 
                 android:layout_weight="30"
                 android:background="@color/kings_blue"
-                android:text="Month View"
+                android:text="@string/monthview"
                 android:textSize="16sp" />
 
             <ImageView

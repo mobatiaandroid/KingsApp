@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.parentessentials
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +46,7 @@ class ParentEssentialsActivity: AppCompatActivity() {
     lateinit var linearLayoutManager: LinearLayoutManager
    // private lateinit var progressDialog: RelativeLayout
    lateinit var progressBarDialog: ProgressBarDialog
-
+   lateinit var textView:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -110,13 +112,18 @@ class ParentEssentialsActivity: AppCompatActivity() {
         list_name= ArrayList()
 
         back = findViewById(R.id.back)
-
+        textView=findViewById(R.id.textView)
         parentList =findViewById(R.id.parentessetialsrec)
         linearLayoutManager = LinearLayoutManager(mcontext)
         progressBarDialog = ProgressBarDialog(mcontext)
        /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mcontext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)*/
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         parentList.layoutManager = linearLayoutManager
 

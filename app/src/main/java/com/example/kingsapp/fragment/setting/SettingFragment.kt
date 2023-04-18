@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -45,6 +46,7 @@ class SettingFragment: Fragment() {
     lateinit var recyclerList: RecyclerView
     lateinit var mContext:Context
     lateinit var menu : ImageView
+    lateinit var textView:TextView
     lateinit var stringList:Array<String>
 
     override fun onCreateView(
@@ -67,6 +69,7 @@ class SettingFragment: Fragment() {
         recyclerList = (rootView.findViewById<View>(R.id.settingsRecycler) as? RecyclerView?)!!
         //recyclerList = findViewById(R.id.settingsRecycler)
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
+        textView= (rootView.findViewById<View>(R.id.textView) as? TextView?)!!
         stringList = mContext.resources.getStringArray(
             R.array.setting_list)
         recyclerList.setHasFixedSize(true)
@@ -77,7 +80,11 @@ class SettingFragment: Fragment() {
         recyclerList.layoutManager = llm
         val adapter = SettingAdapter(mContext, stringList)
         recyclerList.adapter = adapter
-
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
         menu.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)
             startActivity(intent)
@@ -148,14 +155,14 @@ class SettingFragment: Fragment() {
                         ).show()
                     }
                     if (position == 4) {
-                        showSuccessAlertForDelete(mContext, "Do you want to delete your account?")
+                        showSuccessAlertForDelete(mContext, getResources().getString(R.string.do_you_want_delete))
                     }
                     if (position == 5) {
                         showChangePasswordPopUp()
                     }
 
                     if (position == 6) {
-                        showSuccessAlert(mContext, "Do you want to Logout?")
+                        showSuccessAlert(mContext, getResources().getString(R.string.do_you_want_logout))
                     }
                 }
 
@@ -196,10 +203,20 @@ class SettingFragment: Fragment() {
         val dialog = BottomSheetDialog(mContext, R.style.CustomBottomSheetDialog)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_change_password, null)
         val current_passwrd = view.findViewById<TextInputEditText>(R.id.currentpasswd)
+        val change_password = view.findViewById<TextInputEditText>(R.id.textView5)
         val new_passwrd = view.findViewById<TextInputEditText>(R.id.newpasswd)
         val confirm_passwd = view.findViewById<TextInputEditText>(R.id.confirmpasswd)
         val submit_button = view.findViewById<Button>(R.id.button)
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            change_password.setTypeface(face);
+            submit_button.setTypeface(face);
+            current_passwrd.setTypeface(face);
+            new_passwrd.setTypeface(face);
+            confirm_passwd.setTypeface(face);
 
+        }
         dialog.setCancelable(true)
         dialog.setContentView(view)
 
@@ -307,8 +324,16 @@ class SettingFragment: Fragment() {
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
-        btn_Ok.text = "Yes"
-        btn_Cancel.text = "May be later"
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            btn_Ok.setTypeface(face);
+            btn_Cancel.setTypeface(face);
+            text_dialog.setTypeface(face);
+
+        }
+        btn_Ok.text = getResources().getString(R.string.yes)
+        btn_Cancel.text = getResources().getString(R.string.may_be_later)
 
         text_dialog.text = msgHead
         btn_Ok.setOnClickListener()
@@ -342,8 +367,17 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
     var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
     var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
     var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
+
+    if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+        val face: Typeface =
+            Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+        btn_Ok.setTypeface(face);
+        btn_Cancel.setTypeface(face);
+        text_dialog.setTypeface(face);
+
+    }
     text_dialog.text = s
-    btn_Ok.text="Delete"
+    btn_Ok.text=getResources().getString(R.string.delete)
     btn_Ok.setOnClickListener()
     {
         if(CommonClass.isInternetAvailable(this.mContext)) {
@@ -432,7 +466,15 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
         val submitButton = dialog.findViewById<View>(R.id.submitButton) as TextView
         val text_dialog = dialog.findViewById<View>(R.id.text_dialog) as EditText
         val text_content = dialog.findViewById<View>(R.id.text_content) as EditText
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            dialogCancelButton.setTypeface(face);
+            submitButton.setTypeface(face);
+            text_dialog.setTypeface(face);
+            text_content.setTypeface(face);
 
+        }
         //  text_dialog.text = message
         // alertHead.text = msgHead
         // iconImageView.setImageResource(R.color.white)

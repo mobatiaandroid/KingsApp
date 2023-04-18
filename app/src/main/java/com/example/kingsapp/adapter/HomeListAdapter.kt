@@ -3,6 +3,7 @@ package com.example.nas_dubai_kotlin.activities.home.adapter
 import android.app.Activity
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.manager.PreferenceManager
 
 /**
  * Created by Arshad on 05,August,2022
@@ -47,7 +49,13 @@ class HomeListAdapter(context: Context,
             retView = convertView
         val txtTitle = retView.findViewById<View>(R.id.listTxtView) as TextView
         val imgView = retView.findViewById<View>(R.id.listImg) as ImageView
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            txtTitle.setTypeface(face);
+        }
         txtTitle.text = mListItemArray[position]
+
         if (mDisplayListImage) {
             imgView.visibility = View.VISIBLE
             imgView.setImageDrawable(mListImgArray!!.getDrawable(position))

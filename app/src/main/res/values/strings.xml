@@ -294,16 +294,49 @@
         <item>Settings</item>
         <item>About</item>
     </array>
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thur</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
 
+    <string name="one">1</string>
+    <string name="tw0">2</string>
+
+
+
+
+
+    <string name="yearview">Year View</string>
+    <string name="monthview">Month View</string>
+    <string name="weekview">Week View</string>
+
+    <string name="thismonth">This Month</string>
+    <string name="thisweek">This Week</string>
+
+
+    <string name="drawer_open">Terms of Services</string>
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
 
     <string name="do_you_want_account">Do you want to Exit?</string>
+    <string name="do_you_want_delete">Do you want to delete your account?</string>
+    <string name="do_you_want_logout">Do you want to Logout?</string>
     <string name="ok">Ok</string>
+    <string name="yes">Yes</string>
+    <string name="may_be_later">May be later</string>
+
+    <string name="delete">Delete</string>
 
     <string name="parentcomms"> Parent Comms</string>
 
     <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
     <string name="no_data_found"> No data found</string>
+
+
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
 </resources>

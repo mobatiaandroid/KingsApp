@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.forms
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +45,7 @@ class FormsActivity : AppCompatActivity() {
     lateinit var linearLayoutManager: LinearLayoutManager
     //private lateinit var progressDialog: RelativeLayout
     lateinit var progressBarDialog: ProgressBarDialog
-
+    lateinit var textView:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -113,10 +115,14 @@ class FormsActivity : AppCompatActivity() {
 
         parentList =findViewById(R.id.parentessetialsrec)
         linearLayoutManager = LinearLayoutManager(mcontext)
-
+        textView = findViewById(R.id.textView)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         progressBarDialog = ProgressBarDialog(mcontext)
-
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
        /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mcontext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)*/

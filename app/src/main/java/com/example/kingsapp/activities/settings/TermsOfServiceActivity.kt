@@ -3,6 +3,7 @@ package com.example.kingsapp.activities.settings
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
+import com.example.kingsapp.manager.PreferenceManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -56,6 +58,11 @@ class TermsOfServiceActivity : AppCompatActivity(){
         webView = findViewById(R.id.webView)
         webView1 = findViewById(R.id.webView1)
         heading.text = "Terms of Services"
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            heading.setTypeface(face);
+        }
         var termsTitle="Intellectual Property"
         webView1.text=termsTitle
         var termsDescription="The design of this website and its content is © Kings Education Limited , all rights are reserved. Nothing in this website should be taken as conferring any licence or right to use any trademark displayed on this website without the prior written approval of the trademark owner. You may print off or download content as permitted under the fair dealing provisions of the Copyright Designs and Patents Act 1988 (as amended) (sections 28 to 30) for the purposes of viewing it on your computer, research for non-commercial purposes, private study, criticism, review and news reporting, provided that you do not alter it in any way and acknowledge us as the source of the content and the copyright owners. All other use or copying of any of the contents of this site, other than as expressly permitted by us or permitted by law, is prohibited."

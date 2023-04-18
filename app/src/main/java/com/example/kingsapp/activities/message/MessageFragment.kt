@@ -1,6 +1,7 @@
 package com.example.kingsapp.activities.message
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +46,7 @@ class MessageFragment : Fragment() {
     lateinit var message_array:ArrayList<MessageListModel>
     //private lateinit var progressDialog: RelativeLayout
     lateinit var progressBarDialog: ProgressBarDialog
-
+    lateinit var textView : TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -134,6 +136,7 @@ class MessageFragment : Fragment() {
 
         messagerec = (rootView.findViewById<View>(R.id.messagerec) as? RecyclerView)!!
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
+        textView = ((rootView.findViewById<View>(R.id.textView) as? TextView)!!)
         progressBarDialog = ProgressBarDialog(mContext)
         /*val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
@@ -146,7 +149,11 @@ class MessageFragment : Fragment() {
 
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
-
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
 
         messagerec.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {

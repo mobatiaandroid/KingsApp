@@ -43,7 +43,7 @@ class StudentPlannerActivity: AppCompatActivity() {
         // downloadpdf = findViewById(R.id.downloadpdf)
         webview = findViewById(R.id.webview)
         webview.settings.javaScriptEnabled = true
-        webview.settings.setAppCacheEnabled(true)
+       // webview.settings.setAppCacheEnabled(true)
         webview.settings.javaScriptCanOpenWindowsAutomatically = true
         webview.settings.loadsImagesAutomatically = true
         webview.setBackgroundColor(Color.TRANSPARENT)

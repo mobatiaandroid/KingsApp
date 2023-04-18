@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.timetable
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,6 +32,7 @@ import com.example.kingsapp.activities.timetable.model.TimeTableApiListModel
 import com.example.kingsapp.activities.timetable.model.WeekModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -74,8 +76,7 @@ class TimeTableActivity:AppCompatActivity() {
     lateinit var reasonAPI: String
     var weekPosition = 0
     lateinit var dayOfTheWeek: String
-
-
+    lateinit var textView:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -108,6 +109,12 @@ class TimeTableActivity:AppCompatActivity() {
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.back)
         imagicon = findViewById(R.id.imagicon)
+        textView=findViewById(R.id.textView)
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
        // studentListApiCall()
 
 

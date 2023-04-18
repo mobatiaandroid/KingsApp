@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -746,6 +747,16 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         if(PreferenceManager().getLanguage(mContext).equals("ar")) {
             home_logo_image_arab!!.visibility = View.VISIBLE
             home_logo_image!!.visibility = View.GONE
+                val face: Typeface =
+                    Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            mTxtOne!!.setTypeface(face);
+            mTxtTwo!!.setTypeface(face);
+            mTxtThree!!.setTypeface(face);
+            mTxtFour!!.setTypeface(face);
+            mTxtFive!!.setTypeface(face);
+            mTxtSix!!.setTypeface(face);
+            mTxtSeven!!.setTypeface(face);
+
         }else
         {
             home_logo_image_arab!!.visibility=View.GONE

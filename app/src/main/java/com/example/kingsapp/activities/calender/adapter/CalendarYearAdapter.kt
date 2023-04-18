@@ -10,13 +10,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.fragment.mContext
+import com.example.kingsapp.manager.PreferenceManager
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarYearAdapter (context: Context, data:ArrayList<String>):
+class CalendarYearAdapter(
+    context: Context,
+    data: ArrayList<String>
+):
     RecyclerView.Adapter<CalendarYearAdapter.MyViewHolder>() {
     var mData: ArrayList<String> = data
     var mContext: Context =context
@@ -38,7 +42,7 @@ class CalendarYearAdapter (context: Context, data:ArrayList<String>):
     )
     private val dayNames =
         arrayOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY")
-    private val mHolidaysArray: ArrayList<String>? = null
+  //  private val mHolidaysArray: ArrayList<String>? = null
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //var textview: TextView = view.findViewById(R.id.listDate)
         var titleLabel: TextView? = null
@@ -156,16 +160,21 @@ class CalendarYearAdapter (context: Context, data:ArrayList<String>):
             val monthIn2Digits = formatter.format((monthNumber + 1).toLong())
             val dayIn2Digits = formatter.format(days.toLong())
             val currentDayString = "$yearNumber-$monthIn2Digits-$dayIn2Digits"
-            /* if (mHolidaysArray!!.contains(currentDayString)) {
+            Log.e("currentDayString",currentDayString)
+            val holidaysArray: ArrayList<String>
+            holidaysArray = PreferenceManager().getArrayList(mContext)
+            Log.e("mHolidaysArray", holidaysArray.toString())
+
+            if (holidaysArray!!.contains(currentDayString)) {
                  println("if case working holiday")
-                 holder.dateTextView.get(i)!!.setBackgroundResource(R.color.black)
+                 holder.dateTextView.get(i)!!.setBackgroundResource(R.drawable.circle_calendar)
                  holder.dateTextView.get(i)!!
-                     .setTextColor(context.resources.getColor(R.color.white))
+                     .setTextColor(mContext.resources.getColor(R.color.white))
              } else {
                  println("else case working holiday")
                  holder.dateTextView.get(i)!!
-                     .setTextColor(context.resources.getColor(R.color.black))
-             }*/
+                     .setTextColor(mContext.resources.getColor(R.color.black))
+             }
         }
     }
 

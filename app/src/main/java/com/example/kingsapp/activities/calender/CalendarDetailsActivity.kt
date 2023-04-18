@@ -168,12 +168,12 @@ lateinit var linearLayoutManager:LinearLayoutManager
         mwebSettings.setDefaultTextEncodingName("utf-8")
         mwebSettings.setLoadsImagesAutomatically(true)
         mwebSettings.setAllowFileAccessFromFileURLs(true)
-        mWebView.getSettings().setAppCacheMaxSize((10 * 1024 * 1024).toLong()) // 5MB
-        mWebView.getSettings().setAppCachePath(
+      //  mWebView.getSettings().setAppCacheMaxSize((10 * 1024 * 1024).toLong()) // 5MB
+       /* mWebView.getSettings().setAppCachePath(
             mContext.getCacheDir().getAbsolutePath()
-        )
+        *//*)*/
         mWebView.getSettings().setAllowFileAccess(true)
-        mWebView.getSettings().setAppCacheEnabled(true)
+      //  mWebView.getSettings().setAppCacheEnabled(true)
         mWebView.getSettings().setJavaScriptEnabled(true)
         mWebView.getSettings()
             .setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)

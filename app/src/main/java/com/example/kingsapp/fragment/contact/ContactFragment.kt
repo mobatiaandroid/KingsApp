@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Typeface
 import android.location.Location
 import android.location.LocationManager
 import android.location.LocationListener
@@ -58,6 +59,7 @@ GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener,
 GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
     lateinit var titleTextView: TextView
+    lateinit var textView:TextView
     lateinit var mContext: Context
      lateinit var menu: ImageView
   //  lateinit var progressDialog: RelativeLayout
@@ -293,11 +295,16 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
         contact_usrecyclerview = view?.findViewById(R.id.contact_usrecyclerview) as RecyclerView
         descriptiontext = view?.findViewById(R.id.descriptiontext) as TextView
         mapFragment = childFragmentManager.findFragmentById(R.id.googleMap) as SupportMapFragment
+        textView=view?.findViewById(R.id.textView) as TextView
         progressBarDialog = ProgressBarDialog(mContext)
 
         linearLayoutManager = LinearLayoutManager(mContext)
         contact_usrecyclerview.layoutManager = linearLayoutManager
-
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
 
         menu.setOnClickListener {
             val intent = Intent(mContext, HomeActivity::class.java)

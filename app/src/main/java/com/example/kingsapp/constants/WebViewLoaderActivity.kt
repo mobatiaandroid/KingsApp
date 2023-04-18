@@ -8,12 +8,10 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
+
 import android.webkit.*
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
+
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -53,7 +51,7 @@ class WebViewLoaderActivity: AppCompatActivity() {
         // downloadpdf = findViewById(R.id.downloadpdf)
         webview = findViewById(R.id.webview)
         webview.settings.javaScriptEnabled = true
-        webview.settings.setAppCacheEnabled(true)
+       // webview.settings.setAppCacheEnabled(true)
         webview.settings.javaScriptCanOpenWindowsAutomatically = true
         webview.settings.loadsImagesAutomatically = true
         webview.setBackgroundColor(Color.TRANSPARENT)

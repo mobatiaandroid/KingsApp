@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -29,9 +30,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.apps.AppsActivity
@@ -59,8 +57,10 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.api.ApiClient
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -156,7 +156,14 @@ lateinit var menuicon:ImageView
         student_profile = findViewById<View>(R.id.student_profile) as ImageView
         studentListRecyclerview = findViewById<View>(R.id.studentlistrec) as RecyclerView
 
-
+        FirebaseApp.initializeApp(mContext)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            Log.e("token Firebase", token.toString())
+        })
         // studentListRecyclerViewArab = findViewById<View>(R.id.studentlistrecc) as RecyclerView
         lang_switch = findViewById<View>(R.id.switchlang) as Switch
         list = ArrayList()
@@ -215,7 +222,12 @@ lateinit var menuicon:ImageView
 
         showChangeLang()
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
-
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            homeText.setTypeface(face);
+            messageText.setTypeface(face);
+            otherText.setTypeface(face);
+            contactText.setTypeface(face);
             homeText.setText(R.string.Home)
             messageText.setText(R.string.parentcomms)
             otherText.setText(R.string.Settings)

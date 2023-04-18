@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.apps
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -55,7 +56,7 @@ class AppsActivity:AppCompatActivity() {
     lateinit var progressBarDialog: ProgressBarDialog
 
     lateinit var studentSpinner: LinearLayout
-
+    lateinit var textView:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -242,6 +243,12 @@ class AppsActivity:AppCompatActivity() {
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)*/
         parentList = findViewById(R.id.absencelist)
+        textView=findViewById(R.id.textView)
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
         linearLayoutManager = LinearLayoutManager(mContext)
 
         studentName_Text.text=PreferenceManager().getStudentName(mContext)

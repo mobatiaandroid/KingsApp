@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.reports
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,6 +27,7 @@ import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -47,6 +49,7 @@ class ReportsActivity:AppCompatActivity() {
     lateinit var imagicon:ImageView
     lateinit var backarrow : ImageView
     private lateinit var progressDialog: RelativeLayout
+    lateinit var textView:TextView
     //lateinit var progressDialog: ProgressBarDialog
     var studentName:String=""
     var student_class:String=""
@@ -92,7 +95,12 @@ class ReportsActivity:AppCompatActivity() {
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-
+        textView=findViewById(R.id.textView)
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            textView.setTypeface(face);
+        }
         student_Name.text=PreferenceManager().getStudentName(ncontext)
         studentclass.text=PreferenceManager().getStudentClass(ncontext)
         if(!PreferenceManager().getStudentPhoto(ncontext).equals(""))
