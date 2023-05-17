@@ -1,65 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/kings_blue">
+
     <LinearLayout
         android:id="@+id/li"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="3"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/backarrow_registerabsence"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:src="@drawable/backarrow"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/backarrow">
 
         </ImageView>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:text="@string/registerearlypickup"/>
+            android:text="@string/registerearlypickup"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:textSize="20dp"
-            />
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@id/li"
-        android:layout_marginTop="1dp"
         android:background="@drawable/bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/featureLinear"
+        app:layout_constraintTop_toBottomOf="@+id/li">
 
         <LinearLayout
             android:id="@+id/studentSpinner"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/rect_teal"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="100">
+            android:weightSum="100"
+            app:layout_constraintBottom_toTopOf="@+id/first_day_of_absencetext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imagicon"
@@ -82,10 +93,10 @@
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="40"
                     android:gravity="left|center"
                     android:paddingLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -117,23 +128,26 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/day_of_pickup"
             android:textColorHint="@color/border_grey"
             app:boxStrokeColor="@color/border_grey"
             app:endIconDrawable="@drawable/ic_baseline_calendar_today_24"
             app:endIconMode="custom"
-            app:hintTextColor="@color/black">
+            app:hintTextColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/return_absence_text"
+            app:layout_constraintTop_toBottomOf="@+id/studentSpinner"
+            tools:layout_editor_absoluteX="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstdayofabsence"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:inputType="none"
-                android:focusable="false"
                 android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -144,121 +158,132 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/time_of_pickup"
             android:textColorHint="@color/border_grey"
             app:boxStrokeColor="@color/border_grey"
             app:endIconDrawable="@drawable/ic_baseline_access_time_24"
             app:endIconMode="custom"
-            app:hintTextColor="@color/black">
+            app:hintTextColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/pickup_by"
+            app:layout_constraintTop_toBottomOf="@+id/first_day_of_absencetext"
+            tools:layout_editor_absoluteX="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/returnabsence"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:inputType="none"
-                android:focusable="false"
                 android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pickup_by"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/pickup_by"
             android:textColorHint="@color/border_grey"
             app:boxStrokeColor="@color/border_grey"
-            app:hintTextColor="@color/black">
+            app:hintTextColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/reasonforabsence"
+            app:layout_constraintTop_toBottomOf="@+id/return_absence_text"
+            tools:layout_editor_absoluteX="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pickup_by_text"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:inputType="textPersonName"
-                android:textCursorDrawable="@color/kings_blue"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey"
-                />
+                android:textCursorDrawable="@color/kings_blue" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reasonforabsence"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/reason_for_early_pickup"
             android:textColorHint="@color/border_grey"
             app:boxStrokeColor="@color/border_grey"
-            app:hintTextColor="@color/black">
+            app:hintTextColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/pickup_by">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reason_for_absence"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:inputType="textPersonName"
-                android:textCursorDrawable="@color/kings_blue"
                 android:textColor="@color/black"
-                android:textColorHint="@color/border_grey" />
+                android:textColorHint="@color/border_grey"
+                android:textCursorDrawable="@color/kings_blue" />
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/featureLinear"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/register_bg"
         android:elevation="20dp"
-        android:stateListAnimator="@null"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <RelativeLayout
             android:id="@+id/relativieabsence"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/button_bg">
+            android:background="@drawable/button_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:textColor="@color/white"
                 android:gravity="center"
-                android:textSize="17dp"
-                android:text="@string/submit"/>
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
 
         </RelativeLayout>
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <include
             android:id="@+id/progressDialog"
+            layout="@layout/custom_progress_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            layout="@layout/custom_progress_layout"
             android:visibility="gone" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
