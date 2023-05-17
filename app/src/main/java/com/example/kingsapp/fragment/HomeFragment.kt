@@ -23,6 +23,7 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
+import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
@@ -293,7 +294,18 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 }
 
 
+                naisTabConstants.TAB_EARLYPICKUP -> {
+                    //  Toast.makeText(mContext, "frg9", Toast.LENGTH_SHORT).show()
 
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
 
                 naisTabConstants.TAB_APPS -> {
                     //  Toast.makeText(mContext, "frg12", Toast.LENGTH_SHORT).show()
@@ -371,10 +383,11 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     )*/
                 }
 
-                /*naisTabConstants.TAB_SOCIAL_MEDIA -> {
-                    mFragment = SocialMediaFragment()
-                    fragmentIntent(mFragment)
-                }*/
+                naisTabConstants.TAB_EARLYPICKUP -> {
+                    val intent = Intent(mContext, EarlyPickupListActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                }
                 naisTabConstants.TAB_TIME_TABLE -> {
                     // Toast.makeText(mContext, "frg7", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, TimeTableActivity::class.java)
@@ -1053,9 +1066,9 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                 textdata.equals(classNameConstants.SCHOOL_CALENDER, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_CALENDAR
                 }
-               /* textdata.equals(classNameConstants.REPORT_ABSENCE, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_REPORT_ABSENCE
-                }*/
+                textdata.equals(classNameConstants.EARLYPICKUP, ignoreCase = true) -> {
+                    TAB_ID = naisTabConstants.TAB_EARLYPICKUP
+                }
 
                 textdata.equals(classNameConstants.TIME_TABL, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_TIME_TABLE

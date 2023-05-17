@@ -154,7 +154,9 @@ interface ApiService {
     @FormUrlEncoded
     fun forms(
         @Header("Authorization") token:String,
-        @Field("student_id") student_id: String
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
+
     ): Call<FormsModel>
 
     /*************ParentEssentials****************/
@@ -175,7 +177,9 @@ interface ApiService {
     @FormUrlEncoded
     fun apps(
         @Header("Authorization") token:String,
-        @Field("student_id") student_id: String
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
+
     ): Call<AppsModel>
 
     /*************Request Leave****************/
@@ -203,7 +207,8 @@ interface ApiService {
     @FormUrlEncoded
     fun schoolcalendar(
         @Header("Authorization") token:String,
-        @Field("student_id") student_id: String
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
     ): Call<CalendarListModel>
     /*************School Calendar MonthList****************/
     @POST("api/v1/school-calendar-month")

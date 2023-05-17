@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.Settings
+import android.text.InputType
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -31,6 +32,7 @@ import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.mobatia.nasmanila.api.ApiClient
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -50,6 +52,7 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
     lateinit var haveaccount:TextView
     lateinit var donthaveaccount:TextView
     lateinit var rememeberMeImg:ImageView
+    lateinit var passwordTextInputLayout:TextInputLayout
    // private lateinit var progressDialog: RelativeLayout
    lateinit var progressBarDialog: ProgressBarDialog
 
@@ -69,6 +72,7 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
     }
 
     private fun initFn() {
+        passwordTextInputLayout=findViewById(R.id.passwordTextInputLayout)
         createAccountTxt=findViewById(R.id.createAccountTxt)
         signInBtn=findViewById(R.id.signInBtn)
         haveaccount=findViewById(R.id.haveaccount)
@@ -83,7 +87,21 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
         progressBarDialog = ProgressBarDialog(ncontext)
         // edtUserName.setText("9946063677");
         /*set underline for forgot password text*/
+        passwordTextInputLayout.setEndIconOnClickListener {
+            if(flag)
+            {
 
+                passwordTextInputLayout.setEndIconDrawable(R.drawable.ic_baseline_remove_red_eye_24);
+                passwordTextInputEditText.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            }
+            else
+            {
+                passwordTextInputLayout.setEndIconDrawable(R.drawable.ic_baseline_remove_red_eye);
+                passwordTextInputEditText.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            flag = !flag
+
+        }
         //Remeberme click
         if (PreferenceManager().getUsernametext(ncontext)
                 .equals("") && PreferenceManager().getUserpasswrdtext(ncontext).equals("")

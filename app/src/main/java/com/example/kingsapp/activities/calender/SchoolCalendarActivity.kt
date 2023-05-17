@@ -885,7 +885,8 @@ class SchoolCalendarActivity:AppCompatActivity() {
         progressBarDialog.show()
 
         val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
-                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
+                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString(),
+            PreferenceManager().getLanguagetype(mContext).toString())
         call.enqueue(object : retrofit2.Callback<CalendarListModel> {
             override fun onResponse(
                 call: Call<CalendarListModel>,

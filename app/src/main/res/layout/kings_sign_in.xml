@@ -133,8 +133,7 @@
                 android:textColorHint="@color/greyy"
                 app:boxStrokeColor="@color/greyy"
                 app:endIconMode="custom"
-                app:endIconDrawable="@drawable/ic_baseline_remove_red_eye_24"
-                app:hintTextColor="@color/greyy"
+                app:endIconDrawable="@drawable/ic_baseline_remove_red_eye"
                 app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -145,8 +144,8 @@
                     android:textCursorDrawable="@color/kings_blue"
                     android:singleLine="false"
                     android:clickable="true"
-                    android:textColor="@color/black"
                     android:inputType="textPassword"
+                    android:textColor="@color/black"
                     android:textColorHint="@color/greyy"/>
 
             </com.google.android.material.textfield.TextInputLayout>

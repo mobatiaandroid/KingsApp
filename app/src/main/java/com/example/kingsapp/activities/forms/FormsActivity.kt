@@ -65,7 +65,7 @@ class FormsActivity : AppCompatActivity() {
     private fun formListApiCall() {
         progressBarDialog.show()
         val call: Call<FormsModel> = ApiClient.getApiService().forms("Bearer "+
-                PreferenceManager().getAccessToken(mcontext).toString(), PreferenceManager().getStudent_ID(mcontext).toString())
+                PreferenceManager().getAccessToken(mcontext).toString(), PreferenceManager().getStudent_ID(mcontext).toString(),PreferenceManager().getLanguagetype(mContext).toString())
         call.enqueue(object : retrofit2.Callback<FormsModel> {
             override fun onResponse(
                 call: Call<FormsModel>,

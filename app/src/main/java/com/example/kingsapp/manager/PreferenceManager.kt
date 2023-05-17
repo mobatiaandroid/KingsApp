@@ -318,7 +318,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_threetabid", "5")
+        return prefs.getString("button_threetabid", "6")
     }
 
     fun setbuttonfourtabid(context: Context, id: String?) {
@@ -339,7 +339,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_fourtabid", "6")
+        return prefs.getString("button_fourtabid", "7")
     }
 
     fun setbuttonfivetabid(context: Context, id: String?) {
@@ -381,7 +381,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_sixtabid", "7")
+        return prefs.getString("button_sixtabid", "8")
     }
 
     fun setbuttonseventabid(context: Context, id: String?) {
@@ -402,7 +402,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_seventabid", "9")
+        return prefs.getString("button_seventabid", "10")
     }
 
     fun setbuttoneighttabid(context: Context, id: String?) {
@@ -512,7 +512,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_threetextimage", "5")
+        return prefs.getString("button_threetextimage", "6")
     }
 
     fun setbuttonfourtextimage(context: Context, id: String?) {
@@ -533,7 +533,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_fourtextimage", "6")
+        return prefs.getString("button_fourtextimage", "7")
     }
 
     fun setbuttonfivetextimage(context: Context, id: String?) {
@@ -575,7 +575,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_sixtextimage", "7")
+        return prefs.getString("button_sixtextimage", "8")
     }
 
     fun setbuttonseventextimage(context: Context, id: String?) {
@@ -596,7 +596,7 @@ class PreferenceManager {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_seventextimage", "9")
+        return prefs.getString("button_seventextimage", "10")
     }
 
     fun setbuttoneighttextimage(context: Context, id: String?) {
