@@ -347,7 +347,12 @@ class HomeguestuserActivity: AppCompatActivity(),AdapterView.OnItemLongClickList
                     Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     studentListRecyclerview.layoutManager = linearLayoutManager
-                    val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview)
+                    val studentAdapter = StudentListAdapter(
+                        mContext,
+                        student_name,
+                        studentListRecyclerview,
+                        lang_switch
+                    )
                     studentListRecyclerview.setAdapter(studentAdapter)
                     /*student_name.addAll(response.body()!!.student_list)
                     circleImageView!!.layoutManager = LinearLayoutManager(mContext)

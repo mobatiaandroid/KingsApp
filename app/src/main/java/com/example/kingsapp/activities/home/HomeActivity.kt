@@ -34,6 +34,9 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
+import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
+import com.example.kingsapp.activities.early_pickup.EarlyPickupRegisterActivity
+import com.example.kingsapp.activities.early_pickup.EarlyPickupdetailsActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.model.HomeGuestrResponseModel
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
@@ -166,6 +169,17 @@ lateinit var menuicon:ImageView
         })
         // studentListRecyclerViewArab = findViewById<View>(R.id.studentlistrecc) as RecyclerView
         lang_switch = findViewById<View>(R.id.switchlang) as Switch
+       // PreferenceManager().setLanguagetype(mContext, "1")
+
+        if(PreferenceManager().getLanguageschool(mContext).equals("2"))
+        {
+            lang_switch.visibility=View.VISIBLE
+        }
+        else
+       {
+           lang_switch.visibility=View.GONE
+       }
+
         list = ArrayList()
 
         list.add(R.drawable.pic1)
@@ -372,6 +386,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
         studentListRecyclerview.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
+                Log.e("schoolrec", PreferenceManager().getLanguageschool(mContext).toString())
 
                 /*if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
                 {
@@ -607,7 +622,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
 
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     studentListRecyclerview.layoutManager = linearLayoutManager
-                    val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview)
+                    val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview,lang_switch)
                     studentListRecyclerview.setAdapter(studentAdapter)
                     /*student_name.addAll(response.body()!!.student_list)
                     circleImageView!!.layoutManager = LinearLayoutManager(mContext)
@@ -815,7 +830,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
                 else if(position==5)
                 {
 
-                    val intent = Intent(mContext, TimeTableActivity::class.java)
+                    val intent = Intent(mContext, EarlyPickupListActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
@@ -825,7 +840,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
                 else if(position==6)
                 {
 
-                    val intent = Intent(mContext, ParentEssentialsActivity::class.java)
+                    val intent = Intent(mContext, TimeTableActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
@@ -833,7 +848,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
                 }
                 else if(position==7)
                 {
-                    val intent = Intent(mContext, ReportsActivity::class.java)
+                    val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
@@ -841,13 +856,21 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
                 }
                 else if(position==8)
                 {
-                    val intent = Intent(mContext, FormsActivity::class.java)
+                    val intent = Intent(mContext, ReportsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
                 else if(position==9)
+                {
+                    val intent = Intent(mContext, FormsActivity::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(linearLayout)
+
+                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                }
+                else if(position==10)
                 {
                     val intent = Intent(mContext, AppsActivity::class.java)
                     startActivity(intent)
@@ -949,11 +972,14 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
 
 
             if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+                PreferenceManager().setLanguagetype(mContext, "2")
 
                 lang_switch.isChecked = false
                /* setLocate("ar")
                 recreate()*/
             } else if (PreferenceManager().getLanguage(mContext).equals("en")) {
+                PreferenceManager().setLanguagetype(mContext, "1")
+
                 lang_switch.isChecked = true
                 /*setLocate("en")
                 recreate()*/
@@ -963,6 +989,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
 
              if (lang_switch.isChecked) {
                  Log.e("english","english")
+                 PreferenceManager().setLanguagetype(mContext, "1")
                  setLocate("en")
                  restartActivity()
                  lang_switch.isChecked = true
@@ -971,6 +998,7 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
              else
              {
                  Log.e("arabic","arabic")
+                 PreferenceManager().setLanguagetype(mContext, "2")
                  setLocate("ar")
                  restartActivity()
                  lang_switch.isChecked = false

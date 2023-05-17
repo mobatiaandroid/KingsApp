@@ -66,8 +66,10 @@ class ParentEssentialsActivity: AppCompatActivity() {
 
     private fun parrentessentialApiCall() {
         progressBarDialog.show()
+        Log.e("languagetype",PreferenceManager().getLanguagetype(mcontext).toString())
         val call: Call<ParentModel> = ApiClient.getApiService().parentessentials("Bearer "+
-                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
+                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString(),
+            PreferenceManager().getLanguagetype(mcontext).toString())
         call.enqueue(object : retrofit2.Callback<ParentModel> {
             override fun onResponse(
                 call: Call<ParentModel>,

@@ -11,14 +11,17 @@ import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.manager.PreferenceManager
 
-class StudentListAdapter(private val context: Context, private val parentassoictionlist: ArrayList<StudentList>
-                         , private val recyclerView: RecyclerView) :
+class StudentListAdapter(
+    private val context: Context, private val parentassoictionlist: ArrayList<StudentList>
+    , private val recyclerView: RecyclerView, private val lang_switch: Switch
+) :
     RecyclerView.Adapter<StudentListAdapter.MyViewHolder>(){
     class MyViewHolder (view: View) : RecyclerView.ViewHolder(view){
         var stud_profile: ImageView = view.findViewById(R.id.stud_profile)
@@ -43,11 +46,25 @@ class StudentListAdapter(private val context: Context, private val parentassoict
         val list = parentassoictionlist[position].fullname
 
         holder.stud_profile.setImageResource(R.drawable.profile_photo)
+
         holder.stud_profile.setOnClickListener {
             PreferenceManager().setStudentName(context, parentassoictionlist[position].fullname.toString())
             PreferenceManager().setStudent_ID(context, parentassoictionlist[position].id.toString())
             PreferenceManager().setStudentClass(context, parentassoictionlist[position].classs.toString())
             PreferenceManager().setStudentPhoto(context, parentassoictionlist[position].photo.toString())
+            PreferenceManager().setLanguageschool(context, parentassoictionlist[position].school_language_type)
+            Log.e("shool",
+                PreferenceManager().getLanguageschool(context)
+                    .toString())
+            if(PreferenceManager().getLanguageschool(context).equals("2"))
+            {
+                lang_switch.visibility=View.VISIBLE
+            }
+            else
+            {
+                lang_switch.visibility=View.GONE
+            }
+
             recyclerView.visibility = View.GONE
 
         }

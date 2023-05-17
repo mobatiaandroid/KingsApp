@@ -7,6 +7,8 @@ import com.example.kingsapp.activities.absence.model.AbsenceListModel
 import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.apps.model.AppsModel
 import com.example.kingsapp.activities.calender.model.CalendarListModel
+import com.example.kingsapp.activities.early_pickup.model.EarlyPickupListModel
+import com.example.kingsapp.activities.early_pickup.model.RequestEarlyApiModel
 import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.model.HomeGuestrResponseModel
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
@@ -127,11 +129,25 @@ interface ApiService {
     @FormUrlEncoded
     fun contactus(
         @Header("Authorization") token:String,
-        @Field("student_id") student_id: String
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
     ): Call<ContactusModel>
 
+    /*************Early Pickup****************/
+    @POST("api/v1/request-early-pickup")
+    @Headers("Accept: application/json")
+    fun request_early_pickup(
+        @Header("Authorization") token:String,
+        @Body requestLeave: RequestEarlyApiModel
+    ): Call<CommonResponse>
+    /*************EarlyPickup List****************/
+    @POST("api/v1/list-early-pickup")
+    @Headers("Content-Type: application/json")
+    fun earlyPickupList(
+        @Header("Authorization") token:String,
+        @Body  studentInfoModel: AbsenceLeaveApiModel
 
-
+    ): Call<EarlyPickupListModel>
     /*************Forms****************/
     @POST("api/v1/forms")
     @Headers("Accept: application/json")
@@ -147,8 +163,10 @@ interface ApiService {
     @FormUrlEncoded
     fun parentessentials(
         @Header("Authorization") token:String,
-        @Field("student_id") student_id: String
-    ): Call<ParentModel>
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
+
+        ): Call<ParentModel>
 
 
     /*************Apps****************/
@@ -180,7 +198,7 @@ interface ApiService {
 
 
     /*************Calendar Month****************/
-    @POST("api/v1/school-calendar")
+    @POST("api/v1/calendar")
     @Headers("Accept: application/json")
     @FormUrlEncoded
     fun schoolcalendar(

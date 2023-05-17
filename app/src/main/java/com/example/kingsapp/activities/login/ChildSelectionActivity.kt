@@ -119,7 +119,11 @@ class ChildSelectionActivity:AppCompatActivity() {
                 PreferenceManager().setStudentClass(ncontext, student_name[position].classs.toString())
                 PreferenceManager().setStudentPhoto(ncontext, student_name[position].photo.toString())
                 Log.e("Childselid", PreferenceManager().getStudent_ID(ncontext).toString())
-
+                PreferenceManager().setLanguageschool(ncontext, student_name[position].school_language_type)
+                Log.e("shool",
+                    PreferenceManager().getLanguageschool(ncontext)
+                        .toString()
+                )
                 startActivity(Intent(ncontext, HomeActivity::class.java))
             }
 

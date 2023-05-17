@@ -1,46 +1,1372 @@
 package com.example.kingsapp.activities.calender
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
-import android.icu.util.Calendar
-import android.os.Build
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.*
-import com.example.kingsapp.activities.calender.adapter.CustomLisAdapter
-import com.example.kingsapp.activities.calender.adapter.ListViewSpinnerAdapter
-import com.example.kingsapp.activities.calender.model.CalendarList
-import com.example.kingsapp.activities.calender.model.CalendarListModel
-import com.example.kingsapp.activities.calender.model.ListViewSpinnerModel
+import com.example.kingsapp.activities.calender.model.*
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
+import com.mobatia.calendardemopro.adapter.CalendarDateAdapter
+import com.mobatia.calendardemopro.adapter.CategoryAdapter
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
 import java.util.*
 import kotlin.collections.ArrayList
+class SchoolCalendarActivity:AppCompatActivity() {
+    lateinit var mcontext: Context
+   // lateinit var jsonConstans: JsonConstants
+  //  lateinit var sharedprefs: PreferenceData
+    lateinit var calendarRecycler: RecyclerView
+    lateinit var titleTextView: TextView
+    lateinit var noEventTxt: TextView
+    lateinit var noEventImage: ImageView
+    lateinit var back:ImageView
 
+    //  lateinit var mContext: Context
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    lateinit var monthYearTxt: TextView
+    lateinit var hideBtn: TextView
+    lateinit var showBtn: TextView
+    lateinit var previousBtn: ImageView
+    lateinit var calendar_relative:RelativeLayout
+    lateinit var nextBtn: ImageView
+    lateinit var filterLinear: LinearLayout
+    lateinit var hidePast: LinearLayout
+    lateinit var monthLinear: LinearLayout
+    var isPrimarySelected: Boolean = true
+    var isSecondarySeleted: Boolean = true
+    var isWholeSchoolSelected: Boolean = true
+    var isAllSelected: Boolean = true
+    var isHide: Boolean = false
+    var isShow: Boolean = true
+    var start: LocalDate? = null
+    var end: LocalDate? = null
+    var year: Int = 0
+    lateinit var calendarArrayList: ArrayList<CalendarResponseArray>
+    lateinit var primaryArrayList: ArrayList<CalendarList>
+    lateinit var secondaryArrayList: ArrayList<CalendarList>
+    lateinit var wholeSchoolArrayList: ArrayList<CalendarList>
+
+    lateinit var primaryShowArrayList: ArrayList<PrimaryModel>
+    lateinit var secondaryShowArrayList: ArrayList<PrimaryModel>
+    lateinit var wholeSchoolShowArrayList: ArrayList<PrimaryModel>
+   lateinit var calendarShowArrayList: ArrayList<PrimaryModel>
+  lateinit var calendarFilterArrayList: ArrayList<PrimaryModel>
+   lateinit var mTriggerModelArrayList: ArrayList<CategoryModel>
+    lateinit var mCalendarFinalArrayList: ArrayList<CalendarDateModel>
+   // lateinit var TempCALENDARlIST: ArrayList<CalendarDateModel>
+    lateinit var FILTERCALENDARlIST: ArrayList<PrimaryModel>
+   //val liveArray: ArrayList<CalendarDateModel> = ArrayList()
+    lateinit var difference_In_Days: String
+    lateinit var progressBarDialog: ProgressBarDialog
+
+
+    var currentMonth: Int = -1
+    lateinit var monthTxt: String
+    var primaryColor: String = ""
+    var secondaryColor: String = ""
+    var wholeSchoole: String = ""
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.calendar_fragment)
+        mcontext = this
+        initFn()
+        if(CommonClass.isInternetAvailable(mcontext)) {
+            callCalendarApi()
+        }
+        else{
+            Toast.makeText(mcontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+
+        }
+
+
+    }
+
+    private fun initFn() {
+        calendarRecycler = findViewById(R.id.calendarRecycler) as RecyclerView
+        titleTextView = findViewById(R.id.titleTextView) as TextView
+        showBtn = findViewById(R.id.showBtn) as TextView
+        hideBtn = findViewById(R.id.hideBtn) as TextView
+        noEventTxt = findViewById(R.id.noEventTxt) as TextView
+        noEventImage = findViewById(R.id.noEventImage) as ImageView
+        linearLayoutManager = LinearLayoutManager(mContext)
+        calendarRecycler.layoutManager = linearLayoutManager
+        calendarRecycler.itemAnimator = DefaultItemAnimator()
+        titleTextView.text = "Calendar"
+        progressBarDialog = ProgressBarDialog(mcontext)
+        back = findViewById(R.id.back)
+
+        //progressDialog.visibility = View.VISIBLE
+       /* val aniRotate: Animation =
+            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
+        progressDialog.startAnimation(aniRotate)*/
+        monthYearTxt = findViewById(R.id.monthYearTxt)
+        previousBtn = findViewById(R.id.previousBtn)
+        nextBtn = findViewById(R.id.nextBtn)
+        filterLinear = findViewById(R.id.filterLinear)
+        //calendar_relative = view!!.findViewById(R.id.calendar_relative)
+        hidePast = findViewById(R.id.hidePast)
+        monthLinear =findViewById(R.id.monthLinear)
+        year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+        currentMonth = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH)
+        month(currentMonth, year)
+       // monthLinear.visibility=View.VISIBLE
+
+       // filterLinear.visibility=View.VISIBLE
+       // hidePast.visibility=View.VISIBLE
+
+        back.setOnClickListener {
+            val intent = Intent(mcontext, HomeActivity::class.java)
+            startActivity(intent)
+        }
+        filterLinear.setOnClickListener(View.OnClickListener {
+
+
+                showTriggerDataCollection(mcontext)
+
+
+
+        })
+        if(!isHide && isShow)
+        {
+            hideBtn.setTextColor(resources.getColor(R.color.black))
+            showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+        }
+        else{
+            hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            showBtn.setTextColor(resources.getColor(R.color.black))
+        }
+
+        nextBtn.setOnClickListener(View.OnClickListener {
+            currentMonth = currentMonth + 1
+            if (currentMonth > 11) {
+                currentMonth = currentMonth - 12
+                year = year + 1
+
+            }
+            isHide=false
+            isShow=true
+            if(!isHide && isShow)
+            {
+                hideBtn.setTextColor(resources.getColor(R.color.black))
+                showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            }
+            else{
+                hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
+                showBtn.setTextColor(resources.getColor(R.color.black))
+            }
+            month(currentMonth, year)
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
+
+        })
+
+        hideBtn.setOnClickListener(View.OnClickListener {
+            hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            showBtn.setTextColor(resources.getColor(R.color.black))
+            isHide=true
+            isShow=false
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
+        })
+
+        showBtn.setOnClickListener(View.OnClickListener {
+            hideBtn.setTextColor(resources.getColor(R.color.black))
+            showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            isHide=false
+            isShow=true
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
+        })
+
+
+        previousBtn.setOnClickListener(View.OnClickListener {
+            isHide=false
+            isShow=true
+            if(!isHide && isShow)
+            {
+                hideBtn.setTextColor(resources.getColor(R.color.black))
+                showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            }
+            else{
+                hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
+                showBtn.setTextColor(resources.getColor(R.color.black))
+            }
+            if (currentMonth == 0) {
+                currentMonth = 11 - currentMonth
+                year = year - 1
+            } else {
+                currentMonth = currentMonth - 1
+            }
+            month(currentMonth, year)
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
+
+        })
+    }
+    fun showCalendarEvent(
+        allSeleted: Boolean,
+        primarySelected: Boolean,
+        secondarySelected: Boolean,
+        wholeSchoolSelected: Boolean
+    ) {
+        primaryShowArrayList = ArrayList()
+        secondaryShowArrayList = ArrayList()
+        wholeSchoolShowArrayList = ArrayList()
+        calendarFilterArrayList = ArrayList()
+        if (primaryArrayList.size > 0) {
+            for (i in 0..primaryArrayList.size - 1) {
+                var pModel = PrimaryModel()
+                Log.e("date", primaryArrayList.get(i).start_date.length.toString())
+                if (primaryArrayList.get(i).start_date.toString().length == 19) {
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                   // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                   // outputFormat.timeZone = tz
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).start_date)
+                    var result = outputFormat.format(startdate)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    val enddate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    var outputDateStrend: String = outputFormat.format(enddate)
+                    pModel.DTSTART = result
+
+                } else if (primaryArrayList.get(i).start_date.toString().length == 8) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).start_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTSTART = outputDateStrstart
+
+                }else if (primaryArrayList[i].start_date.length==15){
+                    Log.e("1","15")
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).start_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTSTART = outputDateStrstart
+                }
+                if (primaryArrayList.get(i).end_date.toString().length == 19) {
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    //var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                   // outputFormat.timeZone = tz
+                    var result = outputFormat.format(startdate)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTEND = result
+
+                } else if (primaryArrayList.get(i).end_date.toString().length == 8) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTEND = outputDateStrstart
+
+                }else if (primaryArrayList.get(i).end_date.toString().length == 15) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTEND = outputDateStrstart
+
+                }
+
+                pModel.SUMMARY = primaryArrayList.get(i).title
+                pModel.DESCRIPTION = primaryArrayList.get(i).description
+                pModel.LOCATION = primaryArrayList.get(i).venue
+                pModel.color = primaryColor
+                pModel.type = 1
+                primaryShowArrayList.add(pModel)
+                Log.e("primary", primaryShowArrayList.toString())
+
+            }
+        }
+        if (secondaryArrayList.size > 0) {
+            for (i in 0..secondaryArrayList.size - 1) {
+                var sModel = PrimaryModel()
+                Log.e("secondaryArrayList",secondaryArrayList.get(i).start_date)
+
+                if (secondaryArrayList.get(i).start_date.toString().length == 19) {
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).start_date)
+                  //  var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                  //  outputFormat.timeZone = tz
+                    var result = outputFormat.format(startdate)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTSTART = result
+                    Log.e("startdate",result)
+
+                } else if (secondaryArrayList.get(i).start_date.toString().length == 8) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).start_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTSTART = outputDateStrstart
+
+                }else if (secondaryArrayList.get(i).start_date.toString().length == 15) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).start_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTSTART = outputDateStrstart
+
+                }
+                if (secondaryArrayList.get(i).end_date.equals("null")) {
+                    sModel.DTEND = ""
+                } else if (secondaryArrayList.get(i).end_date.toString().length == 19) {
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).end_date)
+                   // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                  //  outputFormat.timeZone = tz
+                    var result = outputFormat.format(startdate)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTEND = result
+
+                } else if (secondaryArrayList.get(i).end_date.toString().length == 8) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).end_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTEND = outputDateStrstart
+
+                }else if (secondaryArrayList.get(i).end_date.toString().length == 15) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).end_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTEND = outputDateStrstart
+
+                }
+                sModel.SUMMARY = secondaryArrayList.get(i).title
+                sModel.DESCRIPTION = secondaryArrayList.get(i).description
+                sModel.LOCATION = secondaryArrayList.get(i).venue
+                sModel.color = secondaryColor
+                sModel.type = 2
+                secondaryShowArrayList.add(sModel)
+                Log.e("secondary", secondaryShowArrayList.toString())
+
+            }
+        }
+        if (wholeSchoolArrayList.size > 0) {
+            for (i in 0..wholeSchoolArrayList.size - 1) {
+                var wModel = PrimaryModel()
+                if (wholeSchoolArrayList.get(i).start_date.toString().length == 19) {
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).start_date)
+                   // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                   // outputFormat.timeZone = tz
+                    var result = outputFormat.format(startdate)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTSTART = result
+
+                } else if (wholeSchoolArrayList.get(i).start_date.toString().length == 8) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).start_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTSTART = outputDateStrstart
+
+                }else if (wholeSchoolArrayList.get(i).start_date.toString().length == 15) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).start_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTSTART = outputDateStrstart
+
+                }
+                if (wholeSchoolArrayList.get(i).end_date.toString().length == 19) {
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).end_date)
+                   // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                   // outputFormat.timeZone = tz
+                    var result = outputFormat.format(startdate)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTEND = result
+
+                } else if (wholeSchoolArrayList.get(i).end_date.toString().length == 8) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).end_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTEND = outputDateStrstart
+
+                }else if (wholeSchoolArrayList.get(i).end_date.toString().length == 15) {
+                    val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).end_date)
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTEND = outputDateStrstart
+
+                }
+
+                wModel.SUMMARY = wholeSchoolArrayList.get(i).title
+                wModel.DESCRIPTION = wholeSchoolArrayList.get(i).description
+                wModel.LOCATION = wholeSchoolArrayList.get(i).venue
+                wModel.color = wholeSchoole
+                wModel.type = 3
+                wholeSchoolShowArrayList.add(wModel)
+                Log.e("wholeshool", wholeSchoolShowArrayList.toString())
+            }
+        }
+
+        if (allSeleted) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(primaryShowArrayList)
+            }
+            if (secondaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(secondaryShowArrayList)
+            }
+            if (wholeSchoolShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(wholeSchoolShowArrayList)
+            }
+
+        } else if (!allSeleted && !primarySelected && !secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            var dummy = ArrayList<PrimaryModel>()
+            calendarShowArrayList = dummy
+        } else if (!allSeleted && !primarySelected && !secondarySelected && wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (wholeSchoolShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(wholeSchoolShowArrayList)
+            }
+
+        } else if (!allSeleted && !primarySelected && secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (secondaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(secondaryShowArrayList)
+            }
+
+        } else if (!allSeleted && !primarySelected && secondarySelected && wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (secondaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(secondaryShowArrayList)
+            }
+            if (wholeSchoolShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(wholeSchoolShowArrayList)
+            }
+
+        } else if (!allSeleted && primarySelected && !secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(primaryShowArrayList)
+            }
+
+        } else if (!allSeleted && primarySelected && !secondarySelected && wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(primaryShowArrayList)
+            }
+            if (wholeSchoolShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(wholeSchoolShowArrayList)
+            }
+
+        } else if (!allSeleted && primarySelected && secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(primaryShowArrayList)
+            }
+            if (secondaryShowArrayList.size > 0) {
+                calendarShowArrayList.addAll(secondaryShowArrayList)
+            }
+
+        }
+        if(calendarShowArrayList.size>0)
+
+        {
+            Log.e("calshowlist",calendarShowArrayList.size.toString())
+
+            FILTERCALENDARlIST=ArrayList()
+            for (n in 0..calendarShowArrayList.size-1)
+            {
+
+                FILTERCALENDARlIST.add(calendarShowArrayList[n])
+
+            }
+
+            if (FILTERCALENDARlIST.size>0)
+            {
+                Log.e("filtercallist",FILTERCALENDARlIST.size.toString())
+                var listMonth: String = ""
+                var listYear: String = ""
+                for (i in 0..FILTERCALENDARlIST.size-1)
+                {
+                    Log.e("filtercallistsize",FILTERCALENDARlIST.get(i).DTSTART.length.toString())
+                    Log.e("filtercalliststart",FILTERCALENDARlIST.get(i).DTSTART)
+                    if (FILTERCALENDARlIST.get(i).DTSTART.length == 20) {
+                        val inputFormat: DateFormat =
+                            SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                        val outputFormatYear: DateFormat = SimpleDateFormat("yyyy")
+                        val outputFormatMonth: DateFormat = SimpleDateFormat("MMMM")
+                        val startdate: Date =
+                            inputFormat.parse(FILTERCALENDARlIST.get(i).DTSTART)
+                        var outputDateMonth: String =
+                            outputFormatMonth.format(startdate)
+                        var outputDateYear: String = outputFormatYear.format(startdate)
+                        listMonth = outputDateMonth
+                        listYear = outputDateYear
+                    } else if (FILTERCALENDARlIST.get(i).DTSTART.length == 11) {
+                        val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                        val outputFormatYear: DateFormat = SimpleDateFormat("yyyy")
+                        val outputFormatMonth: DateFormat = SimpleDateFormat("MMMM")
+                        val startdate: Date =
+                            inputFormat.parse(FILTERCALENDARlIST.get(i).DTSTART)
+                        var outputDateMonth: String =
+                            outputFormatMonth.format(startdate)
+                        var outputDateYear: String = outputFormatYear.format(startdate)
+                        listMonth = outputDateMonth
+                        listYear = outputDateYear
+                    }
+                    else if (FILTERCALENDARlIST.get(i).DTSTART.length==10)
+                    {
+                        val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                        val outputFormatYear: DateFormat = SimpleDateFormat("yyyy")
+                        val outputFormatMonth: DateFormat = SimpleDateFormat("MMMM")
+                        val startdate: Date =
+                            inputFormat.parse(FILTERCALENDARlIST.get(i).DTSTART)
+                        var outputDateMonth: String =
+                            outputFormatMonth.format(startdate)
+                        var outputDateYear: String = outputFormatYear.format(startdate)
+                        listMonth = outputDateMonth
+                        listYear = outputDateYear
+                    }
+                    Log.e("listyear",listYear)
+                    Log.e("lyear", year.toString())
+                    monthLinear.visibility=View.VISIBLE
+                    filterLinear.visibility=View.VISIBLE
+                    hidePast.visibility=View.VISIBLE
+                    if (listYear.equals(year.toString())) {
+                        if (monthTxt.equals(listMonth)) {
+                            Log.e("month",monthTxt+"  "+listMonth)
+                            var model = PrimaryModel()
+                            if (FILTERCALENDARlIST.get(i).DTSTART.length==10)
+                            {
+                                val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                                val outPutFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                                val startdate: Date =
+                                    inputFormat.parse(FILTERCALENDARlIST.get(i).DTSTART)
+                                var outputStart: String = outPutFormat.format(startdate)
+                                model.DTSTART = outputStart
+
+                            }
+                            else
+                            {
+                                model.DTSTART = FILTERCALENDARlIST.get(i).DTSTART
+                            }
+
+
+                            model.DTEND = FILTERCALENDARlIST.get(i).DTEND
+                            model.SUMMARY = FILTERCALENDARlIST.get(i).SUMMARY
+                            model.DESCRIPTION = FILTERCALENDARlIST.get(i).DESCRIPTION
+                            model.LOCATION = FILTERCALENDARlIST.get(i).LOCATION
+                            model.color = FILTERCALENDARlIST.get(i).color
+                            model.type = FILTERCALENDARlIST.get(i).type
+                            calendarFilterArrayList.add(model)
+                        }
+
+                    }
+
+                }
+
+
+                if (calendarFilterArrayList.size>0)
+                {
+                    Log.e("calfilterlist",calendarFilterArrayList.size.toString())
+                    calendarRecycler.visibility = View.VISIBLE
+                    calendarFilterArrayList.sortByDescending { calendarFilterArrayList -> calendarFilterArrayList.DTSTART }
+                    calendarFilterArrayList.reverse()
+                    mCalendarFinalArrayList = ArrayList()
+                    Log.e("filter last date",calendarFilterArrayList[calendarFilterArrayList.size-1].DTSTART.toString())
+                    for (n in 0 until calendarFilterArrayList.size)
+                    {
+
+                        if (mCalendarFinalArrayList.size==0)
+                        {
+                            Log.e("mcalfinallist","SIZE 0")
+                            var cModel = CalendarDateModel()
+                            cModel.startDate = calendarFilterArrayList.get(n).DTSTART
+                            cModel.endDate = calendarFilterArrayList.get(n).DTEND
+                            var calendarDetaiArray = ArrayList<CalendarDetailModel>()
+                            var dModel = CalendarDetailModel()
+                            dModel.DTSTART = calendarFilterArrayList.get(n).DTSTART
+                            dModel.DTEND = calendarFilterArrayList.get(n).DTEND
+                            dModel.SUMMARY = calendarFilterArrayList.get(n).SUMMARY
+                            dModel.DESCRIPTION = calendarFilterArrayList.get(n).DESCRIPTION
+                            dModel.LOCATION = calendarFilterArrayList.get(n).LOCATION
+                            dModel.color = calendarFilterArrayList.get(n).color
+                            dModel.type = calendarFilterArrayList.get(n).type
+                            calendarDetaiArray.add(dModel)
+                            cModel.detailList = calendarDetaiArray
+                            mCalendarFinalArrayList.add(cModel)
+                        }
+                        else
+                        {
+                            Log.e("mcalfinallist",mCalendarFinalArrayList.size.toString())
+                            var isFound:Boolean=false
+                            var pos:Int=-1
+                            for (o in 0 until mCalendarFinalArrayList.size)
+                            {
+                                // Log.e("DATE ",calendarFilterArrayList.get(n).DTSTART+"  :: "+mCalendarFinalArrayList.get(o).startDate)
+                                if (calendarFilterArrayList.get(n).DTSTART.equals(mCalendarFinalArrayList.get(o).startDate))
+                                {
+                                    isFound=true
+                                    pos=o
+                                }
+
+                            }
+
+                            if (!isFound) {
+                                var cModel = CalendarDateModel()
+                                cModel.startDate = calendarFilterArrayList.get(n).DTSTART
+                                cModel.endDate = calendarFilterArrayList.get(n).DTEND
+                                var calendarDetaiArray = ArrayList<CalendarDetailModel>()
+                                var dModel = CalendarDetailModel()
+                                dModel.DTSTART = calendarFilterArrayList.get(n).DTSTART
+                                dModel.DTEND = calendarFilterArrayList.get(n).DTEND
+                                dModel.SUMMARY = calendarFilterArrayList.get(n).SUMMARY
+                                dModel.DESCRIPTION = calendarFilterArrayList.get(n).DESCRIPTION
+                                dModel.LOCATION = calendarFilterArrayList.get(n).LOCATION
+                                dModel.color = calendarFilterArrayList.get(n).color
+                                dModel.type = calendarFilterArrayList.get(n).type
+                                calendarDetaiArray.add(dModel)
+                                cModel.detailList = calendarDetaiArray
+                                mCalendarFinalArrayList.add(cModel)
+
+                            } else {
+
+                                var dModel = CalendarDetailModel()
+                                dModel.DTSTART = calendarFilterArrayList.get(n).DTSTART
+                                dModel.DTEND = calendarFilterArrayList.get(n).DTEND
+                                dModel.SUMMARY = calendarFilterArrayList.get(n).SUMMARY
+                                dModel.DESCRIPTION = calendarFilterArrayList.get(n).DESCRIPTION
+                                dModel.LOCATION = calendarFilterArrayList.get(n).LOCATION
+                                dModel.color = calendarFilterArrayList.get(n).color
+                                dModel.type = calendarFilterArrayList.get(n).type
+                                mCalendarFinalArrayList.get(pos).detailList.add(dModel)
+
+                            }
+                        }
+                    }
+                    monthLinear.visibility=View.VISIBLE
+                    filterLinear.visibility=View.VISIBLE
+                    hidePast.visibility=View.VISIBLE
+                    Log.e("mfinal size",mCalendarFinalArrayList.size.toString())
+                    if (isHide && !isShow)
+                    {
+                        var calendar=ArrayList<CalendarDateModel>()
+                        if (mCalendarFinalArrayList.size>0)
+                        {
+
+                            for (s in 0 until mCalendarFinalArrayList.size)
+                            {
+                                Log.e("S calstart",mCalendarFinalArrayList.get(s).startDate.toString())
+                                if(mCalendarFinalArrayList.get(s).startDate.length==19)
+                                {
+                                    var sdf=SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                                    var strDate=sdf.parse(mCalendarFinalArrayList.get(s).startDate)
+                                    if (System.currentTimeMillis()<strDate.time)
+                                    {
+
+                                        var model=CalendarDateModel()
+                                        model.startDate=mCalendarFinalArrayList.get(s).startDate
+                                        model.endDate=mCalendarFinalArrayList.get(s).endDate
+                                        model.detailList=mCalendarFinalArrayList.get(s).detailList
+                                        calendar.add(model)
+
+                                    }
+                                }
+                                else if(mCalendarFinalArrayList.get(s).startDate.length==11)
+                                {
+                                    var sdf=SimpleDateFormat("MMM dd,yyyy")
+                                    var strDate=sdf.parse(mCalendarFinalArrayList.get(s).startDate)
+                                    if (System.currentTimeMillis()<strDate.time)
+                                    {
+
+                                        var model=CalendarDateModel()
+                                        model.startDate=mCalendarFinalArrayList.get(s).startDate
+                                        model.endDate=mCalendarFinalArrayList.get(s).endDate
+                                        model.detailList=mCalendarFinalArrayList.get(s).detailList
+                                        calendar.add(model)
+
+                                    }
+                                }
+                                else if(mCalendarFinalArrayList.get(s).startDate.length==10)
+                                {
+                                    var sdf=SimpleDateFormat("yyyy-MM-dd")
+                                    var strDate=sdf.parse(mCalendarFinalArrayList.get(s).startDate)
+                                    if (System.currentTimeMillis()<strDate.time)
+                                    {
+
+                                        var model=CalendarDateModel()
+                                        model.startDate=mCalendarFinalArrayList.get(s).startDate
+                                        model.endDate=mCalendarFinalArrayList.get(s).endDate
+                                        model.detailList=mCalendarFinalArrayList.get(s).detailList
+                                        calendar.add(model)
+
+                                    }
+                                }
+
+                            }
+                        }
+                        Log.e("calendar size",calendar.size.toString())
+                        if (calendar.size>0)
+                        {
+                            Log.e("cal",calendar.size.toString())
+                            noEventImage.visibility=View.GONE
+                            noEventTxt.visibility=View.GONE
+                            calendarRecycler.visibility=View.VISIBLE
+                            val calendarListAdapter = CalendarDateAdapter(mcontext, calendar,calendarRecycler)
+                            calendarRecycler.adapter = calendarListAdapter
+                        }
+                        else
+                        {
+                            noEventImage.visibility=View.VISIBLE
+                            noEventTxt.visibility=View.VISIBLE
+                            calendarRecycler.visibility=View.GONE
+                        }
+                    }
+                    else
+                    {
+                        Log.e("else hide SIZE::::",mCalendarFinalArrayList.size.toString())
+                        if (mCalendarFinalArrayList.size>0)
+                        {
+                            Log.e("lastdate",mCalendarFinalArrayList[mCalendarFinalArrayList.size-1].startDate.toString())
+                            noEventImage.visibility=View.GONE
+                            noEventTxt.visibility=View.GONE
+                            calendarRecycler.visibility=View.VISIBLE
+                            val calendarListAdapter = CalendarDateAdapter(mcontext, mCalendarFinalArrayList,calendarRecycler)
+                            calendarRecycler.adapter = calendarListAdapter
+                        }
+                        else
+                        {
+                            noEventImage.visibility=View.VISIBLE
+                            noEventTxt.visibility=View.VISIBLE
+                            calendarRecycler.visibility=View.GONE
+                        }
+                    }
+
+
+
+
+                }
+                else
+                {
+                    noEventImage.visibility=View.VISIBLE
+                    noEventTxt.visibility=View.VISIBLE
+                    calendarRecycler.visibility=View.GONE
+                }
+            }
+            else
+            {
+                noEventImage.visibility=View.VISIBLE
+                noEventTxt.visibility=View.VISIBLE
+                calendarRecycler.visibility=View.GONE
+            }
+        }
+        else
+        {
+            noEventImage.visibility=View.VISIBLE
+            noEventTxt.visibility=View.VISIBLE
+            calendarRecycler.visibility=View.GONE
+        }
+    }
+    fun month(month: Int, year: Int) {
+        when (month) {
+            0 -> {
+                monthTxt = "January"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            1 -> {
+                monthTxt = "February"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            2 -> {
+                monthTxt = "March"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            3 -> {
+                monthTxt = "April"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            4 -> {
+                monthTxt = "May"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            5 -> {
+                monthTxt = "June"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            6 -> {
+                monthTxt = "July"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            7 -> {
+                monthTxt = "August"
+                monthYearTxt.text = monthTxt +" "+ year.toString()
+            }
+
+            8 -> {
+                monthTxt = "September"
+                monthYearTxt.text = monthTxt  +" "+ year.toString()
+            }
+
+            9 -> {
+                monthTxt = "October"
+                monthYearTxt.text = monthTxt  +" "+ year.toString()
+            }
+
+            10 -> {
+                monthTxt = "November"
+                monthYearTxt.text = monthTxt  +" "+ year.toString()
+            }
+
+            11 -> {
+                monthTxt = "December"
+                monthYearTxt.text = monthTxt  +" "+ year.toString()
+            }
+
+        }
+    }
+    fun callCalendarApi() {
+        calendarArrayList = ArrayList()
+        primaryArrayList = ArrayList()
+        secondaryArrayList = ArrayList()
+        wholeSchoolArrayList = ArrayList()
+        progressBarDialog.show()
+
+        val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
+                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString())
+        call.enqueue(object : retrofit2.Callback<CalendarListModel> {
+            override fun onResponse(
+                call: Call<CalendarListModel>,
+                response: Response<CalendarListModel>
+            ) {
+                progressBarDialog.hide()
+                if (response.body()!!.status == 100) {
+                    calendarArrayList.addAll(response.body()!!.calendar)
+                    if (calendarArrayList.size > 0) {
+                        for (i in 0..calendarArrayList.size - 1) {
+                            if (calendarArrayList.get(i).title.equals("Primary")) {
+                                if (calendarArrayList.get(i).details.size > 0) {
+                                    primaryArrayList.addAll(calendarArrayList.get(i).details)
+                                    Log.e("primary", primaryArrayList.toString())
+                                    primaryColor = calendarArrayList.get(i).color
+                                }
+
+                            } else if (calendarArrayList.get(i).title.equals("Secondary")) {
+                                if (calendarArrayList.get(i).details.size > 0) {
+
+                                    secondaryArrayList.addAll(calendarArrayList.get(i).details)
+                                    secondaryColor = calendarArrayList.get(i).color
+                                }
+
+                            } else if (calendarArrayList.get(i).title.equals("Whole School")) {
+                                if (calendarArrayList.get(i).details.size > 0) {
+                                    wholeSchoolArrayList.addAll(calendarArrayList.get(i).details)
+                                    wholeSchoole = calendarArrayList.get(i).color
+                                }
+
+                            }
+
+                            isAllSelected = true
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                            showCalendarEvent(
+                                isAllSelected,
+                                isPrimarySelected,
+                                isSecondarySeleted,
+                                isWholeSchoolSelected
+                            )
+                    }
+                         var categoryList = ArrayList<String>()
+          categoryList.add("Select all/none")
+          categoryList.add("Primary Event")
+          categoryList.add("Secondary Event")
+          categoryList.add("Whole School Event")
+
+          mTriggerModelArrayList = ArrayList()
+          for (i in 0..categoryList.size - 1) {
+              var model = CategoryModel()
+              model.categoryName = categoryList.get(i)
+              model.checkedCategory = true
+              if (i == 0) {
+                  var whiteColor = "#000000"
+                  model.color = whiteColor
+              } else {
+
+                  if (i == 1) {
+                      model.color = primaryColor
+                  }
+                  if (i == 2) {
+                      model.color = secondaryColor
+                  }
+                  if (i == 3) {
+                      model.color = wholeSchoole
+
+                  }
+              }
+
+              mTriggerModelArrayList.add(model)
+
+          }
+
+                    }
+                    else {
+
+
+                    }
+                }
+                else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<CalendarListModel?>, t: Throwable) {
+                progressBarDialog.hide()
+                Toast.makeText(
+                    mcontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+
+    }
+    fun showTriggerDataCollection(context: Context) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_calendar_category)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        var checkRecycler = dialog.findViewById(R.id.checkRecycler) as RecyclerView
+        var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+        var linearLayoutManagerM: LinearLayoutManager = LinearLayoutManager(mContext)
+        checkRecycler.layoutManager = linearLayoutManagerM
+        checkRecycler.itemAnimator = DefaultItemAnimator()
+       // iconImageView.setBackgroundResource(bgIcon)
+        //iconImageView.setImageResource(ico)
+
+        var triggerAdapter = CategoryAdapter(mContext,mTriggerModelArrayList)
+        checkRecycler.adapter = triggerAdapter
+        btn_Cancel.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+        btn_Ok.setOnClickListener(View.OnClickListener {
+            isHide=false
+            isShow=true
+            if(!isHide && isShow)
+            {
+                hideBtn.setTextColor(resources.getColor(R.color.black))
+                showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            }
+            else{
+                hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
+                showBtn.setTextColor(resources.getColor(R.color.black))
+            }
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
+            dialog.dismiss()
+        })
+        checkRecycler.addOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                var selectedPosition: Int = 0
+                if (position == 0) {
+                    var pos0: Boolean = mTriggerModelArrayList.get(0).checkedCategory
+                    if (pos0) {
+                        isAllSelected = false
+                        isPrimarySelected = false
+                        isSecondarySeleted = false
+                        isWholeSchoolSelected = false
+                        mTriggerModelArrayList.get(0).checkedCategory = false
+                        mTriggerModelArrayList.get(1).checkedCategory = false
+                        mTriggerModelArrayList.get(2).checkedCategory = false
+                        mTriggerModelArrayList.get(3).checkedCategory = false
+                    } else {
+                        isAllSelected = true
+                        isPrimarySelected = true
+                        isSecondarySeleted = true
+                        isWholeSchoolSelected = true
+                        mTriggerModelArrayList.get(0).checkedCategory = true
+                        mTriggerModelArrayList.get(1).checkedCategory = true
+                        mTriggerModelArrayList.get(2).checkedCategory = true
+                        mTriggerModelArrayList.get(3).checkedCategory = true
+                    }
+
+                } else {
+                    if (position == 1) {
+                        var pos0: Boolean = mTriggerModelArrayList.get(0).checkedCategory
+                        var pos1: Boolean = mTriggerModelArrayList.get(1).checkedCategory
+                        var pos2: Boolean = mTriggerModelArrayList.get(2).checkedCategory
+                        var pos3: Boolean = mTriggerModelArrayList.get(3).checkedCategory
+                        //0000
+                        if (!pos0 && !pos1 && !pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = false
+                        }
+                        //0001
+                        else if (!pos0 && !pos1 && !pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = true
+                        }
+                        //0010
+                        else if (!pos0 && !pos1 && pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+                        //0011
+                        else if (!pos0 && !pos1 && pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = true
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = true
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+                        //0100
+                        else if (!pos0 && pos1 && !pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = false
+                        }
+                        //0101
+                        else if (!pos0 && pos1 && !pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = true
+                        }
+                        //0110
+                        else if (!pos0 && pos1 && pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+                        //1111
+                        else if (pos0 && pos1 && pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                        }
+
+                    } else if (position == 2) {
+                        var pos0: Boolean = mTriggerModelArrayList.get(0).checkedCategory
+                        var pos1: Boolean = mTriggerModelArrayList.get(1).checkedCategory
+                        var pos2: Boolean = mTriggerModelArrayList.get(2).checkedCategory
+                        var pos3: Boolean = mTriggerModelArrayList.get(3).checkedCategory
+                        //0000
+                        if (!pos0 && !pos1 && !pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+
+                        //0001
+                        else if (!pos0 && !pos1 && !pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                        }
+                        //0010
+                        else if (!pos0 && !pos1 && pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = false
+                        }
+                        //0011
+                        else if (!pos0 && !pos1 && pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = true
+                        }
+                        //0100
+                        else if (!pos0 && pos1 && !pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+
+                        //0101
+                        else if (!pos0 && pos1 && !pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = true
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = true
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                        }
+                        //0110
+                        else if (!pos0 && pos1 && pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = false
+                        }
+
+                        //1111
+                        else if (pos0 && pos1 && pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = true
+                        }
+                    } else if (position == 3) {
+                        var pos0: Boolean = mTriggerModelArrayList.get(0).checkedCategory
+                        var pos1: Boolean = mTriggerModelArrayList.get(1).checkedCategory
+                        var pos2: Boolean = mTriggerModelArrayList.get(2).checkedCategory
+                        var pos3: Boolean = mTriggerModelArrayList.get(3).checkedCategory
+                        //0000
+                        if (!pos0 && !pos1 && !pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = true
+                        }
+                        //0001
+                        else if (!pos0 && !pos1 && !pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = false
+                        }
+                        //0010
+                        else if (!pos0 && !pos1 && pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                        }
+                        //0011
+                        else if (!pos0 && !pos1 && pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = false
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = false
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+                        //0100
+                        else if (!pos0 && pos1 && !pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = true
+                        }
+                        //0101
+                        else if (!pos0 && pos1 && !pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = false
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = false
+                            isWholeSchoolSelected = false
+                        }
+                        //0110
+                        else if (!pos0 && pos1 && pos2 && !pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = true
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = true
+                            isAllSelected = true
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                        }
+                        //1111
+                        else if (pos0 && pos1 && pos2 && pos3) {
+                            mTriggerModelArrayList.get(0).checkedCategory = false
+                            mTriggerModelArrayList.get(1).checkedCategory = true
+                            mTriggerModelArrayList.get(2).checkedCategory = true
+                            mTriggerModelArrayList.get(3).checkedCategory = false
+                            isAllSelected = false
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = false
+                        }
+                    }
+                }
+
+                var triggerAdapter = CategoryAdapter(mContext,mTriggerModelArrayList)
+                checkRecycler.adapter = triggerAdapter
+
+            }
+        })
+        dialog.show()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 class SchoolCalendarActivity:AppCompatActivity() {
     lateinit var mcontext: Context
     lateinit var header:TextView
@@ -109,6 +1435,10 @@ class SchoolCalendarActivity:AppCompatActivity() {
                     mEventArrayListYear.addAll(response.body()!!.calendar)
                     Log.e("mEventArrayListYear", mEventArrayListYear.toString())
 for(i in mEventArrayListYear.indices) {
+    datesToPlot.add(mEventArrayListYear.get(i).start_date)
+    PreferenceManager().saveArrayList(mcontext,datesToPlot)
+    Log.e("datesToPlot2", PreferenceManager().getArrayList(mcontext).toString())
+    holiday()
     val date: Date
     val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 
@@ -283,7 +1613,9 @@ for(i in mEventArrayListYear.indices) {
                     //  Log.e("ArrayAudioFile1", String.valueOf(audiofile.get(0)));
                     //   Log.e("ArrayAudioFile2", String.valueOf(audiofile.get(1)));
 
-                    /************************ end of end date new */
+                    */
+/************************ end of end date new *//*
+
                     if (mEventArrayListYear.size>0)
                     {
                     for (i in mEventArrayListYear.indices )
@@ -332,8 +1664,10 @@ for(i in mEventArrayListYear.indices) {
                     else
                     {
                         callfiltermonthApi()
-                        /*list.visibility=View.GONE
-                        emptyImg.visibility=View.VISIBLE*/
+                        */
+/*list.visibility=View.GONE
+                        emptyImg.visibility=View.VISIBLE*//*
+
                     }
                 }
                 else
@@ -381,7 +1715,9 @@ for(i in mEventArrayListYear.indices) {
                         //  Log.e("ArrayAudioFile1", String.valueOf(audiofile.get(0)));
                         //   Log.e("ArrayAudioFile2", String.valueOf(audiofile.get(1)));
 
-                        /************************ end of end date new */
+                        */
+/************************ end of end date new *//*
+
                         if (mEventArrayListYear.size>0)
                         {
                             for (i in mEventArrayListYear.indices )
@@ -478,19 +1814,46 @@ for(i in mEventArrayListYear.indices) {
     private fun headerfnc() {
         var x = 9
         var currentMonth=monthlist[x]
-        var month= Calendar.getInstance()
-        var simpleDateFormat = SimpleDateFormat("MM")
-        var s=SimpleDateFormat("MMMM")
-        var month_tt=s.format(month.time)
-        var dateMonth = simpleDateFormat.format(month.time).toString()
-        var simpleDateFormat2 = SimpleDateFormat("yyyy")
-        var dateYear = simpleDateFormat2.format(month.time).toString()
-        count_month=dateMonth.toInt()-1
-        count_year=dateYear.toInt()
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            var month= Calendar.getInstance()
+
+            var simpleDateFormat = SimpleDateFormat("MM", Locale("ar"))
+            var s=SimpleDateFormat("MMMM", Locale("ar"))
+            var month_tt=s.format(month.time)
+            var dateMonth = simpleDateFormat.format(month.time).toString()
+            var simpleDateFormat2 = SimpleDateFormat("yyyy", Locale("ar"))
+            var dateYear = simpleDateFormat2.format(month.time).toString()
+            count_month=dateMonth.toInt()-1
+            count_year=dateYear.toInt()
+            header.text = month_tt +" " +count_year
+            Log.e("month",month_tt)
+            Log.e("count_year", count_year.toString())
+
+            //header.text=PreferenceManager().getMonthSelected(mcontext)
+            Log.e("count_month", count_month.toString())
+        }
+        else
+        {
+            var month= Calendar.getInstance()
+
+            var simpleDateFormat = SimpleDateFormat("MM")
+            var s=SimpleDateFormat("MMMM")
+            var month_tt=s.format(month.time)
+            var dateMonth = simpleDateFormat.format(month.time).toString()
+            var simpleDateFormat2 = SimpleDateFormat("yyyy")
+            var dateYear = simpleDateFormat2.format(month.time).toString()
+            count_month=dateMonth.toInt()-1
+            count_year=dateYear.toInt()
+            header.text = month_tt +" " +count_year
+            Log.e("month",month_tt)
+            Log.e("count_year", count_year.toString())
+
+            //header.text=PreferenceManager().getMonthSelected(mcontext)
+            Log.e("count_month", count_month.toString())
+        }
+
         //PreferenceManager().setMonthSelected(mcontext,month_tt)
-        header.text = month_tt +" " +count_year
-        //header.text=PreferenceManager().getMonthSelected(mcontext)
-     Log.e("count_month", count_month.toString())
+
         arrow_prev.setOnClickListener() {
             nums_Array = ArrayList()
             if (count_month != 0) {
@@ -634,8 +1997,10 @@ for(i in mEventArrayListYear.indices) {
                 emptyImg.visibility=View.VISIBLE
 
             }
-            /*if(month.equals(mEventArrayListFilterListMonth.get(i).start_date))
-            mEventArrayListFilterMonth.addAll()*/
+            */
+/*if(month.equals(mEventArrayListFilterListMonth.get(i).start_date))
+            mEventArrayListFilterMonth.addAll()*//*
+
             Log.e("array2", mEventArrayListFilterMonth.toString())
         }
         if(mEventArrayListFilterMonth.size==0)
@@ -833,7 +2198,8 @@ for(i in mEventArrayListYear.indices) {
 
 
 
-                   /* val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
+                   */
+/* val formatdd = SimpleDateFormat("dd", Locale.ENGLISH)
                     val formatMMM = SimpleDateFormat("MMM", Locale.ENGLISH)
                     val c = Calendar.getInstance().getTime()
                     val monthNumber = formatMM.format(c)
@@ -843,7 +2209,8 @@ for(i in mEventArrayListYear.indices) {
                     val year1 = formatyyyy.format(c)
                     Log.e("monthNumber", monthNumber.toString())
                     Log.e("monthNumber", monthNumber.toString())
-                    Log.e("currentdate", c.toString())*/
+                    Log.e("currentdate", c.toString())*//*
+
 
 
                     filterWeekArray()
@@ -851,10 +2218,12 @@ for(i in mEventArrayListYear.indices) {
                     daySpinner.setText(getResources().getString(R.string.weekview))
                    // emptyImg.visibility=View.GONE
 
-                   /* list!!.layoutManager = LinearLayoutManager(mcontext)
+                   */
+/* list!!.layoutManager = LinearLayoutManager(mcontext)
                     val studentlist_adapter =
                         CustomLisAdapter(mcontext, mEventArrayListFilterList)
-                    list!!.adapter = studentlist_adapter*/
+                    list!!.adapter = studentlist_adapter*//*
+
 
                 } else if (position == 0) {
                     listSpinner.setVisibility(
@@ -940,8 +2309,10 @@ Log.e("detailarray",mEventArrayListFilterMonth[position].title)
                 emptyImg.visibility=View.VISIBLE
 
             }
-            /*if(month.equals(mEventArrayListFilterListMonth.get(i).start_date))
-            mEventArrayListFilterMonth.addAll()*/
+            */
+/*if(month.equals(mEventArrayListFilterListMonth.get(i).start_date))
+            mEventArrayListFilterMonth.addAll()*//*
+
         }
         if(mEventArrayListFilterMonth.size==0)
         {
@@ -1090,13 +2461,237 @@ Log.e("detailarray",mEventArrayListFilterMonth[position].title)
                     dateTextView[i]!!.visibility = View.INVISIBLE
                 } else {
                     dateTextView[i]!!.visibility = View.VISIBLE
-                    dateTextView[i]!!.text = value.toString()
+                    if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+                        //calendararabictextview(value)
+                        if(value.equals("1"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }
+
+                       else if(value.equals("2"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }
+                        else if(value.equals("3"))
+                        {
+                            val str:String=getResources().getString(R.string.three)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }else if(value.equals("4"))
+                        {
+                            val str:String=getResources().getString(R.string.four)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }else if(value.equals("5"))
+                        {
+                            val str:String=getResources().getString(R.string.five)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }else if(value.equals("6"))
+                        {
+                            val str:String=getResources().getString(R.string.six)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }else if(value.equals("7"))
+                        {
+                            val str:String=getResources().getString(R.string.seven)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }else if(value.equals("8"))
+                        {
+                            val str:String=getResources().getString(R.string.eight)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }
+                        else if(value.equals("9"))
+                        {
+                            val str:String=getResources().getString(R.string.nine)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }
+                        else if(value.equals("10"))
+                        {
+                            val str:String=getResources().getString(R.string.ten)
+                            dateTextView[i]!!.text = str.toString()
+
+                        }
+                        else if(value.equals("11"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.one)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }
+
+                        else if(value.equals("12"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.tw0)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("13"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.three)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("14"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.four)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("15"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.five)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("16"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.six)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("17"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.seven)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("18"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.eight)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("19"))
+                        {
+                            val str:String=getResources().getString(R.string.one)
+                            val str1:String=getResources().getString(R.string.nine)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("20"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.zero)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("21"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.one)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("22"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.tw0)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("23"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.three)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("24"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.four)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("25"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.five)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("26"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.six)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("27"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.seven)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("28"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.eight)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("29"))
+                        {
+                            val str:String=getResources().getString(R.string.tw0)
+                            val str1:String=getResources().getString(R.string.nine)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("30"))
+                        {
+                            val str:String=getResources().getString(R.string.three)
+                            val str1:String=getResources().getString(R.string.zero)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }else if(value.equals("31"))
+                        {
+                            val str:String=getResources().getString(R.string.three)
+                            val str1:String=getResources().getString(R.string.one)
+
+                            dateTextView[i]!!.text = str.toString()+str1
+
+                        }
+                    }
+                    else
+                    {
+                        dateTextView[i]!!.text = value.toString()
+
+                    }
                 }
             } else {
                 dateTextView[i]!!.visibility = View.INVISIBLE
             }
         }
     }
+   */
+/* private fun calendararabictextview(value: String)
+    {
+        if(value.equals("1"))
+        {
+            val str:String=getResources().getString(R.string.one)
+            dateTextView[i]!!.text = value.toString()
+
+        }
+
+    }*//*
 
     private fun setTextview() {
         for (i in 0..41) {
@@ -1104,33 +2699,16 @@ Log.e("detailarray",mEventArrayListFilterMonth[position].title)
                 mcontext.resources.getIdentifier("textview_$i", "id", mcontext.packageName)
             Log.e("textview",resID.toString())
             Log.e("i", i.toString())
-            if (PreferenceManager().getLanguage(mContext).equals("ar")) {
-                calendararabictextview(i,resID)
-            }
-            else
-            {
-                dateTextView[i] = findViewById(resID)
-                dateTextView[i]!!.setBackgroundColor(Color.WHITE)
-                dateTextView[i]!!.setTextColor(Color.BLACK)
-            }
-
-        }
-
-    }
-
-    private fun calendararabictextview(i: Int, resID: Int)
-    {
-        if(i==1)
-        {
-            val str:String=getResources().getString(R.string.one)
-            val str1:Int=str.toInt()
-            Log.e("arbicdigits", str1.toString())
-            dateTextView[str1] = findViewById(resID)
+            dateTextView[i] = findViewById(resID)
             dateTextView[i]!!.setBackgroundColor(Color.WHITE)
             dateTextView[i]!!.setTextColor(Color.BLACK)
+
+
         }
 
     }
+
+
 
     fun currentMonth(month: Int): Int {
         var currentMonth = "01"
@@ -1186,4 +2764,4 @@ Log.e("datestoplot",datesToPlot.size.toString())
         }
     }
 
-}
+}*/

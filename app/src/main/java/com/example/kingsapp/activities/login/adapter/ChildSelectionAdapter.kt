@@ -35,10 +35,6 @@ class ChildSelectionAdapter(private val mcontext: Context,
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val namelist = student_name[position].fullname
 
-        Log.e("name",
-            PreferenceManager().setStudentName(mcontext, student_name[position].fullname)
-                .toString()
-        )
 
         holder.studentName.setText(namelist)
 

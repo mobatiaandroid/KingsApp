@@ -173,7 +173,31 @@
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".activities.early_pickup.EarlyPickupdetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true">
 
+        </activity>
+        <activity
+            android:name=".activities.early_pickup.EarlyPickupRegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activities.early_pickup.EarlyPickupListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".constants.WebViewLoaderActivity"
             android:screenOrientation="portrait"

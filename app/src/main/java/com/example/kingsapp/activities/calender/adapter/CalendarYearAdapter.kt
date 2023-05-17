@@ -2,6 +2,7 @@ package com.example.kingsapp.activities.calender.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import java.text.DecimalFormat
@@ -26,20 +28,7 @@ class CalendarYearAdapter(
     var mContext: Context =context
     private val mInflater: LayoutInflater? = null
 
-    private val monthNames = arrayOf(
-        "JANUARY",
-        "FEBRUARY",
-        "MARCH",
-        "APRIL",
-        "MAY",
-        "JUNE",
-        "JULY",
-        "AUGUST",
-        "SEPTEMBER",
-        "OCTOBER",
-        "NOVEMBER",
-        "DECEMBER"
-    )
+    lateinit var  monthNames : Array<String>
     private val dayNames =
         arrayOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY")
   //  private val mHolidaysArray: ArrayList<String>? = null
@@ -47,6 +36,7 @@ class CalendarYearAdapter(
         //var textview: TextView = view.findViewById(R.id.listDate)
         var titleLabel: TextView? = null
         var dateTextView = arrayOfNulls<TextView>(100)
+
 
         init {
             titleLabel = itemView.findViewById<TextView>(R.id.titleLabel)
@@ -76,6 +66,7 @@ class CalendarYearAdapter(
 
     @SuppressLint("ResourceAsColor", "SuspiciousIndentation")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        monthNames= mContext.getResources().getStringArray(R.array.Months)
         val monthNumber = mData[position].toInt()
         val monthName = monthNames[monthNumber]
         Log.e("mnth",monthName)
@@ -155,7 +146,220 @@ class CalendarYearAdapter(
                 break
             }
             days = days + 1
-            holder.dateTextView.get(i)!!.setText("" + days)
+            if (PreferenceManager().getLanguage(com.example.kingsapp.fragment.mContext).equals("ar")) {
+                //calendararabictextview(value)
+                if(days.equals(1))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }
+
+                else if(days.equals(2))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }
+                else if(days.equals(3))
+                {
+                    val str:String=mContext.getResources().getString(R.string.three)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }else if(days.equals(4))
+                {
+                    val str:String=mContext.getResources().getString(R.string.four)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }else if(days.equals(5))
+                {
+                    val str:String=mContext.getResources().getString(R.string.five)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }else if(days.equals(6))
+                {
+                    val str:String=mContext.getResources().getString(R.string.six)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }else if(days.equals(7))
+                {
+                    val str:String=mContext.getResources().getString(R.string.seven)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }else if(days.equals(8))
+                {
+                    val str:String=mContext.getResources().getString(R.string.eight)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }
+                else if(days.equals(9))
+                {
+                    val str:String=mContext.getResources().getString(R.string.nine)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }
+                else if(days.equals(10))
+                {
+                    val str:String=mContext.getResources().getString(R.string.ten)
+                    holder.dateTextView.get(i)!!.text = str.toString()
+
+                }
+                else if(days.equals(11))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.one)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }
+
+                else if(days.equals(12))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.tw0)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(13))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.three)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(14))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.four)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(15))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.five)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(16))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.six)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(17))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.seven)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(18))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.eight)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(19))
+                {
+                    val str:String=mContext.getResources().getString(R.string.one)
+                    val str1:String=mContext.getResources().getString(R.string.nine)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(20))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.zero)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(21))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.one)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(22))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.tw0)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(23))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.three)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(24))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.four)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(25))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.five)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(26))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.six)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(27))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.seven)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(28))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.eight)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(29))
+                {
+                    val str:String=mContext.getResources().getString(R.string.tw0)
+                    val str1:String=mContext.getResources().getString(R.string.nine)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(30))
+                {
+                    val str:String=mContext.getResources().getString(R.string.three)
+                    val str1:String=mContext.getResources().getString(R.string.zero)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }else if(days.equals(31))
+                {
+                    val str:String=mContext.getResources().getString(R.string.three)
+                    val str1:String=mContext.getResources().getString(R.string.one)
+
+                    holder.dateTextView.get(i)!!.text = str.toString()+str1
+
+                }
+            }
+            else
+            {
+                holder.dateTextView.get(i)!!.setText("" + days)
+
+            }
             val formatter = DecimalFormat("00")
             val monthIn2Digits = formatter.format((monthNumber + 1).toLong())
             val dayIn2Digits = formatter.format(days.toLong())

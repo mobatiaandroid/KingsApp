@@ -132,7 +132,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
     private fun getcontactdetails() {
         progressBarDialog.show()
         val call: Call<ContactusModel> = ApiClient.getApiService().contactus("Bearer "+PreferenceManager().getAccessToken(
-            mContext).toString(),PreferenceManager().getStudent_ID(mContext).toString())
+            mContext).toString(),PreferenceManager().getStudent_ID(mContext).toString(),PreferenceManager().getLanguagetype(mContext).toString())
         call.enqueue(object : retrofit2.Callback<ContactusModel> {
             override fun onResponse(
                 call: Call<ContactusModel>,
@@ -145,16 +145,16 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                 if(response.body()!!.status.equals(100))
                 {
 
-                contactusdescription.addAll(response.body()!!.contactus)
-                    for (i in 0..contactusdescription.size-1)
-                    {
-                        aboutusdescription.addAll(response.body()!!.contactus.get(i).contacts)
-                    }
+              //  contactusdescription.addAll(response.body()!!.contactus)
+               //     for (i in 0..contactusdescription.size-1)
+                //    {
+                        aboutusdescription.addAll(response.body()!!.contactus.contacts)
+               //     }
                     contact_usrecyclerview.itemAnimator = DefaultItemAnimator()
                     val contactusAdapter = ContactusAdapter(aboutusdescription)
-                    latitude = response.body()!!.contactus.get(0).latitude
-                    longitude = response.body()!!.contactus.get(0).longitude
-                    descriptiontext.text=response.body()!!.contactus.get(0).description
+                    latitude = response.body()!!.contactus.latitude
+                    longitude = response.body()!!.contactus.longitude
+                    descriptiontext.text=response.body()!!.contactus.description
                     contact_usrecyclerview.adapter = contactusAdapter
                 /*val username= response.body()!!.home.user_details.name
                     PreferenceManager().setuser_id(com.example.kingsapp.fragment.mContext,username)

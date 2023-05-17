@@ -9,10 +9,10 @@ class CalendarList (
         @SerializedName("end_date") val end_date: String,
         @SerializedName("venue") val venue: String,
         @SerializedName("description") val description: String,
-        @SerializedName("monthNumber") var monthNumber: String,
-        @SerializedName("dayOfTheWeekk") var dayOfTheWeekk: String,
-        @SerializedName("dayss") var dayss: String,
-        @SerializedName("monthString") var monthString: String,
-        @SerializedName("yearr") var yearr: String
+       // @SerializedName("monthNumber") var monthNumber: String,
+       // @SerializedName("dayOfTheWeekk") var dayOfTheWeekk: String,
+       // @SerializedName("dayss") var dayss: String,
+       // @SerializedName("monthString") var monthString: String,
+       // @SerializedName("yearr") var yearr: String
 
         )

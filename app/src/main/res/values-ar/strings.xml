@@ -135,6 +135,7 @@
         <item>  التقويم المدرسي</item>
         <item>  الإبلاغ عن الغياب</item>
         <item>  الجدول الزمني</item>
+        <item>  الاستلام المبكر</item>
         <item> أساسيات الوالدين</item>
         <item> التقارير </item>
         <item>  نماذج</item>
@@ -219,11 +220,18 @@
     <string name="fri">الجمعة</string>
     <string name="sat">قعد</string>
 
+    <string name="zero">٠</string>
+
     <string name="one">١</string>
     <string name="tw0">٢</string>
-
-
-
+    <string name="three">٣</string>
+    <string name="four">٤</string>
+    <string name="five">٥</string>
+    <string name="six">٦</string>
+    <string name="seven">٧</string>
+    <string name="eight">٨</string>
+    <string name="nine">٩</string>
+    <string name="ten">١٠</string>
 
 
     <string name="navigation_drawer_open">Drawer Open</string>

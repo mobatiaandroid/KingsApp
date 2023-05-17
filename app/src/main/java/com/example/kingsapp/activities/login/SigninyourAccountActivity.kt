@@ -8,8 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.Settings
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -17,9 +15,11 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
@@ -35,7 +35,6 @@ import com.mobatia.nasmanila.api.ApiClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import java.util.logging.Logger.global
 
 
 class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
@@ -82,7 +81,18 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
         joinGuestTxt = findViewById(R.id.joinGuestTxt)
         emailSupport = findViewById(R.id.emailSupport)
         progressBarDialog = ProgressBarDialog(ncontext)
+        // edtUserName.setText("9946063677");
+        /*set underline for forgot password text*/
 
+        //Remeberme click
+        if (PreferenceManager().getUsernametext(ncontext)
+                .equals("") && PreferenceManager().getUserpasswrdtext(ncontext).equals("")
+        ) {
+            //  Toast.makeText(ncontext, "Please enter the field !", Toast.LENGTH_SHORT).show()
+        } else {
+            emailTextInputEditText.setText(PreferenceManager().getUsernametext(ncontext))
+            passwordTextInputEditText.setText(PreferenceManager().getUserpasswrdtext(ncontext))
+        }
        // emailTextInputEditText.setOnTouchListener(this)
        // passwordTextInputEditText.setOnTouchListener(this)
        /* emailTextInputEditText.setOnEditorActionListener { v, actionId, event ->
@@ -110,7 +120,27 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
             }
         }*/
         rememeberMeImg.setOnClickListener(View.OnClickListener {
-            rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.ic_baseline_check_24))
+            if(flag)
+            {
+            if(emailTextInputEditText.text.toString().trim().equals("")&&passwordTextInputEditText.text.toString().trim().equals(""))
+            {
+                Toast.makeText(ncontext, "Please enter the field !", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.ic_baseline_check_24))
+                PreferenceManager().setUsernametext(ncontext, emailTextInputEditText.text.toString())
+                PreferenceManager().setUserpasswrdtext(ncontext, passwordTextInputEditText.text.toString())
+            }
+            }
+            else
+            {
+                rememeberMeImg.setImageResource(0)
+                PreferenceManager().setUsernametext(ncontext, "")
+                PreferenceManager().setUserpasswrdtext(ncontext, "")
+            }
+            flag = !flag
+            /*rememeberMeImg.setImageDrawable(ContextCompat.getDrawable(ncontext, R.drawable.ic_baseline_check_24))
 if(PreferenceManager().getUsernametext(ncontext).equals("")&&PreferenceManager().getUserpasswrdtext(ncontext).equals(""))
 {
    Toast.makeText(ncontext, "Please enter the field !", Toast.LENGTH_SHORT).show()
@@ -119,8 +149,8 @@ if(PreferenceManager().getUsernametext(ncontext).equals("")&&PreferenceManager()
 {
     emailTextInputEditText.setText(PreferenceManager().getUsernametext(ncontext))
     passwordTextInputEditText.setText(PreferenceManager().getUserpasswrdtext(ncontext))
-}
-   /*         if(flag)
+}*/
+         /*   if(flag)
             {
 if(passwordTextInputEditText.text.toString().trim().equals(""))
 {
@@ -183,8 +213,7 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
             }
             else
             {
-                PreferenceManager().setUsernametext(ncontext, emailTextInputEditText.text.toString())
-                PreferenceManager().setUserpasswrdtext(ncontext, passwordTextInputEditText.text.toString())
+
 
                 if(CommonClass.isInternetAvailable(ncontext)) {
                     callLoginApi(

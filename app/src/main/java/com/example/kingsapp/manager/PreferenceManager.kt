@@ -1193,6 +1193,35 @@ class PreferenceManager {
         val type = object : TypeToken<ArrayList<String?>?>() {}.type
         return gson.fromJson(json, type)
     }
+    fun setLanguageschool(context: Context, token: String) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("schoollanguage", token)
+        editor.apply()
+    }
+
+    fun getLanguageschool(context: Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("schoollanguage", "")
+
+    }
+
+    fun setLanguagetype(context: Context, token: String) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("schoollanguagetype", token)
+        editor.apply()
+    }
+
+    fun getLanguagetype(context: Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("schoollanguagetype", "")
+
+    }
 }
 
 
