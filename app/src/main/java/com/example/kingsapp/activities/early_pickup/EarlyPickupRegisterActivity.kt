@@ -161,8 +161,8 @@ lateinit var progressBarDialog: ProgressBarDialog
         }
         timepikup.setOnClickListener {
 
-            if (dayofearlypikup.text!!.equals("")){
-                Toast.makeText(mContext, "mContext", Toast.LENGTH_SHORT).show()
+            if (dayofearlypikup.text.toString().trim().equals("")){
+                Toast.makeText(mContext, "Please select Date of Early Pickup", Toast.LENGTH_SHORT).show()
                 //showerror(mContext,"Please select Date of Early Pickup","Alert")
             }
             else
@@ -237,7 +237,7 @@ lateinit var progressBarDialog: ProgressBarDialog
                 if (response.body() != null) {
                     if(response.body()!!.status.equals(100))
                     {
-                        showErrorAlert(mContext,"Successfully submitted your absence.","Success")
+                        showErrorAlert(mContext,"Successfully submitted","Success")
                     }
                     else if(response.body()!!.status.equals(106))
                     {
@@ -283,7 +283,7 @@ lateinit var progressBarDialog: ProgressBarDialog
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
-            val intent = Intent(context, AbsenceActivity::class.java)
+            val intent = Intent(context, EarlyPickupListActivity::class.java)
             startActivity(intent)
             finish()
         }

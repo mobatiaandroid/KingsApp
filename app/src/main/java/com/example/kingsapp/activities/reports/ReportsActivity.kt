@@ -19,6 +19,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.forms.adapter.FormListAdapter
+import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -26,6 +28,7 @@ import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
+import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
@@ -132,7 +135,7 @@ class ReportsActivity:AppCompatActivity() {
     }
     private fun studentListApiCall() {
         progressDialog.visibility=View.VISIBLE
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
+       /* val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(ncontext).toString())
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
@@ -235,11 +238,11 @@ class ReportsActivity:AppCompatActivity() {
                     .show()
                 Log.e("succ", t.message.toString())
             }
-        })
+        })*/
     }
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
-        val dialog = BottomSheetDialog(ncontext, R.style.AppBottomSheetDialogTheme)
+        /*val dialog = BottomSheetDialog(ncontext, R.style.AppBottomSheetDialogTheme)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)
@@ -263,33 +266,78 @@ class ReportsActivity:AppCompatActivity() {
              override fun onItemClicked(position: Int, view: View) {
 
                  //var id: String = student_name.get(position).id.toString()
-                 var name: String = student_name.get(position).fullname
-                 var classs: String = student_name.get(position).classs
-                 var id: Int = student_name.get(position).id
-                 student_Name.setText(name)
-                 studentclass.text=classs
-                 PreferenceManager().setStudent_ID(ncontext,id.toString())
-                 PreferenceManager().setStudentName(ncontext,name)
+               //  var name: String = student_name.get(position).fullname
+               //  var classs: String = student_name.get(position).classs
+               //  var id: Int = student_name.get(position).id
+              //   student_Name.setText(name)
+              //   studentclass.text=classs
+              //   PreferenceManager().setStudent_ID(ncontext,id.toString())
+              //   PreferenceManager().setStudentName(ncontext,name)
 
-                 reportslisting()
+               //  reportslisting()
                  dialog.dismiss()
              }
 
          })
-        dialog.show()
+        dialog.show()*/
     }
     private fun reportslisting(){
         report_array = ArrayList()
-        var reportmodel=ReportModel(1,"2021-2022","Test report cycle 2021-2022","https:\\/\\/file.io\\/386klufU8FEr")
+       /* var reportmodel=ReportModel(1,"2021-2022","Test report cycle 2021-2022","https:\\/\\/file.io\\/386klufU8FEr")
         report_array.add(reportmodel)
         var reportmodel1=ReportModel(1,"2022-2023","Test report cycle 2022-2023","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
         report_array.add(reportmodel1)
         var reportmodel2=ReportModel(2,"2019-2020","Test report information 2019-2020","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
-        report_array.add(reportmodel2)
+        report_array.add(reportmodel2)*/
         /*var reportmodel3=ReportModel(2,"2022-2023","Test report information 2022-2023","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
         report_array.add(reportmodel3)*/
         report_array_filtered=ArrayList()
-        Log.e("id", PreferenceManager().getStudent_ID(ncontext).toString())
+        Log.e("id",PreferenceManager().getStudent_ID(ncontext).toString())
+        Log.e("type", PreferenceManager().getLanguagetype(ncontext).toString())
+        val call: Call<ReportsResponseModel> = ApiClient.getApiService().reportss("Bearer "+
+                PreferenceManager().getAccessToken(ncontext).toString(),
+            "1",
+           "1")
+        call.enqueue(object : retrofit2.Callback<ReportsResponseModel> {
+            override fun onResponse(
+                call: Call<ReportsResponseModel>,
+                response: Response<ReportsResponseModel>
+            ) {
+               // progressBarDialog.hide()
+
+                Log.e("Response",response.body().toString())
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals(100))
+                    {
+                        /*list_name.addAll(response.body()!!.forms)
+                        parentList.layoutManager = linearLayoutManager
+                        val formadapter = FormListAdapter(mcontext,list_name)
+                        parentList.setAdapter(formadapter)*/
+                    }
+                    else
+                    {
+                        CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+                    }
+                }
+                else{
+                   /* val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)*/
+                }
+            }
+
+            override fun onFailure(call: Call<ReportsResponseModel?>, t: Throwable) {
+               // progressBarDialog.hide()
+
+                Toast.makeText(
+                    ncontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+        /*Log.e("id", PreferenceManager().getStudent_ID(ncontext).toString())
         if (PreferenceManager().getStudent_ID(ncontext)!!.equals("1")){
             Log.e("Sucesee","successs")
             for (i in report_array.indices){
@@ -308,12 +356,12 @@ class ReportsActivity:AppCompatActivity() {
                     report_array_filtered.add(nmodel)
                 }
             }
-        }
+        }*/
 
-        reportrec!!.layoutManager = LinearLayoutManager(ncontext)
+       /* reportrec!!.layoutManager = LinearLayoutManager(ncontext)
         val report_rec_adapter =
             ReportsAdapterList(ncontext, report_array_filtered)
-        reportrec!!.adapter = report_rec_adapter
+        reportrec!!.adapter = report_rec_adapter*/
 
     }
 }

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -85,9 +86,9 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
     var currentMonth: Int = -1
     lateinit var monthTxt: String
-    var primaryColor: String = ""
-    var secondaryColor: String = ""
-    var wholeSchoole: String = ""
+    var primaryColor: String = "#3E56D3"
+    var secondaryColor: String = "#533ED3"
+    var wholeSchoole: String = "#8D61EC"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -154,10 +155,20 @@ class SchoolCalendarActivity:AppCompatActivity() {
         {
             hideBtn.setTextColor(resources.getColor(R.color.black))
             showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            showBtn.setBackgroundResource(R.drawable.edittext_greybg)
+            hideBtn.setBackgroundColor(resources.getColor(R.color.white))
+           // showBtn.setTypeface(showBtn.getTypeface(), Typeface.BOLD);
+          //  hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.NORMAL);
+
         }
         else{
             hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
             showBtn.setTextColor(resources.getColor(R.color.black))
+            hideBtn.setBackgroundResource(R.drawable.edittext_greybg)
+            showBtn.setBackgroundColor(resources.getColor(R.color.white))
+           // hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.BOLD);
+           // showBtn.setTypeface(showBtn.getTypeface(), Typeface.NORMAL);
+
         }
 
         nextBtn.setOnClickListener(View.OnClickListener {
@@ -173,10 +184,20 @@ class SchoolCalendarActivity:AppCompatActivity() {
             {
                 hideBtn.setTextColor(resources.getColor(R.color.black))
                 showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+                showBtn.setBackgroundResource(R.drawable.edittext_greybg)
+                hideBtn.setBackgroundColor(resources.getColor(R.color.white))
+              //  showBtn.setTypeface(showBtn.getTypeface(), Typeface.BOLD);
+             //   hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.NORMAL);
+
             }
             else{
                 hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
                 showBtn.setTextColor(resources.getColor(R.color.black))
+                hideBtn.setBackgroundResource(R.drawable.edittext_greybg)
+                showBtn.setBackgroundColor(resources.getColor(R.color.white))
+               // hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.BOLD);
+              //  showBtn.setTypeface(showBtn.getTypeface(), Typeface.NORMAL);
+
             }
             month(currentMonth, year)
             showCalendarEvent(
@@ -191,6 +212,12 @@ class SchoolCalendarActivity:AppCompatActivity() {
         hideBtn.setOnClickListener(View.OnClickListener {
             hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
             showBtn.setTextColor(resources.getColor(R.color.black))
+            hideBtn.setBackgroundResource(R.drawable.edittext_greybg)
+            showBtn.setBackgroundColor(resources.getColor(R.color.white))
+
+            // hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.BOLD)
+          //  showBtn.setTypeface(showBtn.getTypeface(), R.font.font.)
+
             isHide=true
             isShow=false
             showCalendarEvent(
@@ -204,6 +231,11 @@ class SchoolCalendarActivity:AppCompatActivity() {
         showBtn.setOnClickListener(View.OnClickListener {
             hideBtn.setTextColor(resources.getColor(R.color.black))
             showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+            showBtn.setBackgroundResource(R.drawable.edittext_greybg)
+            hideBtn.setBackgroundColor(resources.getColor(R.color.white))
+           // showBtn.setTypeface(showBtn.getTypeface(), Typeface.BOLD);
+           // hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.NORMAL);
+
             isHide=false
             isShow=true
             showCalendarEvent(
@@ -222,10 +254,22 @@ class SchoolCalendarActivity:AppCompatActivity() {
             {
                 hideBtn.setTextColor(resources.getColor(R.color.black))
                 showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+                showBtn.setBackgroundResource(R.drawable.edittext_greybg)
+                hideBtn.setBackgroundColor(resources.getColor(R.color.white))
+              //  showBtn.setTypeface(showBtn.getTypeface(), Typeface.BOLD);
+              //  hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.NORMAL);
+
+
             }
             else{
                 hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
                 showBtn.setTextColor(resources.getColor(R.color.black))
+                hideBtn.setBackgroundResource(R.drawable.edittext_greybg)
+                showBtn.setBackgroundColor(resources.getColor(R.color.white))
+              //  hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.BOLD);
+              //  showBtn.setTypeface(showBtn.getTypeface(), Typeface.NORMAL);
+
+
             }
             if (currentMonth == 0) {
                 currentMonth = 11 - currentMonth
@@ -320,6 +364,16 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
             }
         }
+        else
+        {
+            noEventTxt.setText("No data")
+            Toast.makeText(
+                mcontext,
+                "No data..",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
         if (secondaryArrayList.size > 0) {
             for (i in 0..secondaryArrayList.size - 1) {
                 var sModel = PrimaryModel()
@@ -388,6 +442,16 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
             }
         }
+        else
+        {
+            noEventTxt.setText("No data")
+            Toast.makeText(
+                mcontext,
+                "No data..",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
         if (wholeSchoolArrayList.size > 0) {
             for (i in 0..wholeSchoolArrayList.size - 1) {
                 var wModel = PrimaryModel()
@@ -451,7 +515,16 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 Log.e("wholeshool", wholeSchoolShowArrayList.toString())
             }
         }
-
+        else
+        {
+            noEventTxt.setText("No data")
+            Toast.makeText(
+                mcontext,
+                "No data..",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
         if (allSeleted) {
             calendarShowArrayList = ArrayList()
             if (primaryShowArrayList.size > 0) {
@@ -901,20 +974,20 @@ class SchoolCalendarActivity:AppCompatActivity() {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     primaryArrayList.addAll(calendarArrayList.get(i).details)
                                     Log.e("primary", primaryArrayList.toString())
-                                    primaryColor = calendarArrayList.get(i).color
+                                  //  primaryColor = calendarArrayList.get(i).color
                                 }
 
                             } else if (calendarArrayList.get(i).title.equals("Secondary")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
 
                                     secondaryArrayList.addAll(calendarArrayList.get(i).details)
-                                    secondaryColor = calendarArrayList.get(i).color
+                                  //  secondaryColor = calendarArrayList.get(i).color
                                 }
 
                             } else if (calendarArrayList.get(i).title.equals("Whole School")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     wholeSchoolArrayList.addAll(calendarArrayList.get(i).details)
-                                    wholeSchoole = calendarArrayList.get(i).color
+                                  //  wholeSchoole = calendarArrayList.get(i).color
                                 }
 
                             }
@@ -942,7 +1015,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
               model.categoryName = categoryList.get(i)
               model.checkedCategory = true
               if (i == 0) {
-                  var whiteColor = "#000000"
+                  var whiteColor = "#6B737A"
                   model.color = whiteColor
               } else {
 
@@ -964,8 +1037,14 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
                     }
                     else {
-
-
+                       // noEventTxt.visibility=View.VISIBLE
+                       // noEventTxt.setText("No data")
+                        Toast.makeText(
+                            mcontext,
+                            "No data..",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
                 }
                 else {
@@ -1014,10 +1093,17 @@ class SchoolCalendarActivity:AppCompatActivity() {
             {
                 hideBtn.setTextColor(resources.getColor(R.color.black))
                 showBtn.setTextColor(resources.getColor(R.color.kings_blue))
+                showBtn.setBackgroundResource(R.drawable.edittext_greybg)
+                hideBtn.setBackgroundColor(resources.getColor(R.color.white))
+              //  showBtn.setTypeface(showBtn.getTypeface(), Typeface.BOLD);
             }
             else{
                 hideBtn.setTextColor(resources.getColor(R.color.kings_blue))
                 showBtn.setTextColor(resources.getColor(R.color.black))
+                hideBtn.setBackgroundResource(R.drawable.edittext_greybg)
+                showBtn.setBackgroundColor(resources.getColor(R.color.white))
+               // hideBtn.setTypeface(hideBtn.getTypeface(), Typeface.BOLD);
+
             }
             showCalendarEvent(
                 isAllSelected,

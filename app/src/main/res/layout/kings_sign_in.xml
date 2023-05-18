@@ -132,6 +132,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:textColorHint="@color/greyy"
                 app:boxStrokeColor="@color/greyy"
+                app:hintTextColor="@color/greyy"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_baseline_remove_red_eye"
                 app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout">

@@ -17,6 +17,7 @@ import com.example.kingsapp.activities.login.model.LoginResponseModel
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.model.NotificationModel
 import com.example.kingsapp.activities.parentessentials.model.ParentModel
+import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.fragment.contact.model.ContactusModel
@@ -228,4 +229,16 @@ interface ApiService {
         @Body  studentInfoModel: AbsenceLeaveApiModel
 
     ): Call<NotificationModel>
+
+
+    /*************Reports****************/
+    @POST("api/v1/reports")
+    @Headers("Content-Type: application/json")
+    @FormUrlEncoded
+    fun reportss(
+        @Header("Authorization") token:String,
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
+
+    ): Call<ReportsResponseModel>
 }

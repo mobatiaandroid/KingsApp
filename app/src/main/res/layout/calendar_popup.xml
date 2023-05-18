@@ -68,6 +68,7 @@
                 android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/textinput_calendar_edittext"
                 android:orientation="horizontal"
                 android:layout_marginStart="15dp">
@@ -90,8 +91,8 @@
                         android:id="@+id/start_text"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
                         android:alpha="0.5"
                         android:gravity="center_vertical"
                         android:text="START"
@@ -127,6 +128,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/textinput_calendar_edittext"
                 android:orientation="horizontal"
+                android:layout_marginRight="10dp"
                 android:layout_marginStart="15dp">
 
                 <com.example.kingsapp.manager.font.CustomVerdanaRegular
@@ -147,7 +149,7 @@
                     <com.example.kingsapp.manager.font.CustomVerdanaRegular
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginRight="2dp"
+                        android:layout_marginRight="10dp"
                         android:id="@+id/end_text"
                         android:alpha="0.5"
                         android:textColor="@color/kings_blue"
@@ -168,7 +170,7 @@
             android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:background="@color/kings_blue"
             android:text="SAVE"
             android:gravity="center"

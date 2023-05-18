@@ -187,7 +187,8 @@ class AppsActivity:AppCompatActivity() {
        progressBarDialog.show()
         val call: Call<AppsModel> = ApiClient.getApiService().apps("Bearer "+
                 PreferenceManager().getAccessToken(mContext).toString(),
-            PreferenceManager().getStudent_ID(mContext).toString(),PreferenceManager().getLanguagetype(mContext).toString())
+            PreferenceManager().getStudent_ID(mContext).toString(),
+            PreferenceManager().getLanguagetype(mContext).toString())
         call.enqueue(object : retrofit2.Callback<AppsModel> {
             override fun onResponse(
                 call: Call<AppsModel>,
