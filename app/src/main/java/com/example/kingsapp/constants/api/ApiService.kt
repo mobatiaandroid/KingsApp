@@ -21,6 +21,7 @@ import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.fragment.contact.model.ContactusModel
+import com.google.gson.JsonObject
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -234,11 +235,9 @@ interface ApiService {
     /*************Reports****************/
     @POST("api/v1/reports")
     @Headers("Content-Type: application/json")
-    @FormUrlEncoded
     fun reportss(
         @Header("Authorization") token:String,
-        @Field("student_id") student_id: String,
-        @Field("language_type") language_type: String
+        @Body json: JsonObject
 
     ): Call<ReportsResponseModel>
 }

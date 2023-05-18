@@ -6,35 +6,29 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
-import com.example.kingsapp.activities.forms.adapter.FormListAdapter
-import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
-import com.example.kingsapp.activities.login.model.StudentListResponseModel
-import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
-import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
-import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
@@ -291,31 +285,38 @@ class ReportsActivity:AppCompatActivity() {
         report_array.add(reportmodel2)*/
         /*var reportmodel3=ReportModel(2,"2022-2023","Test report information 2022-2023","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
         report_array.add(reportmodel3)*/
-        report_array_filtered=ArrayList()
-        Log.e("id",PreferenceManager().getStudent_ID(ncontext).toString())
+        report_array_filtered = ArrayList()
+        Log.e("id", PreferenceManager().getStudent_ID(ncontext).toString())
         Log.e("type", PreferenceManager().getLanguagetype(ncontext).toString())
-        val call: Call<ReportsResponseModel> = ApiClient.getApiService().reportss("Bearer "+
-                PreferenceManager().getAccessToken(ncontext).toString(),
-            "1",
-           "1")
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", "1")
+            addProperty("language_type", "1")
+
+        }
+        val call: Call<ReportsResponseModel> = ApiClient.getApiService().reportss(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(ncontext).toString(), paramObject
+        )
         call.enqueue(object : retrofit2.Callback<ReportsResponseModel> {
             override fun onResponse(
                 call: Call<ReportsResponseModel>,
                 response: Response<ReportsResponseModel>
             ) {
-               // progressBarDialog.hide()
+                // progressBarDialog.hide()
 
-                Log.e("Response",response.body().toString())
+                Log.e("Response", response.body().toString())
                 if (response.body() != null) {
-                    if (response.body()!!.status.equals(100))
-                    {
+                    if (response.body()!!.status == 100) {
+                        Toast.makeText(
+                            ncontext,
+                            response.body()!!.status.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         /*list_name.addAll(response.body()!!.forms)
                         parentList.layoutManager = linearLayoutManager
                         val formadapter = FormListAdapter(mcontext,list_name)
                         parentList.setAdapter(formadapter)*/
-                    }
-                    else
-                    {
+                    } else {
                         CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                     }
                 }
