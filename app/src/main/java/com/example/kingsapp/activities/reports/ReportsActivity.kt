@@ -15,6 +15,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -22,11 +23,12 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
+import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
 import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
+import com.example.kingsapp.activities.reports.model.Reports
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.constants.CommonClass
-import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.google.gson.JsonObject
 import com.mobatia.nasmanila.api.ApiClient
@@ -39,7 +41,7 @@ class ReportsActivity:AppCompatActivity() {
     lateinit var reportrec:RecyclerView
     lateinit var student_name:ArrayList<StudentList>
 
-    lateinit var report_array:ArrayList<ReportModel>
+    lateinit var report_array:ArrayList<Reports>
     lateinit var report_array_filtered:ArrayList<ReportModelFiltered>
     lateinit var student_Name : TextView
     lateinit var studentclass:TextView
@@ -93,9 +95,9 @@ class ReportsActivity:AppCompatActivity() {
             AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
         textView=findViewById(R.id.textView)
-        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+        if (PreferenceManager().getLanguage(ncontext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+                Typeface.createFromAsset(ncontext.getAssets(), "font/times_new_roman.ttf")
             textView.setTypeface(face);
         }
         student_Name.text=PreferenceManager().getStudentName(ncontext)
@@ -289,8 +291,8 @@ class ReportsActivity:AppCompatActivity() {
         Log.e("id", PreferenceManager().getStudent_ID(ncontext).toString())
         Log.e("type", PreferenceManager().getLanguagetype(ncontext).toString())
         val paramObject = JsonObject().apply {
-            addProperty("student_id", "1")
-            addProperty("language_type", "1")
+            addProperty("student_id", PreferenceManager().getStudent_ID(ncontext).toString())
+            addProperty("language_type", PreferenceManager().getLanguagetype(ncontext).toString())
 
         }
         val call: Call<ReportsResponseModel> = ApiClient.getApiService().reportss(
@@ -307,15 +309,12 @@ class ReportsActivity:AppCompatActivity() {
                 Log.e("Response", response.body().toString())
                 if (response.body() != null) {
                     if (response.body()!!.status == 100) {
-                        Toast.makeText(
-                            ncontext,
-                            response.body()!!.status.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        /*list_name.addAll(response.body()!!.forms)
-                        parentList.layoutManager = linearLayoutManager
-                        val formadapter = FormListAdapter(mcontext,list_name)
-                        parentList.setAdapter(formadapter)*/
+
+                        report_array.addAll(response.body()!!.reports)
+                         reportrec!!.layoutManager = LinearLayoutManager(ncontext)
+         val report_rec_adapter =
+             ReportsAdapterList(ncontext, report_array)
+         reportrec!!.adapter = report_rec_adapter
                     } else {
                         CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                     }

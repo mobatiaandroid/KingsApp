@@ -236,6 +236,8 @@ lateinit var menuicon:ImageView
 
         showChangeLang()
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            PreferenceManager().setLanguagetype(mContext, "2")
+
             val face: Typeface =
                 Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
             homeText.setTypeface(face);
@@ -247,7 +249,7 @@ lateinit var menuicon:ImageView
             otherText.setText(R.string.Settings)
             contactText.setText(R.string.Contact)
         } else {
-
+            PreferenceManager().setLanguagetype(mContext, "1")
             homeText.setText(R.string.Home)
             messageText.setText(R.string.parentcomms)
             otherText.setText(R.string.Settings)

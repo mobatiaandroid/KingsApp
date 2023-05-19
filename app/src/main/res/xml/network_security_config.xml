@@ -13,6 +13,9 @@
         <domain includeSubdomains="true">twitter.com</domain>
         <domain includeSubdomains="true">beta.mobatia.in</domain>
         <domain includeSubdomains="true">gama.mobatia.in:8080</domain>
+        <domain includeSubdomains="true">teams.microsoft.com</domain>
+
+
     </domain-config>
 
 </network-security-config>

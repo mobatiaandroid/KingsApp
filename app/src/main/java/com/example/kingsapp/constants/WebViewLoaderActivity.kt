@@ -13,6 +13,7 @@ import android.webkit.*
 import android.widget.ImageView
 
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
@@ -77,6 +78,7 @@ class WebViewLoaderActivity: AppCompatActivity() {
                 if (newProgress == 100) {
                     progressBarDialog.hide()
                     back.visibility = View.VISIBLE
+                    Log.e("web_view", view.toString())
 
                 }
             }
@@ -110,6 +112,9 @@ class WebViewLoaderActivity: AppCompatActivity() {
             request: WebResourceRequest,
             error: WebResourceError
         ) {
+            Log.e("error", error.toString())
+            Toast.makeText(activity, "Got Error! $error", Toast.LENGTH_SHORT).show()
+
         }
 
     }
