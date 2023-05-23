@@ -7,6 +7,7 @@ import com.example.kingsapp.activities.absence.model.AbsenceListModel
 import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.adapter.apps.model.AppsModel
 import com.example.kingsapp.activities.calender.model.CalendarListModel
+import com.example.kingsapp.activities.calender.model.CalendarResponseModel
 import com.example.kingsapp.activities.early_pickup.model.EarlyPickupListModel
 import com.example.kingsapp.activities.early_pickup.model.RequestEarlyApiModel
 import com.example.kingsapp.activities.forms.model.FormsModel
@@ -210,16 +211,26 @@ interface ApiService {
     @Headers("Accept: application/json")
     @FormUrlEncoded
     fun schoolcalendar(
-        @Header("Authorization") token:String,
+        @Header("Authorization") token: String,
         @Field("student_id") student_id: String,
         @Field("language_type") language_type: String
     ): Call<CalendarListModel>
+
+    @POST("api/v1/calendar")
+    @Headers("Accept: application/json")
+    @FormUrlEncoded
+    fun schoolcalendarNew(
+        @Header("Authorization") token: String,
+        @Field("student_id") student_id: String,
+        @Field("language_type") language_type: String
+    ): Call<CalendarResponseModel>
+
     /*************School Calendar MonthList****************/
     @POST("api/v1/school-calendar-month")
     @Headers("Accept: application/json")
     @FormUrlEncoded
     fun schoolcalendarList(
-        @Header("Authorization") token:String,
+        @Header("Authorization") token: String,
         @Field("student_id") student_id: String
     ): Call<CalendarListModel>
 

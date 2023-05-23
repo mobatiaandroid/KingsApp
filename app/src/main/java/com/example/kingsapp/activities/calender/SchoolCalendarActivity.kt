@@ -4,20 +4,29 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.*
-import com.example.kingsapp.activities.calender.model.*
+import com.example.kingsapp.activities.calender.model.CalendarDateModel
+import com.example.kingsapp.activities.calender.model.CalendarDetailModel
+import com.example.kingsapp.activities.calender.model.CalendarList
+import com.example.kingsapp.activities.calender.model.CalendarListModel
+import com.example.kingsapp.activities.calender.model.CalendarResponseArray
+import com.example.kingsapp.activities.calender.model.CalendarResponseModel
+import com.example.kingsapp.activities.calender.model.CategoryModel
+import com.example.kingsapp.activities.calender.model.PrimaryModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
@@ -33,17 +42,18 @@ import retrofit2.Response
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.*
-import kotlin.collections.ArrayList
-class SchoolCalendarActivity:AppCompatActivity() {
+import java.util.Date
+
+class SchoolCalendarActivity : AppCompatActivity() {
     lateinit var mcontext: Context
-   // lateinit var jsonConstans: JsonConstants
-  //  lateinit var sharedprefs: PreferenceData
+
+    // lateinit var jsonConstans: JsonConstants
+    //  lateinit var sharedprefs: PreferenceData
     lateinit var calendarRecycler: RecyclerView
     lateinit var titleTextView: TextView
     lateinit var noEventTxt: TextView
     lateinit var noEventImage: ImageView
-    lateinit var back:ImageView
+    lateinit var back: ImageView
 
     //  lateinit var mContext: Context
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -96,7 +106,8 @@ class SchoolCalendarActivity:AppCompatActivity() {
         mcontext = this
         initFn()
         if(CommonClass.isInternetAvailable(mcontext)) {
-            callCalendarApi()
+//            callCalendarApi()
+            callAPI()
         }
         else{
             Toast.makeText(mcontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
@@ -105,6 +116,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
 
     }
+
 
     private fun initFn() {
         calendarRecycler = findViewById(R.id.calendarRecycler) as RecyclerView
@@ -924,16 +936,78 @@ class SchoolCalendarActivity:AppCompatActivity() {
 
             10 -> {
                 monthTxt = "November"
-                monthYearTxt.text = monthTxt  +" "+ year.toString()
+                monthYearTxt.text = monthTxt + " " + year.toString()
             }
 
             11 -> {
                 monthTxt = "December"
-                monthYearTxt.text = monthTxt  +" "+ year.toString()
+                monthYearTxt.text = monthTxt + " " + year.toString()
             }
 
         }
     }
+
+    private fun callAPI() {
+        val categoryCalendarArrayList: ArrayList<CalendarResponseModel.Calendar> = ArrayList()
+        val call: Call<CalendarResponseModel> = ApiClient.getApiService().schoolcalendarNew(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mcontext).toString(),
+            PreferenceManager().getStudent_ID(mcontext).toString(),
+            PreferenceManager().getLanguagetype(mContext).toString()
+        )
+        call.enqueue(object : retrofit2.Callback<CalendarResponseModel> {
+            override fun onResponse(
+                call: Call<CalendarResponseModel>,
+                response: Response<CalendarResponseModel>
+            ) {
+                if (response != null) {
+                    for (i in response.body()!!.calendar!!.indices) {
+                        categoryCalendarArrayList.add(response.body()!!.calendar!![i]!!)
+                    }
+                    for (i in categoryCalendarArrayList.indices) {
+                        if (categoryCalendarArrayList[i].title.equals("Primary")) {
+                            if (categoryCalendarArrayList[i].details!!.isNotEmpty()) {
+
+                                Log.e(
+                                    "primary",
+                                    categoryCalendarArrayList[i].details!!.size.toString()
+                                )
+                                //  primaryColor = calendarArrayList.get(i).color
+                            }
+
+                        } else if (categoryCalendarArrayList[i].title.equals("Secondary")) {
+                            if (categoryCalendarArrayList[i].details!!.isNotEmpty()) {
+
+                                Log.e(
+                                    "Secondary",
+                                    categoryCalendarArrayList[i].details!!.size.toString()
+                                )
+                                //  secondaryColor = calendarArrayList.get(i).color
+                            }
+
+                        } else if (categoryCalendarArrayList[i].title.equals("WholeSchool")) {
+                            if (categoryCalendarArrayList[i].details!!.isNotEmpty()) {
+                                Log.e(
+                                    "WholeSchool",
+                                    categoryCalendarArrayList[i].details!!.size.toString()
+                                )
+                                //  wholeSchoole = calendarArrayList.get(i).color
+                            }
+
+                        }
+
+                    }
+
+
+                }
+            }
+
+            override fun onFailure(call: Call<CalendarResponseModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
     fun callCalendarApi() {
         calendarArrayList = ArrayList()
         primaryArrayList = ArrayList()
@@ -941,9 +1015,12 @@ class SchoolCalendarActivity:AppCompatActivity() {
         wholeSchoolArrayList = ArrayList()
         progressBarDialog.show()
 
-        val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar("Bearer "+
-                PreferenceManager().getAccessToken(mcontext).toString(),PreferenceManager().getStudent_ID(mcontext).toString(),
-            PreferenceManager().getLanguagetype(mContext).toString())
+        val call: Call<CalendarListModel> = ApiClient.getApiService().schoolcalendar(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mcontext).toString(),
+            PreferenceManager().getStudent_ID(mcontext).toString(),
+            PreferenceManager().getLanguagetype(mContext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<CalendarListModel> {
             override fun onResponse(
                 call: Call<CalendarListModel>,
@@ -954,12 +1031,12 @@ class SchoolCalendarActivity:AppCompatActivity() {
                     calendarArrayList.addAll(response.body()!!.calendar)
                     Log.e("calendarArrayList", calendarArrayList.toString())
                     if (calendarArrayList.size > 0) {
-                        for (i in 0..calendarArrayList.size - 1) {
+                        for (i in calendarArrayList.indices) {
                             if (calendarArrayList.get(i).title.equals("Primary")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     primaryArrayList.addAll(calendarArrayList.get(i).details)
                                     Log.e("primary", primaryArrayList.toString())
-                                  //  primaryColor = calendarArrayList.get(i).color
+                                    //  primaryColor = calendarArrayList.get(i).color
                                 }
 
                             } else if (calendarArrayList.get(i).title.equals("Secondary")) {
