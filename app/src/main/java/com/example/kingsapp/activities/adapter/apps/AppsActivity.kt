@@ -1,4 +1,4 @@
-package com.example.kingsapp.activities.apps
+package com.example.kingsapp.activities.adapter.apps
 
 import android.content.Context
 import android.content.Intent
@@ -19,9 +19,9 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.context
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
-import com.example.kingsapp.activities.apps.adapter.AppsAdapter
-import com.example.kingsapp.activities.apps.model.AppsList
-import com.example.kingsapp.activities.apps.model.AppsModel
+import com.example.kingsapp.activities.adapter.apps.adapter.AppsAdapter
+import com.example.kingsapp.activities.adapter.apps.model.AppsList
+import com.example.kingsapp.activities.adapter.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList

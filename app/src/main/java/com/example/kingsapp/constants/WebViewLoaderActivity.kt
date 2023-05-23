@@ -83,7 +83,8 @@ class WebViewLoaderActivity: AppCompatActivity() {
                 }
             }
         }
-
+        val settings = webview.settings
+        settings.domStorageEnabled = true
 
     }
     class MyWebViewClient internal constructor(private val activity: Activity) : WebViewClient() {
@@ -99,7 +100,7 @@ class WebViewLoaderActivity: AppCompatActivity() {
 
         override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
             webView.loadUrl(url)
-
+            System.out.print("url"+url)
             return true
         }
         override fun onPageFinished(view: WebView, url: String) {

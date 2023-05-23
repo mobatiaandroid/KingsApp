@@ -26,7 +26,7 @@
         android:textSize="19dp"
         android:layout_marginLeft="50dp"
         android:gravity="center"
-        android:text="Calendar"
+        android:text="@string/school_calendar"
         android:layout_height="80dp" />
     <LinearLayout
         android:layout_below="@id/titleTextView"
@@ -51,14 +51,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/logout_user"
-            android:text="Past Events: "/>
+            android:text="@string/past_events"/>
         <com.example.kingsapp.manager.font.CustomVerdanaRegular
             android:id="@+id/hideBtn"
             android:layout_width="55dp"
             android:layout_height="30dp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="Hide"/>
+            android:text="@string/hide"/>
         <com.example.kingsapp.manager.font.CustomVerdanaRegular
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:background="@drawable/edittext_greybg"
-            android:text="Show"/>
+            android:text="@string/show"/>
     </LinearLayout>
 
     <LinearLayout
@@ -97,7 +97,7 @@
             android:gravity="left|center"
             android:paddingLeft="10dp"
             android:textColor="@color/black"
-            android:text="Refine calendar by category"
+            android:text="@string/refine_ategory"
             android:textSize="14sp" />
 
         <View

@@ -116,7 +116,6 @@ class SchoolCalendarActivity:AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(mContext)
         calendarRecycler.layoutManager = linearLayoutManager
         calendarRecycler.itemAnimator = DefaultItemAnimator()
-        titleTextView.text = "Calendar"
         progressBarDialog = ProgressBarDialog(mcontext)
         back = findViewById(R.id.back)
 
@@ -367,12 +366,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
         else
         {
             noEventTxt.setText("No data")
-            Toast.makeText(
-                mcontext,
-                "No data..",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+
         }
         if (secondaryArrayList.size > 0) {
             for (i in 0..secondaryArrayList.size - 1) {
@@ -445,12 +439,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
         else
         {
             noEventTxt.setText("No data")
-            Toast.makeText(
-                mcontext,
-                "No data..",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+
         }
         if (wholeSchoolArrayList.size > 0) {
             for (i in 0..wholeSchoolArrayList.size - 1) {
@@ -518,12 +507,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
         else
         {
             noEventTxt.setText("No data")
-            Toast.makeText(
-                mcontext,
-                "No data..",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+
         }
         if (allSeleted) {
             calendarShowArrayList = ArrayList()
@@ -968,6 +952,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
                 progressBarDialog.hide()
                 if (response.body()!!.status == 100) {
                     calendarArrayList.addAll(response.body()!!.calendar)
+                    Log.e("calendarArrayList", calendarArrayList.toString())
                     if (calendarArrayList.size > 0) {
                         for (i in 0..calendarArrayList.size - 1) {
                             if (calendarArrayList.get(i).title.equals("Primary")) {
@@ -981,12 +966,14 @@ class SchoolCalendarActivity:AppCompatActivity() {
                                 if (calendarArrayList.get(i).details.size > 0) {
 
                                     secondaryArrayList.addAll(calendarArrayList.get(i).details)
+                                    Log.e("Secondary", primaryArrayList.toString())
                                   //  secondaryColor = calendarArrayList.get(i).color
                                 }
 
-                            } else if (calendarArrayList.get(i).title.equals("Whole School")) {
+                            } else if (calendarArrayList.get(i).title.equals("WholeSchool")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     wholeSchoolArrayList.addAll(calendarArrayList.get(i).details)
+                                    Log.e("WholeSchool", primaryArrayList.toString())
                                   //  wholeSchoole = calendarArrayList.get(i).color
                                 }
 
@@ -1039,12 +1026,7 @@ class SchoolCalendarActivity:AppCompatActivity() {
                     else {
                        // noEventTxt.visibility=View.VISIBLE
                        // noEventTxt.setText("No data")
-                        Toast.makeText(
-                            mcontext,
-                            "No data..",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+
                     }
                 }
                 else {

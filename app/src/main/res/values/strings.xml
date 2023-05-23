@@ -39,10 +39,6 @@
 
     <string name="registerearlypickup">Register Early Pickup</string>
 
-
-
-
-
     <string name="early_pickup">Early Pickup</string>
     <string name="registernewearlypickup">Register Early Pickup</string>
     <string name="early_pikup_details">Early Pickup</string>
@@ -51,12 +47,21 @@
     <string name="pickup_by">Pickup By<font fgcolor='#FF0000'> * </font></string>
     <string name="status">Status</string>
     <string name="reason_for_early_pickup">Reason for early pickup<font fgcolor='#FF0000'> * </font></string>
+    <string name="rejetion_for_early_pickup">Rejection for early pickup<font fgcolor='#FF0000'> * </font></string>
 
 
 
     <string name="parent_essentials">Parent Essentials</string>
     <string name="social_media">Social Media</string>
+
+
+
     <string name="school_calendar">School Calendar</string>
+    <string name="hide">Hide</string>
+    <string name="show">Show</string>
+    <string name="refine_ategory">Refine calendar by category</string>
+    <string name="past_events">Past Events:</string>
+
 
 
     <string name="forms">Forms</string>
@@ -186,6 +191,7 @@
         <item>  Reports </item>
         <item> Forms</item>
         <item>  Apps</item>
+        <item>  Social Media</item>
         <item>  Contact Us</item>
     </string-array>
 
@@ -218,6 +224,7 @@
         <item>@drawable/forms</item>
 
         <item>@drawable/app</item>
+        <item>@drawable/social</item>
         <item>@drawable/chatting_clicked</item>
         <!-- 8 -->
 

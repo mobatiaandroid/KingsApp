@@ -1,4 +1,4 @@
-package com.example.kingsapp.activities.apps.model
+package com.example.kingsapp.activities.adapter.apps.model
 
 import com.google.gson.annotations.SerializedName
 

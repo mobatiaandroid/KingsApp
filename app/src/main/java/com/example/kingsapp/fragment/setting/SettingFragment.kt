@@ -203,7 +203,7 @@ class SettingFragment: Fragment() {
         val dialog = BottomSheetDialog(mContext, R.style.CustomBottomSheetDialog)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_change_password, null)
         val current_passwrd = view.findViewById<TextInputEditText>(R.id.currentpasswd)
-        val change_password = view.findViewById<TextInputEditText>(R.id.textView5)
+        val change_password = view.findViewById<TextView>(R.id.textView5)
         val new_passwrd = view.findViewById<TextInputEditText>(R.id.newpasswd)
         val confirm_passwd = view.findViewById<TextInputEditText>(R.id.confirmpasswd)
         val submit_button = view.findViewById<Button>(R.id.button)

@@ -29,6 +29,7 @@ import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 import com.example.kingsapp.activities.reports.model.Reports
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.google.gson.JsonObject
 import com.mobatia.nasmanila.api.ApiClient
@@ -47,7 +48,7 @@ class ReportsActivity:AppCompatActivity() {
     lateinit var studentclass:TextView
     lateinit var imagicon:ImageView
     lateinit var backarrow : ImageView
-    private lateinit var progressDialog: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
     lateinit var textView:TextView
     //lateinit var progressDialog: ProgressBarDialog
     var studentName:String=""
@@ -70,7 +71,6 @@ class ReportsActivity:AppCompatActivity() {
         if(CommonClass.isInternetAvailable(ncontext)) {
            // studentListApiCall()
             //reportslisting()
-            progressDialog.visibility=View.GONE
             reportslisting()
         }
         else{
@@ -90,10 +90,8 @@ class ReportsActivity:AppCompatActivity() {
         studentclass=findViewById(R.id.studentclass)
         imagicon=findViewById(R.id.imagicon)
         backarrow = findViewById(R.id.back)
-        progressDialog = findViewById(R.id.progressDialog)
-        val aniRotate: Animation =
-            AnimationUtils.loadAnimation(ncontext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        progressBarDialog = ProgressBarDialog(ncontext)
+
         textView=findViewById(R.id.textView)
         if (PreferenceManager().getLanguage(ncontext).equals("ar")) {
             val face: Typeface =
@@ -130,7 +128,7 @@ class ReportsActivity:AppCompatActivity() {
         }*/
     }
     private fun studentListApiCall() {
-        progressDialog.visibility=View.VISIBLE
+       // progressDialog.visibility=View.VISIBLE
        /* val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
                 PreferenceManager().getAccessToken(ncontext).toString())
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
@@ -288,6 +286,8 @@ class ReportsActivity:AppCompatActivity() {
         /*var reportmodel3=ReportModel(2,"2022-2023","Test report information 2022-2023","http:\\/\\/naisakcore.mobatia.in:8081\\/storage\\/payment_services\\/2021\\/08\\/03\\/payment_services_dummy_1627970518.pdf")
         report_array.add(reportmodel3)*/
         report_array_filtered = ArrayList()
+        progressBarDialog.show()
+
         Log.e("id", PreferenceManager().getStudent_ID(ncontext).toString())
         Log.e("type", PreferenceManager().getLanguagetype(ncontext).toString())
         val paramObject = JsonObject().apply {
@@ -304,7 +304,7 @@ class ReportsActivity:AppCompatActivity() {
                 call: Call<ReportsResponseModel>,
                 response: Response<ReportsResponseModel>
             ) {
-                // progressBarDialog.hide()
+                 progressBarDialog.hide()
 
                 Log.e("Response", response.body().toString())
                 if (response.body() != null) {
@@ -326,7 +326,7 @@ class ReportsActivity:AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ReportsResponseModel?>, t: Throwable) {
-               // progressBarDialog.hide()
+               progressBarDialog.hide()
 
                 Toast.makeText(
                     ncontext,

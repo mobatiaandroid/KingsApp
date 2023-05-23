@@ -1,11 +1,14 @@
 package com.example.kingsapp.activities.login
 
+import android.R.attr.button
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +27,7 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.mobatia.nasmanila.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
+
 
 class ChildSelectionActivity:AppCompatActivity() {
     lateinit var ncontext: Context
@@ -106,7 +110,9 @@ class ChildSelectionActivity:AppCompatActivity() {
 
         imageView18=findViewById(R.id.imageView18)
         progressBarDialog = ProgressBarDialog(ncontext)
-
+        /*val startAnimation: Animation =
+            AnimationUtils.loadAnimation(applicationContext, R.anim.blinking_animation)
+        circleImageView.startAnimation(startAnimation)*/
         imageView18.setOnClickListener {
             startActivity(Intent(this, SigninyourAccountActivity::class.java))
         }

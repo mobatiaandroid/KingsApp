@@ -3,7 +3,7 @@ package com.example.kingsapp.manager
 class NaisClassNameConstants {
     var STUDENT_INFORMATION = "Student Information"
     var SCHOOL_CALENDER = "School Calendar"
-   // var REPORT_ABSENCE = "Push Notification"
+    var SOCIAL_MEDIA = "Social Media"
     var ABSENCE_REPORTING = "Absence Reporting"
     var TIME_TABL = "Time Table"
     var PARENT_ESSENTIAL = "Parent Essentials"

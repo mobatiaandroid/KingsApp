@@ -24,6 +24,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="35dp"
+            android:textColor="@color/white"
             android:paddingRight="55dp"
             android:drawablePadding="10dp"
             android:text="Twitter"

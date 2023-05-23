@@ -5,7 +5,7 @@ import android.content.Context
 import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
 import com.example.kingsapp.activities.absence.model.AbsenceListModel
 import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
-import com.example.kingsapp.activities.apps.model.AppsModel
+import com.example.kingsapp.activities.adapter.apps.model.AppsModel
 import com.example.kingsapp.activities.calender.model.CalendarListModel
 import com.example.kingsapp.activities.early_pickup.model.EarlyPickupListModel
 import com.example.kingsapp.activities.early_pickup.model.RequestEarlyApiModel
@@ -18,7 +18,9 @@ import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.model.NotificationModel
 import com.example.kingsapp.activities.parentessentials.model.ParentModel
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
+import com.example.kingsapp.activities.social_media.model.SocialMediaResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
+import com.example.kingsapp.activities.timetable.model.TimeTableResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.fragment.contact.model.ContactusModel
 import com.google.gson.JsonObject
@@ -240,4 +242,24 @@ interface ApiService {
         @Body json: JsonObject
 
     ): Call<ReportsResponseModel>
+
+
+    /*************Social Media****************/
+    @POST("api/v1/socialmedia")
+    @Headers("Content-Type: application/json")
+    fun socialmedia(
+        @Header("Authorization") token:String,
+        @Body json: JsonObject
+
+    ): Call<SocialMediaResponseModel>
+
+
+    /*************Time Table****************/
+    @POST("api/v1/timetable")
+    @Headers("Content-Type: application/json")
+    fun timetable(
+        @Header("Authorization") token:String,
+        @Body json: JsonObject
+
+    ): Call<TimeTableResponseModel>
 }

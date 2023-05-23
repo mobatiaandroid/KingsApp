@@ -1,4 +1,4 @@
-package com.example.kingsapp.activities.apps.adapter
+package com.example.kingsapp.activities.adapter.apps.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.apps.model.AppsList
+import com.example.kingsapp.activities.adapter.apps.model.AppsList
 import com.example.kingsapp.activities.forms.model.FormList
 
 
@@ -23,13 +23,13 @@ class AppsAdapter(private val context: Context, private  val name:ArrayList<Apps
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AppsAdapter.MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_parent_essentials, parent, false)
-        return AppsAdapter.MyViewHolder(itemView)
+        return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: AppsAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.textview.text = name!![position].title
         /*if (PreferenceManager().getLanguage(context).equals("ar"))
         {

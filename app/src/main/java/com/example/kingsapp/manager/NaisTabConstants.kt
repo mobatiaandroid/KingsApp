@@ -7,12 +7,12 @@ class NaisTabConstants {
     var TAB_COMMUNICATION = "7"
     var TAB_REPORT_ABSENCE = "4"
     var TAB_EARLYPICKUP = "5"
-    var TAB_SOCIAL_MEDIA = "12"
+    var TAB_SOCIAL_MEDIA = "11"
     var TAB_REPORTS = "8"
-    //    var TAB_ATTENDANCE = "9"
+
     var TAB_TIME_TABLE = "6"
     var TAB_FORMS = "9"
-    var TAB_CONTACT_US = "11"
+    var TAB_CONTACT_US = "12"
     var TAB_APPS = "10"
 
     var TAB_HOME = "16"

@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
-import com.example.kingsapp.activities.apps.adapter.AppsAdapter
-import com.example.kingsapp.activities.apps.model.AppsModel
+import com.example.kingsapp.activities.adapter.apps.adapter.AppsAdapter
+import com.example.kingsapp.activities.adapter.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.message.adapter.MessageListAdapter

@@ -162,7 +162,10 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"/>
-
+        <activity android:name=".activities.social_media.SocialMediaActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"/>
         <activity
             android:name=".constants.PdfReaderActivity"
             android:screenOrientation="portrait"
@@ -218,7 +221,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:name=".activities.apps.AppsActivity"
+            android:name=".activities.adapter.apps.AppsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
             android:windowSoftInputMode="stateHidden|adjustResize" />

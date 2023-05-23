@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment
 import com.example.kingsapp.BuildConfig
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
-import com.example.kingsapp.activities.apps.AppsActivity
+import com.example.kingsapp.activities.adapter.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.forms.FormsActivity
@@ -30,6 +30,7 @@ import com.example.kingsapp.activities.home.model.HomeUserResponseModel
 import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
+import com.example.kingsapp.activities.social_media.SocialMediaActivity
 import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.student_planner.StudentPlannerActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
@@ -273,6 +274,18 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                         "Alert"
                     )*/
                 }
+
+                naisTabConstants.TAB_SOCIAL_MEDIA -> {
+                    // Toast.makeText(mContext, "frg8", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext,"This feature is only available for registered users.",
+                        Toast.LENGTH_SHORT).show()
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
 //                naisTabConstants.TAB_ATTENDANCE -> {
 //                    showSuccessAlert(
 //                        mContext,
@@ -385,6 +398,12 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
                 naisTabConstants.TAB_EARLYPICKUP -> {
                     val intent = Intent(mContext, EarlyPickupListActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                }
+
+                naisTabConstants.TAB_SOCIAL_MEDIA -> {
+                    val intent = Intent(mContext, SocialMediaActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                 }
@@ -1069,7 +1088,9 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                 textdata.equals(classNameConstants.EARLYPICKUP, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_EARLYPICKUP
                 }
-
+                textdata.equals(classNameConstants.SOCIAL_MEDIA, ignoreCase = true) -> {
+                    TAB_ID = naisTabConstants.TAB_SOCIAL_MEDIA
+                }
                 textdata.equals(classNameConstants.TIME_TABL, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_TIME_TABLE
                 }

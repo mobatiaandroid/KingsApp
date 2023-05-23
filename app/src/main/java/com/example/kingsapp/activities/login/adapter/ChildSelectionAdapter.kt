@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +36,9 @@ class ChildSelectionAdapter(private val mcontext: Context,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val namelist = student_name[position].fullname
-
+        val startAnimation: Animation =
+            AnimationUtils.loadAnimation(mcontext, R.anim.blinking_animation)
+        holder.stud_profile.startAnimation(startAnimation)
 
         holder.studentName.setText(namelist)
 

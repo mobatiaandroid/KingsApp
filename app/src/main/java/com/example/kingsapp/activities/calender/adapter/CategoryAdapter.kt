@@ -36,12 +36,12 @@ class CategoryAdapter (private var mContext:Context,private var settingsArrayLis
         if (movie.checkedCategory)
         {
             holder.checkBoxImg.setImageResource(R.drawable.tick)
-            holder.checkBoxImg.setColorFilter(mContext.resources.getColor(R.color.greyyy))
+            holder.checkBoxImg.setColorFilter(mContext.resources.getColor(R.color.black))
 
         }
         else{
             holder.checkBoxImg.setImageResource(R.drawable.tick)
-            holder.checkBoxImg.setColorFilter(mContext.resources.getColor(R.color.kings_blue))
+            holder.checkBoxImg.setColorFilter(mContext.resources.getColor(R.color.greyyy))
         }
 
         //    holder.categoryTypeTxt.setTextColor(Color.parseColor(movie.color))

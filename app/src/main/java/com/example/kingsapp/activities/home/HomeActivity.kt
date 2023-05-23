@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
-import com.example.kingsapp.activities.apps.AppsActivity
+import com.example.kingsapp.activities.adapter.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupRegisterActivity
@@ -46,6 +46,7 @@ import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
+import com.example.kingsapp.activities.social_media.SocialMediaActivity
 import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.adapter.StudentListAdapter
@@ -875,6 +876,14 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
                 else if(position==10)
                 {
                     val intent = Intent(mContext, AppsActivity::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(linearLayout)
+
+                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                }
+                else if(position==11)
+                {
+                    val intent = Intent(mContext, SocialMediaActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 

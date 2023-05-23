@@ -141,6 +141,7 @@
         <item>  نماذج</item>
         <item>  مراسلات الوالديني</item>
         <item>  تطبيقاتي</item>
+        <item>   الاستلام المبكر  </item>
         <item>اتصل بناي</item>
 
     </string-array>
@@ -167,7 +168,7 @@
 
     <string name="logoheading1">الملوك\' \nالتعليم</string>
 
-
+    <string name="social_media">وسائل التواصل الاجتماعي</string>
 
 
 
@@ -240,6 +241,31 @@
     <string name="do_you_want_delete">هل تريد حذف حسابك؟</string>
     <string name="do_you_want_logout">هل ترغب بالخروج؟</string>
 
+
+
+
+    <string name="early_pickup">الاستلام المبكر</string>
+    <string name="registernewearlypickup">سجل الاستلام المبكر</string>
+    <string name="early_pikup_details">الاستلام المبكر</string>
+    <string name="day_of_pickup">يوم الاستلام<font fgcolor='#FF0000'> * </font></string>
+    <string name="time_of_pickup">وقت الاستلام<font fgcolor='#FF0000'> * </font></string>
+    <string name="pickup_by">بيك اب بواسطة<font fgcolor='#FF0000'> * </font></string>
+    <string name="status">حالة</string>
+    <string name="reason_for_early_pickup">سبب الاستلام المبكر<font fgcolor='#FF0000'> * </font></string>
+    <string name="registerearlypickup">سجل الاستلام المبكر</string>
+    <string name="rejetion_for_early_pickup">رفض الاستلام المبكر<font fgcolor='#FF0000'> * </font></string>
+
+
+
+    <string name="hide">يخفي</string>
+    <string name="show">يعرض</string>
+    <string name="refine_ategory">صقل التقويم حسب الفئة</string>
+    <string name="past_events"> : الأحداث الماضية</string>
+
+
+    <string name="name">اسم</string>
+    <string name="classs">فصل</string>
+    <string name="address">عنوان</string>
 
     <string name="please_enter_the_subject"> "الرجاء إدخال الموضوع"</string>
     <string name="no_data_found"> لاتوجد بيانات</string>
