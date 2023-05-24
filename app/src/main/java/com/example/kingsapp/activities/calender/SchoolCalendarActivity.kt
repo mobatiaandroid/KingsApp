@@ -125,7 +125,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
         hideBtn = findViewById(R.id.hideBtn) as TextView
         noEventTxt = findViewById(R.id.noEventTxt) as TextView
         noEventImage = findViewById(R.id.noEventImage) as ImageView
-        linearLayoutManager = LinearLayoutManager(mContext)
+        linearLayoutManager = LinearLayoutManager(mcontext)
         calendarRecycler.layoutManager = linearLayoutManager
         calendarRecycler.itemAnimator = DefaultItemAnimator()
         progressBarDialog = ProgressBarDialog(mcontext)
@@ -527,6 +527,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
             calendarShowArrayList = ArrayList()
             if (primaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(primaryShowArrayList)
+
             }
             if (secondaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(secondaryShowArrayList)
@@ -685,7 +686,8 @@ class SchoolCalendarActivity : AppCompatActivity() {
 
                 if (calendarFilterArrayList.size>0)
                 {
-                    Log.e("calfilterlist",calendarFilterArrayList.size.toString())
+                    Log.e("calfilterlisttt",calendarFilterArrayList.size.toString())
+
                     calendarRecycler.visibility = View.VISIBLE
                     calendarFilterArrayList.sortByDescending { calendarFilterArrayList -> calendarFilterArrayList.DTSTART }
                     calendarFilterArrayList.reverse()
@@ -693,6 +695,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
                     Log.e("filter last date",calendarFilterArrayList[calendarFilterArrayList.size-1].DTSTART.toString())
                     for (n in 0 until calendarFilterArrayList.size)
                     {
+                        Log.e("calfilterlistttstartdate",calendarFilterArrayList.get(n).DTSTART.toString())
 
                         if (mCalendarFinalArrayList.size==0)
                         {
@@ -849,6 +852,8 @@ class SchoolCalendarActivity : AppCompatActivity() {
                             noEventTxt.visibility=View.GONE
                             calendarRecycler.visibility=View.VISIBLE
                             val calendarListAdapter = CalendarDateAdapter(mcontext, mCalendarFinalArrayList,calendarRecycler)
+                         //   Log.e("::::",mCalendarFinalArrayList[mCalendarFinalArrayList.size].startDate.toString())
+
                             calendarRecycler.adapter = calendarListAdapter
                         }
                         else

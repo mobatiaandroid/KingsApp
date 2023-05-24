@@ -69,7 +69,7 @@ class TimeTableActivity:AppCompatActivity() {
 
 
     var feildAPIArrayList = ArrayList<FieldModel>()
-    var mTimetableApiArrayList = ArrayList<MondayList>()
+    var mTimetableApiArrayList = ArrayList<TimeTableList>()
     var mPeriodModel = ArrayList<PeriodModel>()
 
     lateinit var studentNameTextView: TextView
@@ -131,7 +131,7 @@ class TimeTableActivity:AppCompatActivity() {
                     {
 
 
-                        feildAPIArrayList.addAll(response.body()!!.field1List)
+                        feildAPIArrayList.addAll(response.body()!!.timetable.field1List)
                         for (i in 0..feildAPIArrayList.size - 1) {
                             var model = FieldModel(
                                 feildAPIArrayList.get(i).sortname,
@@ -141,22 +141,22 @@ class TimeTableActivity:AppCompatActivity() {
                             mFieldModel.add(model)
                         }
 
-                        Log.e("monday", response.body()!!.timetable.Monday.toString())
+                        Log.e("monday", response.body()!!.timetable.range.Monday.toString())
 
 
-                            mMondayArrayList.addAll(response.body()!!.timetable.Monday)
+                            mMondayArrayList.addAll(response.body()!!.timetable.range.Monday)
                             Log.e("monday", mMondayArrayList.toString())
 
-                            mTuesdayArrayList.addAll(response.body()!!.timetable.Tuesday)
+                            mTuesdayArrayList.addAll(response.body()!!.timetable.range.Tuesday)
                             Log.e("tuesday", mTuesdayArrayList.toString())
 
-                            mwednesdayArrayList.addAll(response.body()!!.timetable.Wednesday)
+                            mwednesdayArrayList.addAll(response.body()!!.timetable.range.Wednesday)
                             Log.e("wednesday", mwednesdayArrayList.toString())
 
-                            mThurdayArrayList.addAll(response.body()!!.timetable.Thursday)
+                            mThurdayArrayList.addAll(response.body()!!.timetable.range.Thursday)
                             Log.e("thursday", mThurdayArrayList.toString())
 
-                            mFridayArrayList.addAll(response.body()!!.timetable.Friday)
+                            mFridayArrayList.addAll(response.body()!!.timetable.range.Friday)
                             Log.e("friday", mFridayArrayList.toString())
 
 
@@ -164,7 +164,12 @@ class TimeTableActivity:AppCompatActivity() {
                         timeTableAllRecycler.visibility = View.VISIBLE
                         card_viewAll.visibility = View.VISIBLE
                         mTimetableApiArrayList = ArrayList()
-                        mTimetableApiArrayList.addAll(response.body()!!.timeTableList)
+
+
+                       // mTimetableApiArrayList.addAll(response.body()!!.timetable.timeTableList))
+                        Log.e("arrayList",mTimetableApiArrayList.get(0).period_name)
+                        Log.e("arrayList2",mTimetableApiArrayList.get(1).period_name)
+
                         mPeriodModel = ArrayList()
                         var mDataModelArrayList = ArrayList<DayModel>()
                         var s = 0
