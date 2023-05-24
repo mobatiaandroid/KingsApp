@@ -28,7 +28,6 @@ import com.example.kingsapp.activities.timetable.adapter.TimeTableWeekListAdapte
 import com.example.kingsapp.activities.timetable.model.*
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
-import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
@@ -132,7 +131,7 @@ class TimeTableActivity:AppCompatActivity() {
                     {
 
 
-                       // feildAPIArrayList.addAll(response.body()!!.field1List)
+                        feildAPIArrayList.addAll(response.body()!!.field1List)
                         for (i in 0..feildAPIArrayList.size - 1) {
                             var model = FieldModel(
                                 feildAPIArrayList.get(i).sortname,
@@ -165,7 +164,7 @@ class TimeTableActivity:AppCompatActivity() {
                         timeTableAllRecycler.visibility = View.VISIBLE
                         card_viewAll.visibility = View.VISIBLE
                         mTimetableApiArrayList = ArrayList()
-                       // mTimetableApiArrayList.addAll(response.body()!!.timeTableList)
+                        mTimetableApiArrayList.addAll(response.body()!!.timeTableList)
                         mPeriodModel = ArrayList()
                         var mDataModelArrayList = ArrayList<DayModel>()
                         var s = 0
@@ -440,9 +439,9 @@ class TimeTableActivity:AppCompatActivity() {
         tipContainer = findViewById(R.id.tooltip_container) as ToolTipLayout
 
 
-        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+        if (PreferenceManager().getLanguage(ncontext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+                Typeface.createFromAsset(ncontext.getAssets(), "font/times_new_roman.ttf")
             textView.setTypeface(face);
         }
        // studentListApiCall()

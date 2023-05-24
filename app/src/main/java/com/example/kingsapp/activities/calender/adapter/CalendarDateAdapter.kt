@@ -66,8 +66,9 @@ class CalendarDateAdapter(
 
 
         if (summary.startDate.length != 0) {
-
 Log.e("size", summary.startDate.length.toString())
+            Log.e("dateeeee", summary.startDate)
+
             if (summary.startDate.length == 20) {
 
                 val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
