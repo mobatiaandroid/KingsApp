@@ -22,14 +22,10 @@ import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
-import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.timetable.adapter.TimeTableAllWeekSelectionAdapterNew
 import com.example.kingsapp.activities.timetable.adapter.TimeTableSingleWeekSelectionAdapter
 import com.example.kingsapp.activities.timetable.adapter.TimeTableWeekListAdapter
-import com.example.kingsapp.activities.timetable.model.DayModel
-import com.example.kingsapp.activities.timetable.model.FieldModel
-import com.example.kingsapp.activities.timetable.model.TimeTableApiListModel
-import com.example.kingsapp.activities.timetable.model.WeekModel
+import com.example.kingsapp.activities.timetable.model.*
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.fragment.mContext
@@ -37,11 +33,14 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
 import com.mobatia.nasmanila.api.ApiClient
+import com.ryanharter.android.tooltips.ToolTipLayout
 import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TimeTableActivity:AppCompatActivity() {
     lateinit var ncontext: Context
@@ -54,14 +53,26 @@ class TimeTableActivity:AppCompatActivity() {
     lateinit var linearLayoutManagerVertical: LinearLayoutManager
     lateinit var linearLayoutManagerVertical1: LinearLayoutManager
     lateinit var linearlayoutstudentlist: LinearLayout
-    lateinit var progressBar: ProgressBarDialog
+    lateinit var progressBarDialog: ProgressBarDialog
 
     lateinit var mFieldModel: ArrayList<FieldModel>
     lateinit var timeTableListS: ArrayList<DayModel>
 
     //    lateinit var student1timetable: ArrayList<DayModel>
 //    lateinit var student2timetable: ArrayList<DayModel>
-    lateinit var mSundayArrayList: ArrayList<TimeTableApiListModel>
+   // lateinit var mSundayArrayList: ArrayList<TimeTableApiListModel>
+    lateinit var mMondayArrayList: ArrayList<MondayList>
+    lateinit var mTuesdayArrayList: ArrayList<MondayList>
+    lateinit var mwednesdayArrayList: ArrayList<MondayList>
+    lateinit var mThurdayArrayList: ArrayList<MondayList>
+    lateinit var mFridayArrayList: ArrayList<MondayList>
+    lateinit var tipContainer: ToolTipLayout
+
+
+    var feildAPIArrayList = ArrayList<FieldModel>()
+    var mTimetableApiArrayList = ArrayList<MondayList>()
+    var mPeriodModel = ArrayList<PeriodModel>()
+
     lateinit var studentNameTextView: TextView
     lateinit var studentName: String
     lateinit var student_name: ArrayList<StudentList>
@@ -86,7 +97,320 @@ class TimeTableActivity:AppCompatActivity() {
         setContentView(R.layout.activity_timetable)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
+
         initFn()
+        callTimeTableApi()
+    }
+
+    private fun callTimeTableApi() {
+       // mSundayArrayList = ArrayList()
+        mMondayArrayList= ArrayList()
+        mTuesdayArrayList= ArrayList()
+        mwednesdayArrayList= ArrayList()
+        mThurdayArrayList= ArrayList()
+        mFridayArrayList= ArrayList()
+        mFridayArrayList = ArrayList()
+
+        Log.e("type", PreferenceManager().getLanguagetype(ncontext).toString())
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", PreferenceManager().getStudent_ID(ncontext).toString())
+            addProperty("language_type", PreferenceManager().getLanguagetype(ncontext).toString())
+
+        }
+        val call: Call<TimeTableResponseModel> = ApiClient.getApiService().timetable("Bearer "+
+                PreferenceManager().getAccessToken(ncontext).toString(), paramObject)
+        call.enqueue(object : retrofit2.Callback<TimeTableResponseModel> {
+            override fun onResponse(
+                call: Call<TimeTableResponseModel>,
+                response: Response<TimeTableResponseModel>
+            ) {
+                progressBarDialog.hide()
+
+                Log.e("Response",response.body().toString())
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals(100))
+                    {
+
+
+                       // feildAPIArrayList.addAll(response.body()!!.field1List)
+                        for (i in 0..feildAPIArrayList.size - 1) {
+                            var model = FieldModel(
+                                feildAPIArrayList.get(i).sortname,
+                                feildAPIArrayList.get(i).starttime,
+                                feildAPIArrayList.get(i).endtime
+                            )
+                            mFieldModel.add(model)
+                        }
+
+                        Log.e("monday", response.body()!!.timetable.Monday.toString())
+
+
+                            mMondayArrayList.addAll(response.body()!!.timetable.Monday)
+                            Log.e("monday", mMondayArrayList.toString())
+
+                            mTuesdayArrayList.addAll(response.body()!!.timetable.Tuesday)
+                            Log.e("tuesday", mTuesdayArrayList.toString())
+
+                            mwednesdayArrayList.addAll(response.body()!!.timetable.Wednesday)
+                            Log.e("wednesday", mwednesdayArrayList.toString())
+
+                            mThurdayArrayList.addAll(response.body()!!.timetable.Thursday)
+                            Log.e("thursday", mThurdayArrayList.toString())
+
+                            mFridayArrayList.addAll(response.body()!!.timetable.Friday)
+                            Log.e("friday", mFridayArrayList.toString())
+
+
+                        timeTableSingleRecycler.visibility = View.GONE
+                        timeTableAllRecycler.visibility = View.VISIBLE
+                        card_viewAll.visibility = View.VISIBLE
+                        mTimetableApiArrayList = ArrayList()
+                       // mTimetableApiArrayList.addAll(response.body()!!.timeTableList)
+                        mPeriodModel = ArrayList()
+                        var mDataModelArrayList = ArrayList<DayModel>()
+                        var s = 0
+                        var m = 0
+                        var tu = 0
+                        var w = 0
+                        var th = 0
+                        for (f in 0..feildAPIArrayList.size - 1) {
+                            var mDayModel: DayModel = DayModel()
+                            var mPeriod: PeriodModel = PeriodModel()
+                            var timeTableListS = ArrayList<DayModel>()
+                            var timeTableListM = ArrayList<DayModel>()
+                            var timeTableListT = ArrayList<DayModel>()
+                            var timeTableListW = ArrayList<DayModel>()
+                            var timeTableListTh = ArrayList<DayModel>()
+                            for (t in 0..mTimetableApiArrayList.size - 1) {
+                                if (feildAPIArrayList.get(f).sortname.equals(
+                                        mTimetableApiArrayList.get(t).period_name
+                                    )
+                                ) {
+                                    Log.e(
+                                        "Sortname",
+                                        mTimetableApiArrayList.get(t).period_name
+                                    )
+                                    mDayModel.id = mTimetableApiArrayList.get(t).id
+                                    mDayModel.period_id =
+                                        mTimetableApiArrayList.get(t).period_order
+                                    mDayModel.day = mTimetableApiArrayList.get(t).day_name
+                                    mDayModel.sortname =
+                                        mTimetableApiArrayList.get(t).period_name
+                                    mDayModel.starttime =
+                                        mTimetableApiArrayList.get(t).start_time
+                                    mDayModel.endtime =
+                                        mTimetableApiArrayList.get(t).end_time
+                                    mDayModel.subject_name =
+                                        mTimetableApiArrayList.get(t).subject_name
+
+
+                                    //    mDayModel.staff=mTimetableApiArrayList.get(t).staff
+
+                                    if (mTimetableApiArrayList.get(t).day_name.equals("Monday")) {
+                                        s = s + 1
+                                        var dayModel = DayModel()
+                                        dayModel.id = mTimetableApiArrayList.get(t).id
+                                        dayModel.period_id =
+                                            mTimetableApiArrayList.get(t).period_order
+                                        dayModel.day = mTimetableApiArrayList.get(t).day_name
+                                        dayModel.sortname =
+                                            mTimetableApiArrayList.get(t).period_name
+                                        dayModel.starttime =
+                                            mTimetableApiArrayList.get(t).start_time
+                                        dayModel.endtime =
+                                            mTimetableApiArrayList.get(t).end_time
+                                        dayModel.subject_name =
+                                            mTimetableApiArrayList.get(t).subject_name
+
+                                        dayModel.staff = mTimetableApiArrayList.get(t).staff
+                                        timeTableListS.add(dayModel)
+                                        mPeriod.sunday =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                    } else if (mTimetableApiArrayList.get(t).day_name.equals("Tuesday")) {
+                                        m = m + 1
+                                        var dayModel = DayModel()
+                                        dayModel.id = mTimetableApiArrayList.get(t).id
+                                        dayModel.period_id =
+                                            mTimetableApiArrayList.get(t).period_order
+                                        dayModel.subject_name =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                        dayModel.staff = mTimetableApiArrayList.get(t).staff
+
+                                        dayModel.day = mTimetableApiArrayList.get(t).day_name
+                                        dayModel.sortname =
+                                            mTimetableApiArrayList.get(t).period_name
+                                        dayModel.starttime =
+                                            mTimetableApiArrayList.get(t).start_time
+                                        dayModel.endtime =
+                                            mTimetableApiArrayList.get(t).end_time
+                                        timeTableListM.add(dayModel)
+                                        mPeriod.monday =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                    } else if (mTimetableApiArrayList.get(t).day_name.equals("Wednesday")) {
+                                        tu = tu + 1
+                                        var dayModel = DayModel()
+                                        dayModel.id = mTimetableApiArrayList.get(t).id
+                                        dayModel.period_id =
+                                            mTimetableApiArrayList.get(t).period_order
+                                        dayModel.day = mTimetableApiArrayList.get(t).day_name
+                                        dayModel.sortname =
+                                            mTimetableApiArrayList.get(t).period_name
+                                        dayModel.starttime =
+                                            mTimetableApiArrayList.get(t).start_time
+                                        dayModel.endtime =
+                                            mTimetableApiArrayList.get(t).end_time
+                                        dayModel.subject_name =
+                                            mTimetableApiArrayList.get(t).subject_name
+
+                                        dayModel.staff = mTimetableApiArrayList.get(t).staff
+                                        timeTableListT.add(dayModel)
+                                        mPeriod.tuesday =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                    } else if (mTimetableApiArrayList.get(t).day_name.equals("Thursday")) {
+                                        w = w + 1
+                                        var dayModel = DayModel()
+                                        dayModel.id = mTimetableApiArrayList.get(t).id
+                                        dayModel.period_id =
+                                            mTimetableApiArrayList.get(t).period_order
+                                        dayModel.day = mTimetableApiArrayList.get(t).day_name
+                                        dayModel.sortname =
+                                            mTimetableApiArrayList.get(t).period_name
+                                        dayModel.starttime =
+                                            mTimetableApiArrayList.get(t).start_time
+                                        dayModel.endtime =
+                                            mTimetableApiArrayList.get(t).end_time
+                                        dayModel.subject_name =
+                                            mTimetableApiArrayList.get(t).subject_name
+
+                                        dayModel.staff = mTimetableApiArrayList.get(t).staff
+                                        timeTableListW.add(dayModel)
+                                        mPeriod.wednesday =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                    } else if (mTimetableApiArrayList.get(t).day_name.equals("Friday")) {
+                                        th = th + 1
+                                        var dayModel = DayModel()
+                                        dayModel.id = mTimetableApiArrayList.get(t).id
+                                        dayModel.period_id =
+                                            mTimetableApiArrayList.get(t).period_order
+                                        dayModel.day = mTimetableApiArrayList.get(t).day_name
+                                        dayModel.sortname =
+                                            mTimetableApiArrayList.get(t).period_name
+                                        dayModel.starttime =
+                                            mTimetableApiArrayList.get(t).start_time
+                                        dayModel.endtime =
+                                            mTimetableApiArrayList.get(t).end_time
+                                        dayModel.subject_name =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                        dayModel.staff = mTimetableApiArrayList.get(t).staff
+                                        timeTableListTh.add(dayModel)
+                                        mPeriod.thursday =
+                                            mTimetableApiArrayList.get(t).subject_name
+                                    } else {
+                                        mPeriod.sunday = ""
+                                        mPeriod.monday = ""
+                                        mPeriod.tuesday = ""
+                                        mPeriod.wednesday = ""
+                                        mPeriod.thursday = ""
+                                    }
+                                    mPeriod.countS = s
+                                    mPeriod.countM = m
+                                    mPeriod.countT = tu
+                                    mPeriod.countW = w
+                                    mPeriod.countTh = th
+                                    mPeriod.timeTableListS = timeTableListS
+                                    mPeriod.timeTableListM = timeTableListM
+                                    mPeriod.timeTableListTu = timeTableListT
+                                    mPeriod.timeTableListW = timeTableListW
+                                    mPeriod.timeTableListTh = timeTableListTh
+
+                                }
+                            }
+                            mDataModelArrayList.add(mDayModel)
+                            mPeriod.timeTableDayModel = mDataModelArrayList
+                            mPeriodModel.add(mPeriod)
+                        }
+
+                        if (weekPosition != 0) {
+                            timeTableAllRecycler.visibility = View.GONE
+                            card_viewAll.visibility = View.GONE
+                            //  timeTableAllRecycler.visibility=View.GONE
+                             tipContainer.visibility = View.GONE
+                            timeTableSingleRecycler.visibility = View.VISIBLE
+//                    if (mRangeModel.size>0)
+//                    {
+                            //card_viewAll.visibility = View.GONE
+                            // timeTableAllRecycler.visibility = View.GONE
+                            timeTableSingleRecycler.visibility = View.VISIBLE
+                            // timeTableAllRecycler.visibility = View.VISIBLE
+                            Log.e("weekposition", weekPosition.toString())
+                            if (weekPosition == 1) {
+
+                                var mRecyclerViewMainAdapter =
+                                    TimeTableSingleWeekSelectionAdapter(ncontext, mMondayArrayList)
+                                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+                            } else if (weekPosition == 2) {
+                                Log.e("week","Successs")
+                                var mRecyclerViewMainAdapter =
+                                    TimeTableSingleWeekSelectionAdapter(ncontext, mTuesdayArrayList)
+                                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+
+                            } else if (weekPosition == 3) {
+                                Log.e("Success","Successs")
+                                var mRecyclerViewMainAdapter =
+                                    TimeTableSingleWeekSelectionAdapter(ncontext, mwednesdayArrayList)
+                                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+                            } else if (weekPosition == 4) {
+                                Log.e("Failed","Successs")
+                                var mRecyclerViewMainAdapter =
+                                    TimeTableSingleWeekSelectionAdapter(ncontext, mThurdayArrayList)
+                                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+                            } else if (weekPosition == 5) {
+
+                                var mRecyclerViewMainAdapter =
+                                    TimeTableSingleWeekSelectionAdapter(ncontext, mFridayArrayList)
+                                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
+                            }
+                        }
+                        else {
+                            timeTableSingleRecycler.visibility = View.GONE
+                            // timeTableAllRecycler.visibility = View.VISIBLE
+                             tipContainer.visibility = View.VISIBLE
+
+                            card_viewAll.visibility = View.VISIBLE
+
+                            recyclerinitializer()
+                            timeTableAllRecycler.visibility = View.VISIBLE
+                            // timeTableListS.shuffle()
+                            var mRecyclerAllAdapter =
+                                TimeTableAllWeekSelectionAdapterNew(ncontext, mPeriodModel, feildAPIArrayList,tipContainer)
+                            timeTableAllRecycler.adapter = mRecyclerAllAdapter
+
+                        }
+
+                    }
+                    else
+                    {
+                        CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+                    }
+                }
+                else{
+                    val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<TimeTableResponseModel?>, t: Throwable) {
+                progressBarDialog.hide()
+
+                Toast.makeText(
+                    ncontext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
     private fun initFn() {
@@ -94,7 +418,9 @@ class TimeTableActivity:AppCompatActivity() {
         mFieldModel = ArrayList()
         timeTableListS = ArrayList()
         weekListArrayString = ArrayList()
-        mSundayArrayList = ArrayList()
+
+
+
 
         student_name = ArrayList()
         weekListArrayString.add("ALL")
@@ -103,13 +429,17 @@ class TimeTableActivity:AppCompatActivity() {
         weekListArrayString.add("WEDNESDAY")
         weekListArrayString.add("THURSDAY")
         weekListArrayString.add("FRIDAY")
-        progressBar = ProgressBarDialog(ncontext)
+        progressBarDialog = ProgressBarDialog(ncontext)
         studentNameTextView = findViewById(R.id.studentName)
         linearlayoutstudentlist = findViewById(R.id.studentSpinner)
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.back)
         imagicon = findViewById(R.id.imagicon)
         textView=findViewById(R.id.textView)
+
+        tipContainer = findViewById(R.id.tooltip_container) as ToolTipLayout
+
+
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
                 Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
@@ -127,7 +457,7 @@ class TimeTableActivity:AppCompatActivity() {
          var emodel=Studentlist_model("Jane Mathewes",false)
          student_name.add(emodel)*/
 
-        var model = FieldModel("TUT", "10;30", "11;30")
+       /* var model = FieldModel("TUT", "10;30", "11;30")
         mFieldModel.add(model)
         var model1 = FieldModel("P1", "10;30", "11;30")
         mFieldModel.add(model1)
@@ -146,10 +476,10 @@ class TimeTableActivity:AppCompatActivity() {
         var model5= FieldModel("P5","10;30","11;30")
         mFieldModel.add(model5)
         var model6= FieldModel("P6","10;30","11;30")
-        mFieldModel.add(model6)
+        mFieldModel.add(model6)*/
 
 
-        var sub= DayModel(0,"Tutor")
+       /* var sub= DayModel(0,"Tutor")
         timeTableListS.add(sub)
         var sub1= DayModel(1,"Mathematics")
         timeTableListS.add(sub1)
@@ -168,9 +498,9 @@ class TimeTableActivity:AppCompatActivity() {
         var sub8 = DayModel(8, "Social Science")
         timeTableListS.add(sub8)
         var sub9 = DayModel(9, "Extras")
-        timeTableListS.add(sub9)
+        timeTableListS.add(sub9)*/
 
-        var weekk= TimeTableApiListModel(0,"Tutor","Mark Tidball","TUT","07:45 AM")
+       /* var weekk= TimeTableApiListModel(0,"Tutor","Mark Tidball","TUT","07:45 AM")
         mSundayArrayList.add(weekk)
         var weekk1= TimeTableApiListModel(1,"Mathematics","Vicky Wright","P1","08:30 AM")
         mSundayArrayList.add(weekk1)
@@ -185,7 +515,7 @@ class TimeTableActivity:AppCompatActivity() {
         var weekk5= TimeTableApiListModel(6,"History","Arun","P4","12:55 PM")
         mSundayArrayList.add(weekk5)
         var weekk6= TimeTableApiListModel(7,"Economics","Arun","P6","02:15 PM")
-        mSundayArrayList.add(weekk6)
+        mSundayArrayList.add(weekk6)*/
 
 
 
@@ -209,7 +539,7 @@ class TimeTableActivity:AppCompatActivity() {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
-        Log.e("mSundayArrayList", mSundayArrayList.toString())
+       // Log.e("mSundayArrayList", mSundayArrayList.toString())
         /*linearlayoutstudentlist.setOnClickListener {
             studentlist_popup(student_name)
             *//* val intent = Intent(mContext, StudentListActivity::class.java)
@@ -267,7 +597,7 @@ class TimeTableActivity:AppCompatActivity() {
 
         card_viewAll.visibility = View.VISIBLE
 
-        recyclerinitializer()
+      //  recyclerinitializer()
 
 
 
@@ -299,13 +629,13 @@ class TimeTableActivity:AppCompatActivity() {
         }
        // weekPosition = dayOfTheWeek.length
         Log.e("weekposition", weekPosition.toString())
-       if (weekPosition < 3) {
+        if (weekPosition < 3) {
             weekRecyclerList.scrollToPosition(0)
         } else {
             weekRecyclerList.scrollToPosition(5)
         }
         for (i in 0 until weekListArray.size) {
-           // Log.e("i", i.toString())
+            // Log.e("i", i.toString())
 
             if (i == weekPosition) {
 
@@ -314,62 +644,6 @@ class TimeTableActivity:AppCompatActivity() {
             } else {
                 weekListArray.get(i).positionSelected = -1
             }
-        }
-        if (weekPosition != 0) {
-            timeTableAllRecycler.visibility = View.GONE
-            card_viewAll.visibility = View.GONE
-            //  timeTableAllRecycler.visibility=View.GONE
-            // tipContainer.visibility = View.GONE
-            timeTableSingleRecycler.visibility = View.VISIBLE
-//                    if (mRangeModel.size>0)
-//                    {
-            //card_viewAll.visibility = View.GONE
-            // timeTableAllRecycler.visibility = View.GONE
-            timeTableSingleRecycler.visibility = View.VISIBLE
-        timeTableAllRecycler.visibility = View.VISIBLE
-
-            if (weekPosition == 1) {
-
-                var mRecyclerViewMainAdapter =
-                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
-                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
-            } else if (weekPosition == 2) {
-
-                var mRecyclerViewMainAdapter =
-                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
-                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
-
-            } else if (weekPosition == 3) {
-            Log.e("Success","Successs")
-                var mRecyclerViewMainAdapter =
-                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
-                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
-            } else if (weekPosition == 4) {
-                Log.e("Failed","Successs")
-                var mRecyclerViewMainAdapter =
-                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
-                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
-            } else if (weekPosition == 5) {
-
-                var mRecyclerViewMainAdapter =
-                    TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
-                timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
-            }
-        }
-        else {
-            timeTableSingleRecycler.visibility = View.GONE
-            // timeTableAllRecycler.visibility = View.VISIBLE
-            // tipContainer.visibility = View.VISIBLE
-
-            card_viewAll.visibility = View.VISIBLE
-
-            recyclerinitializer()
-            timeTableAllRecycler.visibility = View.VISIBLE
-            timeTableListS.shuffle()
-            var mRecyclerAllAdapter =
-                TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
-            timeTableAllRecycler.adapter = mRecyclerAllAdapter
-
         }
         weekRecyclerList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
@@ -401,7 +675,7 @@ class TimeTableActivity:AppCompatActivity() {
                     timeTableAllRecycler.visibility = View.GONE
                     card_viewAll.visibility = View.GONE
                     //  timeTableAllRecycler.visibility=View.GONE
-                   // tipContainer.visibility = View.GONE
+                    tipContainer.visibility = View.GONE
                     timeTableSingleRecycler.visibility = View.VISIBLE
 //                    if (mRangeModel.size>0)
 //                    {
@@ -410,41 +684,43 @@ class TimeTableActivity:AppCompatActivity() {
                     timeTableSingleRecycler.visibility = View.VISIBLE
                     if (weekPosition == 1) {
 
-
+                        var mRecyclerViewMainAdapter =
+                            TimeTableSingleWeekSelectionAdapter(ncontext, mMondayArrayList)
+                        timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     } else if (weekPosition == 2) {
 
                         var mRecyclerViewMainAdapter =
-                            TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                            TimeTableSingleWeekSelectionAdapter(ncontext, mTuesdayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
 
                     } else if (weekPosition == 3) {
 
                         var mRecyclerViewMainAdapter =
-                            TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                            TimeTableSingleWeekSelectionAdapter(ncontext, mwednesdayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     } else if (weekPosition == 4) {
 
                         var mRecyclerViewMainAdapter =
-                            TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                            TimeTableSingleWeekSelectionAdapter(ncontext, mThurdayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     } else if (weekPosition == 5) {
 
                         var mRecyclerViewMainAdapter =
-                            TimeTableSingleWeekSelectionAdapter(ncontext, mSundayArrayList)
+                            TimeTableSingleWeekSelectionAdapter(ncontext, mFridayArrayList)
                         timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                     }
                 }
                 else {
                     timeTableSingleRecycler.visibility = View.GONE
                     // timeTableAllRecycler.visibility = View.VISIBLE
-                    // tipContainer.visibility = View.VISIBLE
+                     tipContainer.visibility = View.VISIBLE
 
                     card_viewAll.visibility = View.VISIBLE
 
                     recyclerinitializer()
                     timeTableAllRecycler.visibility = View.VISIBLE
                     var mRecyclerAllAdapter =
-                        TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
+                        TimeTableAllWeekSelectionAdapterNew(ncontext, mPeriodModel, feildAPIArrayList,tipContainer)
                     timeTableAllRecycler.adapter = mRecyclerAllAdapter
 
                 }
@@ -454,7 +730,7 @@ class TimeTableActivity:AppCompatActivity() {
         })
     }
 
-    private fun studentListApiCall() {
+    /*private fun studentListApiCall() {
         val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list(
             "Bearer " +
                     PreferenceManager().getAccessToken(ncontext).toString()
@@ -547,7 +823,7 @@ class TimeTableActivity:AppCompatActivity() {
                 Log.e("succ", t.message.toString())
             }
         })
-    }
+    }*/
 
     private fun studentlist_popup(student_name: ArrayList<StudentList>) {
         // progress.visibility = View.VISIBLE
@@ -581,7 +857,7 @@ class TimeTableActivity:AppCompatActivity() {
                 //leavelist(id)
                 studentclass.setText(classs)
                 studentNameTextView.setText(name)
-                showTimeTable()
+               // showTimeTable()
                 dialog.dismiss()
             }
 
@@ -589,7 +865,7 @@ class TimeTableActivity:AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showTimeTable() {
+   /* private fun showTimeTable() {
         timeTableListS.shuffle()
         var mRecyclerAllAdapter =
             TimeTableAllWeekSelectionAdapterNew(ncontext, mFieldModel, timeTableListS)
@@ -597,7 +873,7 @@ class TimeTableActivity:AppCompatActivity() {
 
 //        timeTableListS.shuffle()
 
-    }
+    }*/
 
     fun recyclerinitializer() {
         timeTableAllRecycler = findViewById(R.id.timeTableAllRecycler) as RecyclerView

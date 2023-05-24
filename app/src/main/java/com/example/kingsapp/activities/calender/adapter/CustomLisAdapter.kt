@@ -13,6 +13,7 @@ import com.example.kingsapp.activities.calender.model.CalendarList
 import com.example.kingsapp.activities.calender.model.CalendarModel
 
 
+/*
 class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<CalendarList>) :
     RecyclerView.Adapter<CustomLisAdapter.MyViewHolder>() {
 
@@ -59,4 +60,4 @@ class CustomLisAdapter(private val mContext: Context, eventArrayList: ArrayList<
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {
         super.onViewDetachedFromWindow(holder)
     }
-}
+}*/

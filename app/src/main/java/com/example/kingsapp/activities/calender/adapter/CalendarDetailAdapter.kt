@@ -65,16 +65,7 @@ class CalendarDetailAdapter(private var context:Context,private var calendarArra
                         val outputFormat: DateFormat = SimpleDateFormat("HH:mm")
                         val endDate: Date = inputFormat.parse(summary.DTEND)
                         var outputDateEND:String= outputFormat.format(endDate)
-                        if(outputDateStrstart.equals("00:00")&&outputDateEND.equals("00:00"))
-                        {
-                            holder.timeTxt.text = "All day"
-                        }
-                        else
-                        {
-                            holder.timeTxt.text = outputDateStrstart+" - "+outputDateEND
-                            Log.e("start",outputDateStrstart)
 
-                        }
 
                     }
                     else if (summary.DTEND.length==11)

@@ -106,8 +106,8 @@ class SchoolCalendarActivity : AppCompatActivity() {
         mcontext = this
         initFn()
         if(CommonClass.isInternetAvailable(mcontext)) {
-//            callCalendarApi()
-            callAPI()
+           callCalendarApi()
+        //    callAPI()
         }
         else{
             Toast.makeText(mcontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
@@ -311,63 +311,65 @@ class SchoolCalendarActivity : AppCompatActivity() {
         if (primaryArrayList.size > 0) {
             for (i in 0..primaryArrayList.size - 1) {
                 var pModel = PrimaryModel()
-                Log.e("date", primaryArrayList.get(i).start_date.length.toString())
-                if (primaryArrayList.get(i).start_date.toString().length == 19) {
+                Log.e("date", primaryArrayList.get(i).dTSTART!!.length.toString())
+                if (primaryArrayList.get(i).dTSTART.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                    // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
                    // outputFormat.timeZone = tz
-                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).dTSTART)
                     var result = outputFormat.format(startdate)
                     var outputDateStrstart: String = outputFormat.format(startdate)
-                    val enddate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    val enddate: Date = inputFormat.parse(primaryArrayList.get(i).dTEND)
                     var outputDateStrend: String = outputFormat.format(enddate)
                     pModel.DTSTART = result
 
-                } else if (primaryArrayList.get(i).start_date.toString().length == 8) {
+                } else if (primaryArrayList.get(i).dTSTART.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).dTSTART)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     pModel.DTSTART = outputDateStrstart
 
-                }else if (primaryArrayList[i].start_date.length==15){
+                }else if (primaryArrayList[i].dTSTART!!.length==15){
                     Log.e("1","15")
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
-                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).start_date)
+                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).dTSTART)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     pModel.DTSTART = outputDateStrstart
+                    Log.e("time",outputDateStrstart)
+                    Log.e("dateee",outputDateStrstart)
                 }
-                if (primaryArrayList.get(i).end_date.toString().length == 19) {
+                if (primaryArrayList.get(i).dTEND.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).dTEND)
                     //var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
                    // outputFormat.timeZone = tz
                     var result = outputFormat.format(startdate)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     pModel.DTEND = result
 
-                } else if (primaryArrayList.get(i).end_date.toString().length == 8) {
+                } else if (primaryArrayList.get(i).dTEND.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).dTEND)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     pModel.DTEND = outputDateStrstart
 
-                }else if (primaryArrayList.get(i).end_date.toString().length == 15) {
+                }else if (primaryArrayList.get(i).dTEND.toString().length == 15) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(primaryArrayList.get(i).dTEND)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     pModel.DTEND = outputDateStrstart
 
                 }
 
-                pModel.SUMMARY = primaryArrayList.get(i).title
-                pModel.DESCRIPTION = primaryArrayList.get(i).description
-                pModel.LOCATION = primaryArrayList.get(i).venue
+                pModel.SUMMARY = primaryArrayList.get(i).sUMMARY.toString()
+               // pModel.DESCRIPTION = primaryArrayList.get(i).description
+                //pModel.LOCATION = primaryArrayList.get(i).venue
                 pModel.color = primaryColor
                 pModel.type = 1
                 primaryShowArrayList.add(pModel)
@@ -383,12 +385,12 @@ class SchoolCalendarActivity : AppCompatActivity() {
         if (secondaryArrayList.size > 0) {
             for (i in 0..secondaryArrayList.size - 1) {
                 var sModel = PrimaryModel()
-                Log.e("secondaryArrayList",secondaryArrayList.get(i).start_date)
+                Log.e("secondaryArrayList", secondaryArrayList.get(i).dTSTART!!)
 
-                if (secondaryArrayList.get(i).start_date.toString().length == 19) {
+                if (secondaryArrayList.get(i).dTSTART.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).dTSTART)
                   //  var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
                   //  outputFormat.timeZone = tz
                     var result = outputFormat.format(startdate)
@@ -396,51 +398,51 @@ class SchoolCalendarActivity : AppCompatActivity() {
                     sModel.DTSTART = result
                     Log.e("startdate",result)
 
-                } else if (secondaryArrayList.get(i).start_date.toString().length == 8) {
+                } else if (secondaryArrayList.get(i).dTSTART.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).dTSTART)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     sModel.DTSTART = outputDateStrstart
 
-                }else if (secondaryArrayList.get(i).start_date.toString().length == 15) {
+                }else if (secondaryArrayList.get(i).dTSTART.toString().length == 15) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).dTSTART)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     sModel.DTSTART = outputDateStrstart
 
                 }
-                if (secondaryArrayList.get(i).end_date.equals("null")) {
+                if (secondaryArrayList.get(i).dTEND.equals("null")) {
                     sModel.DTEND = ""
-                } else if (secondaryArrayList.get(i).end_date.toString().length == 19) {
+                } else if (secondaryArrayList.get(i).dTEND.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).dTEND)
                    // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
                   //  outputFormat.timeZone = tz
                     var result = outputFormat.format(startdate)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     sModel.DTEND = result
 
-                } else if (secondaryArrayList.get(i).end_date.toString().length == 8) {
+                } else if (secondaryArrayList.get(i).dTEND.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).dTEND)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     sModel.DTEND = outputDateStrstart
 
-                }else if (secondaryArrayList.get(i).end_date.toString().length == 15) {
+                }else if (secondaryArrayList.get(i).dTEND.toString().length == 15) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).dTEND)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     sModel.DTEND = outputDateStrstart
 
                 }
-                sModel.SUMMARY = secondaryArrayList.get(i).title
-                sModel.DESCRIPTION = secondaryArrayList.get(i).description
-                sModel.LOCATION = secondaryArrayList.get(i).venue
+                sModel.SUMMARY = secondaryArrayList.get(i).sUMMARY.toString()
+              //  sModel.DESCRIPTION = secondaryArrayList.get(i).description
+              //  sModel.LOCATION = secondaryArrayList.get(i).venue
                 sModel.color = secondaryColor
                 sModel.type = 2
                 secondaryShowArrayList.add(sModel)
@@ -456,60 +458,60 @@ class SchoolCalendarActivity : AppCompatActivity() {
         if (wholeSchoolArrayList.size > 0) {
             for (i in 0..wholeSchoolArrayList.size - 1) {
                 var wModel = PrimaryModel()
-                if (wholeSchoolArrayList.get(i).start_date.toString().length == 19) {
+                if (wholeSchoolArrayList.get(i).dTSTART.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTSTART)
                    // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
                    // outputFormat.timeZone = tz
                     var result = outputFormat.format(startdate)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTSTART = result
 
-                } else if (wholeSchoolArrayList.get(i).start_date.toString().length == 8) {
+                } else if (wholeSchoolArrayList.get(i).dTSTART.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTSTART)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTSTART = outputDateStrstart
 
-                }else if (wholeSchoolArrayList.get(i).start_date.toString().length == 15) {
+                }else if (wholeSchoolArrayList.get(i).dTSTART.toString().length == 15) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).start_date)
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTSTART)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTSTART = outputDateStrstart
 
                 }
-                if (wholeSchoolArrayList.get(i).end_date.toString().length == 19) {
+                if (wholeSchoolArrayList.get(i).dTEND.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTEND)
                    // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
                    // outputFormat.timeZone = tz
                     var result = outputFormat.format(startdate)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTEND = result
 
-                } else if (wholeSchoolArrayList.get(i).end_date.toString().length == 8) {
+                } else if (wholeSchoolArrayList.get(i).dTEND.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTEND)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTEND = outputDateStrstart
 
-                }else if (wholeSchoolArrayList.get(i).end_date.toString().length == 15) {
+                }else if (wholeSchoolArrayList.get(i).dTEND.toString().length == 15) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).end_date)
+                    val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTEND)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTEND = outputDateStrstart
 
                 }
 
-                wModel.SUMMARY = wholeSchoolArrayList.get(i).title
-                wModel.DESCRIPTION = wholeSchoolArrayList.get(i).description
-                wModel.LOCATION = wholeSchoolArrayList.get(i).venue
+                wModel.SUMMARY = wholeSchoolArrayList.get(i).sUMMARY.toString()
+               // wModel.DESCRIPTION = wholeSchoolArrayList.get(i).description
+              //  wModel.LOCATION = wholeSchoolArrayList.get(i).venue
                 wModel.color = wholeSchoole
                 wModel.type = 3
                 wholeSchoolShowArrayList.add(wModel)
@@ -967,7 +969,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
                     for (i in categoryCalendarArrayList.indices) {
                         if (categoryCalendarArrayList[i].title.equals("Primary")) {
                             if (categoryCalendarArrayList[i].details!!.isNotEmpty()) {
-
+                               // primaryArrayList.addAll(categoryCalendarArrayList[i].details)
                                 Log.e(
                                     "primary",
                                     categoryCalendarArrayList[i].details!!.size.toString()
@@ -1029,13 +1031,20 @@ class SchoolCalendarActivity : AppCompatActivity() {
                 progressBarDialog.hide()
                 if (response.body()!!.status == 100) {
                     calendarArrayList.addAll(response.body()!!.calendar)
-                    Log.e("calendarArrayList", calendarArrayList.toString())
+
                     if (calendarArrayList.size > 0) {
                         for (i in calendarArrayList.indices) {
+                            Log.e("title",
+                                calendarArrayList.get(i).details.get(0).dTSTART.toString()
+                            )
+
                             if (calendarArrayList.get(i).title.equals("Primary")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     primaryArrayList.addAll(calendarArrayList.get(i).details)
-                                    Log.e("primary", primaryArrayList.toString())
+                                    Log.e("primary",
+                                        calendarArrayList.get(i).details.get(i).dTSTART.toString()
+                                    )
+                                    Log.e("primaryst", primaryArrayList.get(i).dTSTART.toString())
                                     //  primaryColor = calendarArrayList.get(i).color
                                 }
 
@@ -1043,14 +1052,14 @@ class SchoolCalendarActivity : AppCompatActivity() {
                                 if (calendarArrayList.get(i).details.size > 0) {
 
                                     secondaryArrayList.addAll(calendarArrayList.get(i).details)
-                                    Log.e("Secondary", primaryArrayList.toString())
+                                    Log.e("Secondary", secondaryArrayList.toString())
                                   //  secondaryColor = calendarArrayList.get(i).color
                                 }
 
                             } else if (calendarArrayList.get(i).title.equals("WholeSchool")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     wholeSchoolArrayList.addAll(calendarArrayList.get(i).details)
-                                    Log.e("WholeSchool", primaryArrayList.toString())
+                                    Log.e("WholeSchool", wholeSchoolArrayList.toString())
                                   //  wholeSchoole = calendarArrayList.get(i).color
                                 }
 

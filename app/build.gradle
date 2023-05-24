@@ -95,6 +95,7 @@ dependencies {
     implementation 'com.applandeo:material-calendar-view:1.7.0'
 
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
+    implementation 'com.ryanharter.android.tooltips:library:0.0.3'
 
     implementation 'com.gauravbhola.ripplepulsebackground:library:1.0.0'
 }

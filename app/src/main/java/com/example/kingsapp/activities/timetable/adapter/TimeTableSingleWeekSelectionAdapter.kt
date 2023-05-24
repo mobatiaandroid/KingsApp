@@ -13,13 +13,14 @@ import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.timetable.model.MondayList
 import com.example.kingsapp.activities.timetable.model.TimeTableApiListModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context, private var calendarArrayList: ArrayList<TimeTableApiListModel>) :
+internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context, private var calendarArrayList: ArrayList<MondayList>) :
     RecyclerView.Adapter<TimeTableSingleWeekSelectionAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var llread: RelativeLayout = view.findViewById(R.id.llread)
@@ -48,7 +49,7 @@ internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context
         Log.e("calendarArrayList", calendarArrayList.toString())
 
 
-if(calendarArrayList[position].sortname.equals("Break"))
+if(calendarArrayList[position].is_break.equals(1))
 {
     holder.breakTxtt.visibility = View.VISIBLE
     holder.tutorNameTxt.visibility = View.GONE
@@ -56,52 +57,45 @@ if(calendarArrayList[position].sortname.equals("Break"))
     holder.subjectNameTxt.visibility = View.GONE
     holder.timeTxt.setTextColor(mContetx.getResources().getColor(R.color.white))
     holder.relSub.setBackgroundColor(mContetx.getResources().getColor(R.color.kings_blue))
-    val time = calendarArrayList[position].starttime
+    val time = calendarArrayList[position].start_time
+
+
+    if(calendarArrayList[position].period_name.equals("Break"))
+    {
+        holder.breakTxtt.text = calendarArrayList[position].period_name
+    }
+    else
+    {
+        holder.breakTxtt.text = calendarArrayList[position].period_name
+    }
 
     try {
         val sdf = SimpleDateFormat("HH:mm")
         val dateObj: Date = sdf.parse(time)
         println(dateObj)
         println(SimpleDateFormat("hh:mm a").format(dateObj))
+        Log.e("breaktime",SimpleDateFormat("hh:mm a").format(dateObj))
         holder.timeTxt.text = SimpleDateFormat("hh:mm a").format(dateObj)
     } catch (e: ParseException) {
         e.printStackTrace()
     }
 
 }
-        else if(calendarArrayList[position].sortname.equals("L1"))
-{
-    holder.breakTxtt.visibility = View.VISIBLE
-    holder.tutorNameTxt.visibility = View.GONE
-    holder.subjectTxt.visibility = View.GONE
-    holder.subjectNameTxt.visibility = View.GONE
-    holder.breakTxtt.text = calendarArrayList[position].sortname
-    holder.timeTxt.setTextColor(mContetx.getResources().getColor(R.color.white))
-    holder.relSub.setBackgroundColor(mContetx.getResources().getColor(R.color.kings_blue))
-    val time = calendarArrayList[position].starttime
 
-    try {
-        val sdf = SimpleDateFormat("HH:mm")
-        val dateObj: Date = sdf.parse(time)
-        println(dateObj)
-        println(SimpleDateFormat("hh:mm a").format(dateObj))
-        holder.timeTxt.text = SimpleDateFormat("hh:mm a").format(dateObj)
-    } catch (e: ParseException) {
-        e.printStackTrace()
-    }
-}
 
         else
 {
+
+
     holder.llread.visibility = View.VISIBLE
     holder.timeAPTxt.visibility = View.GONE
     holder.llreadbreak.visibility = View.GONE
     holder.starLinear.visibility = View.GONE
     holder.tutorNameTxt.text = calendarArrayList[position].staff
-    holder.subjectTxt.text = calendarArrayList[position].sortname
+    holder.subjectTxt.text = calendarArrayList[position].period_name
     holder.subjectNameTxt.text = calendarArrayList[position].subject_name
 
-    val time = calendarArrayList[position].starttime
+    val time = calendarArrayList[position].start_time
 
     try {
         val sdf = SimpleDateFormat("HH:mm")
