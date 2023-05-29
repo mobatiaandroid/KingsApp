@@ -1,5 +1,6 @@
 package com.example.kingsapp.activities.early_pickup.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,6 +30,7 @@ internal class PickuplistAdapter (private var Context: Context,var pickup_list:A
             .inflate(R.layout.adapter_absence_leave_recycelr, parent, false)
         return MyViewHolder(itemView)
     }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val list = pickup_list[position]
 
@@ -45,16 +47,20 @@ internal class PickuplistAdapter (private var Context: Context,var pickup_list:A
         if (status==1){
             holder.listStatus.visibility = VISIBLE
             holder.listStatus.text = "PENDING"
+            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.kings_blue))
            //label pending
         }
         else if (status==2){
             holder.listStatus.visibility = VISIBLE
             holder.listStatus.text = "APPROVED"
+            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.teal_700))
             //label approved
         }
         else{
             holder.listStatus.visibility = VISIBLE
+            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.red))
             holder.listStatus.text = "REJECTED"
+
             //label rejected
         }
 

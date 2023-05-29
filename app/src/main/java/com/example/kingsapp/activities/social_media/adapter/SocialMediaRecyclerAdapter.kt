@@ -1,5 +1,6 @@
 package com.example.kingsapp.activities.social_media.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,13 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.social_media.model.SocialMediaDetailModel
+import com.example.kingsapp.manager.PreferenceManager
 
 
-internal class SocialMediaRecyclerAdapter (private var socialMediaArrayList: List<SocialMediaDetailModel>) :
+internal class SocialMediaRecyclerAdapter(
+    private var mContext: Context,
+    private var socialMediaArrayList: List<SocialMediaDetailModel>
+) :
     RecyclerView.Adapter<SocialMediaRecyclerAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var socialMediaText: TextView = view.findViewById(R.id.socialMediaText)
@@ -27,7 +32,15 @@ internal class SocialMediaRecyclerAdapter (private var socialMediaArrayList: Lis
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val movie = socialMediaArrayList[position]
-        holder.socialMediaText.text = movie.title
+
+      if(PreferenceManager().getLanguagetype(mContext).toString().equals("1"))
+        {
+            holder.socialMediaText.text = movie.title
+        }
+        else
+      {
+          holder.socialMediaText.text = movie.title_ar
+      }
         if (socialMediaArrayList.get(position).title.equals("Youtube"))
         {
             holder.cellLinear.setBackgroundResource(R.drawable.curve_you)

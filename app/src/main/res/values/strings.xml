@@ -45,7 +45,7 @@
     <string name="day_of_pickup">Day of Pickup<font fgcolor='#FF0000'> * </font></string>
     <string name="time_of_pickup">Time of Pickup<font fgcolor='#FF0000'> * </font></string>
     <string name="pickup_by">Pickup By<font fgcolor='#FF0000'> * </font></string>
-    <string name="status">Status</string>
+    <string name="status">Status<font fgcolor='#FF0000'> * </font></string>
     <string name="reason_for_early_pickup">Reason for early pickup<font fgcolor='#FF0000'> * </font></string>
     <string name="rejetion_for_early_pickup">Rejection for early pickup<font fgcolor='#FF0000'> * </font></string>
 

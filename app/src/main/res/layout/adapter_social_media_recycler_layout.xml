@@ -27,7 +27,6 @@
             android:textColor="@color/white"
             android:paddingRight="55dp"
             android:drawablePadding="10dp"
-            android:text="Twitter"
             android:textSize="20sp" />
     </LinearLayout>
 

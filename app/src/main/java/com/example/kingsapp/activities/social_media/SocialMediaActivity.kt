@@ -8,24 +8,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.forms.adapter.FormListAdapter
-import com.example.kingsapp.activities.forms.model.FormsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.social_media.adapter.SocialMediaRecyclerAdapter
 import com.example.kingsapp.activities.social_media.model.SocialMediaDetailModel
 import com.example.kingsapp.activities.social_media.model.SocialMediaResponseModel
-import com.example.kingsapp.activities.timetable.model.FieldModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.constants.WebViewLoaderActivity
@@ -88,7 +82,7 @@ class SocialMediaActivity:AppCompatActivity() {
                     if (response.body()!!.status.equals(100))
                     {
                         socialMediaArrayList.addAll(response.body()!!.socialmedia)
-                        val socialMediaRecyclerAdapter = SocialMediaRecyclerAdapter(socialMediaArrayList)
+                        val socialMediaRecyclerAdapter = SocialMediaRecyclerAdapter(mContext,socialMediaArrayList)
                         socialMediaRecycler.adapter = socialMediaRecyclerAdapter
                     }
                     else

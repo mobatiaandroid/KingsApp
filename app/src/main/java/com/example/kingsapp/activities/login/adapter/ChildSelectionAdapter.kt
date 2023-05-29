@@ -36,9 +36,9 @@ class ChildSelectionAdapter(private val mcontext: Context,
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val namelist = student_name[position].fullname
-        val startAnimation: Animation =
+        /*val startAnimation: Animation =
             AnimationUtils.loadAnimation(mcontext, R.anim.blinking_animation)
-        holder.stud_profile.startAnimation(startAnimation)
+        holder.stud_profile.startAnimation(startAnimation)*/
 
         holder.studentName.setText(namelist)
 

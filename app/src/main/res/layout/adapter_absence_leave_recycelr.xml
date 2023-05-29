@@ -36,7 +36,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="10dp"
-        android:textColor="@color/kings_blue"
         android:textSize="15sp" />
 
     <ImageView

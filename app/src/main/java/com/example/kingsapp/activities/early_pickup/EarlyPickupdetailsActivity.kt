@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,6 +27,7 @@ class EarlyPickupdetailsActivity:AppCompatActivity() {
     lateinit var studentNameText: TextView
     lateinit var studentclass: TextView
     lateinit var backtolist : TextView
+    lateinit var rejection : TextInputLayout
 
     var reason: String? = ""
     var studentName: String? = ""
@@ -53,7 +55,7 @@ class EarlyPickupdetailsActivity:AppCompatActivity() {
         pickupby=intent.getStringExtra("pickupby")
         reason_for_rejection=intent.getStringExtra("reason_for_rejection").toString()
 
-        Log.e("Values get",reason +" "+fromDate+" "+status)
+        Log.e("Values get",reason +" "+fromDate+" "+status+" "+reason_for_rejection)
         initFn()
 }
 
@@ -68,7 +70,7 @@ class EarlyPickupdetailsActivity:AppCompatActivity() {
         studentclass = findViewById(R.id.studentclass)
         studentNameText = findViewById(R.id.studentName)
         backtolist = findViewById(R.id.backtolist)
-
+        rejection = findViewById(R.id.rejection)
         studentNameText.text = studentName
         studentclass.text = studentClass
 
@@ -93,18 +95,23 @@ class EarlyPickupdetailsActivity:AppCompatActivity() {
 
         if (status.equals("1")){
             status_text.setText("PENDING")
-            rejection_text.visibility= View.GONE
+            rejection.visibility= View.GONE
+            Log.e("pending",reason_for_rejection)
            // reasonRejectionScroll.visibility= View.GONE
         }
         else if(status.equals("2")){
             status_text.setText ("APPROVED")
-            rejection_text.visibility= View.GONE
-           // reasonRejectionScroll.visibility= View.GONE
+            rejection.visibility= View.GONE
+            Log.e("APPROVED",reason_for_rejection)
+
+            // reasonRejectionScroll.visibility= View.GONE
         }
         else{
             status_text.setText("REJECTED")
-            rejection_text.visibility= View.VISIBLE
-           // reasonRejectionScroll.visibility= View.VISIBLE
+            rejection.visibility= View.VISIBLE
+            Log.e("REJECTED",reason_for_rejection)
+
+            // reasonRejectionScroll.visibility= View.VISIBLE
             rejection_text.setText(reason_for_rejection)
 
         }

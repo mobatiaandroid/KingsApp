@@ -17,7 +17,8 @@
         android:id="@+id/mainRecycleRel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/greyy">
+        android:layout_margin="5dp"
+        android:background="@color/kings_blue">
 
 
             <ImageView
@@ -25,6 +26,7 @@
                 android:layout_height="25dp"
                 android:padding="5dp"
                 android:id="@+id/popup_close"
+                android:src="@drawable/ic_baseline_clear_24"
                 android:layout_alignParentRight="true" />
 
 

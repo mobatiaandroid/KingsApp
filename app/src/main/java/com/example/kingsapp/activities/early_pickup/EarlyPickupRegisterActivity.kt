@@ -95,6 +95,12 @@ lateinit var progressBarDialog: ProgressBarDialog
                 if (timepikup.text.toString().trim().equals("")){
                     Toast.makeText(mContext, "Please select Time of Early Pickup", Toast.LENGTH_SHORT).show()
                 }
+                else  if (pickup_by_text.text.toString().trim().equals("")){
+                    Toast.makeText(mContext, "Please select Pickup By of Early Pickup", Toast.LENGTH_SHORT).show()
+                }
+                else  if (pickup_reason.text.toString().trim().equals("")){
+                    Toast.makeText(mContext, "Please select Pickup Reason of Early Pickup", Toast.LENGTH_SHORT).show()
+                }
                 else
                 {
             pickupby=pickup_by_text.text.toString().trim()

@@ -99,6 +99,9 @@ class SchoolCalendarActivity : AppCompatActivity() {
     var primaryColor: String = "#3E56D3"
     var secondaryColor: String = "#533ED3"
     var wholeSchoole: String = "#8D61EC"
+   /* var primaryColor: String = ""
+    var secondaryColor: String = ""
+    var wholeSchoole: String = ""*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -1050,7 +1053,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
                                         calendarArrayList.get(i).details.get(i).dTSTART.toString()
                                     )
                                     Log.e("primaryst", primaryArrayList.get(i).dTSTART.toString())
-                                    //  primaryColor = calendarArrayList.get(i).color
+                                     // primaryColor = calendarArrayList.get(i).color
                                 }
 
                             } else if (calendarArrayList.get(i).title.equals("Secondary")) {
@@ -1058,14 +1061,14 @@ class SchoolCalendarActivity : AppCompatActivity() {
 
                                     secondaryArrayList.addAll(calendarArrayList.get(i).details)
                                     Log.e("Secondary", secondaryArrayList.toString())
-                                  //  secondaryColor = calendarArrayList.get(i).color
+                                    //secondaryColor = calendarArrayList.get(i).color
                                 }
 
                             } else if (calendarArrayList.get(i).title.equals("WholeSchool")) {
                                 if (calendarArrayList.get(i).details.size > 0) {
                                     wholeSchoolArrayList.addAll(calendarArrayList.get(i).details)
                                     Log.e("WholeSchool", wholeSchoolArrayList.toString())
-                                  //  wholeSchoole = calendarArrayList.get(i).color
+                                    //wholeSchoole = calendarArrayList.get(i).color
                                 }
 
                             }

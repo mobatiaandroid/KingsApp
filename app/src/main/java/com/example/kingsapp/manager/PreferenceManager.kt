@@ -3,8 +3,10 @@ package com.example.kingsapp.manager
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.timetable.model.MondayList
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 class PreferenceManager {
     val PREFSNAME = "NAS"
@@ -1221,6 +1223,29 @@ class PreferenceManager {
         )
         return pref.getString("schoollanguagetype", "")
 
+    }
+
+
+
+    fun savesortname(context: Context, list: ArrayList<MondayList>) {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        val editor = pref.edit()
+        val gson = Gson()
+        val json = gson.toJson(list)
+        editor.putString("sortname", json)
+        editor.apply()
+    }
+
+    fun getsortname(context: Context): ArrayList<MondayList> {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        val gson = Gson()
+        val json = pref.getString("sortname", null)
+        val type: Type = object : TypeToken<ArrayList<MondayList>>() {}.getType()
+        return gson.fromJson(json, type)
     }
 }
 

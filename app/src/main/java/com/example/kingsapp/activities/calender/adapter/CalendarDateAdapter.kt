@@ -120,9 +120,9 @@ Log.e("size", summary.startDate.length.toString())
 
         if (summary.detailList.size > 0) {
 
-           /* detailArray = summary.detailList
+            detailArray = summary.detailList
             val calendarListAdapter = CalendarDetailAdapter(mContext,detailArray)
-            holder.detailRecycler.adapter = calendarListAdapter*/
+            holder.detailRecycler.adapter = calendarListAdapter
         }
 
     }

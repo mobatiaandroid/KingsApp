@@ -20,7 +20,7 @@
 
     </ImageView>
 
-    <TextView
+    <com.example.kingsapp.manager.font.CustomVerdanaRegular
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -78,7 +78,7 @@
                 android:orientation="vertical">
 
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaBold
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -92,7 +92,7 @@
                     android:textStyle="bold" />
 
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:id="@+id/studentclass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -137,7 +137,7 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/button_bg"
             android:layout_marginRight="20dp">
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/white"
@@ -145,7 +145,7 @@
                 android:textSize="17dp"
                 android:text="@string/registernewabsence">
 
-            </TextView>
+            </com.example.kingsapp.manager.font.CustomVerdanaRegular>
         </RelativeLayout>
     </RelativeLayout>
 

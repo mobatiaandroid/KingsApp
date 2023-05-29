@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.timetable.model.FieldModel
+import com.example.kingsapp.activities.timetable.model.MondayList
 import com.example.kingsapp.activities.timetable.model.PeriodModel
+import com.example.kingsapp.manager.PreferenceManager
 import com.ryanharter.android.tooltips.ToolTip
 import com.ryanharter.android.tooltips.ToolTipLayout
 
@@ -24,9 +26,11 @@ class TimeTableAllWeekSelectionAdapterNew(
     private var mContext: Context,
     private var mPeriodModel: List<PeriodModel>,
     private var mFeildList: ArrayList<FieldModel>,
-    var tipContainer: ToolTipLayout
+    var tipContainer: ToolTipLayout,
+    private var mTimetableApiArrayList: ArrayList<MondayList>
 
-    ) :
+
+) :
     RecyclerView.Adapter<TimeTableAllWeekSelectionAdapterNew.MyViewHolder>() {
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var periodTxt: TextView = view.findViewById(R.id.periodTxt)
@@ -64,10 +68,29 @@ class TimeTableAllWeekSelectionAdapterNew(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+         // var mStaffModelArrayList: ArrayList<MondayList>?
+      //  mStaffModelArrayList= PreferenceManager().getsortname(mContext)
+        //Log.e("sortname:", mStaffModelArrayList!![position].period_name.toString())
+        if(mFeildList.get(position).sortname.equals("Break"))
+        {
+            holder.relSub.visibility=View.GONE
+            holder.timeLinear.visibility=View.VISIBLE
+            holder.txtBreak.setText(mFeildList.get(position).sortname)
+            holder.timeLinear.setBackgroundResource(R.color.kings_blue)
 
-        holder.periodTxt.text = mPeriodModel[position].sortname
+        }
+        else if (mFeildList.get(position).sortname.equals("Lunch"))
+        {
+            holder.relSub.visibility=View.GONE
+            holder.timeLinear.visibility=View.VISIBLE
+            holder.txtBreak.setText(mFeildList.get(position).sortname)
+            holder.timeLinear.setBackgroundResource(R.color.kings_blue)
+        }
+        else
+        {
+        holder.periodTxt.text = mFeildList[position].sortname
         Log.e("PERIODTEXT:",mFeildList[position].sortname)
-        Log.e("size:", mPeriodModel.size.toString())
+
         holder.timeTxt.visibility = View.GONE
         if (mPeriodModel[position].timeTableDayModel.size > 0) {
             holder.timeLinear.visibility = View.GONE
@@ -159,7 +182,8 @@ class TimeTableAllWeekSelectionAdapterNew(
                 holder.countFTextView.visibility = View.GONE
             }
 
-        } else {
+        }
+        else {
             holder.tutor1.text = ""
             holder.tutor2.text = ""
             holder.tutor3.text = ""
@@ -175,6 +199,7 @@ class TimeTableAllWeekSelectionAdapterNew(
             holder.countThTextView.visibility = View.GONE
             holder.countFRel.visibility = View.GONE
             holder.countFTextView.visibility = View.GONE
+        }
         }
         holder.tutor1.setOnClickListener {
             //Quick and Easy intent selector in tooltip styles
