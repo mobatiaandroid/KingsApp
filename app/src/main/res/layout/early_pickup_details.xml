@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/li"
-        android:background="@drawable/bg"
+        android:background="@drawable/bak_bg"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/featureLinear"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                 android:orientation="vertical">
 
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaBold
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -105,7 +105,7 @@
                     android:textStyle="bold" />
 
 
-                <TextView
+                <com.example.kingsapp.manager.font.CustomVerdanaRegular
                     android:id="@+id/studentclass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -318,7 +318,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/register_bg"
+        android:background="@drawable/register_bgg"
         android:elevation="20dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -336,7 +336,7 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/button_bg">
 
-            <TextView
+            <com.example.kingsapp.manager.font.CustomVerdanaRegular
                 android:id="@+id/backtolist"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -345,7 +345,7 @@
                 android:textColor="@color/white"
                 android:textSize="17dp">
 
-            </TextView>
+            </com.example.kingsapp.manager.font.CustomVerdanaRegular>
         </RelativeLayout>
     </RelativeLayout>
 

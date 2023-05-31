@@ -236,7 +236,7 @@ class AppsActivity:AppCompatActivity() {
         studentSpinner = findViewById(R.id.studentSpinner)
         studentName_Text = findViewById(R.id.studentName)
         imagicon = findViewById(R.id.imagicon)
-        backImage = findViewById(R.id.backarrow_absense)
+        backImage = findViewById(R.id.back)
         studentclass = findViewById(R.id.studentclass)
         progressBarDialog = ProgressBarDialog(mContext)
         /*val aniRotate: Animation =

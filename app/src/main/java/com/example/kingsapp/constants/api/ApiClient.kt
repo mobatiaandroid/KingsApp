@@ -17,7 +17,7 @@ object ApiClient {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://gama.mobatia.in:8080/kingseducation/public/")
+            .baseUrl("http://ec2-18-208-30-224.compute-1.amazonaws.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -25,6 +25,7 @@ object ApiClient {
         return apiService
     }
 }
+//http://gama.mobatia.in:8080/kingseducation/public/
 /*object ApiClient {
     //    var BASE_URL = "http://bisad.mobatia.in:8081/"
 //      var BASE_URL = "https://stagingcms.bisad.ae/"

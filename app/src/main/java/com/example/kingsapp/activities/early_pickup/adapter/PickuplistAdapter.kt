@@ -47,13 +47,13 @@ internal class PickuplistAdapter (private var Context: Context,var pickup_list:A
         if (status==1){
             holder.listStatus.visibility = VISIBLE
             holder.listStatus.text = "PENDING"
-            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.kings_blue))
+            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.orange))
            //label pending
         }
         else if (status==2){
             holder.listStatus.visibility = VISIBLE
             holder.listStatus.text = "APPROVED"
-            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.teal_700))
+            holder.listStatus.setTextColor(Context.getResources().getColor(R.color.green))
             //label approved
         }
         else{
