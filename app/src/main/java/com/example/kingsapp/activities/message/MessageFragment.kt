@@ -180,8 +180,7 @@ class MessageFragment : Fragment() {
                 }
                 else if (message_array.get(position).alert_type.equals(3))
                 {
-                    if (message_array.get(position).url.endsWith(".mp3"))
-                    {
+
                         val intent = Intent(activity, AudioPlayerDetail::class.java)
                         intent.putExtra("url", message_array[position].url)
                         Log.e("urll",message_array.get(position).url)
@@ -190,21 +189,21 @@ class MessageFragment : Fragment() {
                         //intent.putExtra("audio_id", message_array[position].id)
 
                         activity?.startActivity(intent)
-                    }
-                    else{
 
-                        val intent = Intent(activity, VideoMessageActivity::class.java)
-                        intent.putExtra("id",message_array.get(position).id)
-                        intent.putExtra("title",message_array.get(position).title)
-                        intent.putExtra("url",message_array.get(position).url)
-                        intent.putExtra("createdate",message_array.get(position).created_at)
-                        Log.e("image",message_array.get(position).title)
-                        Log.e("url",message_array.get(position).url)
-                        activity?.startActivity(intent)
-                    }
+
 
                 }
-                    // showChangePasswordPopUp()
+                else{
+
+                    val intent = Intent(activity, VideoMessageActivity::class.java)
+                    intent.putExtra("id",message_array.get(position).id)
+                    intent.putExtra("title",message_array.get(position).title)
+                    intent.putExtra("url",message_array.get(position).url)
+                    intent.putExtra("createdate",message_array.get(position).created_at)
+                    Log.e("image",message_array.get(position).title)
+                    Log.e("url",message_array.get(position).url)
+                    activity?.startActivity(intent)
+                }  // showChangePasswordPopUp()
 
             }
 

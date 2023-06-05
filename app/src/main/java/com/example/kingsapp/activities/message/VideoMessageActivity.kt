@@ -50,7 +50,7 @@ class VideoMessageActivity : AppCompatActivity(){
         setContentView(R.layout.messge_activity_video_layout)
         mContext=this
 
-        id=intent.getStringExtra("id").toString()
+       // id=intent.getStringExtra("id").toString()
         title=intent.getStringExtra("title").toString()
         createdate=intent.getStringExtra("createdate").toString()
         url=intent.getStringExtra("url").toString()
