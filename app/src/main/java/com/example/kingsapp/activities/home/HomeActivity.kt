@@ -21,6 +21,9 @@ import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -62,6 +65,7 @@ import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.api.ApiClient
@@ -110,7 +114,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     var flag:Boolean = true
     lateinit var student_name: ArrayList<StudentList>
 lateinit var menuicon:ImageView
-
+    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_activity)
@@ -160,14 +164,14 @@ lateinit var menuicon:ImageView
         student_profile = findViewById<View>(R.id.student_profile) as ImageView
         studentListRecyclerview = findViewById<View>(R.id.studentlistrec) as RecyclerView
 
-        FirebaseApp.initializeApp(mContext)
+        /*FirebaseApp.initializeApp(mContext)
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 return@OnCompleteListener
             }
             val token = task.result
             Log.e("token Firebase", token.toString())
-        })
+        })*/
         // studentListRecyclerViewArab = findViewById<View>(R.id.studentlistrecc) as RecyclerView
         lang_switch = findViewById<View>(R.id.switchlang) as Switch
        // PreferenceManager().setLanguagetype(mContext, "1")
@@ -222,6 +226,49 @@ lateinit var menuicon:ImageView
         )
 
         mHomeListView.onItemLongClickListener = this
+
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+            ActivityResultCallback<Boolean> { result ->
+                Log.e("result", result.toString())
+                if (result) {
+                    // PERMISSION GRANTED
+                    Log.e("result", result.toString())
+                    // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
+                } else {
+                    // PERMISSION NOT GRANTED
+                    Log.e("denied", result.toString())
+                    val snackbar = Snackbar.make(
+                        drawerLayout,
+                        "Notification Permission Denied",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction("Settings") {
+                            val intent = Intent()
+                            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            intent.putExtra("app_package", mContext.packageName)
+                            intent.putExtra("app_uid", mContext.applicationInfo.uid)
+                            intent.putExtra(
+                                "android.provider.extra.APP_PACKAGE",
+                                mContext.packageName
+                            )
+                            startActivity(intent)
+                        }
+                    snackbar.setActionTextColor(Color.RED)
+
+                    val view = snackbar.view
+                    val tv = view
+                        .findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                    tv.setTextColor(Color.WHITE)
+                    snackbar.show()
+
+
+                    // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
+                }
+            }
+        )
+        askForNotificationPermission()
         mHomeListView.setOnItemClickListener { parent, view, position, id ->
             display(position)
 
@@ -482,7 +529,23 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
 
 
     }
-
+    private fun askForNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // FCM SDK (and your app) can post notifications.
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
     private fun callhomeuserApi() {
         Log.e("token", PreferenceManager().getAccessToken(mContext).toString())
         val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(

@@ -33,6 +33,8 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.api.ApiClient
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -55,6 +57,7 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
     lateinit var passwordTextInputLayout:TextInputLayout
    // private lateinit var progressDialog: RelativeLayout
    lateinit var progressBarDialog: ProgressBarDialog
+    var tokenM:String=""
 
     var flag:Boolean = true
 
@@ -234,10 +237,19 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
 
 
                 if(CommonClass.isInternetAvailable(ncontext)) {
-                    callLoginApi(
-                        emailTextInputEditText.text.toString(),
-                        passwordTextInputEditText.text.toString()
-                    )
+                    FirebaseApp.initializeApp(ncontext)
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                        if (task.isComplete) {
+                            val token: String = task.getResult().toString()
+                            tokenM = token
+                            callLoginApi(
+                         emailTextInputEditText.text.toString(),
+                         passwordTextInputEditText.text.toString()
+                     )
+                            //callChangePasswordStaffAPI(URL_STAFF_CHANGE_PASSWORD, token)
+                        }
+                    }
+
                 }
                 else{
                     Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
@@ -269,8 +281,8 @@ if(passwordTextInputEditText.text.toString().trim().equals(""))
         var androidID = Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
         Log.e("android_id",androidID)
-        val call: Call<LoginResponseModel> = ApiClient.getApiService().login(username,paswwd,"1",
-            androidID,"123456789")
+        val call: Call<LoginResponseModel> = ApiClient.getApiService().login(username,paswwd,"2",
+            tokenM, androidID)
         call.enqueue(object : retrofit2.Callback<LoginResponseModel> {
             override fun onResponse(
                 call: Call<LoginResponseModel>,

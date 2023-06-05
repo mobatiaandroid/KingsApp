@@ -17,7 +17,7 @@ object ApiClient {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://ec2-18-208-30-224.compute-1.amazonaws.com/")
+            .baseUrl("http://gama.mobatia.in:8080/kingseducation/public/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
