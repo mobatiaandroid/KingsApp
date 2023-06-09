@@ -1,6 +1,5 @@
-package com.mobatia.nasmanila.api
+package com.example.kingsapp.constants.api
 
-import com.example.isgoman_kotlin.constants.api.ApiService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

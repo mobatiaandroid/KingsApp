@@ -16,6 +16,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -38,11 +39,10 @@ import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.adapter.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
-import com.example.kingsapp.activities.early_pickup.EarlyPickupRegisterActivity
-import com.example.kingsapp.activities.early_pickup.EarlyPickupdetailsActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.model.HomeGuestrResponseModel
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
+import com.example.kingsapp.activities.login.ChildSelectionActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
@@ -64,11 +64,11 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.example.kingsapp.constants.api.ApiClient
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
-import com.mobatia.nasmanila.api.ApiClient
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -115,6 +115,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     lateinit var student_name: ArrayList<StudentList>
 lateinit var menuicon:ImageView
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    var tokenM:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_activity)
@@ -525,10 +526,55 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
 //}
 
         }
+        if(CommonClass.isInternetAvailable(mContext)) {
+            FirebaseApp.initializeApp(mContext)
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (task.isComplete) {
+                    val token: String = task.getResult().toString()
+                    tokenM = token
+                    calldeviceRegistrion(tokenM)
+                    //callChangePasswordStaffAPI(URL_STAFF_CHANGE_PASSWORD, token)
+                }
+            }
 
+        }
+        else{
+            Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+        }
 
 
     }
+
+    private fun calldeviceRegistrion(tokenM: String) {
+        var androidID = Settings.Secure.getString(this.contentResolver,
+            Settings.Secure.ANDROID_ID)
+        Log.e("android_id",androidID)
+        val call: Call<ResponseBody> = ApiClient.getApiService().devicereg("2",
+            tokenM, androidID)
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+              // progressBarDialog.hide()
+
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+              //  progressBarDialog.hide()
+
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+    }
+
     private fun askForNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==

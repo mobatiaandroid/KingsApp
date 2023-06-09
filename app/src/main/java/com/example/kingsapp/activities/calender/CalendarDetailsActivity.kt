@@ -27,7 +27,7 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.manager.PreferenceManager
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 import java.text.DateFormat

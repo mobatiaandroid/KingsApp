@@ -17,13 +17,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.AbsenceDeatilsActivity
-import com.example.kingsapp.activities.absence.RegisterAbsenceActivity
 import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
-import com.example.kingsapp.activities.absence.model.AbsenceList
-import com.example.kingsapp.activities.absence.model.AbsenceListModel
 import com.example.kingsapp.activities.absence.studentImg
-import com.example.kingsapp.activities.adapter.AbsenceListAdapter
 import com.example.kingsapp.activities.early_pickup.adapter.PickuplistAdapter
 import com.example.kingsapp.activities.early_pickup.model.EarlyList
 import com.example.kingsapp.activities.early_pickup.model.EarlyPickupListModel
@@ -33,7 +28,7 @@ import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 

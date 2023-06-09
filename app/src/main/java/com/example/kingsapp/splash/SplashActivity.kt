@@ -11,11 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
-import com.example.kingsapp.activities.login.SigninyourAccountActivity
-import com.example.kingsapp.fragment.currentversion
-import com.example.kingsapp.fragment.versionfromapi
 import com.example.kingsapp.manager.PreferenceManager
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 

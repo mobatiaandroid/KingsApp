@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
-import com.example.kingsapp.activities.adapter.apps.adapter.AppsAdapter
-import com.example.kingsapp.activities.adapter.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.message.adapter.MessageListAdapter
@@ -34,7 +29,7 @@ import com.example.kingsapp.manager.NaisTabConstants
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -163,6 +158,7 @@ class MessageFragment : Fragment() {
                     val intent = Intent(activity, MessageDetailsActivity::class.java)
                     intent.putExtra("id",message_array.get(position).id)
                     intent.putExtra("title",message_array.get(position).title)
+                    intent.putExtra("message",message_array.get(position).message)
                     intent.putExtra("date",message_array.get(position).created_at)
                     activity?.startActivity(intent)
                 }

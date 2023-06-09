@@ -1,4 +1,4 @@
-package com.example.isgoman_kotlin.constants.api
+package com.example.kingsapp.constants.api
 
 
 import android.content.Context
@@ -78,8 +78,14 @@ interface ApiService {
     fun student_list(
         @Header("Authorization") token:String
     ): Call<StudentListResponseModel>
-
-
+    /*************deviceRegistration****************/
+    @POST("api/v1/update-token")
+    @FormUrlEncoded
+    fun devicereg(
+        @Field("devicetype") devicetype: String,
+        @Field("deviceid") deviceid: String,
+        @Field("device_identifier") device_identifier: String
+    ): Call<ResponseBody>
     /*************Logout****************/
     @GET("api/v1/parent-logout")
     @Headers("Accept: application/json")

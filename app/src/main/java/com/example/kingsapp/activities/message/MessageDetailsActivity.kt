@@ -21,6 +21,7 @@ class MessageDetailsActivity: AppCompatActivity() {
     lateinit var stringList:Array<String>
     lateinit var desc:TextView
     lateinit var datee:String
+    lateinit var descrption:String
     lateinit var textview:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +33,13 @@ class MessageDetailsActivity: AppCompatActivity() {
     private fun initFn() {
         title=intent.getStringExtra("title").toString()
         datee=intent.getStringExtra("date").toString()
+        descrption=intent.getStringExtra("message").toString()
         dateText=findViewById(R.id.textview1)
         timeText=findViewById(R.id.timetextview)
         textview=findViewById(R.id.textview)
         message_backarrow = findViewById(R.id.message_backarrow)
         desc=findViewById(R.id.desc)
-        desc.setText(title)
+        desc.setText(descrption)
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
                 Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")

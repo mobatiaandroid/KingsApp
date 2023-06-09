@@ -22,11 +22,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.absence.AbsenceActivity
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.settings.TermsOfServiceActivity
-import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.fragment.setting.adapter.SettingAdapter
@@ -36,7 +34,7 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response

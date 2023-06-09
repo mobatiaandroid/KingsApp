@@ -21,7 +21,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.*
-import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.early_pickup.model.RequestEarlyApiModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
@@ -31,7 +30,7 @@ import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.AppUtils
 import com.example.kingsapp.manager.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 import java.text.DateFormat

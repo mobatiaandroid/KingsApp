@@ -8,7 +8,6 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -26,21 +25,15 @@ import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.HomeActivity
-import com.example.kingsapp.activities.home.model.HomeUserResponseModel
-import com.example.kingsapp.activities.message.MessageFragment
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
 import com.example.kingsapp.activities.social_media.SocialMediaActivity
 import com.example.kingsapp.activities.student_info.StudentInfoActivity
-import com.example.kingsapp.activities.student_planner.StudentPlannerActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.manager.AppController
 import com.example.kingsapp.manager.NaisClassNameConstants
 import com.example.kingsapp.manager.NaisTabConstants
 import com.example.kingsapp.manager.PreferenceManager
-import com.mobatia.nasmanila.api.ApiClient
-import retrofit2.Call
-import retrofit2.Response
 import java.util.*
 
 private var mTxtOne: TextView? = null

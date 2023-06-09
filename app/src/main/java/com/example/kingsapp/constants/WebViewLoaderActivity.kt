@@ -114,7 +114,7 @@ class WebViewLoaderActivity: AppCompatActivity() {
             error: WebResourceError
         ) {
             Log.e("error", error.toString())
-            Toast.makeText(activity, "Got Error! $error", Toast.LENGTH_SHORT).show()
+           // Toast.makeText(activity, "Got Error! $error", Toast.LENGTH_SHORT).show()
 
         }
 

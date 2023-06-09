@@ -5,13 +5,9 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.WindowManager
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +20,6 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.reports.adapter.ReportsAdapterList
-import com.example.kingsapp.activities.reports.model.ReportModel
 import com.example.kingsapp.activities.reports.model.ReportModelFiltered
 import com.example.kingsapp.activities.reports.model.Reports
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
@@ -32,7 +27,7 @@ import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.manager.PreferenceManager
 import com.google.gson.JsonObject
-import com.mobatia.nasmanila.api.ApiClient
+import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 

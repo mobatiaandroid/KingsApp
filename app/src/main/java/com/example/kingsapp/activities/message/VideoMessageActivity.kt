@@ -34,7 +34,8 @@ private lateinit var webView: WebView
 //private lateinit var proWebView: ProgressBar
 class VideoMessageActivity : AppCompatActivity(){
     lateinit var mContext: Context
-
+    lateinit var dateText:TextView
+    lateinit var timeText:TextView
     var id:String=""
     var title:String=""
     var idApi:String=""
@@ -64,10 +65,13 @@ class VideoMessageActivity : AppCompatActivity(){
         btn_left = findViewById(R.id.btn_info)
         textcontent = findViewById(R.id.txtContent)
         webView = findViewById(R.id.webView)
+        dateText=findViewById(R.id.textview1)
+        timeText=findViewById(R.id.timetextview)
         //proWebView = findViewById(R.id.proWebView)
        // backRelative = findViewById(R.id.backRelative)
         textcontent.visibility= View.INVISIBLE
         heading.text = "Messages"
+
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -86,6 +90,8 @@ class VideoMessageActivity : AppCompatActivity(){
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)
         val outputDateStr1: String = outputFormatdate.format(date)
+        dateText.setText(outputDateStr1)
+        timeText.setText(outputDateStr)
                     var pushNotificationDetail="<!DOCTYPE html>\n"+
                             "<html>\n" +
                             "<head>\n" +
@@ -152,7 +158,7 @@ class VideoMessageActivity : AppCompatActivity(){
                     webView.loadData(urlYoutube, "text/html", "utf-8")*/
 
 
-        var frameVideo= "<html>" + "<br><iframe width=\"320\" height=\"250\" src=\""
+        var frameVideo= "<html>" + "<br><iframe width=\"350\" height=\"250\" src=\""
                     var url_Video= frameVideo+url+"\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
                     var urlYoutube=url_Video.replace("watch?v=", "embed/")
                    Log.e("urlYoutube",urlYoutube)

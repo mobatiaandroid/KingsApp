@@ -59,12 +59,49 @@
             android:layout_centerVertical="true"
             android:visibility="gone" />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/timeanddateli"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeWebView"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textview1"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center|left"
+            android:paddingTop="10dp"
+            android:textStyle="bold"
+            android:paddingBottom="10dp"
+            android:textColor="@color/greyy"
+            android:textSize="13sp"
+            android:text="13 Sep 2022"/>
+        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:id="@+id/timetextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center|right"
+            android:paddingTop="10dp"
+            android:textStyle="bold"
+            android:paddingBottom="10dp"
+            android:textColor="@color/greyy"
+            android:textSize="13sp"
+            android:text="9:30 pm"/>
+    </RelativeLayout>
     <ScrollView
         android:id="@+id/relcontent"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/relativeWebView"
+        android:layout_below="@+id/timeanddateli"
         android:layout_margin="10dp"
         android:padding="10dp">
 
