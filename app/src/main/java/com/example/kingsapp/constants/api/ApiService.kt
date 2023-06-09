@@ -80,8 +80,10 @@ interface ApiService {
     ): Call<StudentListResponseModel>
     /*************deviceRegistration****************/
     @POST("api/v1/update-token")
+    @Headers("Accept: application/json")
     @FormUrlEncoded
     fun devicereg(
+        @Header("Authorization") token:String,
         @Field("devicetype") devicetype: String,
         @Field("deviceid") deviceid: String,
         @Field("device_identifier") device_identifier: String

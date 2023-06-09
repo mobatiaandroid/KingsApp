@@ -549,7 +549,8 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
         var androidID = Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
         Log.e("android_id",androidID)
-        val call: Call<ResponseBody> = ApiClient.getApiService().devicereg("2",
+        val call: Call<ResponseBody> = ApiClient.getApiService().devicereg("Bearer "+
+                PreferenceManager().getAccessToken(mContext).toString(),"2",
             tokenM, androidID)
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(

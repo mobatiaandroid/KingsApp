@@ -45,6 +45,7 @@ class AudioPlayerDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player_detail)
        // extras = intent.extras!!
+        extras = intent.extras!!
         audio_title =  extras.getString("url")!!
         Log.e("url",audio_title)
         mContext = this
