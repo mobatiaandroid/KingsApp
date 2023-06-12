@@ -2,18 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
     <RelativeLayout
         android:id="@+id/relativeHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <include
+   <!-- <include
         layout="@layout/giraffe_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeHeader"
-        />
+        />-->
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="visible"
+        android:background="@drawable/ic_chevron_left_white_36dp"/>
     <ImageView
         android:id="@+id/audioImage"
         android:layout_width="wrap_content"
@@ -35,5 +43,56 @@
             android:visibility="gone" />
 
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:visibility="visible"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
+        <ImageView
+            android:id="@+id/playbutton"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+android:src="@drawable/ic_baseline_pause_circle_outline_24"
+            />
+        <SeekBar
+            android:id="@+id/seebbar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/playbutton"
+            android:progressTint="@color/white"
+            android:thumbTint="@color/white"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seebbar"
+            android:orientation="horizontal"
+            android:layout_marginRight="30dp"
+            android:layout_alignParentRight="true">
+            <TextView
+                android:id="@+id/textcurrent_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="0.00"/>
+            <TextView
+                android:id="@+id/duration_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                android:text="0.00"/>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
