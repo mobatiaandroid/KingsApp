@@ -57,7 +57,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+    <com.example.kingsapp.manager.font.CustomTimesNewRoman
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

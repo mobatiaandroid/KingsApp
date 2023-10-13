@@ -7,6 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
+//    var base_url = "http://ec2-54-236-247-24.compute-1.amazonaws.com"
+var base_url = "http://gama.mobatia.in:8080/kingseducation/public/"
     private lateinit var apiService: ApiService
     fun getApiService(): ApiService {
         val gson = GsonBuilder()
@@ -16,7 +18,7 @@ object ApiClient {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://gama.mobatia.in:8080/kingseducation/public/")
+            .baseUrl(base_url)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

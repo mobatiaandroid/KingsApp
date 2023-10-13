@@ -32,7 +32,7 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/timeTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:visibility="visible"
             android:orientation="vertical">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/subjectNameTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,13 +77,15 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="8dp"
                 android:text="message1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/subjectNameTxt"
                 android:gravity="center"
                 android:orientation="horizontal">
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+                <com.example.kingsapp.manager.font.CustomMontserratMedium
                     android:id="@+id/tutorNameTxt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -96,7 +98,7 @@
                     android:text="test1"
                     android:textColor="@color/black" />
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomMontserratMedium
                     android:id="@+id/subjectTxt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -114,13 +116,14 @@
                     android:text="Tutor"
                     android:textColor="@color/white" />
             </LinearLayout>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/breakTxtt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout

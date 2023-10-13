@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
                 android:background="@drawable/home_clicked" />
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/homeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="5dp"
                 android:text="@string/Home"
-                android:layout_below="@+id/homeImg"/>
+                android:layout_below="@+id/homeImg" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -52,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:src="@drawable/email" />
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/messageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
                 android:textColor="@color/grey_bottom"
                 android:layout_marginTop="5dp"
                 android:text="@string/Message"
-                android:layout_below="@+id/messageImg"/>
+                android:layout_below="@+id/messageImg" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -77,7 +78,7 @@
                 android:layout_marginLeft="4dp"
                 android:src="@drawable/chatting" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/contactText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +87,7 @@
                 android:layout_marginBottom="5dp"
                 android:text="@string/Contact"
                 android:singleLine="true"
-                android:layout_below="@+id/profileImg"/>
+                android:layout_below="@+id/profileImg" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/settingRel"
@@ -102,7 +103,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_weight="20"
                 android:background="@drawable/settings" />
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/otherText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +112,7 @@
                 android:gravity="center"
                 android:textColor="@color/grey_bottom"
                 android:text="@string/Settings"
-                android:layout_below="@+id/otherImg"/>
+                android:layout_below="@+id/otherImg" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

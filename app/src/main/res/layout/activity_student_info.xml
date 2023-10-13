@@ -20,7 +20,7 @@
             android:layout_weight="1">
 
         </ImageView>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomTimesNewRoman
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:textSize="20dp"
-            android:text="@string/StudentInformation"/>
+            android:text="@string/StudentInformation" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                 android:orientation="vertical">
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+                <com.example.kingsapp.manager.font.CustomTimesNewRoman
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -93,7 +93,7 @@
                     android:textStyle="bold" />
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomTimesNewRoman
                     android:id="@+id/studentclass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -131,8 +131,9 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text=""
                 android:focusable="false"
+                android:fontFamily="@font/montserrat"
+                android:text=""
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -156,8 +157,9 @@
                 android:id="@+id/classs"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text=" "
                 android:focusable="false"
+                android:fontFamily="@font/montserrat"
+                android:text=" "
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -180,8 +182,9 @@
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text=" "
                 android:focusable="false"
+                android:fontFamily="@font/montserrat"
+                android:text=" "
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>

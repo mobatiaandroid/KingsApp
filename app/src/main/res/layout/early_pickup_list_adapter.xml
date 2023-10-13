@@ -21,7 +21,7 @@
 
         </ImageView>
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomTimesNewRoman
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -79,7 +79,7 @@
                 android:orientation="vertical">
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+                <com.example.kingsapp.manager.font.CustomTimesNewRoman
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -93,7 +93,7 @@
                     android:textStyle="bold" />
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomTimesNewRoman
                     android:id="@+id/studentclass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -133,13 +133,15 @@
         android:stateListAnimator="@null"
         android:orientation="horizontal"
         android:gravity="center">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/button_bg"
             android:layout_marginRight="20dp">
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+            <com.example.kingsapp.manager.font.CustomTimesNewRoman
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/white"
@@ -147,7 +149,7 @@
                 android:textSize="17dp"
                 android:text="@string/registernewearlypickup">
 
-            </com.example.kingsapp.manager.font.CustomVerdanaRegular>
+            </com.example.kingsapp.manager.font.CustomTimesNewRoman>
         </RelativeLayout>
     </RelativeLayout>
 

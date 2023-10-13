@@ -22,14 +22,20 @@ import com.example.kingsapp.activities.message.model.MessageListModel
 import com.example.kingsapp.activities.message.model.NotificationModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
-import com.example.kingsapp.fragment.*
+import com.example.kingsapp.constants.api.ApiClient
+import com.example.kingsapp.fragment.appController
+import com.example.kingsapp.fragment.classNameConstants
+import com.example.kingsapp.fragment.homeActivity
+import com.example.kingsapp.fragment.mContext
+import com.example.kingsapp.fragment.mListImgArrays
+import com.example.kingsapp.fragment.mListItemArray
+import com.example.kingsapp.fragment.naisTabConstants
 import com.example.kingsapp.manager.AppController
-import com.example.kingsapp.manager.NaisClassNameConstants
+import com.example.kingsapp.manager.ClassNameConstants
 import com.example.kingsapp.manager.NaisTabConstants
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -50,7 +56,7 @@ class MessageFragment : Fragment() {
         mContext =requireContext()
         homeActivity = activity as HomeActivity
         appController = AppController()
-        classNameConstants = NaisClassNameConstants()
+        classNameConstants = ClassNameConstants()
         naisTabConstants = NaisTabConstants()
         mListItemArray = resources.getStringArray(R.array.home_list_items)
         mListImgArrays = mContext.resources.obtainTypedArray(R.array.home_list_reg_icons)
@@ -83,24 +89,18 @@ class MessageFragment : Fragment() {
             ) {
                 progressBarDialog.hide()
                 if (response.body() != null) {
-                if (response.body()!!.status.equals(100))
-                {
-                    message_array.addAll(response.body()!!.notifications)
-                    if (message_array.size>0)
-                    {
-                        messagerec.layoutManager = linearLayoutManager
-                        val messageListAdapter = MessageListAdapter(mContext,message_array)
-                        messagerec.setAdapter(messageListAdapter)
+                    if (response.body()!!.status == 100) {
+                        message_array.addAll(response.body()!!.notifications)
+                        if (message_array.size > 0) {
+                            messagerec.layoutManager = linearLayoutManager
+                            val messageListAdapter = MessageListAdapter(mContext, message_array)
+                            messagerec.adapter = messageListAdapter
+                        } else {
+                            CommonClass.showErrorAlert(mContext, " No Data Found", "Alert")
+                        }
+                    } else {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
-                    else
-                    {
-                        CommonClass.showErrorAlert(mContext," No Data Found","Alert")
-                    }
-                }
-                else
-                {
-                    CommonClass.checkApiStatusError(response.body()!!.status,mContext)
-                }
                 }
                     else{
                         val intent = Intent(mContext, SigninyourAccountActivity::class.java)
@@ -146,58 +146,49 @@ class MessageFragment : Fragment() {
 
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
-            textView.setTypeface(face);
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            textView.typeface = face;
         }
 
         messagerec.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
-                if(message_array.get(position).alert_type.equals(1))
-                {
+                if (message_array[position].alert_type == 1) {
                     val intent = Intent(activity, MessageDetailsActivity::class.java)
-                    intent.putExtra("id",message_array.get(position).id)
-                    intent.putExtra("title",message_array.get(position).title)
-                    intent.putExtra("message",message_array.get(position).message)
-                    intent.putExtra("date",message_array.get(position).created_at)
+                    intent.putExtra("id", message_array[position].id)
+                    intent.putExtra("title", message_array[position].title)
+                    intent.putExtra("message", message_array[position].message)
+                    intent.putExtra("date", message_array[position].created_at)
                     activity?.startActivity(intent)
-                }
-
-                else if (message_array.get(position).alert_type.equals(2))
-                {
+                } else if (message_array[position].alert_type == 2) {
                     val intent = Intent(activity, ImageMessageActivity::class.java)
-                    intent.putExtra("id",message_array.get(position).id)
-                    intent.putExtra("title",message_array.get(position).title)
-                    intent.putExtra("url",message_array.get(position).url)
-                    intent.putExtra("createdate",message_array.get(position).created_at)
-                    Log.e("image",message_array.get(position).title)
-                    Log.e("url",message_array.get(position).url)
+                    intent.putExtra("id", message_array[position].id)
+                    intent.putExtra("title", message_array[position].title)
+                    intent.putExtra("url", message_array[position].url)
+                    intent.putExtra("createdate", message_array[position].created_at)
+                    Log.e("image", message_array[position].title)
+                    Log.e("url", message_array[position].url)
                     activity?.startActivity(intent)
-                }
-                else if (message_array.get(position).alert_type.equals(3))
-                {
+                } else if (message_array.get(position).alert_type == 3) {
+                    val intent = Intent(activity, AudioPlayerDetail::class.java)
+                    intent.putExtra("url", message_array[position].url)
+                    Log.e("urll", message_array[position].url)
+                    intent.putExtra("createdate", message_array[position].created_at)
 
-                        val intent = Intent(activity, AudioPlayerDetail::class.java)
-                        intent.putExtra("url", message_array[position].url)
-                        Log.e("urll",message_array.get(position).url)
-                        intent.putExtra("createdate",message_array.get(position).created_at)
+                    //intent.putExtra("audio_id", message_array[position].id)
 
-                        //intent.putExtra("audio_id", message_array[position].id)
-
-                        activity?.startActivity(intent)
+                    activity?.startActivity(intent)
 
 
-
-                }
-                else{
+                } else {
 
                     val intent = Intent(activity, VideoMessageActivity::class.java)
-                    intent.putExtra("id",message_array.get(position).id)
-                    intent.putExtra("title",message_array.get(position).title)
-                    intent.putExtra("url",message_array.get(position).url)
-                    intent.putExtra("createdate",message_array.get(position).created_at)
-                    Log.e("image",message_array.get(position).title)
-                    Log.e("url",message_array.get(position).url)
+                    intent.putExtra("id", message_array[position].id)
+                    intent.putExtra("title", message_array[position].title)
+                    intent.putExtra("url", message_array[position].url)
+                    intent.putExtra("createdate", message_array[position].created_at)
+                    Log.e("image", message_array.get(position).title)
+                    Log.e("url", message_array.get(position).url)
                     activity?.startActivity(intent)
                 }  // showChangePasswordPopUp()
 

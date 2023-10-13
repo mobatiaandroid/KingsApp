@@ -11,7 +11,7 @@ import com.example.kingsapp.R
 import com.example.kingsapp.manager.PreferenceManager
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 class MessageDetailsActivity: AppCompatActivity() {
     lateinit var mContext: Context
@@ -47,7 +47,7 @@ class MessageDetailsActivity: AppCompatActivity() {
         }
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
-        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
+        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMMM-yyyy")
         val inputDateStr = datee
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)

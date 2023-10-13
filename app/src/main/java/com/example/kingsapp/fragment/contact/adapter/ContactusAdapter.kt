@@ -2,24 +2,23 @@ package com.example.kingsapp.fragment.contact.adapter
 
 import android.Manifest
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.fragment.contact.model.ContactsListDetailModel
 
-import java.security.AccessController.getContext
 
 internal class ContactusAdapter(
     private var aboutuslist: List<ContactsListDetailModel>
@@ -55,7 +54,13 @@ internal class ContactusAdapter(
 
         holder.name.text = data.name
         holder.email.text = data.email
-        holder.number.text = data.phone
+        var text = SpannableString(data.email)
+        text.setSpan(UnderlineSpan(), 0, text.length, 0)
+        holder.email.text = text
+//        textView.setText(text)
+        text = SpannableString(data.phone)
+        text.setSpan(UnderlineSpan(), 0, text.length, 0)
+        holder.number.text = text
 
         holder.number.setOnClickListener {
 

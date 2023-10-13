@@ -14,6 +14,7 @@
         <domain includeSubdomains="true">beta.mobatia.in</domain>
         <domain includeSubdomains="true">gama.mobatia.in:8080</domain>
         <domain includeSubdomains="true">teams.microsoft.com</domain>
+        <domain includeSubdomains="true">ec2-54-236-247-24.compute-1.amazonaws.com</domain>
 
 
     </domain-config>

@@ -10,7 +10,7 @@
         android:layout_marginLeft="7dp"
         android:background="@color/white">
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,14 +45,15 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/chevron_right" />
+
         <RelativeLayout
             android:id="@+id/timeanddateli"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/desc"
-            android:orientation="horizontal"
-            >
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:orientation="horizontal">
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,8 +67,9 @@
                 android:paddingBottom="10dp"
                 android:textColor="@color/greyy"
                 android:textSize="13sp"
-                android:text="13 Sep 2022"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:text="13 Sep 2022" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

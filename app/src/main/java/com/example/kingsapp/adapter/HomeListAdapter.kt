@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.manager.PreferenceManager
 
@@ -52,6 +51,10 @@ class HomeListAdapter(context: Context,
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
                 Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
+            txtTitle.setTypeface(face);
+        } else {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.getAssets(), "font/montserrat_medium.ttf")
             txtTitle.setTypeface(face);
         }
         txtTitle.text = mListItemArray[position]

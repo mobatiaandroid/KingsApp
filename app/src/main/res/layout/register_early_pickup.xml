@@ -26,7 +26,7 @@
 
         </ImageView>
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomTimesNewRoman
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -89,13 +89,14 @@
                 android:orientation="vertical">
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+                <com.example.kingsapp.manager.font.CustomTimesNewRoman
                     android:id="@+id/studentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_weight="40"
                     android:gravity="left|center"
+
                     android:paddingLeft="10dp"
                     android:text=""
                     android:textColor="@color/black"
@@ -103,7 +104,7 @@
                     android:textStyle="bold" />
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomTimesNewRoman
                     android:id="@+id/studentclass"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -147,6 +148,7 @@
                 android:layout_height="70dp"
                 android:cursorVisible="false"
                 android:focusable="false"
+                android:fontFamily="@font/montserrat"
                 android:inputType="none"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
@@ -177,6 +179,7 @@
                 android:layout_height="70dp"
                 android:cursorVisible="false"
                 android:focusable="false"
+                android:fontFamily="@font/montserrat"
                 android:inputType="none"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
@@ -202,6 +205,7 @@
                 android:id="@+id/pickup_by_text"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:fontFamily="@font/montserrat"
                 android:inputType="textPersonName"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey"
@@ -226,6 +230,7 @@
                 android:id="@+id/reason_for_absence"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:fontFamily="@font/montserrat"
                 android:inputType="textPersonName"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey"
@@ -257,7 +262,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomTimesNewRoman
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"

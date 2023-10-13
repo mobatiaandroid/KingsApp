@@ -43,7 +43,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomMontserratMedium
                     android:id="@+id/periodTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     android:textColor="@color/logout_user"
                     android:textSize="16dp" />
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomMontserratMedium
                     android:id="@+id/timeTxt"
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                         android:background="@color/btnBackground">
 
 
-                        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                        <com.example.kingsapp.manager.font.CustomMontserratMedium
                             android:id="@+id/tutor1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -105,6 +105,7 @@
                             android:maxLines="3"
                             android:textColor="@color/logout_user"
                             android:textSize="14dp" />
+
                         <RelativeLayout
                             android:id="@+id/countMRel"
                             android:layout_width="wrap_content"
@@ -114,7 +115,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:background="@drawable/shape_quarter_circle_teal">
-                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+                            <com.example.kingsapp.manager.font.CustomMontserratMedium
                                 android:id="@+id/countMTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -124,7 +126,7 @@
                                 android:textColor="@color/white"
                                 android:layout_centerInParent="true"
                                 android:rotation="90"
-                                android:text="+1"/>
+                                android:text="+1" />
 
                         </RelativeLayout>
                     </RelativeLayout>
@@ -137,7 +139,7 @@
 
                         android:background="@color/btnBackground">
 
-                        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                        <com.example.kingsapp.manager.font.CustomMontserratMedium
                             android:id="@+id/tutor2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -146,6 +148,7 @@
                             android:text=""
                             android:textColor="@color/logout_user"
                             android:textSize="14dp" />
+
                         <RelativeLayout
                             android:id="@+id/countTRel"
                             android:layout_width="wrap_content"
@@ -155,7 +158,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:background="@drawable/shape_quarter_circle_teal">
-                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+                            <com.example.kingsapp.manager.font.CustomMontserratMedium
                                 android:id="@+id/countTTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -165,7 +169,7 @@
                                 android:textColor="@color/white"
                                 android:layout_centerInParent="true"
                                 android:rotation="90"
-                                android:text="+1"/>
+                                android:text="+1" />
 
                         </RelativeLayout>
 
@@ -179,7 +183,7 @@
 
                         android:background="@color/btnBackground">
 
-                        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                        <com.example.kingsapp.manager.font.CustomMontserratMedium
                             android:id="@+id/tutor3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -188,6 +192,7 @@
                             android:text=""
                             android:textColor="@color/logout_user"
                             android:textSize="14dp" />
+
                         <RelativeLayout
                             android:id="@+id/countWRel"
                             android:layout_width="wrap_content"
@@ -197,7 +202,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:background="@drawable/shape_quarter_circle_teal">
-                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+                            <com.example.kingsapp.manager.font.CustomMontserratMedium
                                 android:id="@+id/countWTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -207,7 +213,7 @@
                                 android:textColor="@color/white"
                                 android:layout_centerInParent="true"
                                 android:rotation="90"
-                                android:text="+1"/>
+                                android:text="+1" />
 
                         </RelativeLayout>
 
@@ -221,7 +227,7 @@
 
                         android:background="@color/btnBackground">
 
-                        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                        <com.example.kingsapp.manager.font.CustomMontserratMedium
                             android:id="@+id/tutor4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -232,6 +238,7 @@
                             android:textColor="@color/logout_user"
 
                             android:textSize="14dp" />
+
                         <RelativeLayout
                             android:id="@+id/countThRel"
                             android:layout_width="wrap_content"
@@ -241,7 +248,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:background="@drawable/shape_quarter_circle_teal">
-                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+                            <com.example.kingsapp.manager.font.CustomMontserratMedium
                                 android:id="@+id/countThTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -251,7 +259,7 @@
                                 android:textColor="@color/white"
                                 android:layout_centerInParent="true"
                                 android:rotation="90"
-                                android:text="+1"/>
+                                android:text="+1" />
 
                         </RelativeLayout>
 
@@ -265,7 +273,7 @@
 
                         android:background="@color/btnBackground">
 
-                        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                        <com.example.kingsapp.manager.font.CustomMontserratMedium
                             android:id="@+id/tutor5"
 
                             android:layout_width="match_parent"
@@ -276,6 +284,7 @@
 
                             android:textColor="@color/logout_user"
                             android:textSize="14dp" />
+
                         <RelativeLayout
                             android:id="@+id/countFRel"
                             android:layout_width="wrap_content"
@@ -285,7 +294,8 @@
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
                             android:background="@drawable/shape_quarter_circle_teal">
-                            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+                            <com.example.kingsapp.manager.font.CustomMontserratMedium
                                 android:id="@+id/countFTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -295,7 +305,7 @@
                                 android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:rotation="90"
-                                android:text="+1"/>
+                                android:text="+1" />
 
                         </RelativeLayout>
 
@@ -315,7 +325,7 @@
             android:orientation="horizontal"
             android:visibility="gone">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/timeBreak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -327,7 +337,7 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/txtBreak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -30,13 +30,13 @@ import com.example.kingsapp.activities.calender.model.PrimaryModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.mobatia.calendardemopro.adapter.CalendarDateAdapter
 import com.mobatia.calendardemopro.adapter.CategoryAdapter
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 import java.text.DateFormat
@@ -83,37 +83,43 @@ class SchoolCalendarActivity : AppCompatActivity() {
     lateinit var primaryShowArrayList: ArrayList<PrimaryModel>
     lateinit var secondaryShowArrayList: ArrayList<PrimaryModel>
     lateinit var wholeSchoolShowArrayList: ArrayList<PrimaryModel>
-   lateinit var calendarShowArrayList: ArrayList<PrimaryModel>
-  lateinit var calendarFilterArrayList: ArrayList<PrimaryModel>
-   lateinit var mTriggerModelArrayList: ArrayList<CategoryModel>
+    lateinit var calendarShowArrayList: ArrayList<PrimaryModel>
+    lateinit var calendarFilterArrayList: ArrayList<PrimaryModel>
+    lateinit var mTriggerModelArrayList: ArrayList<CategoryModel>
     lateinit var mCalendarFinalArrayList: ArrayList<CalendarDateModel>
-   // lateinit var TempCALENDARlIST: ArrayList<CalendarDateModel>
+
+    // lateinit var TempCALENDARlIST: ArrayList<CalendarDateModel>
     lateinit var FILTERCALENDARlIST: ArrayList<PrimaryModel>
-   //val liveArray: ArrayList<CalendarDateModel> = ArrayList()
+
+    //val liveArray: ArrayList<CalendarDateModel> = ArrayList()
     lateinit var difference_In_Days: String
     lateinit var progressBarDialog: ProgressBarDialog
 
 
     var currentMonth: Int = -1
     lateinit var monthTxt: String
-    var primaryColor: String = "#3E56D3"
-    var secondaryColor: String = "#533ED3"
-    var wholeSchoole: String = "#8D61EC"
-   /* var primaryColor: String = ""
-    var secondaryColor: String = ""
-    var wholeSchoole: String = ""*/
+    var primaryColor: String = "#DE000F"
+    var secondaryColor: String = "#00458C"
+    var wholeSchoole: String = "#C4A105"
+
+    /* var primaryColor: String = ""
+     var secondaryColor: String = ""
+     var wholeSchoole: String = ""*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.calendar_fragment)
         mcontext = this
         initFn()
-        if(CommonClass.isInternetAvailable(mcontext)) {
-           callCalendarApi()
-        //    callAPI()
-        }
-        else{
-            Toast.makeText(mcontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+        if (CommonClass.isInternetAvailable(mcontext)) {
+            callCalendarApi()
+            //    callAPI()
+        } else {
+            Toast.makeText(
+                mcontext,
+                "Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT
+            ).show()
 
         }
 
@@ -1096,7 +1102,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
               model.categoryName = categoryList.get(i)
               model.checkedCategory = true
               if (i == 0) {
-                  var whiteColor = "#6B737A"
+                  var whiteColor = "#E6E7E8"
                   model.color = whiteColor
               } else {
 

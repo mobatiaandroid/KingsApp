@@ -9,16 +9,20 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textview.MaterialTextView
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -106,7 +110,7 @@ class ForgetPasswordActivity:AppCompatActivity() {
                     val animZoomInP =
                         AnimationUtils.loadAnimation(ncontext, R.anim.zoom_in_progress)
                     createacconttextview.setText("We have reset your password")
-                    textView24.setText("We have send your username and password to your given email id")
+                    textView24.setText("We have send your username and password to your given Email ID")
                     signin.visibility = View.GONE
                     passwordTextInputLayout.visibility = View.GONE
                     Thread {

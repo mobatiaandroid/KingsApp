@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/kings_blue">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -43,7 +42,7 @@
                     android:visibility="visible" />
 
 
-                <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                <com.example.kingsapp.manager.font.CustomMontserratMedium
                     android:id="@+id/txtMYW"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +51,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_alignParentRight="true"
                     android:gravity="right|center"
-                    android:text="Feb 2023"
+                    android:text="February 2023"
                     android:textColor="@color/logout_user"
                     android:textSize="15dp"
                     android:visibility="visible" />
@@ -107,12 +106,14 @@
                     android:orientation="vertical"
                     android:layout_marginBottom="10dp"
                     android:gravity="center">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/no_events"
-                        android:layout_gravity="center"/>
-                    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                        android:layout_gravity="center" />
+
+                    <com.example.kingsapp.manager.font.CustomMontserratMedium
                         android:id="@+id/noDataAlertTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -120,7 +121,7 @@
                         android:textSize="16dp"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="No data found"/>
+                        android:text="No data found" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -170,7 +171,7 @@
                 android:background="@color/kings_blue"
                 android:src="@drawable/ic_arrow_left" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/Header"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -199,7 +200,7 @@
             android:weightSum="7"
             android:layout_below="@id/calendar_title" >
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/firstday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -212,7 +213,7 @@
                 android:backgroundTint="@color/white"
                 android:text="@string/sun" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/secondday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -223,8 +224,9 @@
                 android:textSize="12dp"
                 android:textColor="@color/white"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="@color/white"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:backgroundTint="@color/white" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/thirdday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -235,8 +237,9 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="@color/white"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:backgroundTint="@color/white" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/fourthday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -247,8 +250,9 @@
                 android:textSize="12dp"
                 android:textColor="@color/white"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="@color/white"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:backgroundTint="@color/white" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/fifthday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -259,8 +263,9 @@
                 android:textSize="12dp"
                 android:textColor="@color/white"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="@color/white"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:backgroundTint="@color/white" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/sixthday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -271,8 +276,9 @@
                 android:textSize="12dp"
                 android:textColor="@color/white"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="@color/white"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:backgroundTint="@color/white" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/seventhday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -282,168 +288,175 @@
                 android:gravity="center"
                 android:textSize="12dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/days_layout_r1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@id/calendar_week_days">
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_0"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_1"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_2"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:gravity="center"
-                android:layout_marginRight="10dp"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_3"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_4"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_5"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_6"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white"
-                android:layout_marginRight="10dp"/>
+       <LinearLayout
+           android:id="@+id/days_layout_r1"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/calendar_week_days"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
+           android:orientation="horizontal"
+           android:weightSum="7">
 
-        </LinearLayout>
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_0"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginLeft="5dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-        <LinearLayout
-            android:id="@+id/days_layout_r2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="7"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_1"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
+
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_2"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
+
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_3"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
+
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_4"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
+
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_5"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
+
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_6"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:id="@+id/days_layout_r2"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="10dp"
+           android:layout_marginTop="5dp"
+           android:layout_marginRight="10dp"
+           android:orientation="horizontal"
+           android:weightSum="7"
            android:layout_below="@+id/days_layout_r1">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_7"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_7"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginLeft="5dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_8"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_8"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_9"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_9"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_10"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_10"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_11"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:textColor="@color/black"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_11"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_12"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_12"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
-                android:id="@+id/textview_13"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:background="@color/white" />
+           <com.example.kingsapp.manager.font.CustomMontserratMedium
+               android:id="@+id/textview_13"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginRight="10dp"
+               android:layout_weight="1"
+               android:background="@color/white"
+               android:gravity="center"
+               android:textColor="@color/black" />
 
-        </LinearLayout>
+       </LinearLayout>
         <LinearLayout
             android:id="@+id/days_layout_r3"
             android:layout_width="match_parent"
@@ -455,7 +468,7 @@
             android:layout_marginTop="5dp"
            android:layout_below="@+id/days_layout_r2">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_14"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -466,7 +479,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_15"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -476,7 +489,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_16"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -486,7 +499,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_17"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -496,7 +509,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_18"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -506,7 +519,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_19"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -516,7 +529,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_20"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -538,7 +551,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/days_layout_r3">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_21"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -549,7 +562,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_22"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -559,7 +572,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_23"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -569,7 +582,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_24"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -578,7 +591,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_25"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -588,7 +601,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_26"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -598,7 +611,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_27"
                 android:layout_width="0dp"
                 android:layout_height="40dp"

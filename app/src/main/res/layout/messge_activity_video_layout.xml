@@ -15,7 +15,7 @@
 
 
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomTimesNewRoman
             android:id="@+id/heading"
             android:layout_width="match_parent"
             android:background="@color/kings_blue"
@@ -24,7 +24,7 @@
             android:textColor="@color/white"
             android:textSize="17dp"
             android:gravity="center"
-            android:text="NewsLetter"
+            android:text="Newsletter"
             android:layout_height="70dp" />
         <ImageView
             android:id="@+id/btn_info"
@@ -59,6 +59,7 @@
             android:layout_centerVertical="true"
             android:visibility="gone" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/timeanddateli"
         android:layout_width="match_parent"
@@ -67,9 +68,9 @@
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        android:layout_marginRight="20dp">
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,8 +83,9 @@
             android:paddingBottom="10dp"
             android:textColor="@color/greyy"
             android:textSize="13sp"
-            android:text="13 Sep 2022"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:text="13 Sep 2022" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:id="@+id/timetextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

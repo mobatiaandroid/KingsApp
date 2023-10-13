@@ -22,9 +22,6 @@ import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -42,7 +39,6 @@ import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.model.HomeGuestrResponseModel
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
-import com.example.kingsapp.activities.login.ChildSelectionActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
@@ -54,6 +50,7 @@ import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.adapter.StudentListAdapter
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.fragment.HomeFragment
 import com.example.kingsapp.fragment.contact.ContactFragment
 import com.example.kingsapp.fragment.currentversion
@@ -64,8 +61,6 @@ import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
-import com.google.android.material.snackbar.Snackbar
-import com.example.kingsapp.constants.api.ApiClient
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import okhttp3.ResponseBody
@@ -98,34 +93,35 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     //private lateinit var navView: NavigationView
     lateinit var menu_btn: ImageView
     lateinit var student_profile : ImageView
-    lateinit var lang_switch : Switch
-    lateinit var studentListRecyclerview : RecyclerView
-     lateinit var mHomeListView: ListView
+    lateinit var lang_switch: Switch
+    lateinit var studentListRecyclerview: RecyclerView
+    lateinit var mHomeListView: ListView
     var mListAdapter: HomeListAdapter? = null
-    lateinit var mListItemArray:Array<String>
+    lateinit var mListItemArray: Array<String>
     lateinit var mContext: Context
     lateinit var linearLayout: LinearLayout
     lateinit var fragment: Fragment
     private var mListImgArray: TypedArray? = null
     var sPosition: Int = 0
-    lateinit var list:ArrayList<Int>
-    lateinit var name:Array<String>
+    lateinit var list: ArrayList<Int>
+    lateinit var name: Array<String>
     lateinit var linearLayoutManager: LinearLayoutManager
-    var flag:Boolean = true
+    var flag: Boolean = true
     lateinit var student_name: ArrayList<StudentList>
-lateinit var menuicon:ImageView
-    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    var tokenM:String=""
+    lateinit var menuicon: ImageView
+
+    //    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    var tokenM: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_activity)
 
-        mContext=this
+        mContext = this
         PreferenceManager().setvalue(mContext, "")
         loadLocate()
         initFn()
         showfragmenthome()
-        if(PreferenceManager().getAccessToken(mContext).equals(""))
+        if (PreferenceManager().getAccessToken(mContext).equals(""))
             {
        Log.e("Sucess","Success")
             }
@@ -228,48 +224,48 @@ lateinit var menuicon:ImageView
 
         mHomeListView.onItemLongClickListener = this
 
-        requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-            ActivityResultCallback<Boolean> { result ->
-                Log.e("result", result.toString())
-                if (result) {
-                    // PERMISSION GRANTED
-                    Log.e("result", result.toString())
-                    // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
-                } else {
-                    // PERMISSION NOT GRANTED
-                    Log.e("denied", result.toString())
-                    val snackbar = Snackbar.make(
-                        drawerLayout,
-                        "Notification Permission Denied",
-                        Snackbar.LENGTH_LONG
-                    )
-                        .setAction("Settings") {
-                            val intent = Intent()
-                            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intent.putExtra("app_package", mContext.packageName)
-                            intent.putExtra("app_uid", mContext.applicationInfo.uid)
-                            intent.putExtra(
-                                "android.provider.extra.APP_PACKAGE",
-                                mContext.packageName
-                            )
-                            startActivity(intent)
-                        }
-                    snackbar.setActionTextColor(Color.RED)
-
-                    val view = snackbar.view
-                    val tv = view
-                        .findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
-                    tv.setTextColor(Color.WHITE)
-                    snackbar.show()
-
-
-                    // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
-                }
-            }
-        )
-        askForNotificationPermission()
+//        requestPermissionLauncher = registerForActivityResult(
+//            ActivityResultContracts.RequestPermission(),
+//            ActivityResultCallback<Boolean> { result ->
+//                Log.e("result", result.toString())
+//                if (result) {
+//                    // PERMISSION GRANTED
+//                    Log.e("result", result.toString())
+//                    // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // PERMISSION NOT GRANTED
+//                    Log.e("denied", result.toString())
+//                    val snackbar = Snackbar.make(
+//                        drawerLayout,
+//                        "Notification Permission Denied",
+//                        Snackbar.LENGTH_LONG
+//                    )
+//                        .setAction("Settings") {
+//                            val intent = Intent()
+//                            intent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                            intent.putExtra("app_package", mContext.packageName)
+//                            intent.putExtra("app_uid", mContext.applicationInfo.uid)
+//                            intent.putExtra(
+//                                "android.provider.extra.APP_PACKAGE",
+//                                mContext.packageName
+//                            )
+//                            startActivity(intent)
+//                        }
+//                    snackbar.setActionTextColor(Color.RED)
+//
+//                    val view = snackbar.view
+//                    val tv = view
+//                        .findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+//                    tv.setTextColor(Color.WHITE)
+//                    snackbar.show()
+//
+//
+//                    // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        )
+//        askForNotificationPermission()
         mHomeListView.setOnItemClickListener { parent, view, position, id ->
             display(position)
 
@@ -325,7 +321,7 @@ lateinit var menuicon:ImageView
 
         messageRel.setOnClickListener {
 
-Log.e("setvalue",PreferenceManager().getvalue(mContext))
+            Log.e("setvalue", PreferenceManager().getvalue(mContext))
             // bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
             messageImg.setBackgroundResource(R.drawable.email_clicked)
             messageText.setTextColor(Color.parseColor("#FFFFFFFF"));
@@ -576,58 +572,66 @@ Log.e("setvalue",PreferenceManager().getvalue(mContext))
         })
     }
 
-    private fun askForNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED
-            ) {
-                // FCM SDK (and your app) can post notifications.
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                // TODO: display an educational UI explaining to the user the features that will be enabled
-                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
-                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
-                //       If the user selects "No thanks," allow the user to continue without notifications.
-            } else {
-                // Directly ask for the permission
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
-    }
+    //    private fun askForNotificationPermission() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+//                PackageManager.PERMISSION_GRANTED
+//            ) {
+//                // FCM SDK (and your app) can post notifications.
+//            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+//                // TODO: display an educational UI explaining to the user the features that will be enabled
+//                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+//                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+//                //       If the user selects "No thanks," allow the user to continue without notifications.
+//            } else {
+//                // Directly ask for the permission
+//                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//            }
+//        }
+//    }
     private fun callhomeuserApi() {
         Log.e("token", PreferenceManager().getAccessToken(mContext).toString())
-        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(
-            mContext
+        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser(
+            "Bearer " + PreferenceManager().getAccessToken(
+                mContext
+            )
+                .toString()
         )
-            .toString())
         call.enqueue(object : retrofit2.Callback<HomeUserResponseModel> {
             override fun onResponse(
                 call: Call<HomeUserResponseModel>,
                 response: Response<HomeUserResponseModel>
             ) {
-                Log.e("respon",response.body().toString())
+                Log.e("respon", response.body().toString())
                 if (response.body() != null) {
 
-                if(response.body()!!.status.equals("100"))
-                {
-                    val username= response.body()!!.home.user_details.name
-                    PreferenceManager().setuser_id(mContext,username)
-                    Log.e("Username", PreferenceManager().getuser_id(com.example.kingsapp.fragment.mContext).toString())
-                    val useremail=response.body()!!.home.user_details.email
-                    PreferenceManager().setUserCode(mContext,useremail)
-                    PreferenceManager().setAppversion(mContext, response.body()!!.home.android_version)
-                    versionfromapi =
-                        PreferenceManager().getAppVersion(mContext)!!.replace(".", "")
-                    currentversion = currentversion.replace(".", "")
+                    if (response.body()!!.status.equals("100")) {
+                        val username = response.body()!!.home.user_details.name
+                        PreferenceManager().setuser_id(mContext, username)
+                        Log.e(
+                            "Username",
+                            PreferenceManager().getuser_id(com.example.kingsapp.fragment.mContext)
+                                .toString()
+                        )
+                        val useremail = response.body()!!.home.user_details.email
+                        PreferenceManager().setUserCode(mContext, useremail)
+                        PreferenceManager().setAppversion(
+                            mContext,
+                            response.body()!!.home.android_version
+                        )
+                        versionfromapi =
+                            PreferenceManager().getAppVersion(mContext)!!.replace(".", "")
+                        currentversion = currentversion.replace(".", "")
 
-                    Log.e("APPVERSIONAPI:", versionfromapi)
-                    Log.e("CURRENTVERSION:", currentversion)
+                        Log.e("APPVERSIONAPI:", versionfromapi)
+                        Log.e("CURRENTVERSION:", currentversion)
 
 
-                    if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
-                        if (versionfromapi > currentversion) {
-                            showforceupdate(mContext)
+                        if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
+                            if (versionfromapi > currentversion) {
+                                showforceupdate(mContext)
 
-                        }
+                            }
                     }
 
 

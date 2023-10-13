@@ -64,8 +64,8 @@ internal class SocialMediaRecyclerAdapter(
         }
         else if (socialMediaArrayList.get(position).title.equals("Linkedin"))
         {
-           // holder.cellLinear.setBackgroundResource(R.drawable.curve_linked)
-           // holder.socialMediaIcon.setImageResource(R.mipmap.linkedin)
+            holder.cellLinear.setBackgroundResource(R.drawable.curve_linked)
+            holder.socialMediaIcon.setImageResource(R.mipmap.linkedin)
         }
         else{
             holder.cellLinear.setBackgroundResource(R.drawable.curve_blo)

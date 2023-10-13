@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
     <LinearLayout
@@ -12,13 +11,15 @@
         android:orientation="horizontal"
         android:layout_marginTop="30dp"
         android:weightSum="1">
+
         <ImageView
             android:id="@+id/back"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_weight=".1"
-            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
@@ -26,8 +27,9 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_weight=".7"
-            android:text="Calendar"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:text="Calendar" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
@@ -53,7 +55,7 @@
                 android:layout_height="25dp"
                 android:src="@drawable/message_icon"/>
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/msgTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,11 +115,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            tools:listitem="@layout/student_image_name"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            tools:listitem="@layout/student_image_name" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/black"/>
+            android:background="@color/black" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -135,21 +139,23 @@
                 android:focusableInTouchMode="false"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/greyy"
-                android:text="Venue: KINGS"/>
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:text="Venue: KINGS" />
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="15dp"
-                android:text="More details to folllow"/>
+                android:text="More details to folllow" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/datee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

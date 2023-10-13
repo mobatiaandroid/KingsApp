@@ -25,7 +25,6 @@
     <string name="change_password">Change Password</string>
 
 
-
     <string name="about_us">About Us</string>
     <string name="Select_Child">Select Child</string>
 
@@ -34,7 +33,6 @@
     <string name="registerabsence">Register Absence</string>
     <string name="absencedetails">Absence Details</string>
     <string name="backtlolits">Back to List</string>
-
 
 
     <string name="registerearlypickup">Register Early Pickup</string>
@@ -50,10 +48,8 @@
     <string name="rejetion_for_early_pickup">Rejection for early pickup<font fgcolor='#FF0000'> * </font></string>
 
 
-
     <string name="parent_essentials">Parent Essentials</string>
     <string name="social_media">Social Media</string>
-
 
 
     <string name="school_calendar">School Calendar</string>
@@ -61,7 +57,6 @@
     <string name="show">Show</string>
     <string name="refine_ategory">Refine calendar by category</string>
     <string name="past_events">Past Events:</string>
-
 
 
     <string name="forms">Forms</string>
@@ -91,13 +86,13 @@
     <string name="email_us">Email Us</string>
     <string name="tutorial">Tutorial</string>-->
     <string-array name="setting_list">
-    <item> Change App Settings</item>
-    <item>Terms of Service</item>
-    <item> Feedback </item>
-    <item> Tutorial</item>
+        <item> Change App Settings</item>
+        <item>Terms of Service</item>
+        <item> Feedback </item>
+        <item> Tutorial</item>
         <item> Delete My Account</item>
-    <item>Change Password</item>
-        <item>Logout</item>
+        <item>Change Password</item>
+        <item>Log Out</item>
     </string-array>
 
 
@@ -181,9 +176,9 @@
 
     <string-array name="home_list_items">
         <item>  Home</item>
-        <item>  Student Information </item>
+        <item>  Student Info </item>
         <item>  School Calendar</item>
-        <item>  Parent Comms</item>
+        <item>  Notices</item>
         <item>  Absence Reporting</item>
         <item>  Early Pickup</item>
         <item>  Time Table</item>
@@ -229,7 +224,6 @@
         <!-- 8 -->
 
 
-
     </string-array>
 
     <string-array name="student_list">
@@ -246,11 +240,6 @@
         <item> Information</item>
 
     </string-array>
-
-
-
-
-
 
 
     <string-array name="Months">
@@ -310,8 +299,6 @@
         <item>31  </item>-->
 
 
-
-
     </string-array>
 
 
@@ -343,8 +330,6 @@
     <string name="ten">10</string>
 
 
-
-
     <string name="yearview">Year View</string>
     <string name="monthview">Month View</string>
     <string name="weekview">Week View</string>
@@ -366,11 +351,10 @@
 
     <string name="delete">Delete</string>
 
-    <string name="parentcomms"> Parent Comms</string>
+    <string name="parentcomms"> Notices</string>
 
     <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
     <string name="no_data_found"> No data found</string>
-
 
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>

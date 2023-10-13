@@ -59,7 +59,7 @@
                 android:textStyle="bold" />
 
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
                 android:id="@+id/studentclass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

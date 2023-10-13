@@ -1,7 +1,6 @@
 package com.example.kingsapp.activities.message
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -12,17 +11,13 @@ import android.webkit.WebSettings.PluginState
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 private lateinit var relativeHeader: RelativeLayout
 private lateinit var backRelative: RelativeLayout
@@ -85,7 +80,7 @@ class VideoMessageActivity : AppCompatActivity(){
     {
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
-        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
+        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMMM-yyyy")
         val inputDateStr = createdate
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)

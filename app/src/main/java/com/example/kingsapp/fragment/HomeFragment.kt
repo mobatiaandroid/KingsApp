@@ -31,7 +31,7 @@ import com.example.kingsapp.activities.social_media.SocialMediaActivity
 import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.manager.AppController
-import com.example.kingsapp.manager.NaisClassNameConstants
+import com.example.kingsapp.manager.ClassNameConstants
 import com.example.kingsapp.manager.NaisTabConstants
 import com.example.kingsapp.manager.PreferenceManager
 import java.util.*
@@ -65,20 +65,21 @@ private var mRelSix: RelativeLayout? = null
 private var mRelSeven: RelativeLayout? = null
 
 var isDraggable: Boolean = false
-var key:String=" "
+var key: String = " "
 lateinit var homeActivity: HomeActivity
 lateinit var mSectionText: Array<String?>
-lateinit var mContext:Context
-lateinit var classNameConstants: NaisClassNameConstants
+lateinit var mContext: Context
+lateinit var classNameConstants: ClassNameConstants
 lateinit var naisTabConstants: NaisTabConstants
 lateinit var mListImgArrays: TypedArray
-lateinit var mListItemArray:Array<String>
+lateinit var mListItemArray: Array<String>
 lateinit var TouchedView: View
 private var TAB_ID: String = ""
 
 lateinit var appController: AppController
 var versionfromapi: String = ""
 var currentversion: String = ""
+
 @Suppress(
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS",
     "ControlFlowWithEmptyBody"
@@ -96,7 +97,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         mContext=requireContext()
         homeActivity = activity as HomeActivity
         appController = AppController()
-        classNameConstants = NaisClassNameConstants()
+        classNameConstants = ClassNameConstants()
         naisTabConstants = NaisTabConstants()
         mListItemArray = resources.getStringArray(R.array.home_list_items)
         mListImgArrays = mContext.resources.obtainTypedArray(R.array.home_list_reg_icons)
@@ -843,22 +844,17 @@ Log.e("Sucesss","Sucbnbfhjdevcess")
                                 ignoreCase = true
                             )
                         ) {
-                            Log.e("position",mListItemArray[homeActivity.sPosition])
+                            Log.e("position", mListItemArray[homeActivity.sPosition])
                             isDraggable = false
-                            key="0"
+                            key = "0"
                             break
-                        }
-                     else if(mListItemArray[homeActivity.sPosition].equals("Parent Comms"))
-                        {
+                        } else if (mListItemArray[homeActivity.sPosition].equals("Notices")) {
                             isDraggable = false
-                            key="1"
+                            key = "1"
                             break
-                        }
-
-                        else if(mListItemArray[homeActivity.sPosition].equals("Contact Us"))
-                        {
+                        } else if (mListItemArray[homeActivity.sPosition].equals("Contact Us")) {
                             isDraggable = false
-                            key="1"
+                            key = "1"
                             break
                         }
                     }

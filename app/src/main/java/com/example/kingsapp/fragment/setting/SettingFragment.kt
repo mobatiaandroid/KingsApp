@@ -27,6 +27,7 @@ import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.settings.TermsOfServiceActivity
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.fragment.setting.adapter.SettingAdapter
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -34,7 +35,6 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.example.kingsapp.splash.WelcomeActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.example.kingsapp.constants.api.ApiClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -124,7 +124,7 @@ class SettingFragment: Fragment() {
 
                     if (position == 6) {
 
-                        showSuccessAlertGuest(mContext, "Do you want to Logout?")
+                        showSuccessAlertGuest(mContext, "Do you want to Log Out?")
                     }
 
                 }

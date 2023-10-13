@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" >
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomTimesNewRoman
             android:id="@+id/heading"
             android:layout_width="match_parent"
             android:background="@color/kings_blue"
