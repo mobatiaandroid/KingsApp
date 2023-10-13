@@ -47,6 +47,7 @@ import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
 import com.example.kingsapp.activities.social_media.SocialMediaActivity
 import com.example.kingsapp.activities.student_info.StudentInfoActivity
+import com.example.kingsapp.activities.teacher_contact.TeacherContactActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
 import com.example.kingsapp.adapter.StudentListAdapter
 import com.example.kingsapp.constants.CommonClass
@@ -92,7 +93,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
     //private lateinit var navView: NavigationView
     lateinit var menu_btn: ImageView
-    lateinit var student_profile : ImageView
+    lateinit var student_profile: ImageView
     lateinit var lang_switch: Switch
     lateinit var studentListRecyclerview: RecyclerView
     lateinit var mHomeListView: ListView
@@ -121,14 +122,10 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         loadLocate()
         initFn()
         showfragmenthome()
-        if (PreferenceManager().getAccessToken(mContext).equals(""))
-            {
-       Log.e("Sucess","Success")
-            }
-        else
-
-        {
-            Log.e("Failed","Success")
+        if (PreferenceManager().getAccessToken(mContext).equals("")) {
+            Log.e("Sucess", "Success")
+        } else {
+            Log.e("Failed", "Success")
             callhomeuserApi()
         }
 
@@ -632,14 +629,10 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                                 showforceupdate(mContext)
 
                             }
-                    }
-
-
-                else if(response.body()!!.status.equals("106"))
-                {
-                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
+                        } else if (response.body()!!.status.equals("106")) {
+                            val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                            startActivity(intent)
+                        }
 
                 }
                 else{
@@ -995,16 +988,19 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
-                else if(position==11)
-                {
+                else if (position == 11) {
                     val intent = Intent(mContext, SocialMediaActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
+                } else if (position == 13) {
+                    val intent = Intent(mContext, TeacherContactActivity::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(linearLayout)
+
+                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                } else {
                     if (ActivityCompat.checkSelfPermission(
                             mContext,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -1015,20 +1011,17 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                             mContext,
                             Manifest.permission.CALL_PHONE
                         ) != PackageManager.PERMISSION_GRANTED
-                    )
-                    {
+                    ) {
                         checkPermissionContactUs()
 
 
-                    }
-                    else {
+                    } else {
                         studentListRecyclerview.visibility=View.GONE
                         top_navigation_li.visibility=View.GONE
                         fragment = ContactFragment()
                         replaceFragmentsSelected(position)
                         drawerLayout.closeDrawer(linearLayout)
                     }
-
 
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()

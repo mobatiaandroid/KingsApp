@@ -50,6 +50,7 @@
 
     <string name="parent_essentials">Parent Essentials</string>
     <string name="social_media">Social Media</string>
+    <string name="teacher_contact">Teacher Contact</string>
 
 
     <string name="school_calendar">School Calendar</string>
@@ -188,6 +189,7 @@
         <item>  Apps</item>
         <item>  Social Media</item>
         <item>  Contact Us</item>
+        <item>  Teacher Contact</item>
     </string-array>
 
     <string name="null_value" translatable="false">
@@ -221,6 +223,7 @@
         <item>@drawable/app</item>
         <item>@drawable/social</item>
         <item>@drawable/chatting_clicked</item>
+        <item>@drawable/parent</item>
         <!-- 8 -->
 
 

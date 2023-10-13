@@ -39,7 +39,10 @@
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
             android:name=".activities.teacher_contact.TeacherContactActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.home.HomeActivity"
             android:exported="true"
