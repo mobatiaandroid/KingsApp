@@ -21,6 +21,8 @@ import com.example.kingsapp.activities.parentessentials.model.ParentModel
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.activities.social_media.model.SocialMediaResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
+import com.example.kingsapp.activities.teacher_contact.model.ContactTeacherResponseModel
+import com.example.kingsapp.activities.teacher_contact.model.SubjectTeachersResponseModel
 import com.example.kingsapp.activities.timetable.model.TimeTableResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.fragment.contact.model.ContactusModel
@@ -277,8 +279,26 @@ interface ApiService {
     @POST("api/v1/timetable")
     @Headers("Content-Type: application/json")
     fun timetable(
-        @Header("Authorization") token:String,
+        @Header("Authorization") token: String,
         @Body json: JsonObject
 
     ): Call<TimeTableResponseModel>
+
+    /***************Subject Teachers****************/
+    @POST("api/v1/subject-teachers")
+    @Headers("Content-Type: application/json")
+    fun getSubjectTeachers(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+
+    ): Call<SubjectTeachersResponseModel>
+
+    /******************Contact Teacher*************/
+
+    @POST("api/v1/contact-teacher")
+    @Headers("Content-Type: application/json")
+    fun postContactTeacher(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<ContactTeacherResponseModel>
 }

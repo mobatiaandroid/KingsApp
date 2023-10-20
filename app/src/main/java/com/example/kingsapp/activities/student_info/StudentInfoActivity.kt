@@ -8,7 +8,11 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,12 +28,12 @@ import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -38,6 +42,7 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var name: TextInputEditText
     lateinit var classs: TextInputEditText
     lateinit var address: TextInputEditText
+    lateinit var tutoremail: TextInputEditText
     lateinit var studentName_Text: TextView
     lateinit var studentName: String
     lateinit var studentId: String
@@ -193,11 +198,12 @@ class StudentInfoActivity:AppCompatActivity (){
             ) {
                 progressBarDialog.hide()
                 if (response.body() != null) {
-               if (response.body()!!.status.equals(100))
-               {
+               if (response.body()!!.status.equals(100)) {
                    name.setText(response.body()!!.student_info.fullname)
-                   address.setText(response.body()!!.student_info.address)
+                   address.setText(response.body()!!.student_info.tutorName)
                    classs.setText(response.body()!!.student_info.classs)
+                   tutoremail.setText(response.body()!!.student_info.tutor_email)
+
 
                }
              else
@@ -233,6 +239,7 @@ class StudentInfoActivity:AppCompatActivity (){
         name = findViewById(R.id.name)
         classs = findViewById(R.id.classs)
         address = findViewById(R.id.address)
+        tutoremail = findViewById(R.id.tutoremailtext)
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.backarrow)
         progressBarDialog = ProgressBarDialog(mContext)

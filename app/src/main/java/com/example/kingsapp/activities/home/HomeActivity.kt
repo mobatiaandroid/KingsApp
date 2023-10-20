@@ -917,28 +917,29 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                     drawerLayout.closeDrawer(linearLayout)
                     //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                 }
-                else if(position==3)
-                {
-                    studentListRecyclerview.visibility=View.GONE
-                    top_navigation_li.visibility=View.GONE
+                else if (position == 3) {
+                    studentListRecyclerview.visibility = View.GONE
+                    top_navigation_li.visibility = View.GONE
                     fragment = MessageFragment()
                     replaceFragmentsSelected(position)
                     drawerLayout.closeDrawer(linearLayout)
 
 
                     //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==4)
-                {
+                } else if (position == 4) {
+                    val intent = Intent(mContext, TeacherContactActivity::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(linearLayout)
+
+                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+                } else if (position == 5) {
 
                     val intent = Intent(mContext, AbsenceActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
 
-                }
-                else if(position==5)
-                {
+                } else if (position == 6) {
 
                     val intent = Intent(mContext, EarlyPickupListActivity::class.java)
                     startActivity(intent)
@@ -946,56 +947,39 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
 
                     //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==6)
-                {
+                } else if (position == 7) {
 
                     val intent = Intent(mContext, TimeTableActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
 
-                }
-                else if(position==7)
-                {
+                } else if (position == 8) {
                     val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==8)
-                {
+                } else if (position == 9) {
                     val intent = Intent(mContext, ReportsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==9)
-                {
+                } else if (position == 10) {
                     val intent = Intent(mContext, FormsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==10)
-                {
+                } else if (position == 11) {
                     val intent = Intent(mContext, AppsActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 
                     // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if (position == 11) {
+                } else if (position == 12) {
                     val intent = Intent(mContext, SocialMediaActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                } else if (position == 13) {
-                    val intent = Intent(mContext, TeacherContactActivity::class.java)
                     startActivity(intent)
                     drawerLayout.closeDrawer(linearLayout)
 

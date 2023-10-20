@@ -9,7 +9,11 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,16 +29,15 @@ import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
-import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.fragment.mContext
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.RecyclerItemListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -150,128 +153,128 @@ class AbsenceActivity: AppCompatActivity() {
                 })
         )
         registerabsence.setOnClickListener {
-             val intent = Intent(ncontext, RegisterAbsenceActivity::class.java)
+            val intent = Intent(ncontext, RegisterAbsenceActivity::class.java)
             startActivity(intent)
         }
     }
-    private fun studentListApiCall() {
-//        progressDialog.visibility = View.VISIBLE
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-                PreferenceManager().getAccessToken(ncontext).toString())
-        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
-            override fun onResponse(
-                call: Call<StudentListResponseModel>,
-                response: Response<StudentListResponseModel>
-            ) {
-//                progressDialog.visibility = View.GONE
-
-                Log.e("Response",response.body().toString())
-                if (response.body() != null) {
-                if (response.body()!!.status.equals(100))
-                {
-                    student_name.addAll(response.body()!!.student_list)
-                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(ncontext).toString())
-                    if ( PreferenceManager().getStudent_ID(ncontext).equals(""))
-                    {
-                        studentName=student_name.get(0).fullname
-                        student_class=student_name.get(0).classs
-                        Log.e("StudentName",studentName)
-                        Log.e("student_class",student_class)
-                        studentImg=student_name.get(0).photo
-                        studentId= student_name.get(0).id.toString()
-                        PreferenceManager().setStudent_ID(ncontext,studentId)
-                        PreferenceManager().setStudentName(ncontext,studentName)
-                        PreferenceManager().setStudentPhoto(ncontext,studentImg)
-                        PreferenceManager().setStudentClass(ncontext,student_class)
-                        student_Name.text=studentName
-                        studentclass.text=student_class
-                        if(!studentImg.equals(""))
-                        {
-                            Glide.with(ncontext) //1
-                                .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
-                                .skipMemoryCache(true) //2
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                                .transform(CircleCrop()) //4
-                                .into(imagicon)
-                        }
-                        else{
-                            imagicon.setImageResource(R.drawable.profile_photo)
-                        }
-
-                    }
-                    else{
-
-                        studentName= PreferenceManager().getStudentName(ncontext)!!
-                        Log.e("StudentName",studentName)
-                        student_class= PreferenceManager().getStudentClass(ncontext)!!
-                        studentImg= PreferenceManager().getStudentPhoto(ncontext)!!
-                        studentId= PreferenceManager().getStudent_ID(ncontext)!!
-                        student_Name.text=studentName
-                        studentclass.text=student_class
-                        if(!studentImg.equals(""))
-                        {
-                            Glide.with(ncontext) //1
-                                .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
-                                .skipMemoryCache(true) //2
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                                .transform(CircleCrop()) //4
-                                .into(imagicon)
-                        }
-                        else{
-                            imagicon.setImageResource(R.drawable.profile_photo)
-                        }
-                    }
-                    if(CommonClass.isInternetAvailable(ncontext)) {
-//                        progressDialog.visibility = View.VISIBLE
-                        callStudentLeaveInfo()
-                    }
-                    else{
-                        Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
-
-                    }
-                }
-                else if(response.body()!!.status.equals(106))
-                {
-                    val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
-                else
-                {
-                    CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
-                }
-
-            }
-            else{
-                val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
-                startActivity(intent)
-            }
-            }
-
-            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
-                Toast.makeText(
-                    ncontext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                Log.e("succ", t.message.toString())
-            }
-        })
-    }
+//    private fun studentListApiCall() {
+////        progressDialog.visibility = View.VISIBLE
+//        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
+//                PreferenceManager().getAccessToken(ncontext).toString())
+//        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
+//            override fun onResponse(
+//                call: Call<StudentListResponseModel>,
+//                response: Response<StudentListResponseModel>
+//            ) {
+////                progressDialog.visibility = View.GONE
+//
+//                Log.e("Response",response.body().toString())
+//                if (response.body() != null) {
+//                if (response.body()!!.status.equals(100))
+//                {
+//                    student_name.addAll(response.body()!!.student_list)
+//                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(ncontext).toString())
+//                    if ( PreferenceManager().getStudent_ID(ncontext).equals(""))
+//                    {
+//                        studentName=student_name.get(0).fullname
+//                        student_class=student_name.get(0).classs
+//                        Log.e("StudentName",studentName)
+//                        Log.e("student_class",student_class)
+//                        studentImg=student_name.get(0).photo
+//                        studentId= student_name.get(0).id.toString()
+//                        PreferenceManager().setStudent_ID(ncontext,studentId)
+//                        PreferenceManager().setStudentName(ncontext,studentName)
+//                        PreferenceManager().setStudentPhoto(ncontext,studentImg)
+//                        PreferenceManager().setStudentClass(ncontext,student_class)
+//                        student_Name.text=studentName
+//                        studentclass.text=student_class
+//                        if(!studentImg.equals(""))
+//                        {
+//                            Glide.with(ncontext) //1
+//                                .load(studentImg)
+//                                .placeholder(R.drawable.profile_photo)
+//                                .error(R.drawable.profile_photo)
+//                                .skipMemoryCache(true) //2
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//                                .transform(CircleCrop()) //4
+//                                .into(imagicon)
+//                        }
+//                        else{
+//                            imagicon.setImageResource(R.drawable.profile_photo)
+//                        }
+//
+//                    }
+//                    else{
+//
+//                        studentName= PreferenceManager().getStudentName(ncontext)!!
+//                        Log.e("StudentName",studentName)
+//                        student_class= PreferenceManager().getStudentClass(ncontext)!!
+//                        studentImg= PreferenceManager().getStudentPhoto(ncontext)!!
+//                        studentId= PreferenceManager().getStudent_ID(ncontext)!!
+//                        student_Name.text=studentName
+//                        studentclass.text=student_class
+//                        if(!studentImg.equals(""))
+//                        {
+//                            Glide.with(ncontext) //1
+//                                .load(studentImg)
+//                                .placeholder(R.drawable.profile_photo)
+//                                .error(R.drawable.profile_photo)
+//                                .skipMemoryCache(true) //2
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//                                .transform(CircleCrop()) //4
+//                                .into(imagicon)
+//                        }
+//                        else{
+//                            imagicon.setImageResource(R.drawable.profile_photo)
+//                        }
+//                    }
+//                    if(CommonClass.isInternetAvailable(ncontext)) {
+////                        progressDialog.visibility = View.VISIBLE
+//                        callStudentLeaveInfo()
+//                    }
+//                    else{
+//                        Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+//
+//                    }
+//                }
+//                else if(response.body()!!.status.equals(106))
+//                {
+//                    val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+//                    startActivity(intent)
+//                }
+//                else
+//                {
+//                    CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
+//                }
+//
+//            }
+//            else{
+//                val intent = Intent(ncontext, SigninyourAccountActivity::class.java)
+//                startActivity(intent)
+//            }
+//            }
+//
+//            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+//                Toast.makeText(
+//                    ncontext,
+//                    "Fail to get the data..",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
+//                Log.e("succ", t.message.toString())
+//            }
+//        })
+//    }
 
     private fun callStudentLeaveInfo() {
 //        progressDialog.visibility = View.VISIBLE
-        studentInfoCopy=ArrayList<AbsenceList>()
+        studentInfoCopy = ArrayList<AbsenceList>()
         absenceList.clear()
-        absencelist.visibility=View.GONE
-        val abseneadapter = AbsenceListAdapter(ncontext,absenceList)
+        absencelist.visibility = View.GONE
+        val abseneadapter = AbsenceListAdapter(ncontext, absenceList)
         absencelist.setAdapter(abseneadapter)
         progressBarDialog.show()
-        val studentbody= AbsenceLeaveApiModel(PreferenceManager().getStudent_ID(ncontext)!!,0,20)
+        val studentbody = AbsenceLeaveApiModel(PreferenceManager().getStudent_ID(ncontext)!!, 0, 20)
         val call: Call<AbsenceListModel> = ApiClient.getApiService().absenceList("Bearer "+
                 PreferenceManager().getAccessToken(ncontext).toString(),
             studentbody

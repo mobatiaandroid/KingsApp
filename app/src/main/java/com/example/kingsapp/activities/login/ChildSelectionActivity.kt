@@ -18,10 +18,10 @@ import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -119,11 +119,21 @@ class ChildSelectionActivity:AppCompatActivity() {
                 PreferenceManager().setStudent_ID(ncontext,id.toString())*/
                 PreferenceManager().setStudentName(ncontext, student_name[position].fullname.toString())
                 PreferenceManager().setStudent_ID(ncontext, student_name[position].id.toString())
-                PreferenceManager().setStudentClass(ncontext, student_name[position].classs.toString())
-                PreferenceManager().setStudentPhoto(ncontext, student_name[position].photo.toString())
+                PreferenceManager().setStudentClass(
+                    ncontext,
+                    convertFormat(student_name[position].classs.toString())
+                )
+                PreferenceManager().setStudentPhoto(
+                    ncontext,
+                    student_name[position].photo.toString()
+                )
                 Log.e("Childselid", PreferenceManager().getStudent_ID(ncontext).toString())
-                PreferenceManager().setLanguageschool(ncontext, student_name[position].school_language_type)
-                Log.e("shool",
+                PreferenceManager().setLanguageschool(
+                    ncontext,
+                    student_name[position].school_language_type
+                )
+                Log.e(
+                    "shool",
                     PreferenceManager().getLanguageschool(ncontext)
                         .toString()
                 )
@@ -132,5 +142,11 @@ class ChildSelectionActivity:AppCompatActivity() {
 
         })
 
+
+    }
+
+    fun convertFormat(input: String): String? {
+        // Use regular expressions to replace the extra space between digits and letters
+        return input.replace("(\\d)\\s(\\d)([A-Z])".toRegex(), "$1 $2 $3")
     }
 }

@@ -80,7 +80,8 @@ class CreateAccountActivity:AppCompatActivity() {
             }
             else if(!emailPattern)
             {
-                Toast.makeText(ncontext, "Please enter the valid email !", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ncontext, "Please enter a valid Email ID!", Toast.LENGTH_SHORT)
+                    .show()
             }
             else {
                 if(CommonClass.isInternetAvailable(ncontext)) {

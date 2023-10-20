@@ -29,10 +29,10 @@ import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
 import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
-import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.common.CommonResponse
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.AppUtils
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
@@ -40,7 +40,6 @@ import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 import java.text.DateFormat
@@ -97,120 +96,123 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         context = this
         initFn()
-        if(CommonClass.isInternetAvailable(context)) {
+        if (CommonClass.isInternetAvailable(context)) {
             //studentListApiCall()
-        }
-        else{
-            Toast.makeText(context,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                context,
+                "Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT
+            ).show()
 
         }
     }
 
-    private fun studentListApiCall() {
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-                PreferenceManager().getAccessToken(context).toString())
-        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
-            override fun onResponse(
-                call: Call<StudentListResponseModel>,
-                response: Response<StudentListResponseModel>
-            ) {
-                Log.e("Response",response.body().toString())
-                if (response.body() != null) {
-                if (response.body()!!.status.equals(100))
-                {
-                    student_name.addAll(response.body()!!.student_list)
-                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(context).toString())
-                    if ( PreferenceManager().getStudent_ID(context).equals(""))
-                    {
-                        studentName=student_name.get(0).fullname
-                        student_class=student_name.get(0).classs
-                        Log.e("StudentName",studentName)
-                        Log.e("student_class",student_class)
-                        studentImg=student_name.get(0).photo
-                        studentId= student_name.get(0).id.toString()
-                        PreferenceManager().setStudent_ID(context,studentId)
-                        PreferenceManager().setStudentName(context,studentName)
-                        PreferenceManager().setStudentPhoto(context,studentImg)
-                        PreferenceManager().setStudentClass(context,student_class)
-                        student_Name.text=studentName
-                        studentclass.text=student_class
-                        if(!studentImg.equals(""))
-                        {
-                            Glide.with(context) //1
-                                .load(studentImg)
-                                .placeholder(R.drawable.profile_icon_grey)
-                                .error(R.drawable.profile_icon_grey)
-                                .skipMemoryCache(true) //2
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                                .transform(CircleCrop()) //4
-                                .into(imagicon)
-                        }
-                        else{
-                            imagicon.setImageResource(R.drawable.profile_icon_grey)
-                        }
-
-                    }
-                    else{
-
-                        studentName= PreferenceManager().getStudentName(context)!!
-                        Log.e("StudentName",studentName)
-                        student_class=PreferenceManager().getStudentClass(context)!!
-                        studentImg= PreferenceManager().getStudentPhoto(context)!!
-                        studentId= PreferenceManager().getStudent_ID(context)!!
-                        student_Name.text=studentName
-                        studentclass.text=student_class
-                        if(!studentImg.equals(""))
-                        {
-                            Glide.with(context) //1
-                                .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
-                                .skipMemoryCache(true) //2
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                                .transform(CircleCrop()) //4
-                                .into(imagicon)
-                        }
-                        else{
-                            imagicon.setImageResource(R.drawable.profile_photo)
-                        }
-                    }
-
-                }
-                else if(response.body()!!.status.equals(106))
-                {
-                    val intent = Intent(context, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
-                else
-                {
-                    CommonClass.checkApiStatusError(response.body()!!.status, context)
-                }
-                }
-                else{
-                    val intent = Intent(context, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-
-            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
-                Toast.makeText(
-                    context,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                Log.e("succ", t.message.toString())
-            }
-        })
-    }
+//    private fun studentListApiCall() {
+//        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
+//                PreferenceManager().getAccessToken(context).toString())
+//        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
+//            override fun onResponse(
+//                call: Call<StudentListResponseModel>,
+//                response: Response<StudentListResponseModel>
+//            ) {
+//                Log.e("Response",response.body().toString())
+//                if (response.body() != null) {
+//                if (response.body()!!.status.equals(100))
+//                {
+//                    student_name.addAll(response.body()!!.student_list)
+//                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(context).toString())
+//                    if ( PreferenceManager().getStudent_ID(context).equals(""))
+//                    {
+//                        studentName=student_name.get(0).fullname
+//                        student_class=student_name.get(0).classs
+//                        Log.e("StudentName",studentName)
+//                        Log.e("student_class",student_class)
+//                        studentImg=student_name.get(0).photo
+//                        studentId= student_name.get(0).id.toString()
+//                        PreferenceManager().setStudent_ID(context,studentId)
+//                        PreferenceManager().setStudentName(context,studentName)
+//                        PreferenceManager().setStudentPhoto(context,studentImg)
+//                        PreferenceManager().setStudentClass(context,student_class)
+//                        student_Name.text=studentName
+//                        studentclass.text=student_class
+//                        if(!studentImg.equals(""))
+//                        {
+//                            Glide.with(context) //1
+//                                .load(studentImg)
+//                                .placeholder(R.drawable.profile_icon_grey)
+//                                .error(R.drawable.profile_icon_grey)
+//                                .skipMemoryCache(true) //2
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//                                .transform(CircleCrop()) //4
+//                                .into(imagicon)
+//                        }
+//                        else{
+//                            imagicon.setImageResource(R.drawable.profile_icon_grey)
+//                        }
+//
+//                    }
+//                    else{
+//
+//                        studentName= PreferenceManager().getStudentName(context)!!
+//                        Log.e("StudentName",studentName)
+//                        student_class=PreferenceManager().getStudentClass(context)!!
+//                        studentImg= PreferenceManager().getStudentPhoto(context)!!
+//                        studentId= PreferenceManager().getStudent_ID(context)!!
+//                        student_Name.text=studentName
+//                        studentclass.text=student_class
+//                        if(!studentImg.equals(""))
+//                        {
+//                            Glide.with(context) //1
+//                                .load(studentImg)
+//                                .placeholder(R.drawable.profile_photo)
+//                                .error(R.drawable.profile_photo)
+//                                .skipMemoryCache(true) //2
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//                                .transform(CircleCrop()) //4
+//                                .into(imagicon)
+//                        }
+//                        else{
+//                            imagicon.setImageResource(R.drawable.profile_photo)
+//                        }
+//                    }
+//
+//                }
+//                else if(response.body()!!.status.equals(106))
+//                {
+//                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+//                    startActivity(intent)
+//                }
+//                else
+//                {
+//                    CommonClass.checkApiStatusError(response.body()!!.status, context)
+//                }
+//                }
+//                else{
+//                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+//                    startActivity(intent)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+//                Toast.makeText(
+//                    context,
+//                    "Fail to get the data..",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
+//                Log.e("succ", t.message.toString())
+//            }
+//        })
+//    }
 
     @SuppressLint("ResourceAsColor")
     private fun initFn() {
 
         student_name = ArrayList()
-        imagicon=findViewById(R.id.imagicon)
-        studentclass=findViewById(R.id.studentclass)
-        relativieabsence=findViewById(R.id.relativieabsence)
+        imagicon = findViewById(R.id.imagicon)
+        studentclass = findViewById(R.id.studentclass)
+        relativieabsence = findViewById(R.id.relativieabsence)
         first_day_of_absencetext = findViewById(R.id.first_day_of_absencetext)
         return_absence_text = findViewById(R.id.return_absence_text)
       //  reasonforabsence = findViewById(R.id.reasonforabsence)

@@ -40,18 +40,32 @@ class StudentListAdapter(
         return MyViewHolder(itemView)
     }
 
+    fun convertFormat(input: String): String? {
+        // Use regular expressions to replace the extra space between digits and letters
+        return input.replace("(\\d)\\s(\\d)([A-Z])".toRegex(), "$1 $2 $3")
+    }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var flag:Boolean = true
-        Log.e("list",parentassoictionlist.toString())
+        var flag: Boolean = true
+        Log.e("list", parentassoictionlist.toString())
         val list = parentassoictionlist[position].fullname
 
         holder.stud_profile.setImageResource(R.drawable.profile_photo)
 
         holder.stud_profile.setOnClickListener {
-            PreferenceManager().setStudentName(context, parentassoictionlist[position].fullname.toString())
+            PreferenceManager().setStudentName(
+                context,
+                parentassoictionlist[position].fullname.toString()
+            )
             PreferenceManager().setStudent_ID(context, parentassoictionlist[position].id.toString())
-            PreferenceManager().setStudentClass(context, parentassoictionlist[position].classs.toString())
-            PreferenceManager().setStudentPhoto(context, parentassoictionlist[position].photo.toString())
+            PreferenceManager().setStudentClass(
+                context,
+                convertFormat(parentassoictionlist[position].classs.toString())
+            )
+            PreferenceManager().setStudentPhoto(
+                context,
+                parentassoictionlist[position].photo.toString()
+            )
             PreferenceManager().setLanguageschool(context, parentassoictionlist[position].school_language_type)
             Log.e("shool",
                 PreferenceManager().getLanguageschool(context)

@@ -180,6 +180,7 @@
         <item>  Student Info </item>
         <item>  School Calendar</item>
         <item>  Notices</item>
+        <item>  Teacher Contact</item>
         <item>  Absence Reporting</item>
         <item>  Early Pickup</item>
         <item>  Time Table</item>
@@ -189,7 +190,6 @@
         <item>  Apps</item>
         <item>  Social Media</item>
         <item>  Contact Us</item>
-        <item>  Teacher Contact</item>
     </string-array>
 
     <string name="null_value" translatable="false">
@@ -208,6 +208,7 @@
         <!-- 4 -->
         <item>@drawable/calender4</item>
         <item>@drawable/message_white</item>
+        <item>@drawable/meeting</item>
         <item>@drawable/absence4</item>
         <item>@drawable/earlypickup</item>
         <item>@drawable/timetable4</item>
@@ -223,7 +224,6 @@
         <item>@drawable/app</item>
         <item>@drawable/social</item>
         <item>@drawable/chatting_clicked</item>
-        <item>@drawable/parent</item>
         <!-- 8 -->
 
 

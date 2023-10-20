@@ -14,5 +14,7 @@ class StudentInfo (
         @SerializedName("contact_number") val contact_number: String,
         @SerializedName("academicYear") val academicYear: String,
         @SerializedName("joinDate") val joinDate: String,
-        @SerializedName("address") val address: String
+        @SerializedName("address") val address: String,
+        @SerializedName("tutor_name") val tutorName: String,
+        @SerializedName("tutor_email") val tutor_email: String,
 )

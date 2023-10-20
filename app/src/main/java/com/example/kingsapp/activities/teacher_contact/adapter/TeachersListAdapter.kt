@@ -7,9 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.teacher_contact.model.TeacherModel
 
@@ -39,16 +36,16 @@ class TeachersListAdapterRecyclerView(context: Context, teachersList: ArrayList<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.teacherName.text = teachersList[position].name
-        holder.teacherRole.text = teachersList[position].designation
-        Glide.with(context) //1
-            .load("")
-            .placeholder(R.drawable.student)
-            .error(R.drawable.student)
-            .skipMemoryCache(true) //2
-            .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-            .transform(CircleCrop()) //4
-            .into(holder.teacherPhoto)        //detailArray.addAll(name[position].data)
+        holder.teacherName.text = teachersList[position].staff_name
+        holder.teacherRole.text = teachersList[position].subject
+//        Glide.with(context) //1
+//            .load("")
+//            .placeholder(null)
+//            .error(R.drawable.user)
+//            .skipMemoryCache(true) //2
+//            .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//            .transform(CircleCrop()) //4
+//            .into(holder.teacherPhoto)        //detailArray.addAll(name[position].data)
 
     }
 

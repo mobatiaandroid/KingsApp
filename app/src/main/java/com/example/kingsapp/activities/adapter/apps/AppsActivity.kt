@@ -7,7 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,16 +26,15 @@ import com.example.kingsapp.activities.adapter.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
-import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.PdfReaderActivity
 import com.example.kingsapp.constants.ProgressBarDialog
 import com.example.kingsapp.constants.WebViewLoaderActivity
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -67,125 +70,129 @@ class AppsActivity:AppCompatActivity() {
         initFn()
         if(CommonClass.isInternetAvailable(mContext)) {
             appsInfoApiCall()
-           // studentListApiCall()
-        }
-        else{
-            Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",
-                Toast.LENGTH_SHORT).show()
+            // studentListApiCall()
+        } else {
+            Toast.makeText(
+                mContext,
+                "Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT
+            ).show()
 
         }
 
     }
 
-    private fun studentListApiCall() {
-
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-                PreferenceManager().getAccessToken(mContext).toString())
-        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
-            override fun onResponse(
-                call: Call<StudentListResponseModel>,
-                response: Response<StudentListResponseModel>
-            ) {
-              //  progressDialog.visibility = View.GONE
-                Log.e("Response",response.body().toString())
-                if (response.body() != null) {
-                if (response.body()!!.status.equals(100))
-                {
-                    student_name.addAll(response.body()!!.student_list)
-                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(mContext).toString())
-                    if ( PreferenceManager().getStudent_ID(mContext).equals(""))
-                    {
-                        studentName=student_name.get(0).fullname
-                        student_class=student_name.get(0).classs
-                        Log.e("StudentName",studentName)
-                        Log.e("student_class",student_class)
-                        studentImg=student_name.get(0).photo
-                        studentId= student_name.get(0).id.toString()
-                        PreferenceManager().setStudent_ID(mContext,studentId)
-                        PreferenceManager().setStudentName(mContext,studentName)
-                        PreferenceManager().setStudentPhoto(mContext,studentImg)
-                        PreferenceManager().setStudentClass(mContext,student_class)
-
-                        studentName_Text.text=studentName
-                        studentclass.text=student_class
-                        if(!studentImg.equals(""))
-                        {
-                            Glide.with(mContext) //1
-                                .load(studentImg)
-                                .placeholder(R.drawable.profile_photo)
-                                .error(R.drawable.profile_photo)
-                                .skipMemoryCache(true) //2
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                                .transform(CircleCrop()) //4
-                                .into(imagicon)
-                        }
-                        else{
-                            imagicon.setImageResource(R.drawable.profile_photo)
-                        }
-
-                    }
-                    else{
-
-                        studentName= PreferenceManager().getStudentName(mContext)!!
-                        Log.e("StudentName",studentName)
-                        studentImg= PreferenceManager().getStudentPhoto(mContext)!!
-                        studentId= PreferenceManager().getStudent_ID(mContext)!!
-                        student_class=PreferenceManager().getStudentClass(mContext)!!
-                        studentName_Text.text=studentName
-                        studentclass.text=student_class
-                        if(!studentImg.equals(""))
-                        {
-                            Glide.with(mContext) //1
-                                .load(studentImg)
-                                .placeholder(R.drawable.profile_icon_grey)
-                                .error(R.drawable.profile_icon_grey)
-                                .skipMemoryCache(true) //2
-                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                                .transform(CircleCrop()) //4
-                                .into(imagicon)
-                        }
-                        else{
-                            imagicon.setImageResource(R.drawable.profile_icon_grey)
-                        }
-                    }
-                    if(CommonClass.isInternetAvailable(mContext)) {
-                        appsInfoApiCall()
-                    }
-                    else{
-                        Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
-
-                    }
-                }
-                else
-                {
-                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
-                }
-                }
-                else{
-                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-
-            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
-                Toast.makeText(
-                    mContext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                Log.e("succ", t.message.toString())
-            }
-        })
-    }
+//    private fun studentListApiCall() {
+//
+//        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
+//                PreferenceManager().getAccessToken(mContext).toString())
+//        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
+//            override fun onResponse(
+//                call: Call<StudentListResponseModel>,
+//                response: Response<StudentListResponseModel>
+//            ) {
+//              //  progressDialog.visibility = View.GONE
+//                Log.e("Response",response.body().toString())
+//                if (response.body() != null) {
+//                if (response.body()!!.status.equals(100))
+//                {
+//                    student_name.addAll(response.body()!!.student_list)
+//                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(mContext).toString())
+//                    if ( PreferenceManager().getStudent_ID(mContext).equals(""))
+//                    {
+//                        studentName=student_name.get(0).fullname
+//                        student_class=student_name.get(0).classs
+//                        Log.e("StudentName",studentName)
+//                        Log.e("student_class",student_class)
+//                        studentImg=student_name.get(0).photo
+//                        studentId= student_name.get(0).id.toString()
+//                        PreferenceManager().setStudent_ID(mContext,studentId)
+//                        PreferenceManager().setStudentName(mContext,studentName)
+//                        PreferenceManager().setStudentPhoto(mContext,studentImg)
+//                        PreferenceManager().setStudentClass(mContext,student_class)
+//
+//                        studentName_Text.text=studentName
+//                        studentclass.text=student_class
+//                        if(!studentImg.equals(""))
+//                        {
+//                            Glide.with(mContext) //1
+//                                .load(studentImg)
+//                                .placeholder(R.drawable.profile_photo)
+//                                .error(R.drawable.profile_photo)
+//                                .skipMemoryCache(true) //2
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//                                .transform(CircleCrop()) //4
+//                                .into(imagicon)
+//                        }
+//                        else{
+//                            imagicon.setImageResource(R.drawable.profile_photo)
+//                        }
+//
+//                    }
+//                    else{
+//
+//                        studentName= PreferenceManager().getStudentName(mContext)!!
+//                        Log.e("StudentName",studentName)
+//                        studentImg= PreferenceManager().getStudentPhoto(mContext)!!
+//                        studentId= PreferenceManager().getStudent_ID(mContext)!!
+//                        student_class=PreferenceManager().getStudentClass(mContext)!!
+//                        studentName_Text.text=studentName
+//                        studentclass.text=student_class
+//                        if(!studentImg.equals(""))
+//                        {
+//                            Glide.with(mContext) //1
+//                                .load(studentImg)
+//                                .placeholder(R.drawable.profile_icon_grey)
+//                                .error(R.drawable.profile_icon_grey)
+//                                .skipMemoryCache(true) //2
+//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
+//                                .transform(CircleCrop()) //4
+//                                .into(imagicon)
+//                        }
+//                        else{
+//                            imagicon.setImageResource(R.drawable.profile_icon_grey)
+//                        }
+//                    }
+//                    if(CommonClass.isInternetAvailable(mContext)) {
+//                        appsInfoApiCall()
+//                    }
+//                    else{
+//                        Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+//
+//                    }
+//                }
+//                else
+//                {
+//                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+//                }
+//                }
+//                else{
+//                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+//                    startActivity(intent)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
+//                Toast.makeText(
+//                    mContext,
+//                    "Fail to get the data..",
+//                    Toast.LENGTH_SHORT
+//                )
+//                    .show()
+//                Log.e("succ", t.message.toString())
+//            }
+//        })
+//    }
 
     private fun appsInfoApiCall() {
         list_name = ArrayList()
-       progressBarDialog.show()
-        val call: Call<AppsModel> = ApiClient.getApiService().apps("Bearer "+
-                PreferenceManager().getAccessToken(mContext).toString(),
+        progressBarDialog.show()
+        val call: Call<AppsModel> = ApiClient.getApiService().apps(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mContext).toString(),
             PreferenceManager().getStudent_ID(mContext).toString(),
-            PreferenceManager().getLanguagetype(mContext).toString())
+            PreferenceManager().getLanguagetype(mContext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<AppsModel> {
             override fun onResponse(
                 call: Call<AppsModel>,
