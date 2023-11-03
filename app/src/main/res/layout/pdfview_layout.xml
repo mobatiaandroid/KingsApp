@@ -23,12 +23,13 @@
                 android:layout_marginTop="10dp"
                 android:src="@color/kings_blue" />
 
-            <com.example.kingsapp.manager.font.CustomTimesNewRoman
+            <com.example.kingsapp.manager.font.CustomTimeLTSBold
                 android:id="@+id/logoClickImgView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:text="pdf"
+                android:text="PDF"
+                android:textSize="28dp"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@drawable/logotransperent" />

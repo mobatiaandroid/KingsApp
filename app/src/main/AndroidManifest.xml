@@ -229,7 +229,7 @@
             android:theme="@style/Theme.Kings_Edu"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activities.adapter.apps.AppsActivity"
+            android:name=".activities.apps.AppsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
             android:windowSoftInputMode="stateHidden|adjustResize" />

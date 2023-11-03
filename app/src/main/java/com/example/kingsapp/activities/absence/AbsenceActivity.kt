@@ -10,7 +10,6 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,11 +20,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.adapter.AbsenceListAdapter
+import com.example.kingsapp.activities.absence.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
 import com.example.kingsapp.activities.absence.model.AbsenceList
 import com.example.kingsapp.activities.absence.model.AbsenceListModel
-import com.example.kingsapp.activities.adapter.AbsenceListAdapter
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -48,12 +47,13 @@ class AbsenceActivity: AppCompatActivity() {
     lateinit var student_Name: TextView
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var registerabsence: RelativeLayout
-    lateinit var studentSpinner:LinearLayout
+
+    //    lateinit var studentSpinner:LinearLayout
     lateinit var backarrow_absense: ImageView
     lateinit var progressBarDialog: ProgressBarDialog
     var mListAdapter: AbsenceListAdapter? = null
     lateinit var absenceList: ArrayList<AbsenceList>
-    lateinit var studentInfoCopy :ArrayList<AbsenceList>
+    lateinit var studentInfoCopy: ArrayList<AbsenceList>
 
     lateinit var student_name: ArrayList<StudentList>
 
@@ -90,7 +90,7 @@ class AbsenceActivity: AppCompatActivity() {
         student_name = ArrayList()
         studentclass = findViewById(R.id.studentclass)
         imagicon = findViewById(R.id.imagicon)
-        studentSpinner = findViewById(R.id.studentSpinner)
+//        studentSpinner = findViewById(R.id.studentSpinner)
 //        progressDialog = findViewById(R.id.progressDialog)
         progressBarDialog = ProgressBarDialog(ncontext)
         val aniRotate: Animation =
@@ -272,7 +272,7 @@ class AbsenceActivity: AppCompatActivity() {
         absenceList.clear()
         absencelist.visibility = View.GONE
         val abseneadapter = AbsenceListAdapter(ncontext, absenceList)
-        absencelist.setAdapter(abseneadapter)
+        absencelist.adapter = abseneadapter
         progressBarDialog.show()
         val studentbody = AbsenceLeaveApiModel(PreferenceManager().getStudent_ID(ncontext)!!, 0, 20)
         val call: Call<AbsenceListModel> = ApiClient.getApiService().absenceList("Bearer "+
@@ -294,7 +294,7 @@ class AbsenceActivity: AppCompatActivity() {
                             absencelist.visibility = View.VISIBLE
                             Log.e("name", absenceList.toString())
                             val abseneadapter = AbsenceListAdapter(ncontext, absenceList)
-                        absencelist.setAdapter(abseneadapter)
+                            absencelist.adapter = abseneadapter
                     }
                     else
                     {
@@ -340,10 +340,10 @@ class AbsenceActivity: AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)
-        dialog.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
         var rel = dialog.findViewById<RecyclerView>(R.id.rel2)!! as RelativeLayout
-        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!! as ImageView
+        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!!
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(ncontext)
@@ -351,7 +351,7 @@ class AbsenceActivity: AppCompatActivity() {
             AbsenceStudentListAdapter(
                 ncontext,
                 student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view.adapter = studentlist_adapter
 
         crossicon.setOnClickListener {
             dialog.dismiss()
@@ -363,8 +363,8 @@ Log.e("view", view.toString())
                 var name: String = student_name.get(position).fullname
                 var classs: String = student_name.get(position).classs
                 var id: Int = student_name.get(position).id
-                student_Name.setText(name)
-                studentclass.text=classs
+                student_Name.text = name
+                studentclass.text = classs
                 PreferenceManager().setStudent_ID(ncontext,id.toString())
                 PreferenceManager().setStudentName(ncontext,name)
 //                progressDialog.visibility = View.VISIBLE

@@ -7,6 +7,17 @@
     android:background="@color/kings_blue">
 
 
+    <ImageView
+        android:id="@+id/imageView_staff2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/backarrow" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -52,9 +63,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
+                android:background="@drawable/rectangle_with_full_white"
                 android:gravity="center|start"
                 android:hint="@string/search"
-                android:background="@drawable/rectangle_with_full_white"
                 android:textColorHint="@color/grey"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -81,21 +92,23 @@
         android:id="@+id/imageView_staff"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <com.example.kingsapp.manager.font.CustomTimesNewRoman
+    <com.example.kingsapp.manager.font.CustomTimeLTSBold
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/staff_directory"
-        android:textSize="20sp"
         android:textColor="@color/white"
+        android:textSize="28dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_staff2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_staff"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

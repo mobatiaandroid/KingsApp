@@ -5,7 +5,7 @@ import android.content.Context
 import com.example.kingsapp.activities.absence.model.AbsenceLeaveApiModel
 import com.example.kingsapp.activities.absence.model.AbsenceListModel
 import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
-import com.example.kingsapp.activities.adapter.apps.model.AppsModel
+import com.example.kingsapp.activities.apps.model.AppsModel
 import com.example.kingsapp.activities.calender.model.CalendarListModel
 import com.example.kingsapp.activities.calender.model.CalendarResponseModel
 import com.example.kingsapp.activities.early_pickup.model.EarlyPickupListModel

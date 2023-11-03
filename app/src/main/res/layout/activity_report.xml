@@ -23,104 +23,68 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2">
 
 
-        <LinearLayout
-            android:id="@+id/linearlayoutstudentlist"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout7"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
             android:background="@drawable/rect_teal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            tools:layout_editor_absoluteX="16dp">
+
 
             <ImageView
                 android:id="@+id/imagicon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="16sp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/profile_photo" />
+                android:src="@drawable/profile_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-
-            <LinearLayout
+            <com.example.kingsapp.manager.font.CustomTimeLTStandard
+                android:id="@+id/studentName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="80"
-                android:orientation="vertical">
+                android:layout_marginStart="16sp"
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/studentclass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon"
+                tools:text="Sanju Sabu" />
 
 
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:gravity="left|center"
-                    android:layout_marginTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentclass"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:paddingLeft="10dp"
-                    android:text=""
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-            <ImageView
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                android:id="@+id/studentclass"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="right|center"
-                android:layout_weight="12"
-                android:src="@drawable/chevron_right"
-                android:visibility="gone" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toBottomOf="@+id/studentName"
+                tools:text="10 B" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <include
-                android:id="@+id/progressDialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                layout="@layout/custom_progress_layout"
-                android:visibility="gone" />
-
-        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reportrec"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
-            tools:listitem="@layout/item_about_us"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearlayoutstudentlist" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
+            tools:listitem="@layout/item_about_us" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -133,12 +97,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <com.example.kingsapp.manager.font.CustomTimesNewRoman
+    <com.example.kingsapp.manager.font.CustomTimeLTSBold
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reports"
-        android:textSize="20sp"
+        android:textSize="28dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"

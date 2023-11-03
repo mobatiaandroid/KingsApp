@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.home.model.HomeUserResponseModel
-import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.constants.api.ApiClient
+import com.example.kingsapp.manager.PreferenceManager
 import retrofit2.Call
 import retrofit2.Response
 
-class SplashActivity: AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     lateinit var mContext: Context
     private val SPLASH_TIME_OUT: Long = 3000
     var firebaseid: String = ""
@@ -30,44 +30,42 @@ class SplashActivity: AppCompatActivity() {
 
         Handler().postDelayed({
             Log.e("Username", PreferenceManager().getuser_id(mContext).toString())
-            if (PreferenceManager().getAccessToken(mContext).equals(""))
-            {
+            if (PreferenceManager().getAccessToken(mContext).equals("")) {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
-            }
-            else
-            {
-                Log.e("Failed","Success")
+            } else {
+                Log.e("Failed", "Success")
                 callhomeuserApi()
             }
 
         }, SPLASH_TIME_OUT)
     }
+
     private fun callhomeuserApi() {
         Log.e("token", PreferenceManager().getAccessToken(mContext).toString())
-        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser("Bearer "+PreferenceManager().getAccessToken(
-            mContext
+        val call: Call<HomeUserResponseModel> = ApiClient.getApiService().homeuser(
+            "Bearer " + PreferenceManager().getAccessToken(
+                mContext
+            )
+                .toString()
         )
-            .toString())
         call.enqueue(object : retrofit2.Callback<HomeUserResponseModel> {
             override fun onResponse(
                 call: Call<HomeUserResponseModel>,
                 response: Response<HomeUserResponseModel>
             ) {
-                Log.e("respon",response.body().toString())
+                Log.e("respon", response.body().toString())
                 if (response.body() != null) {
 
-                    if(response.body()!!.status.equals("100"))
-                    {
+                    if (response.body()!!.status.equals("100")) {
+
                         val intent = Intent(mContext, HomeActivity::class.java)
                         startActivity(intent)
 
-                    }
-                    else{
+                    } else {
                         // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
-                }
-                else{
+                } else {
                     val intent = Intent(mContext, WelcomeActivity::class.java)
                     startActivity(intent)
                 }

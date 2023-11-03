@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/kings_blue">
     <LinearLayout
         android:id="@+id/li"
@@ -10,6 +11,7 @@
         android:layout_height="100dp"
         android:orientation="horizontal"
         android:weightSum="3">
+
         <ImageView
             android:id="@+id/backarrow_registerabsence"
             android:layout_width="0dp"
@@ -19,15 +21,17 @@
             android:layout_weight="1">
 
         </ImageView>
-        <com.example.kingsapp.manager.font.CustomTimesNewRoman
+
+        <com.example.kingsapp.manager.font.CustomTimeLTSBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="28dp"
             android:text="@string/registerabsence" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,69 +51,53 @@
         android:background="@drawable/bg"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/studentSpinner"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rect_teal"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:background="@drawable/rect_teal">
 
             <ImageView
                 android:id="@+id/imagicon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="16sp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/profile_photo" />
+                android:src="@drawable/profile_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <com.example.kingsapp.manager.font.CustomTimeLTStandard
+                android:id="@+id/studentName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="80"
-                android:orientation="vertical">
+                android:layout_marginStart="16sp"
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/studentclass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon"
+                tools:text="Sanju Sabu" />
 
 
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentclass"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:paddingLeft="10dp"
-                    android:text=""
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <ImageView
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                android:id="@+id/studentclass"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:layout_gravity="right|center"
-                android:layout_weight="12"
-                android:src="@drawable/chevron_right"
-                android:visibility="gone" />
-
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toBottomOf="@+id/studentName"
+                tools:text="10 B" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/first_day_of_absencetext"

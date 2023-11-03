@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/kings_blue">
 
     <androidx.constraintlayout.widget.Guideline
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/googleMap"
             android:visibility="visible">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -47,13 +49,24 @@
                 android:justificationMode="inter_word"
                 android:orientation="vertical">
 
+                <com.example.kingsapp.manager.font.CustomMontserratBold
+                    android:id="@+id/schoolNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:text="Kings' School Dubai" />
+
                 <com.example.kingsapp.manager.font.CustomMontserratMedium
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/descriptiontext"
+                    android:gravity="center"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/black"
                     android:text="" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/contact_usrecyclerview"
                     android:layout_width="match_parent"
@@ -89,12 +102,12 @@
         app:srcCompat="@drawable/backarrow" />
 
 
-    <com.example.kingsapp.manager.font.CustomTimesNewRoman
+    <com.example.kingsapp.manager.font.CustomTimeLTSBold
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ContactUs"
-        android:textSize="20sp"
+        android:textSize="28dp"
         android:textColor="@color/white"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"

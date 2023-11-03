@@ -60,7 +60,7 @@ class CreateAccountActivity:AppCompatActivity() {
 
     private fun initFn() {
         signin = findViewById(R.id.signin)
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar)
         createacconttextview = findViewById(R.id.textView23)
         textView24 = findViewById(R.id.textView24)
         txtProgress = findViewById(R.id.textView)
@@ -110,8 +110,9 @@ class CreateAccountActivity:AppCompatActivity() {
                 progressBarDialog.hide()
                 if (response.body()!!.status.equals(100)) {
                     Log.e("Response", response.body().toString())
-                    createacconttextview.setText("Account created")
-                    textView24.setText("We have send your username and password to your given Email ID")
+                    createacconttextview.text = "Account created"
+                    textView24.text =
+                        "We have send your username and password to your given Email ID"
                     signin.visibility = View.GONE
                     passwordTextInputLayout.visibility = View.GONE
                     val animZoomIn = AnimationUtils.loadAnimation(ncontext, R.anim.zoom_in)
@@ -120,10 +121,10 @@ class CreateAccountActivity:AppCompatActivity() {
                     Thread {
                         while (pStatus <= 100) {
                             handler.post {
-                                progressBar?.setProgress(pStatus)
-                                txtProgress?.setText("$pStatus %")
+                                progressBar?.progress = pStatus
+                                txtProgress.text = "$pStatus %"
                                 while (pStatus == 100) {
-                                    (image.getDrawable() as Animatable).start()
+                                    (image.drawable as Animatable).start()
                                 }
                             }
                             try {

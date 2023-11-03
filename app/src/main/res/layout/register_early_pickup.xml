@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/kings_blue">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/li"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -18,15 +18,19 @@
 
         <ImageView
             android:id="@+id/backarrow_registerabsence"
-            android:layout_width="0dp"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/backarrow">
+            android:layout_marginStart="16sp"
+            android:src="@drawable/backarrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </ImageView>
 
-        <com.example.kingsapp.manager.font.CustomTimesNewRoman
+        <com.example.kingsapp.manager.font.CustomTimeLTSBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -34,17 +38,14 @@
             android:gravity="center"
             android:text="@string/registerearlypickup"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="28dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -54,93 +55,81 @@
         android:background="@drawable/bak_bg"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/featureLinear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/li">
 
-        <LinearLayout
-            android:id="@+id/studentSpinner"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
             android:background="@drawable/rect_teal"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="100"
-            app:layout_constraintBottom_toTopOf="@+id/first_day_of_absencetext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
             <ImageView
                 android:id="@+id/imagicon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="16sp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/profile_photo" />
+                android:src="@drawable/profile_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+
+            <com.example.kingsapp.manager.font.CustomTimeLTStandard
+                android:id="@+id/studentName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="80"
-                android:orientation="vertical">
+                android:layout_marginStart="16sp"
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/studentclass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon"
+                tools:text="Sanju Sabu" />
 
 
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="40"
-                    android:gravity="left|center"
-
-                    android:paddingLeft="10dp"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentclass"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:paddingLeft="10dp"
-                    android:text=""
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <ImageView
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                android:id="@+id/studentclass"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:layout_gravity="right|center"
-                android:layout_weight="12"
-                android:src="@drawable/chevron_right"
-                android:visibility="gone" />
-
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toBottomOf="@+id/studentName"
+                tools:text="10 B" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/first_day_of_absencetext"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/day_of_pickup"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
-            android:hint="@string/day_of_pickup"
             android:textColorHint="@color/border_grey"
             app:boxStrokeColor="@color/border_grey"
             app:endIconDrawable="@drawable/ic_baseline_calendar_today_24"
             app:endIconMode="custom"
             app:hintTextColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/return_absence_text"
-            app:layout_constraintTop_toBottomOf="@+id/studentSpinner"
-            tools:layout_editor_absoluteX="20dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstdayofabsence"

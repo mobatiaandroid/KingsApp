@@ -19,14 +19,15 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.absence.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.absence.model.RequestAbsenceApiModel
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.common.CommonResponse
@@ -54,7 +55,7 @@ lateinit var reason_for_absence : TextInputEditText
 lateinit var reasonforabsence : TextInputLayout
 lateinit var first_day_of_absencetext: TextInputLayout
 lateinit var return_absence_text: TextInputLayout
-lateinit var studentSpinner: LinearLayout
+lateinit var studentSpinner: ConstraintLayout
 lateinit var student_Name: TextView
 lateinit var studentName: String
 lateinit var studentId: String
@@ -108,104 +109,6 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         }
     }
 
-//    private fun studentListApiCall() {
-//        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-//                PreferenceManager().getAccessToken(context).toString())
-//        call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
-//            override fun onResponse(
-//                call: Call<StudentListResponseModel>,
-//                response: Response<StudentListResponseModel>
-//            ) {
-//                Log.e("Response",response.body().toString())
-//                if (response.body() != null) {
-//                if (response.body()!!.status.equals(100))
-//                {
-//                    student_name.addAll(response.body()!!.student_list)
-//                    Log.e("StudentNameid", PreferenceManager().getStudent_ID(context).toString())
-//                    if ( PreferenceManager().getStudent_ID(context).equals(""))
-//                    {
-//                        studentName=student_name.get(0).fullname
-//                        student_class=student_name.get(0).classs
-//                        Log.e("StudentName",studentName)
-//                        Log.e("student_class",student_class)
-//                        studentImg=student_name.get(0).photo
-//                        studentId= student_name.get(0).id.toString()
-//                        PreferenceManager().setStudent_ID(context,studentId)
-//                        PreferenceManager().setStudentName(context,studentName)
-//                        PreferenceManager().setStudentPhoto(context,studentImg)
-//                        PreferenceManager().setStudentClass(context,student_class)
-//                        student_Name.text=studentName
-//                        studentclass.text=student_class
-//                        if(!studentImg.equals(""))
-//                        {
-//                            Glide.with(context) //1
-//                                .load(studentImg)
-//                                .placeholder(R.drawable.profile_icon_grey)
-//                                .error(R.drawable.profile_icon_grey)
-//                                .skipMemoryCache(true) //2
-//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-//                                .transform(CircleCrop()) //4
-//                                .into(imagicon)
-//                        }
-//                        else{
-//                            imagicon.setImageResource(R.drawable.profile_icon_grey)
-//                        }
-//
-//                    }
-//                    else{
-//
-//                        studentName= PreferenceManager().getStudentName(context)!!
-//                        Log.e("StudentName",studentName)
-//                        student_class=PreferenceManager().getStudentClass(context)!!
-//                        studentImg= PreferenceManager().getStudentPhoto(context)!!
-//                        studentId= PreferenceManager().getStudent_ID(context)!!
-//                        student_Name.text=studentName
-//                        studentclass.text=student_class
-//                        if(!studentImg.equals(""))
-//                        {
-//                            Glide.with(context) //1
-//                                .load(studentImg)
-//                                .placeholder(R.drawable.profile_photo)
-//                                .error(R.drawable.profile_photo)
-//                                .skipMemoryCache(true) //2
-//                                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-//                                .transform(CircleCrop()) //4
-//                                .into(imagicon)
-//                        }
-//                        else{
-//                            imagicon.setImageResource(R.drawable.profile_photo)
-//                        }
-//                    }
-//
-//                }
-//                else if(response.body()!!.status.equals(106))
-//                {
-//                    val intent = Intent(context, SigninyourAccountActivity::class.java)
-//                    startActivity(intent)
-//                }
-//                else
-//                {
-//                    CommonClass.checkApiStatusError(response.body()!!.status, context)
-//                }
-//                }
-//                else{
-//                    val intent = Intent(context, SigninyourAccountActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
-//                Toast.makeText(
-//                    context,
-//                    "Fail to get the data..",
-//                    Toast.LENGTH_SHORT
-//                )
-//                    .show()
-//                Log.e("succ", t.message.toString())
-//            }
-//        })
-//    }
-
     @SuppressLint("ResourceAsColor")
     private fun initFn() {
 
@@ -246,20 +149,17 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         else{
             imagicon.setImageResource(R.drawable.profile_photo)
         }
-        if (PreferenceManager().getLanguage(context).equals("ar"))
+        if (PreferenceManager().getLanguage(context).equals("ar")) {
+            first_day_of_absencetext.setStartIconDrawable(R.drawable.ic_baseline_calendar_today_24)
+            return_absence_text.setStartIconDrawable(R.drawable.ic_baseline_calendar_today_24)
 
-        {
-            first_day_of_absencetext.setStartIconDrawable(R.drawable.ic_baseline_calendar_today_24);
-            return_absence_text.setStartIconDrawable(R.drawable.ic_baseline_calendar_today_24);
-
-          //  reasonforabsence.gravity= Gravity.LEFT
-           // reason_for_absence.gravity= Gravity.RIGHT
+            //  reasonforabsence.gravity= Gravity.LEFT
+            // reason_for_absence.gravity= Gravity.RIGHT
 
         }
-        else
-        {
-            first_day_of_absencetext.setEndIconDrawable(R.drawable.ic_baseline_calendar_today_24);
-            return_absence_text.setEndIconDrawable(R.drawable.ic_baseline_calendar_today_24);
+        else {
+            first_day_of_absencetext.setEndIconDrawable(R.drawable.ic_baseline_calendar_today_24)
+            return_absence_text.setEndIconDrawable(R.drawable.ic_baseline_calendar_today_24)
 
         }
         /*else
@@ -324,18 +224,19 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                         var date_sel: String? = String.format("%d-%d-%d", dayOfMonth, month + 1, year)
                         var date_temp = date_sel.toString()
                         Log.e("date_temp",date_temp)
-                        fromDate=date_sel.toString()
+                        fromDate = date_sel.toString()
 
                         firstdayofabsence.setText(AppUtils().dateConversionY(date_temp))
-                       // firstdayofabsence.text = outputDateStr
+                        // firstdayofabsence.text = outputDateStr
 
                     }
-                }, year, month, day)
+                }, year, month, day
+            )
 
             dpd1.datePicker.minDate = android.icu.util.Calendar.getInstance().timeInMillis
             dpd1.show()
-            dpd1.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(R.color.kings_blue);
-            dpd1.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(R.color.kings_blue);
+            dpd1.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(R.color.kings_blue)
+            dpd1.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(R.color.kings_blue)
         }
 
         returnabsence.setOnClickListener {
@@ -353,26 +254,33 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             minDate.set(android.icu.util.Calendar.HOUR_OF_DAY, 0)
             minDate.set(android.icu.util.Calendar.MINUTE, 0)
             minDate.set(android.icu.util.Calendar.SECOND, 0)
-            val dpd1 = DatePickerDialog(this, R.style.DialogTheme, object : DatePickerDialog.OnDateSetListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-                    var firstday: String? =String.format("%d/%d/%d", month + 1,dayOfMonth , year)
-                    var date_sel: String? = String.format("%d-%d-%d", dayOfMonth, month + 1, year)
-                    var date_temp = date_sel.toString()
+                val dpd1 = DatePickerDialog(this, R.style.DialogTheme, object : OnDateSetListener {
+                    @RequiresApi(Build.VERSION_CODES.O)
+                    override fun onDateSet(
+                        view: DatePicker?,
+                        year: Int,
+                        month: Int,
+                        dayOfMonth: Int
+                    ) {
+                        var firstday: String? =
+                            String.format("%d/%d/%d", month + 1, dayOfMonth, year)
+                        var date_sel: String? =
+                            String.format("%d-%d-%d", dayOfMonth, month + 1, year)
+                        var date_temp = date_sel.toString()
 
-                    toDate=date_sel.toString()
-                    returnabsence.setText(AppUtils().dateConversionY(date_temp))
+                        toDate = date_sel.toString()
+                        returnabsence.setText(AppUtils().dateConversionY(date_temp))
 
 
-                }
-            }, year, month, day)
+                    }
+                }, year, month, day)
 
-            dpd1.datePicker.minDate = android.icu.util.Calendar.getInstance().timeInMillis
-            dpd1.show()
-            dpd1.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(R.color.navyBlue);
-            dpd1.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(R.color.navyBlue);
+                dpd1.datePicker.minDate = android.icu.util.Calendar.getInstance().timeInMillis
+                dpd1.show()
+                dpd1.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(R.color.navyBlue)
+                dpd1.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(R.color.navyBlue)
 
-        }
+            }
         }
 
 
@@ -446,7 +354,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 }
             }
             if (elapsedDays < 0 && toDate != "") {
-                fromDate = AppUtils().dateConversionYToD(firstdayofabsence.getText().toString()).toString()
+                fromDate =
+                    AppUtils().dateConversionYToD(firstdayofabsence.text.toString()).toString()
                 /*AppUtils().showDialogAlertDismiss(
                     context as Activity?,
                     getString(R.string.alert_heading),
@@ -479,19 +388,19 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                     mMonth = c!!.get(Calendar.MONTH)
                     mDay = c!!.get(Calendar.DAY_OF_MONTH)
                     df = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                    formattedDate = df!!.format(c!!.getTime())
+                    formattedDate = df!!.format(c!!.time)
                     val endDate = sdf.parse(formattedDate)
                     val dateFormatt = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
                     var convertedDate: Date? = Date()
                     try {
-                        convertedDate = dateFormatt.parse(firstdayofabsence.getText().toString())
+                        convertedDate = dateFormatt.parse(firstdayofabsence.text.toString())
                     } catch (e: ParseException) {
                         // TODO Auto-generated catch block
                         e.printStackTrace()
                     }
-                    calendar!!.setTime(convertedDate)
+                    calendar!!.time = convertedDate
                     calendar!!.add(Calendar.DAY_OF_YEAR, 1)
-                    val tomorrow: Date = calendar!!.getTime()
+                    val tomorrow: Date = calendar!!.time
                     tomorrowAsString = dateFormatt.format(tomorrow)
 
                     //System.out.println(todayAsString);
@@ -515,7 +424,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                 } catch (e: java.lang.Exception) {
                 }
                 if (elapsedDays < 0) {
-                    toDate = AppUtils().dateConversionYToD(returnabsence.getText().toString())
+                    toDate = AppUtils().dateConversionYToD(returnabsence.text.toString())
                     /*AppUtils.showDialogAlertDismiss(
                         mContext as Activity?,
                         getString(R.string.alert_heading),
@@ -553,7 +462,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
             mMonth = c!!.get(Calendar.MONTH)
             mDay = c!!.get(Calendar.DAY_OF_MONTH)
             df = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-            formattedDate = df!!.format(c!!.getTime())
+            formattedDate = df!!.format(c!!.time)
             val endDate = sdf.parse(formattedDate)
         } catch (e: ParseException) {
             e.printStackTrace()
@@ -610,17 +519,17 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.student_list_popup)
-        dialog.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
         var rel = dialog.findViewById<RecyclerView>(R.id.rel2)!! as RelativeLayout
-        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!! as ImageView
+        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!!
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(context)
         val studentlist_adapter =
             AbsenceStudentListAdapter(
                 context,
                 student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view.adapter = studentlist_adapter
         crossicon.setOnClickListener {
             dialog.dismiss()
         }
@@ -634,8 +543,8 @@ class RegisterAbsenceActivity:AppCompatActivity() {
                  var name: String = student_name.get(position).fullname
                  var classs: String = student_name.get(position).classs
                  var id: Int = student_name.get(position).id
-                 student_Name.setText(name)
-                 studentclass.text=classs
+                 student_Name.text = name
+                 studentclass.text = classs
                  PreferenceManager().setStudent_ID(context,id.toString())
                  dialog.dismiss()
              }

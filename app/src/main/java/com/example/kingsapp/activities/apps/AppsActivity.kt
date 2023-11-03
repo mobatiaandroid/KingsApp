@@ -1,4 +1,4 @@
-package com.example.kingsapp.activities.adapter.apps
+package com.example.kingsapp.activities.apps
 
 import android.content.Context
 import android.content.Intent
@@ -8,21 +8,21 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
-import com.example.kingsapp.activities.adapter.apps.adapter.AppsAdapter
-import com.example.kingsapp.activities.adapter.apps.model.AppsList
-import com.example.kingsapp.activities.adapter.apps.model.AppsModel
+import com.example.kingsapp.activities.absence.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.apps.adapter.AppsAdapter
+import com.example.kingsapp.activities.apps.model.AppsList
+import com.example.kingsapp.activities.apps.model.AppsModel
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -52,11 +52,12 @@ class AppsActivity:AppCompatActivity() {
     lateinit var parentList: RecyclerView
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var list_name: ArrayList<AppsList>
+
     //private lateinit var progressDialog: RelativeLayout
     lateinit var progressBarDialog: ProgressBarDialog
 
-    lateinit var studentSpinner: LinearLayout
-    lateinit var textView:TextView
+    lateinit var studentSpinner: ConstraintLayout
+    lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,7 +207,7 @@ class AppsActivity:AppCompatActivity() {
                     list_name.addAll(response.body()!!.apps)
                     parentList.layoutManager = linearLayoutManager
                     val appadapter = AppsAdapter(mContext,list_name)
-                    parentList.setAdapter(appadapter)
+                    parentList.adapter = appadapter
 
                 }
                 else
@@ -250,8 +251,8 @@ class AppsActivity:AppCompatActivity() {
         textView=findViewById(R.id.textView)
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
-            textView.setTypeface(face);
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            textView.typeface = face
         }
         linearLayoutManager = LinearLayoutManager(mContext)
 
@@ -307,10 +308,10 @@ class AppsActivity:AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)
-        dialog.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
         var rel = dialog.findViewById<RecyclerView>(R.id.rel2)!! as RelativeLayout
-        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!! as ImageView
+        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!!
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(mContext)
@@ -318,7 +319,7 @@ class AppsActivity:AppCompatActivity() {
             AbsenceStudentListAdapter(
                 mContext,
                 student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view.adapter = studentlist_adapter
 
         crossicon.setOnClickListener {
             dialog.dismiss()
@@ -329,8 +330,8 @@ class AppsActivity:AppCompatActivity() {
                 var name: String = student_name.get(position).fullname
                 var classs: String = student_name.get(position).classs
                 var id: Int = student_name.get(position).id
-                studentName_Text.setText(name)
-                studentclass.text=classs
+                studentName_Text.text = name
+                studentclass.text = classs
                 PreferenceManager().setStudent_ID(mContext,id.toString())
                 appsInfoApiCall()
                 dialog.dismiss()

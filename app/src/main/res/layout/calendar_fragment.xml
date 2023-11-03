@@ -15,14 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
-    <com.example.kingsapp.manager.font.CustomTimesNewRoman
+    <com.example.kingsapp.manager.font.CustomTimeLTSBold
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:paddingRight="40dp"
         android:textColor="@color/white"
-        android:textSize="19dp"
+        android:textSize="28dp"
         android:layout_marginLeft="50dp"
         android:gravity="center"
         android:text="@string/school_calendar"
@@ -46,31 +46,35 @@
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical">
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/logout_user"
-            android:text="@string/past_events"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:text="@string/past_events" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:id="@+id/hideBtn"
             android:layout_width="55dp"
             android:layout_height="30dp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="@string/hide"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:text="@string/hide" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/grey"
-            android:text="| "/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:text="| " />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:id="@+id/showBtn"
             android:layout_width="55dp"
             android:layout_height="30dp"
             android:gravity="center"
             android:textColor="@color/black"
             android:background="@drawable/edittext_greybg"
-            android:text="@string/show"/>
+            android:text="@string/show" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,7 +92,7 @@
         android:orientation="horizontal"
         android:weightSum="100">
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:id="@+id/filterName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -121,16 +125,17 @@
         android:layout_below="@+id/filterLinear"
         android:orientation="horizontal"
         android:visibility="gone"
-        android:weightSum="100"
-        >
+        android:weightSum="100">
+
         <ImageView
             android:id="@+id/previousBtn"
             android:layout_width="0dp"
             android:layout_weight="25"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
-           android:src="@drawable/ic_baseline_keyboard_arrow_left_24"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:src="@drawable/ic_baseline_keyboard_arrow_left_24" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
             android:layout_width="0dp"
             android:layout_weight="50"
             android:layout_height="40dp"
@@ -138,7 +143,8 @@
             android:textColor="@color/kings_blue"
             android:textSize="16sp"
             android:text="Januray 2021"
-            android:gravity="center"/>
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/nextBtn"
             android:layout_width="0dp"
@@ -163,14 +169,16 @@
 
     </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
+
     <ImageView
         android:id="@+id/noEventImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/no_events"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        android:visibility="gone" />
+
+    <com.example.kingsapp.manager.font.CustomMontserratMedium
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

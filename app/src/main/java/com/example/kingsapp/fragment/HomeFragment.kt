@@ -20,20 +20,26 @@ import androidx.fragment.app.Fragment
 import com.example.kingsapp.BuildConfig
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
-import com.example.kingsapp.activities.adapter.apps.AppsActivity
+import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.forms.FormsActivity
 import com.example.kingsapp.activities.home.HomeActivity
+import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.parentessentials.ParentEssentialsActivity
 import com.example.kingsapp.activities.reports.ReportsActivity
 import com.example.kingsapp.activities.social_media.SocialMediaActivity
 import com.example.kingsapp.activities.student_info.StudentInfoActivity
 import com.example.kingsapp.activities.timetable.TimeTableActivity
+import com.example.kingsapp.constants.CommonClass
+import com.example.kingsapp.constants.api.ApiClient
+import com.example.kingsapp.fragment.contact.model.ContactusModel
 import com.example.kingsapp.manager.AppController
 import com.example.kingsapp.manager.ClassNameConstants
 import com.example.kingsapp.manager.NaisTabConstants
 import com.example.kingsapp.manager.PreferenceManager
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 
 private var mTxtOne: TextView? = null
@@ -88,20 +94,21 @@ class HomeFragment  : Fragment(),View.OnClickListener{
     lateinit var rootView: View
     private var INTENT_TAB_ID: String? = null
     private var CLICKED: String = ""
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        rootView= inflater.inflate(R.layout.home_screen_fragments, container, false)
-        mContext=requireContext()
+    ): View {
+        rootView = inflater.inflate(R.layout.home_screen_fragments, container, false)
+        mContext = requireContext()
         homeActivity = activity as HomeActivity
         appController = AppController()
         classNameConstants = ClassNameConstants()
         naisTabConstants = NaisTabConstants()
         mListItemArray = resources.getStringArray(R.array.home_list_items)
         mListImgArrays = mContext.resources.obtainTypedArray(R.array.home_list_reg_icons)
-        mContext=requireContext()
+        mContext = requireContext()
         currentversion = BuildConfig.VERSION_NAME
         initFn()
 
@@ -112,15 +119,6 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
         return rootView
     }
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-
 
 
     private fun setListeners() {
@@ -206,7 +204,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 PreferenceManager().setFromYearView(mContext,"0")
                 val intent = Intent(mContext, SchoolCalendarActivity::class.java)
                 startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
                 /*Log.e("EmailHelp","EmailHelp")
                */
             }
@@ -346,18 +344,29 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, StudentInfoActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
                 }
 
                 naisTabConstants.TAB_CALENDAR -> {
                     //Toast.makeText(mContext, "frg2", Toast.LENGTH_SHORT).show()
-                    PreferenceManager().setFromYearView(mContext,"0")
+                    PreferenceManager().setFromYearView(mContext, "0")
                     val intent = Intent(mContext, SchoolCalendarActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
                     /*Log.e("EmailHelp","EmailHelp")
                    */
                 }
+//                naisTabConstants.TAB_TEACHER_CONTACT ->{
+//                    val intent = Intent(mContext, TeacherContactActivity::class.java)
+//                    startActivity(intent)
+//                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+//                }
 
                 naisTabConstants.TAB_MESSAGES -> {
                     // Toast.makeText(mContext, "frg3", Toast.LENGTH_SHORT).show()
@@ -373,7 +382,10 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
                     val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
                     /* mFragment = CommunicationFragment()
                      fragmentIntent(mFragment)*/
                 }
@@ -381,7 +393,10 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, AbsenceActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
 
                     /*showSuccessAlert(
                         mContext,
@@ -393,19 +408,28 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 naisTabConstants.TAB_EARLYPICKUP -> {
                     val intent = Intent(mContext, EarlyPickupListActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
                 }
 
                 naisTabConstants.TAB_SOCIAL_MEDIA -> {
                     val intent = Intent(mContext, SocialMediaActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
                 }
                 naisTabConstants.TAB_TIME_TABLE -> {
                     // Toast.makeText(mContext, "frg7", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, TimeTableActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
 
                     /* showSuccessAlert(
                          mContext,
@@ -418,7 +442,10 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     // Toast.makeText(mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, ReportsActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
                     /*showSuccessAlert(
                         mContext,
                         "This feature is only available for registered users.",
@@ -452,7 +479,10 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
                     val intent = Intent(mContext, AppsActivity::class.java)
                     startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
 
                     /*showSuccessAlert(
                         mContext,
@@ -463,7 +493,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                 // Toast.makeText(mContext, "frg13", Toast.LENGTH_SHORT).show()
                 val intent = Intent(mContext, FormsActivity::class.java)
                 startActivity(intent)
-                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                requireActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
 
                 /* showSuccessAlert(
                      mContext,
@@ -745,9 +775,20 @@ class HomeFragment  : Fragment(),View.OnClickListener{
     private fun initFn() {
 
         CLICKED = homeActivity.sPosition.toString()
-        home_logo_image_arab =rootView. findViewById<View>(R.id.home_logo_image_arab) as ImageView
-        home_logo_image =rootView. findViewById<View>(R.id.home_logo_image) as ImageView
-
+        home_logo_image_arab = rootView.findViewById<View>(R.id.home_logo_image_arab) as ImageView
+        home_logo_image = rootView.findViewById<View>(R.id.home_logo_image) as ImageView
+//        getContactUs();
+        if (PreferenceManager().getSchoolName(mContext).equals("Kings School Dubai")) {
+            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)
+        } else if (PreferenceManager().getSchoolName(mContext).equals("Kings School Al Barsha")) {
+            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_al_barsha_logo)
+        } else if (PreferenceManager().getSchoolName(mContext)
+                .equals("Kings School Nad al Sheba")
+        ) {
+            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_nad_al_sheba_logo)
+        } else {
+            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)
+        }
         mRelOne = rootView.findViewById<View>(R.id.relOne) as? RelativeLayout?
         mRelTwo = rootView.findViewById<View>(R.id.relTwo) as? RelativeLayout
         mRelThree = rootView.findViewById<View>(R.id.relThree) as? RelativeLayout
@@ -773,25 +814,82 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         if(PreferenceManager().getLanguage(mContext).equals("ar")) {
             home_logo_image_arab!!.visibility = View.VISIBLE
             home_logo_image!!.visibility = View.GONE
-                val face: Typeface =
-                    Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
-            mTxtOne!!.setTypeface(face);
-            mTxtTwo!!.setTypeface(face);
-            mTxtThree!!.setTypeface(face);
-            mTxtFour!!.setTypeface(face);
-            mTxtFive!!.setTypeface(face);
-            mTxtSix!!.setTypeface(face);
-            mTxtSeven!!.setTypeface(face);
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            mTxtOne!!.typeface = face
+            mTxtTwo!!.typeface = face
+            mTxtThree!!.typeface = face
+            mTxtFour!!.typeface = face
+            mTxtFive!!.typeface = face
+            mTxtSix!!.typeface = face
+            mTxtSeven!!.typeface = face
 
-        }else
-        {
-            home_logo_image_arab!!.visibility=View.GONE
-            home_logo_image!!.visibility=View.VISIBLE
+        } else {
+            home_logo_image_arab!!.visibility = View.GONE
+            home_logo_image!!.visibility = View.VISIBLE
         }
 
     }
+
+
+    private fun getContactUs() {
+        val call: Call<ContactusModel> = ApiClient.getApiService().contactus(
+            "Bearer " + PreferenceManager().getAccessToken(
+                mContext
+            ).toString(),
+            PreferenceManager().getStudent_ID(mContext).toString(),
+            PreferenceManager().getLanguagetype(mContext).toString()
+        )
+        call.enqueue(object : retrofit2.Callback<ContactusModel> {
+            override fun onResponse(
+                call: Call<ContactusModel>,
+                response: Response<ContactusModel>
+            ) {
+
+                Log.e("respon", response.body().toString())
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals(100)) {
+
+
+                        val schoolName = response.body()!!.contactus.school_name
+                        if (schoolName.equals("Kings School Dubai")) {
+                            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)
+                        } else if (schoolName.equals("Kings School Al Barsha")) {
+                            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_al_barsha_logo)
+
+                        } else if (schoolName.equals("Kings School Nad al Sheba")) {
+                            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_nad_al_sheba_logo)
+                        } else {
+                            home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)
+                        }
+
+                    } else {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                    }
+                } else {
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
+
+            }
+
+            override fun onFailure(call: Call<ContactusModel?>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                Log.e("succ", t.message.toString())
+            }
+        })
+
+
+    }
+
+
     private fun setdraglisteners() {
-Log.e("Sucesss","Sucbnbfhjdevcess")
+        Log.e("Sucesss", "Sucbnbfhjdevcess")
         mRelOne!!.setOnDragListener(DropListener())
         mRelTwo!!.setOnDragListener(DropListener())
         mRelThree!!.setOnDragListener(DropListener())

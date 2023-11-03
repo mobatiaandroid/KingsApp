@@ -1,4 +1,4 @@
-package com.example.kingsapp.activities.adapter
+package com.example.kingsapp.activities.absence.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -24,21 +24,22 @@ class AbsenceStudentListAdapter(
         //var check : ImageView = view.findViewById(R.id.check)
 
     }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AbsenceStudentListAdapter.MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.student_list_item_popup, parent, false)
-        return AbsenceStudentListAdapter.MyViewHolder(itemView)
+        return MyViewHolder(itemView)
 
     }
 
-    override fun onBindViewHolder(holder: AbsenceStudentListAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val namelist = student_name[position].fullname
         val nameclass = student_name[position].classs
-        holder.studentName.setText(namelist)
-        holder.studentclass.setText(nameclass)
+        holder.studentName.text = namelist
+        holder.studentclass.text = nameclass
         /*holder.itemView.setOnClickListener() {
 
 Log.e("Suceess","Success")

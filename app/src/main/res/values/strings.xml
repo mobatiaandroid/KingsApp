@@ -10,9 +10,9 @@
 
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
     <string name="Home">Home</string>
-    <string name="Message">Comms</string>
+    <string name="Message">Notices</string>
     <string name="About">About</string>
-    <string name="Contact">Contact</string>
+    <string name="Contact">Contact Us</string>
     <string name="Settings">Settings</string>
 
     <string name="staff_directory_detail">Staff Directory Detail</string>
@@ -73,8 +73,8 @@
     <string name="cancel">Cancel</string>
 
     <string name="apps">Apps</string>
-    <string name="name">Name</string>
-    <string name="classs">Class</string>
+    <string name="name">NAME</string>
+    <string name="classs">CLASS</string>
     <string name="address">Address</string>
 
     <string name="loading">Loading&#8230;</string>
@@ -180,7 +180,7 @@
         <item>  Student Info </item>
         <item>  School Calendar</item>
         <item>  Notices</item>
-        <item>  Teacher Contact</item>
+        <!--        <item>  Teacher Contact</item>-->
         <item>  Absence Reporting</item>
         <item>  Early Pickup</item>
         <item>  Time Table</item>
@@ -208,7 +208,7 @@
         <!-- 4 -->
         <item>@drawable/calender4</item>
         <item>@drawable/message_white</item>
-        <item>@drawable/meeting</item>
+        <!--        <item>@drawable/meeting</item>-->
         <item>@drawable/absence4</item>
         <item>@drawable/earlypickup</item>
         <item>@drawable/timetable4</item>
@@ -354,7 +354,7 @@
 
     <string name="delete">Delete</string>
 
-    <string name="parentcomms"> Notices</string>
+    <string name="parentcomms">Notices</string>
 
     <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
     <string name="no_data_found"> No data found</string>

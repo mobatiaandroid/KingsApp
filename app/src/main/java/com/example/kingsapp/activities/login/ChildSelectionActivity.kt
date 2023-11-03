@@ -72,10 +72,10 @@ class ChildSelectionActivity:AppCompatActivity() {
 
                     val llm = LinearLayoutManager(ncontext)
                     llm.orientation = LinearLayoutManager.HORIZONTAL
-                    circleImageView!!.layoutManager = llm
+                    circleImageView.layoutManager = llm
                     val studentlist_adapter =
                         ChildSelectionAdapter(ncontext, student_name)
-                    circleImageView!!.adapter = studentlist_adapter
+                    circleImageView.adapter = studentlist_adapter
                 }
                 else
                 {
@@ -119,6 +119,7 @@ class ChildSelectionActivity:AppCompatActivity() {
                 PreferenceManager().setStudent_ID(ncontext,id.toString())*/
                 PreferenceManager().setStudentName(ncontext, student_name[position].fullname.toString())
                 PreferenceManager().setStudent_ID(ncontext, student_name[position].id.toString())
+                PreferenceManager().setSchoolName(ncontext, student_name[position].school_name)
                 PreferenceManager().setStudentClass(
                     ncontext,
                     convertFormat(student_name[position].classs.toString())
@@ -145,7 +146,7 @@ class ChildSelectionActivity:AppCompatActivity() {
 
     }
 
-    fun convertFormat(input: String): String? {
+    fun convertFormat(input: String): String {
         // Use regular expressions to replace the extra space between digits and letters
         return input.replace("(\\d)\\s(\\d)([A-Z])".toRegex(), "$1 $2 $3")
     }
