@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:srcCompat="@drawable/splash_logo" />
+        app:srcCompat="@drawable/kings_education_logo" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -44,7 +44,7 @@
         android:id="@+id/welcomeToTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24sp"
+        android:layout_marginTop="64dp"
         android:gravity="center"
         android:text="Welcome to "
         android:textColor="@color/white"
@@ -91,13 +91,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/createAccountBtn"
-            android:layout_width="0dp"
+            android:layout_width="379dp"
             android:layout_height="48dp"
             android:layout_marginLeft="16sp"
             android:layout_marginRight="16sp"
             android:background="@drawable/curved_rectangle_button_blue"
             android:text="Create Account"
             android:textAllCaps="false"
+            android:fontFamily="@font/montserrat"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/signInBtn"
@@ -107,45 +108,53 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signInBtn"
-            android:layout_width="0dp"
+            android:layout_width="379dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="16sp"
-            android:layout_marginRight="16sp"
             android:background="@drawable/curved_rectangle_button_white"
             android:text="Sign In"
+            android:fontFamily="@font/montserrat"
             android:textAllCaps="false"
             android:textColor="@color/kings_blue"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/joinGuestTxt"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createAccountBtn" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
-            android:id="@+id/joinGuestTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="bottom"
-            android:text="Join as a guest"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/guestBgImg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signInBtn" />
-
-        <ImageView
-            android:id="@+id/guestBgImg"
-            android:layout_width="100dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/guest_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/joinGuestTxt" />
+            app:layout_constraintTop_toBottomOf="@+id/signInBtn">
+
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                android:id="@+id/joinGuestTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="bottom"
+                android:text="Join as a guest"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/guestBgImg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/guestBgImg"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/guest_bg"
+                app:layout_constraintBottom_toTopOf="@+id/joinGuestTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/joinGuestTxt" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

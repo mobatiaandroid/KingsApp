@@ -40,12 +40,12 @@
     <string name="early_pickup">Early Pickup</string>
     <string name="registernewearlypickup">Register Early Pickup</string>
     <string name="early_pikup_details">Early Pickup</string>
-    <string name="day_of_pickup">Day of Pickup<font fgcolor='#FF0000'> * </font></string>
-    <string name="time_of_pickup">Time of Pickup<font fgcolor='#FF0000'> * </font></string>
-    <string name="pickup_by">Pickup By<font fgcolor='#FF0000'> * </font></string>
-    <string name="status">Status<font fgcolor='#FF0000'> * </font></string>
-    <string name="reason_for_early_pickup">Reason for early pickup<font fgcolor='#FF0000'> * </font></string>
-    <string name="rejetion_for_early_pickup">Rejection for early pickup<font fgcolor='#FF0000'> * </font></string>
+    <string name="day_of_pickup">DAY OF PICKUP<font fgcolor='#FF0000'> * </font></string>
+    <string name="time_of_pickup">TIME OF PICKUP<font fgcolor='#FF0000'> * </font></string>
+    <string name="pickup_by">PICK-UP BY<font fgcolor='#FF0000'> * </font></string>
+    <string name="status">STATUS<font fgcolor='#FF0000'> * </font></string>
+    <string name="reason_for_early_pickup">REASON FOR EARLY PICK-UP<font fgcolor='#FF0000'> * </font></string>
+    <string name="rejetion_for_early_pickup">REJECTION FOR EARLY PICK-UP<font fgcolor='#FF0000'> * </font></string>
 
 
     <string name="parent_essentials">Parent Essentials</string>

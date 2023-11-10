@@ -113,7 +113,7 @@
                     android:id="@+id/emailTextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="EMAIL-ID"
+                    android:hint="USER NAME"
                     android:textCursorDrawable="@color/kings_blue"
                     android:singleLine="true"
                     android:clickable="true"
