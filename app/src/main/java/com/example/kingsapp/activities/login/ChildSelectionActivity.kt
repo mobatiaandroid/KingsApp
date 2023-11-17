@@ -120,6 +120,10 @@ class ChildSelectionActivity:AppCompatActivity() {
                 PreferenceManager().setStudentName(ncontext, student_name[position].fullname.toString())
                 PreferenceManager().setStudent_ID(ncontext, student_name[position].id.toString())
                 PreferenceManager().setSchoolName(ncontext, student_name[position].school_name)
+                PreferenceManager().setSchoolIdentifier(
+                    ncontext,
+                    student_name[position].schoolIdentifier
+                )
                 PreferenceManager().setStudentClass(
                     ncontext,
                     convertFormat(student_name[position].classs.toString())

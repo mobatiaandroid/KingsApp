@@ -106,7 +106,6 @@ class StudentListAdapter(
                 slideUp(holder.relstudenttext)
             }
 
-            @SuppressLint("ResourceAsColor")
             override fun onAnimationEnd(p0: Animation?) {
                 Log.e("NameList", list)
 

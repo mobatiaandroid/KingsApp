@@ -8,7 +8,6 @@ import android.graphics.Typeface
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -194,12 +193,13 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                             )
                             startActivity(callGPSSettingIntent)
                         } else {
+                            // TODO check what to do here
                             //val url = "http://maps.google.com/maps?saddr=$c_latitude,$c_longitude&daddr=The British International School,Abudhabi"
-                            val url = "http://maps.google.com/maps?saddr=Your Location&daddr=Kings School Al Barsha"
-
-                            val i = Intent(Intent.ACTION_VIEW)
-                            i.data = Uri.parse(url)
-                            startActivity(i)
+//                            val url = "http://maps.google.com/maps?saddr=Your Location&daddr=Kings School Al Barsha"
+//
+//                            val i = Intent(Intent.ACTION_VIEW)
+//                            i.data = Uri.parse(url)
+//                            startActivity(i)
                         }
 
 

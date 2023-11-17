@@ -157,12 +157,12 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
         student_profile = findViewById<View>(R.id.student_profile) as ImageView
         studentListRecyclerview = findViewById<View>(R.id.studentlistrec) as RecyclerView
         logo = findViewById(R.id.logo)
-        if (PreferenceManager().getSchoolName(mContext).equals("Kings School Dubai")) {
+        if (PreferenceManager().getSchoolIdentifier(mContext).equals("KSD")) {
             logo.setBackgroundResource(R.drawable.kings_school_dubai_logo)
-        } else if (PreferenceManager().getSchoolName(mContext).equals("Kings School Al Barsha")) {
+        } else if (PreferenceManager().getSchoolIdentifier(mContext).equals("KSAB")) {
             logo.setBackgroundResource(R.drawable.kings_school_al_barsha_logo)
-        } else if (PreferenceManager().getSchoolName(mContext)
-                .equals("Kings School Nad al Sheba")
+        } else if (PreferenceManager().getSchoolIdentifier(mContext)
+                .equals("KSNAS")
         ) {
             logo.setBackgroundResource(R.drawable.kings_school_nad_al_sheba_logo)
         } else {

@@ -778,12 +778,12 @@ class HomeFragment  : Fragment(),View.OnClickListener{
         home_logo_image_arab = rootView.findViewById<View>(R.id.home_logo_image_arab) as ImageView
         home_logo_image = rootView.findViewById<View>(R.id.home_logo_image) as ImageView
 //        getContactUs();
-        if (PreferenceManager().getSchoolName(mContext).equals("Kings School Dubai")) {
+        if (PreferenceManager().getSchoolIdentifier(mContext).equals("KSD")) {
             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)
-        } else if (PreferenceManager().getSchoolName(mContext).equals("Kings School Al Barsha")) {
+        } else if (PreferenceManager().getSchoolIdentifier(mContext).equals("KSAB")) {
             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_al_barsha_logo)
-        } else if (PreferenceManager().getSchoolName(mContext)
-                .equals("Kings School Nad al Sheba")
+        } else if (PreferenceManager().getSchoolIdentifier(mContext)
+                .equals("KSNAS")
         ) {
             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_nad_al_sheba_logo)
         } else {
@@ -851,13 +851,14 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     if (response.body()!!.status.equals(100)) {
 
 
+                        val schoolID = response.body()!!.contactus.schoolIdentifier
                         val schoolName = response.body()!!.contactus.school_name
-                        if (schoolName.equals("Kings School Dubai")) {
+                        if (schoolID.equals("KSD")) {
                             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)
-                        } else if (schoolName.equals("Kings School Al Barsha")) {
+                        } else if (schoolID.equals("KSAB")) {
                             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_al_barsha_logo)
 
-                        } else if (schoolName.equals("Kings School Nad al Sheba")) {
+                        } else if (schoolID.equals("KSNAS")) {
                             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_nad_al_sheba_logo)
                         } else {
                             home_logo_image!!.setBackgroundResource(R.drawable.kings_school_dubai_logo)

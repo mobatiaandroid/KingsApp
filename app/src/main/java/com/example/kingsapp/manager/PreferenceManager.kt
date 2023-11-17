@@ -1263,6 +1263,21 @@ class PreferenceManager {
         return pref.getString("schoolName", "")
 
     }
+
+    fun setSchoolIdentifier(context: Context, token: String) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("schoolID", token)
+        editor.apply()
+    }
+
+    fun getSchoolIdentifier(context: Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("schoolID", "")
+
+    }
 }
 
 
