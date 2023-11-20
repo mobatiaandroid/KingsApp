@@ -2,6 +2,7 @@ package com.example.kingsapp.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,18 +16,21 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
+import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.manager.PreferenceManager
 
 class StudentListAdapter(
-    private val context: Context, private val parentassoictionlist: ArrayList<StudentList>
-    , private val recyclerView: RecyclerView, private val lang_switch: Switch
+    private val context: Context,
+    private val parentassoictionlist: ArrayList<StudentList>,
+    private val recyclerView: RecyclerView,
+    private val lang_switch: Switch
 ) :
-    RecyclerView.Adapter<StudentListAdapter.MyViewHolder>(){
-    class MyViewHolder (view: View) : RecyclerView.ViewHolder(view){
+    RecyclerView.Adapter<StudentListAdapter.MyViewHolder>() {
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var stud_profile: ImageView = view.findViewById(R.id.stud_profile)
         var textview: TextView = view.findViewById(R.id.textview)
-        var relstudenttext : RelativeLayout = view.findViewById(R.id.relstudenttext)
+        var relstudenttext: RelativeLayout = view.findViewById(R.id.relstudenttext)
 
 
     }
@@ -40,52 +44,74 @@ class StudentListAdapter(
         return MyViewHolder(itemView)
     }
 
+    fun convertFormat(input: String): String {
+        // Use regular expressions to replace the extra space between digits and letters
+        return input.replace("(\\d)\\s(\\d)([A-Z])".toRegex(), "$1 $2 $3")
+    }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var flag:Boolean = true
-        Log.e("list",parentassoictionlist.toString())
+        var flag: Boolean = true
+        Log.e("list", parentassoictionlist.toString())
         val list = parentassoictionlist[position].fullname
 
         holder.stud_profile.setImageResource(R.drawable.profile_photo)
 
         holder.stud_profile.setOnClickListener {
-            PreferenceManager().setStudentName(context, parentassoictionlist[position].fullname.toString())
+            PreferenceManager().setStudentName(
+                context,
+                parentassoictionlist[position].fullname.toString()
+            )
             PreferenceManager().setStudent_ID(context, parentassoictionlist[position].id.toString())
-            PreferenceManager().setStudentClass(context, parentassoictionlist[position].classs.toString())
-            PreferenceManager().setStudentPhoto(context, parentassoictionlist[position].photo.toString())
-            PreferenceManager().setLanguageschool(context, parentassoictionlist[position].school_language_type)
-            Log.e("shool",
+            PreferenceManager().setStudentClass(
+                context,
+                convertFormat(parentassoictionlist[position].classs.toString())
+            )
+            PreferenceManager().setStudentPhoto(
+                context,
+                parentassoictionlist[position].photo.toString()
+            )
+            PreferenceManager().setLanguageschool(
+                context,
+                parentassoictionlist[position].school_language_type
+            )
+            PreferenceManager().setSchoolName(context, parentassoictionlist[position].school_name)
+            PreferenceManager().setSchoolIdentifier(
+                context,
+                parentassoictionlist[position].schoolIdentifier
+            )
+            Log.e(
+                "shool",
                 PreferenceManager().getLanguageschool(context)
-                    .toString())
-            if(PreferenceManager().getLanguageschool(context).equals("2"))
-            {
-                lang_switch.visibility=View.VISIBLE
-            }
-            else
-            {
-                lang_switch.visibility=View.GONE
+                    .toString()
+            )
+
+            if (PreferenceManager().getLanguageschool(context).equals("2")) {
+                lang_switch.visibility = View.VISIBLE
+            } else {
+                lang_switch.visibility = View.GONE
             }
 
             recyclerView.visibility = View.GONE
+            val intent = Intent(context, HomeActivity::class.java)
+            context.startActivity(intent)
 
         }
         Log.e("studentlistimages", list.toString())
         //slideUp(holder.stud_profile,namelist,holder.textview)
         fun onSlideViewButtonClick(view: View) {}
-        var animation= AnimationUtils.loadAnimation(context,R.anim.slide_top)
-        animation.setAnimationListener(object : Animation.AnimationListener{
+        var animation = AnimationUtils.loadAnimation(context, R.anim.slide_top)
+        animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {
-                holder.relstudenttext.visibility= View.VISIBLE
-                holder.textview.visibility= View.VISIBLE
-                holder.textview.setText(list)
+                holder.relstudenttext.visibility = View.VISIBLE
+                holder.textview.visibility = View.VISIBLE
+                holder.textview.text = list
                 /* var animationlist=AnimationUtils.loadAnimation(context,R.anim.slide_down)
                  holder.textview.startAnimation(animationlist)*/
                 slideUp(holder.relstudenttext)
             }
 
-            @SuppressLint("ResourceAsColor")
             override fun onAnimationEnd(p0: Animation?) {
-                Log.e("NameList",list)
-
+                Log.e("NameList", list)
 
 
             }
@@ -109,16 +135,18 @@ class StudentListAdapter(
              .transform(CircleCrop()) //4
              .into(holder.stud_profile)*/
     }
+
     fun slideUp(view: RelativeLayout) {
         view.visibility = View.VISIBLE
         val animate = TranslateAnimation(
             0F,  // fromXDelta
             0F,  // toXDelta
             -80F,  // fromYDelta
-            0F) // toYDelta
+            0F
+        ) // toYDelta
         animate.duration = 500
         animate.fillAfter = true
-        animate.setAnimationListener(object : Animation.AnimationListener{
+        animate.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {
 
             }

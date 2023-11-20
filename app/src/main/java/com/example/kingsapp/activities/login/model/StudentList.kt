@@ -11,5 +11,6 @@ class StudentList (
     @SerializedName("photo") val photo: String,
     @SerializedName("school_name") val school_name: String,
     @SerializedName("school_language_type") val school_language_type: String,
-    var isclicked:Boolean
-    )
+    @SerializedName("school_identifier") val schoolIdentifier: String,
+    var isclicked: Boolean
+)

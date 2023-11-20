@@ -33,7 +33,26 @@ class MessageListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.message_item_list, parent, false)
-        return MessageListAdapter.MyViewHolder(itemView)
+        return MyViewHolder(itemView)
+    }
+
+    fun formatDateWithSuffix(dateString: String): String {
+        val dateParts = dateString.split(" ")
+        if (dateParts.size == 3) {
+            val day = dateParts[0].toInt()
+            val month = dateParts[1]
+            val year = dateParts[2]
+
+            val dayWithSuffix = when (day) {
+                1, 21, 31 -> "${day}st"
+                2, 22 -> "${day}nd"
+                3, 23 -> "${day}rd"
+                else -> "${day}th"
+            }
+
+            return "$dayWithSuffix $month $year"
+        }
+        return dateString
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -41,13 +60,13 @@ class MessageListAdapter(
         val desc = name[position].title
         /* holder.date.setText(date)
          holder.time.setText(time)*/
-        holder.desc.setText(desc)
+        holder.desc.text = desc
         val datestring = name[position].created_at
         // addReadMore(desc,holder.desc)
 
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
-        val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMMM-yyyy")
+        val outputFormatdate: DateFormat = SimpleDateFormat("dd MMMM yyyy")
         val inputDateStr = datestring
         val date: Date = inputFormat.parse(inputDateStr)
         val datetring: String = date.toString()
@@ -62,8 +81,8 @@ class MessageListAdapter(
         Log.e("substr2", substr2)
 
         val finaldate: String = substr + "-" + substr1 + "-" + substr2
-        holder.date.setText(outputDateStr1)
-        holder.time.setText(outputDateStr)
+        holder.date.text = formatDateWithSuffix(outputDateStr1)
+        holder.time.text = outputDateStr
 
     }
 
@@ -77,13 +96,13 @@ class MessageListAdapter(
             @SuppressLint("ResourceAsColor")
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.setUnderlineText(false)
-                ds.setColor(R.color.black)
+                ds.isUnderlineText = false
+                ds.color = R.color.black
             }
         }
         ss.setSpan(clickableSpan, ss.length - 2, ss.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textView.setText(ss)
-        textView.setMovementMethod(LinkMovementMethod.getInstance())
+        textView.text = ss
+        textView.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun getItemCount(): Int {

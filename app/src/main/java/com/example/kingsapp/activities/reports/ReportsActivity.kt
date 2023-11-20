@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,15 +24,16 @@ import com.example.kingsapp.activities.reports.model.Reports
 import com.example.kingsapp.activities.reports.model.ReportsResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.PreferenceManager
 import com.google.gson.JsonObject
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
 class ReportsActivity:AppCompatActivity() {
     lateinit var ncontext: Context
-    lateinit var linearlayoutstudentlist:LinearLayout
+
+    //    lateinit var linearlayoutstudentlist:LinearLayout
     lateinit var reportrec:RecyclerView
     lateinit var student_name:ArrayList<StudentList>
 
@@ -77,7 +77,7 @@ class ReportsActivity:AppCompatActivity() {
     }
 
     private fun initFn() {
-        linearlayoutstudentlist=findViewById(R.id.linearlayoutstudentlist)
+//        linearlayoutstudentlist=findViewById(R.id.linearlayoutstudentlist)
         student_name = ArrayList()
         reportrec = findViewById(R.id.reportrec)
         report_array_filtered= ArrayList()
@@ -90,8 +90,8 @@ class ReportsActivity:AppCompatActivity() {
         textView=findViewById(R.id.textView)
         if (PreferenceManager().getLanguage(ncontext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(ncontext.getAssets(), "font/times_new_roman.ttf")
-            textView.setTypeface(face);
+                Typeface.createFromAsset(ncontext.assets, "font/times_new_roman.ttf")
+            textView.typeface = face
         }
         student_Name.text=PreferenceManager().getStudentName(ncontext)
         studentclass.text=PreferenceManager().getStudentClass(ncontext)
@@ -306,10 +306,10 @@ class ReportsActivity:AppCompatActivity() {
                     if (response.body()!!.status == 100) {
 
                         report_array.addAll(response.body()!!.reports)
-                         reportrec!!.layoutManager = LinearLayoutManager(ncontext)
+                        reportrec.layoutManager = LinearLayoutManager(ncontext)
          val report_rec_adapter =
              ReportsAdapterList(ncontext, report_array)
-         reportrec!!.adapter = report_rec_adapter
+                        reportrec.adapter = report_rec_adapter
                     } else {
                         CommonClass.checkApiStatusError(response.body()!!.status, ncontext)
                     }

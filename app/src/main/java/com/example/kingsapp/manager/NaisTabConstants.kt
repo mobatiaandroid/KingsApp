@@ -4,16 +4,18 @@ class NaisTabConstants {
     var TAB_STUDENT_INFORMATION = "1"
     var TAB_CALENDAR = "2"
     var TAB_MESSAGES = "3"
-    var TAB_COMMUNICATION = "7"
+
+    //    var TAB_TEACHER_CONTACT = "4"
     var TAB_REPORT_ABSENCE = "4"
     var TAB_EARLYPICKUP = "5"
-    var TAB_SOCIAL_MEDIA = "11"
-    var TAB_REPORTS = "8"
 
     var TAB_TIME_TABLE = "6"
+    var TAB_COMMUNICATION = "7"
+    var TAB_REPORTS = "8"
     var TAB_FORMS = "9"
-    var TAB_CONTACT_US = "12"
     var TAB_APPS = "10"
+    var TAB_SOCIAL_MEDIA = "11"
+    var TAB_CONTACT_US = "12"
 
     var TAB_HOME = "16"
     var TAB_NOTIFICATIONS = "17"

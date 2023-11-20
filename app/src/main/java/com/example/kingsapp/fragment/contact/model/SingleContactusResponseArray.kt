@@ -9,5 +9,6 @@ class SingleContactusResponseArray (
     @SerializedName("latitude") val latitude: String,
     @SerializedName("longitude") val longitude: String,
     @SerializedName("contacts") val contacts: ArrayList<ContactsListDetailModel>,
+    @SerializedName("school_identifier") val schoolIdentifier: String,
 
-        )
+    )

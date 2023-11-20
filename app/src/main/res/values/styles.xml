@@ -12,7 +12,15 @@
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
+
     <style name="FontLocalizedBold">
         <item name="android:fontFamily">@fo</item>
+    </style>
+
+    <style name="CustomMaterialButtonTheme" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/custom_button_background</item>
+        <item name="android:textColor">@color/custom_button_text_color</item>
+        <item name="android:textSize">16sp</item>
+        <!-- Add more attributes as needed -->
     </style>
 </resources>

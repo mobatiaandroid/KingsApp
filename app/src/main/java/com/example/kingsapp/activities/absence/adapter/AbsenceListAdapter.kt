@@ -1,8 +1,7 @@
-package com.example.kingsapp.activities.adapter
+package com.example.kingsapp.activities.absence.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,7 @@ import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.model.AbsenceList
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Date
 
 class AbsenceListAdapter(private val context: Context, private  val name:ArrayList<AbsenceList>):
     RecyclerView.Adapter<AbsenceListAdapter.MyViewHolder>() {
@@ -26,7 +24,26 @@ class AbsenceListAdapter(private val context: Context, private  val name:ArrayLi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.absence_list_items, parent, false)
-        return AbsenceListAdapter.MyViewHolder(itemView)
+        return MyViewHolder(itemView)
+    }
+
+    fun formatDateWithSuffix(dateString: String): String {
+        val dateParts = dateString.split(" ")
+        if (dateParts.size == 3) {
+            val day = dateParts[0].toInt()
+            val month = dateParts[1]
+            val year = dateParts[2]
+
+            val dayWithSuffix = when (day) {
+                1, 21, 31 -> "${day}st"
+                2, 22 -> "${day}nd"
+                3, 23 -> "${day}rd"
+                else -> "${day}th"
+            }
+
+            return "$dayWithSuffix $month $year"
+        }
+        return dateString
     }
 
     @SuppressLint("ResourceAsColor", "SuspiciousIndentation")
@@ -34,12 +51,12 @@ class AbsenceListAdapter(private val context: Context, private  val name:ArrayLi
         val namelist = name[position]
         Log.e("nameList", namelist.toString())
 
-        val fromDate=namelist.from_date
+        val fromDate = namelist.from_date
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val outputFormat: DateFormat = SimpleDateFormat("dd MMM yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
         val inputDateStr = fromDate
         val date: Date = inputFormat.parse(inputDateStr)
-        val outputDateStr: String = outputFormat.format(date)
+        val outputDateStr: String = formatDateWithSuffix(outputFormat.format(date))
 
         if (namelist.to_date!=""){
             val toDate=namelist.to_date

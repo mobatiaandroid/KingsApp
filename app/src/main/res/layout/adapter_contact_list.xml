@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linear"
         android:orientation="vertical">
 
-        <com.example.kingsapp.manager.font.CustomVerdanaBold
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.example.kingsapp.manager.font.CustomTimeLTSBold
             android:id="@+id/contactName"
-            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
             android:textColor="@color/black"
-            android:gravity="left|center"
-            />
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/contactNumber"
-            android:textColor="@color/btn_blue"
-            android:text=""
-            android:gravity="left|center"
-            />
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/contactNumber"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sanju" />
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
+            android:id="@+id/contactNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/contactEmail"
-            android:textColor="@color/btn_blue"
+            android:layout_marginTop="8dp"
             android:text=""
-            android:gravity="left|center"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
+            android:gravity="center"
+            android:textColor="@color/btn_blue"
+            app:layout_constraintBottom_toTopOf="@+id/contactEmail"
+            app:layout_constraintTop_toBottomOf="@+id/contactName"
+            tools:text="9567456927" />
+
+        <com.example.kingsapp.manager.font.CustomMontserratMedium
+            android:id="@+id/contactEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/btn_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contactNumber"
+            tools:ignore="RtlHardcoded"
+            tools:text="sanju.sabu@mobatia.com" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
