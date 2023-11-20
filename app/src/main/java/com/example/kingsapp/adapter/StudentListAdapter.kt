@@ -75,6 +75,10 @@ class StudentListAdapter(
                 parentassoictionlist[position].school_language_type
             )
             PreferenceManager().setSchoolName(context, parentassoictionlist[position].school_name)
+            PreferenceManager().setSchoolIdentifier(
+                context,
+                parentassoictionlist[position].schoolIdentifier
+            )
             Log.e(
                 "shool",
                 PreferenceManager().getLanguageschool(context)
