@@ -10,9 +10,9 @@
 
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
     <string name="Home">Home</string>
-    <string name="Message">Comms</string>
+    <string name="Message">Notices</string>
     <string name="About">About</string>
-    <string name="Contact">Contact</string>
+    <string name="Contact">Contact Us</string>
     <string name="Settings">Settings</string>
 
     <string name="staff_directory_detail">Staff Directory Detail</string>
@@ -40,16 +40,17 @@
     <string name="early_pickup">Early Pickup</string>
     <string name="registernewearlypickup">Register Early Pickup</string>
     <string name="early_pikup_details">Early Pickup</string>
-    <string name="day_of_pickup">Day of Pickup<font fgcolor='#FF0000'> * </font></string>
-    <string name="time_of_pickup">Time of Pickup<font fgcolor='#FF0000'> * </font></string>
-    <string name="pickup_by">Pickup By<font fgcolor='#FF0000'> * </font></string>
-    <string name="status">Status<font fgcolor='#FF0000'> * </font></string>
-    <string name="reason_for_early_pickup">Reason for early pickup<font fgcolor='#FF0000'> * </font></string>
-    <string name="rejetion_for_early_pickup">Rejection for early pickup<font fgcolor='#FF0000'> * </font></string>
+    <string name="day_of_pickup">DAY OF PICKUP<font fgcolor='#FF0000'> * </font></string>
+    <string name="time_of_pickup">TIME OF PICKUP<font fgcolor='#FF0000'> * </font></string>
+    <string name="pickup_by">PICK-UP BY<font fgcolor='#FF0000'> * </font></string>
+    <string name="status">STATUS<font fgcolor='#FF0000'> * </font></string>
+    <string name="reason_for_early_pickup">REASON FOR EARLY PICK-UP<font fgcolor='#FF0000'> * </font></string>
+    <string name="rejetion_for_early_pickup">REJECTION FOR EARLY PICK-UP<font fgcolor='#FF0000'> * </font></string>
 
 
     <string name="parent_essentials">Parent Essentials</string>
     <string name="social_media">Social Media</string>
+    <string name="teacher_contact">Teacher Contact</string>
 
 
     <string name="school_calendar">School Calendar</string>
@@ -72,8 +73,8 @@
     <string name="cancel">Cancel</string>
 
     <string name="apps">Apps</string>
-    <string name="name">Name</string>
-    <string name="classs">Class</string>
+    <string name="name">NAME</string>
+    <string name="classs">CLASS</string>
     <string name="address">Address</string>
 
     <string name="loading">Loading&#8230;</string>
@@ -179,6 +180,7 @@
         <item>  Student Info </item>
         <item>  School Calendar</item>
         <item>  Notices</item>
+        <!--        <item>  Teacher Contact</item>-->
         <item>  Absence Reporting</item>
         <item>  Early Pickup</item>
         <item>  Time Table</item>
@@ -206,6 +208,7 @@
         <!-- 4 -->
         <item>@drawable/calender4</item>
         <item>@drawable/message_white</item>
+        <!--        <item>@drawable/meeting</item>-->
         <item>@drawable/absence4</item>
         <item>@drawable/earlypickup</item>
         <item>@drawable/timetable4</item>
@@ -351,7 +354,7 @@
 
     <string name="delete">Delete</string>
 
-    <string name="parentcomms"> Notices</string>
+    <string name="parentcomms">Notices</string>
 
     <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
     <string name="no_data_found"> No data found</string>

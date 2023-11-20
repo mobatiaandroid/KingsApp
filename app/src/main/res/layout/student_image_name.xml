@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/student"
+            android:src="@drawable/profile_photo"
             android:id="@+id/imagicon"
             android:layout_centerHorizontal="true"
             android:layout_alignParentLeft="true"

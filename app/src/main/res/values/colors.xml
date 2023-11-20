@@ -25,9 +25,11 @@
     <color name="transparent">#00000000</color>
     <color name="grey_bottom">#7F8B93</color>
     <color name="navyBlue">#002B7F</color>
+    <color name="kings_yellow">#544218</color>
     <color name="greyy">#ACACAC</color>
     <color name="background_color_c">#BDBDBD</color>
     <color name="kings_blue">#182A54</color>
+    <color name="button_blue">#00458C</color>
     <color name="present">#4BB5C4</color>
     <color name="logout_user"> #808080</color>
     <color name="btnBackground">#e7e7e7</color>
@@ -42,4 +44,7 @@
     <color name="colorPrimary">#7E57C2</color>
     <color name="colorPrimaryDark">#673AB7</color>
     <color name="colorAccent">#B39DDB</color>
+
+    <color name="custom_button_background_color">#2196F3</color>
+    <color name="custom_button_text_color">#000000</color>
 </resources>

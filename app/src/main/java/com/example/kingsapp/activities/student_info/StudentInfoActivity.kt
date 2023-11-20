@@ -8,7 +8,10 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.*
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.absence.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
@@ -24,12 +27,12 @@ import com.example.kingsapp.activities.login.model.StudentListResponseModel
 import com.example.kingsapp.activities.student_info.model.StudentInfoResponseModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -38,6 +41,7 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var name: TextInputEditText
     lateinit var classs: TextInputEditText
     lateinit var address: TextInputEditText
+    lateinit var tutoremail: TextInputEditText
     lateinit var studentName_Text: TextView
     lateinit var studentName: String
     lateinit var studentId: String
@@ -47,10 +51,12 @@ class StudentInfoActivity:AppCompatActivity (){
     lateinit var imagicon: ImageView
     lateinit var studentclass: TextView
     lateinit var backarrow: ImageView
-    lateinit var studentLinear: LinearLayout
-    lateinit var textView:TextView
-   // private lateinit var progressDialog: RelativeLayout
-   lateinit var progressBarDialog: ProgressBarDialog
+
+    //    lateinit var studentLinear: LinearLayout
+    lateinit var textView: TextView
+
+    // private lateinit var progressDialog: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,11 +199,12 @@ class StudentInfoActivity:AppCompatActivity (){
             ) {
                 progressBarDialog.hide()
                 if (response.body() != null) {
-               if (response.body()!!.status.equals(100))
-               {
+               if (response.body()!!.status.equals(100)) {
                    name.setText(response.body()!!.student_info.fullname)
-                   address.setText(response.body()!!.student_info.address)
+                   address.setText(response.body()!!.student_info.tutorName)
                    classs.setText(response.body()!!.student_info.classs)
+                   tutoremail.setText(response.body()!!.student_info.tutor_email)
+
 
                }
              else
@@ -227,20 +234,24 @@ class StudentInfoActivity:AppCompatActivity (){
 
     fun initFn() {
         student_name = ArrayList()
-        studentLinear = findViewById(R.id.studentSpinner)
+//        studentLinear = findViewById(R.id.studentSpinner)
         studentName_Text = findViewById(R.id.studentName)
         imagicon = findViewById(R.id.imagicon)
         name = findViewById(R.id.name)
         classs = findViewById(R.id.classs)
         address = findViewById(R.id.address)
+        tutoremail = findViewById(R.id.tutoremailtext)
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.backarrow)
         progressBarDialog = ProgressBarDialog(mContext)
         textView=findViewById(R.id.textView)
         if (PreferenceManager().getLanguage(com.example.kingsapp.fragment.mContext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(com.example.kingsapp.fragment.mContext.getAssets(), "font/times_new_roman.ttf")
-            textView.setTypeface(face);
+                Typeface.createFromAsset(
+                    com.example.kingsapp.fragment.mContext.assets,
+                    "font/times_new_roman.ttf"
+                )
+            textView.typeface = face
         }
        /* val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
@@ -279,10 +290,10 @@ class StudentInfoActivity:AppCompatActivity (){
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.student_list_popup)
-        dialog.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
         var rel = dialog.findViewById<RecyclerView>(R.id.rel2)!! as RelativeLayout
-        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!! as ImageView
+        var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!!
 
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(mContext)
@@ -290,7 +301,7 @@ class StudentInfoActivity:AppCompatActivity (){
             AbsenceStudentListAdapter(
                 mContext,
                 student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view.adapter = studentlist_adapter
 
         crossicon.setOnClickListener {
             dialog.dismiss()
@@ -301,9 +312,9 @@ class StudentInfoActivity:AppCompatActivity (){
                 var name: String = student_name.get(position).fullname
                 var classs: String = student_name.get(position).classs
                 var id: Int = student_name.get(position).id
-                studentName_Text.setText(name)
-                studentclass.setText(classs)
-                PreferenceManager().setStudent_ID(mContext,id.toString())
+                studentName_Text.text = name
+                studentclass.text = classs
+                PreferenceManager().setStudent_ID(mContext, id.toString())
 
                 studentInfoApiCall()
 

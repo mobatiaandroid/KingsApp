@@ -836,7 +836,7 @@ class PreferenceManager {
     }
 
     //getStudIdForCCA
-    fun getStudIdForCCA(context: Context): String? {
+    fun getStudIdForCCA(context: Context): String {
         var StudIdForCCA = ""
         val prefs =
             context.getSharedPreferences(
@@ -858,7 +858,7 @@ class PreferenceManager {
         editor.commit()
     }
 
-    fun getStudNameForCCA(context: Context): String? {
+    fun getStudNameForCCA(context: Context): String {
         var StudNameForCCA = ""
         val prefs =
             context.getSharedPreferences(
@@ -880,7 +880,7 @@ class PreferenceManager {
         editor.commit()
     }
 
-    fun getStudClassForCCA(context: Context): String? {
+    fun getStudClassForCCA(context: Context): String {
         var StudClassForCCA = ""
         val prefs =
             context.getSharedPreferences(
@@ -902,7 +902,7 @@ class PreferenceManager {
         editor.commit()
     }
 
-    fun getCCATitle(context: Context): String? {
+    fun getCCATitle(context: Context): String {
         var CCATitle = ""
         val prefs =
             context.getSharedPreferences(
@@ -1244,8 +1244,39 @@ class PreferenceManager {
         )
         val gson = Gson()
         val json = pref.getString("sortname", null)
-        val type: Type = object : TypeToken<ArrayList<MondayList>>() {}.getType()
+        val type: Type = object : TypeToken<ArrayList<MondayList>>() {}.type
         return gson.fromJson(json, type)
+    }
+
+
+    fun setSchoolName(context: Context, token: String) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("schoolName", token)
+        editor.apply()
+    }
+
+    fun getSchoolName(context: Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("schoolName", "")
+
+    }
+
+    fun setSchoolIdentifier(context: Context, token: String) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("schoolID", token)
+        editor.apply()
+    }
+
+    fun getSchoolIdentifier(context: Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("schoolID", "")
+
     }
 }
 

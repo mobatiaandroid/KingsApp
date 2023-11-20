@@ -6,9 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.location.Location
-import android.location.LocationManager
 import android.location.LocationListener
-import android.net.Uri
+import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -29,6 +28,7 @@ import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.InternetCheckClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.fragment.contact.adapter.ContactusAdapter
 import com.example.kingsapp.fragment.contact.model.ContactsListDetailModel
 import com.example.kingsapp.fragment.contact.model.ContactusModel
@@ -42,7 +42,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.kingsapp.constants.api.ApiClient
 import retrofit2.Call
 import retrofit2.Response
 
@@ -73,6 +72,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
     lateinit var c_latitude: String
     lateinit var c_longitude: String
     lateinit var locationManager: LocationManager
+    lateinit var schoolNameTextView: TextView
     var isGPSEnabled: Boolean? = null
     var isNetworkEnabled: Boolean? = null
     var lat: Double = 0.0
@@ -193,12 +193,13 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
                             )
                             startActivity(callGPSSettingIntent)
                         } else {
+                            // TODO check what to do here
                             //val url = "http://maps.google.com/maps?saddr=$c_latitude,$c_longitude&daddr=The British International School,Abudhabi"
-                            val url = "http://maps.google.com/maps?saddr=Your Location&daddr=Kings School Al Barsha"
-
-                            val i = Intent(Intent.ACTION_VIEW)
-                            i.data = Uri.parse(url)
-                            startActivity(i)
+//                            val url = "http://maps.google.com/maps?saddr=Your Location&daddr=Kings School Al Barsha"
+//
+//                            val i = Intent(Intent.ACTION_VIEW)
+//                            i.data = Uri.parse(url)
+//                            startActivity(i)
                         }
 
 
@@ -283,7 +284,7 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
 
     }
     private fun initFn() {
-        mContext =requireContext()
+        mContext = requireContext()
 
         aboutusdescription = ArrayList()
         contactusdescription = ArrayList()
@@ -292,15 +293,16 @@ GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener   {
         contact_usrecyclerview = view?.findViewById(R.id.contact_usrecyclerview) as RecyclerView
         descriptiontext = view?.findViewById(R.id.descriptiontext) as TextView
         mapFragment = childFragmentManager.findFragmentById(R.id.googleMap) as SupportMapFragment
-        textView=view?.findViewById(R.id.textView) as TextView
+        textView = view?.findViewById(R.id.textView) as TextView
+        schoolNameTextView = view?.findViewById(R.id.schoolNameTextView)!!
         progressBarDialog = ProgressBarDialog(mContext)
-
+        schoolNameTextView.text = PreferenceManager().getSchoolName(requireContext())
         linearLayoutManager = LinearLayoutManager(mContext)
         contact_usrecyclerview.layoutManager = linearLayoutManager
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
-            textView.setTypeface(face);
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            textView.typeface = face
         }
 
         menu.setOnClickListener {

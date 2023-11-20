@@ -27,7 +27,7 @@
 
         </ImageView>
 
-        <com.example.kingsapp.manager.font.CustomTimesNewRoman
+        <com.example.kingsapp.manager.font.CustomTimeLTSBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -35,7 +35,7 @@
             android:gravity="center"
             android:text="@string/early_pikup_details"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="28dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,69 +60,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/li">
 
-        <LinearLayout
-            android:id="@+id/studentSpinner"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rect_teal"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            android:weightSum="100">
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:background="@drawable/rect_teal">
+
 
             <ImageView
                 android:id="@+id/imagicon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="16sp"
                 android:gravity="center"
-                android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/profile_photo" />
+                android:src="@drawable/profile_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+
+            <com.example.kingsapp.manager.font.CustomTimeLTStandard
+                android:id="@+id/studentName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="80"
-                android:orientation="vertical">
+                android:layout_marginStart="16sp"
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/studentclass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon"
+                tools:text="Sanju Sabu" />
 
 
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="40"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
-                    android:text="Rexa Mathewes"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-                <com.example.kingsapp.manager.font.CustomTimesNewRoman
-                    android:id="@+id/studentclass"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:paddingLeft="10dp"
-                    android:text="X A"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <ImageView
+            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                android:id="@+id/studentclass"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:layout_gravity="right|center"
-                android:layout_weight="12"
-                android:visibility="gone" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toBottomOf="@+id/studentName"
+                tools:text="10 B" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"

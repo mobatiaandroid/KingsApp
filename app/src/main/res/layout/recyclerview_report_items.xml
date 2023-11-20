@@ -11,9 +11,10 @@
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@color/kings_blue"
+        android:background="@color/button_blue"
         android:layout_marginTop="5dp">
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+        <com.example.kingsapp.manager.font.CustomTimeLTStandard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/accYr"
@@ -21,7 +22,7 @@
             android:text="Accyear"
             android:textColor="@color/white"
             android:layout_marginLeft="10dp"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

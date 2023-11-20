@@ -8,7 +8,10 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.*
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -18,28 +21,32 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceStudentListAdapter
+import com.example.kingsapp.activities.absence.adapter.AbsenceStudentListAdapter
 import com.example.kingsapp.activities.home.HomeActivity
 import com.example.kingsapp.activities.login.SigninyourAccountActivity
 import com.example.kingsapp.activities.login.model.StudentList
 import com.example.kingsapp.activities.timetable.adapter.TimeTableAllWeekSelectionAdapterNew
 import com.example.kingsapp.activities.timetable.adapter.TimeTableSingleWeekSelectionAdapter
 import com.example.kingsapp.activities.timetable.adapter.TimeTableWeekListAdapter
-import com.example.kingsapp.activities.timetable.model.*
+import com.example.kingsapp.activities.timetable.model.DayModel
+import com.example.kingsapp.activities.timetable.model.FieldModel
+import com.example.kingsapp.activities.timetable.model.MondayList
+import com.example.kingsapp.activities.timetable.model.PeriodModel
+import com.example.kingsapp.activities.timetable.model.TimeTableResponseModel
+import com.example.kingsapp.activities.timetable.model.WeekModel
 import com.example.kingsapp.constants.CommonClass
 import com.example.kingsapp.constants.ProgressBarDialog
+import com.example.kingsapp.constants.api.ApiClient
 import com.example.kingsapp.manager.PreferenceManager
 import com.example.kingsapp.manager.recyclerviewmanager.OnItemClickListener
 import com.example.kingsapp.manager.recyclerviewmanager.addOnItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
-import com.example.kingsapp.constants.api.ApiClient
 import com.ryanharter.android.tooltips.ToolTipLayout
 import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Date
 
 class TimeTableActivity:AppCompatActivity() {
     lateinit var ncontext: Context
@@ -51,7 +58,8 @@ class TimeTableActivity:AppCompatActivity() {
     lateinit var timeTableSingleRecycler: RecyclerView
     lateinit var linearLayoutManagerVertical: LinearLayoutManager
     lateinit var linearLayoutManagerVertical1: LinearLayoutManager
-    lateinit var linearlayoutstudentlist: LinearLayout
+
+    //    lateinit var linearlayoutstudentlist: LinearLayout
     lateinit var progressBarDialog: ProgressBarDialog
 
     lateinit var mFieldModel: ArrayList<FieldModel>
@@ -59,7 +67,7 @@ class TimeTableActivity:AppCompatActivity() {
 
     //    lateinit var student1timetable: ArrayList<DayModel>
 //    lateinit var student2timetable: ArrayList<DayModel>
-   // lateinit var mSundayArrayList: ArrayList<TimeTableApiListModel>
+    // lateinit var mSundayArrayList: ArrayList<TimeTableApiListModel>
     lateinit var mMondayArrayList: ArrayList<MondayList>
     lateinit var mTuesdayArrayList: ArrayList<MondayList>
     lateinit var mwednesdayArrayList: ArrayList<MondayList>
@@ -458,19 +466,19 @@ if (response.body()!!.timetable.range.Monday.isEmpty()&&response.body()!!.timeta
         weekListArrayString.add("FRIDAY")
         progressBarDialog = ProgressBarDialog(ncontext)
         studentNameTextView = findViewById(R.id.studentName)
-        linearlayoutstudentlist = findViewById(R.id.studentSpinner)
+//        linearlayoutstudentlist = findViewById(R.id.studentSpinner)
         studentclass = findViewById(R.id.studentclass)
         backarrow = findViewById(R.id.back)
         imagicon = findViewById(R.id.imagicon)
         textView=findViewById(R.id.textView)
 
-        tipContainer = findViewById(R.id.tooltip_container) as ToolTipLayout
+        tipContainer = findViewById<ToolTipLayout>(R.id.tooltip_container)
 
 
         if (PreferenceManager().getLanguage(ncontext).equals("ar")) {
             val face: Typeface =
-                Typeface.createFromAsset(ncontext.getAssets(), "font/times_new_roman.ttf")
-            textView.setTypeface(face);
+                Typeface.createFromAsset(ncontext.assets, "font/times_new_roman.ttf")
+            textView.typeface = face
         }
        // studentListApiCall()
 
@@ -514,7 +522,7 @@ if (response.body()!!.timetable.range.Monday.isEmpty()&&response.body()!!.timeta
         timeTableSingleRecycler.itemAnimator = DefaultItemAnimator()
         weekRecyclerList = findViewById<RecyclerView>(R.id.weekRecyclerList)
         recyclerinitializer()
-        card_viewAll = findViewById(R.id.card_viewAll) as CardView
+        card_viewAll = findViewById<CardView>(R.id.card_viewAll)
 
         weekListArray = ArrayList()
         Log.e("weekListArrayString", weekListArrayString.toString())
@@ -555,7 +563,7 @@ if (response.body()!!.timetable.range.Monday.isEmpty()&&response.body()!!.timeta
 
         val timeTableWeekListAdapter =
             TimeTableWeekListAdapter(ncontext, weekListArray, weekPosition)
-        weekRecyclerList.setAdapter(timeTableWeekListAdapter)
+        weekRecyclerList.adapter = timeTableWeekListAdapter
 
         timeTableSingleRecycler.visibility = View.GONE
         // timeTableAllRecycler.visibility = View.VISIBLE
@@ -814,7 +822,7 @@ if (response.body()!!.timetable.range.Monday.isEmpty()&&response.body()!!.timeta
             AbsenceStudentListAdapter(
                 ncontext,
                 student_name)
-        recycler_view!!.adapter = studentlist_adapter
+        recycler_view.adapter = studentlist_adapter
         crossicon.setOnClickListener {
             dialog.dismiss()
         }
@@ -823,13 +831,13 @@ if (response.body()!!.timetable.range.Monday.isEmpty()&&response.body()!!.timeta
 
                 //var id: String = student_name.get(position).id.toString()
                 var name: String = student_name.get(position).fullname
-                var classs:String=student_name.get(position).classs
+                var classs: String = student_name.get(position).classs
                 // PreferenceManager().setStudentname(nContext, name).toString()
                 // Log.e("recycler id", id.toString())
                 //leavelist(id)
-                studentclass.setText(classs)
-                studentNameTextView.setText(name)
-               // showTimeTable()
+                studentclass.text = classs
+                studentNameTextView.text = name
+                // showTimeTable()
                 dialog.dismiss()
             }
 
@@ -848,7 +856,7 @@ if (response.body()!!.timetable.range.Monday.isEmpty()&&response.body()!!.timeta
     }*/
 
     fun recyclerinitializer() {
-        timeTableAllRecycler = findViewById(R.id.timeTableAllRecycler) as RecyclerView
+        timeTableAllRecycler = findViewById<RecyclerView>(R.id.timeTableAllRecycler)
         linearLayoutManagerVertical.orientation = LinearLayoutManager.VERTICAL
         timeTableAllRecycler.layoutManager = linearLayoutManagerVertical
         timeTableAllRecycler.itemAnimator = DefaultItemAnimator()

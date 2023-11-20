@@ -8,10 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
-import com.example.kingsapp.activities.adapter.AbsenceListAdapter
 import com.example.kingsapp.activities.forms.model.FormList
-import com.example.kingsapp.activities.parentessentials.model.ParentessentialModel
-import com.example.kingsapp.manager.PreferenceManager
 
 class ParentListAdapter(private val context: Context, private  val name:ArrayList<FormList>):
     RecyclerView.Adapter<ParentListAdapter.MyViewHolder>() {
@@ -24,14 +21,14 @@ class ParentListAdapter(private val context: Context, private  val name:ArrayLis
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ParentListAdapter.MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_parent_essentials, parent, false)
-        return ParentListAdapter.MyViewHolder(itemView)
+        return MyViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ParentListAdapter.MyViewHolder, position: Int) {
-        holder.textview.text = name!![position].title
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.textview.text = name[position].title
         /*if (PreferenceManager().getLanguage(context).equals("ar"))
         {
 

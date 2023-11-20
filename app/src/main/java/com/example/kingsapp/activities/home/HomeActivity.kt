@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kingsapp.R
 import com.example.kingsapp.activities.absence.AbsenceActivity
-import com.example.kingsapp.activities.adapter.apps.AppsActivity
+import com.example.kingsapp.activities.apps.AppsActivity
 import com.example.kingsapp.activities.calender.SchoolCalendarActivity
 import com.example.kingsapp.activities.early_pickup.EarlyPickupListActivity
 import com.example.kingsapp.activities.forms.FormsActivity
@@ -69,7 +69,7 @@ import retrofit2.Response
 import java.util.*
 import kotlin.system.exitProcess
 
-class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
+class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 
     val manager = supportFragmentManager
     lateinit var shadowBuilder: MyDragShadowBuilder
@@ -86,13 +86,14 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     lateinit var profileImg: ImageView
     lateinit var contactText: TextView
     lateinit var homeImg: ImageView
+    lateinit var logo: ImageView
 
     lateinit var homeText: TextView
     lateinit var bottomLinear: ConstraintLayout
 
     //private lateinit var navView: NavigationView
     lateinit var menu_btn: ImageView
-    lateinit var student_profile : ImageView
+    lateinit var student_profile: ImageView
     lateinit var lang_switch: Switch
     lateinit var studentListRecyclerview: RecyclerView
     lateinit var mHomeListView: ListView
@@ -121,17 +122,12 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         loadLocate()
         initFn()
         showfragmenthome()
-        if (PreferenceManager().getAccessToken(mContext).equals(""))
-            {
-       Log.e("Sucess","Success")
-            }
-        else
-
-        {
-            Log.e("Failed","Success")
+        if (PreferenceManager().getAccessToken(mContext).equals("")) {
+            Log.e("Sucess", "Success")
+        } else {
+            Log.e("Failed", "Success")
             callhomeuserApi()
         }
-
 
 
     }
@@ -142,7 +138,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         linearLayout = findViewById<View>(R.id.linearLayout) as LinearLayout
         drawerLayout = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         mHomeListView = findViewById<View>(R.id.homeList) as ListView
-        menuicon =  findViewById<View>(R.id.menuicon) as ImageView
+        menuicon = findViewById<View>(R.id.menuicon) as ImageView
         contactText = findViewById<View>(R.id.contactText) as TextView
         homeText = findViewById<View>(R.id.homeText) as TextView
         homeImg = findViewById<View>(R.id.homeImg) as ImageView
@@ -155,12 +151,23 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         settingRel = findViewById<View>(R.id.settingRel) as ConstraintLayout
         homeRel = findViewById<View>(R.id.homeRel) as ConstraintLayout
         profileRel = findViewById<View>(R.id.profileRel) as ConstraintLayout
-        profileImg = findViewById(R.id.profileImg) as ImageView
+        profileImg = findViewById<ImageView>(R.id.profileImg)
         bottomLinear = findViewById<View>(R.id.bottomLinear) as ConstraintLayout
         menu_btn = findViewById<View>(R.id.hambrgr_btn) as ImageView
         student_profile = findViewById<View>(R.id.student_profile) as ImageView
         studentListRecyclerview = findViewById<View>(R.id.studentlistrec) as RecyclerView
-
+        logo = findViewById(R.id.logo)
+        if (PreferenceManager().getSchoolIdentifier(mContext).equals("KSD")) {
+            logo.setBackgroundResource(R.drawable.kings_school_dubai_logo)
+        } else if (PreferenceManager().getSchoolIdentifier(mContext).equals("KSAB")) {
+            logo.setBackgroundResource(R.drawable.kings_school_al_barsha_logo)
+        } else if (PreferenceManager().getSchoolIdentifier(mContext)
+                .equals("KSNAS")
+        ) {
+            logo.setBackgroundResource(R.drawable.kings_school_nad_al_sheba_logo)
+        } else {
+            logo.setBackgroundResource(R.drawable.kings_school_dubai_logo)
+        }
         /*FirebaseApp.initializeApp(mContext)
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -171,16 +178,13 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         })*/
         // studentListRecyclerViewArab = findViewById<View>(R.id.studentlistrecc) as RecyclerView
         lang_switch = findViewById<View>(R.id.switchlang) as Switch
-       // PreferenceManager().setLanguagetype(mContext, "1")
+        // PreferenceManager().setLanguagetype(mContext, "1")
 
-        if(PreferenceManager().getLanguageschool(mContext).equals("2"))
-        {
-            lang_switch.visibility=View.VISIBLE
+        if (PreferenceManager().getLanguageschool(mContext).equals("2")) {
+            lang_switch.visibility = View.VISIBLE
+        } else {
+            lang_switch.visibility = View.GONE
         }
-        else
-       {
-           lang_switch.visibility=View.GONE
-       }
 
         list = ArrayList()
 
@@ -201,7 +205,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             R.array.home_list_items
         )
         Log.e("home_list_items", mListItemArray.get(0).toString())
-        mListImgArray = mContext!!.resources.obtainTypedArray(
+        mListImgArray = mContext.resources.obtainTypedArray(
             R.array.home_list_reg_icons
         )
         val width = (resources.displayMetrics.widthPixels / 1.7).toInt()
@@ -284,11 +288,11 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             PreferenceManager().setLanguagetype(mContext, "2")
 
             val face: Typeface =
-                Typeface.createFromAsset(mContext.getAssets(), "font/times_new_roman.ttf")
-            homeText.setTypeface(face);
-            messageText.setTypeface(face);
-            otherText.setTypeface(face);
-            contactText.setTypeface(face);
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            homeText.typeface = face
+            messageText.typeface = face
+            otherText.typeface = face
+            contactText.typeface = face
             homeText.setText(R.string.Home)
             messageText.setText(R.string.parentcomms)
             otherText.setText(R.string.Settings)
@@ -305,12 +309,12 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         homeRel.setOnClickListener {
             PreferenceManager().setvalue(mContext, "")
             homeImg.setBackgroundResource(R.drawable.home_clicked)
-            homeText.setTextColor(Color.parseColor("#FFFFFFFF"));
+            homeText.setTextColor(Color.parseColor("#FFFFFFFF"))
             otherImg.setBackgroundResource(R.drawable.settings)
-            otherText.setTextColor(Color.parseColor("#7F8B93"));
+            otherText.setTextColor(Color.parseColor("#7F8B93"))
             messageImg.setBackgroundResource(R.drawable.email)
-            messageText.setTextColor(Color.parseColor("#7F8B93"));
-            contactText.setTextColor(Color.parseColor("#7F8B93"));
+            messageText.setTextColor(Color.parseColor("#7F8B93"))
+            contactText.setTextColor(Color.parseColor("#7F8B93"))
             profileImg.setBackgroundResource(R.drawable.chatting)
 
             fragment = HomeFragment()
@@ -324,12 +328,12 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             Log.e("setvalue", PreferenceManager().getvalue(mContext))
             // bottomLinear.setBackgroundColor(R.drawable.bottom_bg)
             messageImg.setBackgroundResource(R.drawable.email_clicked)
-            messageText.setTextColor(Color.parseColor("#FFFFFFFF"));
+            messageText.setTextColor(Color.parseColor("#FFFFFFFF"))
             otherImg.setBackgroundResource(R.drawable.settings)
-            otherText.setTextColor(Color.parseColor("#7F8B93"));
+            otherText.setTextColor(Color.parseColor("#7F8B93"))
             homeImg.setBackgroundResource(R.drawable.home)
-            homeText.setTextColor(Color.parseColor("#7F8B93"));
-            contactText.setTextColor(Color.parseColor("#7F8B93"));
+            homeText.setTextColor(Color.parseColor("#7F8B93"))
+            contactText.setTextColor(Color.parseColor("#7F8B93"))
             profileImg.setBackgroundResource(R.drawable.chatting)
 
             if (PreferenceManager().getAccessToken(mContext).equals("")) {
@@ -340,11 +344,11 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                     studentListRecyclerview.visibility = View.VISIBLE
                     top_navigation_li.visibility = View.VISIBLE
                 }
-                Toast.makeText(mContext,"This feature is only available for registered users.",
-                    Toast.LENGTH_SHORT).show()
-            }
-            else
-            {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 top_navigation_li.visibility = View.GONE
                 studentListRecyclerview.visibility = View.GONE
 
@@ -359,12 +363,12 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             studentListRecyclerview.visibility = View.GONE
             top_navigation_li.visibility = View.GONE
             otherImg.setBackgroundResource(R.drawable.settings_clicked)
-            otherText.setTextColor(Color.parseColor("#FFFFFFFF"));
+            otherText.setTextColor(Color.parseColor("#FFFFFFFF"))
             messageImg.setBackgroundResource(R.drawable.email)
-            messageText.setTextColor(Color.parseColor("#7F8B93"));
+            messageText.setTextColor(Color.parseColor("#7F8B93"))
             homeImg.setBackgroundResource(R.drawable.home)
-            homeText.setTextColor(Color.parseColor("#7F8B93"));
-            contactText.setTextColor(Color.parseColor("#7F8B93"));
+            homeText.setTextColor(Color.parseColor("#7F8B93"))
+            contactText.setTextColor(Color.parseColor("#7F8B93"))
             profileImg.setBackgroundResource(R.drawable.chatting)
 
 
@@ -378,32 +382,28 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         profileRel.setOnClickListener {
 
             profileImg.setBackgroundResource(R.drawable.chatting_clicked)
-            contactText.setTextColor(Color.parseColor("#FFFFFFFF"));
+            contactText.setTextColor(Color.parseColor("#FFFFFFFF"))
             otherImg.setBackgroundResource(R.drawable.settings)
-            otherText.setTextColor(Color.parseColor("#7F8B93"));
+            otherText.setTextColor(Color.parseColor("#7F8B93"))
             messageImg.setBackgroundResource(R.drawable.email)
-            messageText.setTextColor(Color.parseColor("#7F8B93"));
+            messageText.setTextColor(Color.parseColor("#7F8B93"))
             homeImg.setBackgroundResource(R.drawable.home)
-            homeText.setTextColor(Color.parseColor("#7F8B93"));
+            homeText.setTextColor(Color.parseColor("#7F8B93"))
 
 
-            if (PreferenceManager().getAccessToken(mContext).equals(""))
-            {
-                if (PreferenceManager().getvalue(mContext).equals("0"))
-                {
+            if (PreferenceManager().getAccessToken(mContext).equals("")) {
+                if (PreferenceManager().getvalue(mContext).equals("0")) {
                     studentListRecyclerview.visibility = View.GONE
                     top_navigation_li.visibility = View.GONE
-                }
-                else
-                {
+                } else {
                     studentListRecyclerview.visibility = View.VISIBLE
                     top_navigation_li.visibility = View.VISIBLE
                 }
-                Toast.makeText(mContext,"This feature is only available for registered users.",
-                    Toast.LENGTH_SHORT).show()
-            }
-            else
-            {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 if (ActivityCompat.checkSelfPermission(
                         mContext,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -414,13 +414,11 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                         mContext,
                         Manifest.permission.CALL_PHONE
                     ) != PackageManager.PERMISSION_GRANTED
-                )
-                {
+                ) {
                     checkPermissionContactUs()
 
 
-                }
-                else {
+                } else {
                     top_navigation_li.visibility = View.GONE
                     studentListRecyclerview.visibility = View.GONE
 
@@ -453,7 +451,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
         })
 
-        menuicon.setOnClickListener(){
+        menuicon.setOnClickListener {
             drawerLayout.openDrawer(linearLayout)
             if (drawerLayout.isDrawerOpen(linearLayout)) {
 
@@ -462,7 +460,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 drawerLayout.openDrawer(linearLayout)
             }
         }
-        menu_btn.setOnClickListener(){
+        menu_btn.setOnClickListener {
             drawerLayout.openDrawer(linearLayout)
             if (drawerLayout.isDrawerOpen(linearLayout)) {
 
@@ -473,93 +471,99 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             //
 
         }
-        student_profile.setOnClickListener() {
-            if(flag)
-            {
-                studentListRecyclerview.visibility=View.VISIBLE
+        student_profile.setOnClickListener {
+            if (flag) {
+                studentListRecyclerview.visibility = View.VISIBLE
 
-                if(CommonClass.isInternetAvailable(mContext)) {
+                if (CommonClass.isInternetAvailable(mContext)) {
                     student_name.clear()
-                    if (PreferenceManager().getAccessToken(mContext).equals(""))
-                    {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
-                    }
-                    else
-                    {
+                    if (PreferenceManager().getAccessToken(mContext).equals("")) {
+                        Toast.makeText(
+                            mContext, "This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
                         studentListApiCall()
                     }
 
-                }
-                else{
-                    Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        mContext,
+                        "Network error occurred. Please check your internet connection and try again later",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
 
-            }
-            else
-            {
+            } else {
 
-                studentListRecyclerview.visibility=View.GONE
+                studentListRecyclerview.visibility = View.GONE
                 /*linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                 studentListRecyclerview.layoutManager = linearLayoutManager
                 val studentAdapter = StudentListAdapter(mContext,list,name)
                 studentListRecyclerview.setAdapter(studentAdapter)*/
             }
             flag = !flag
-/*if(PreferenceManager().getLanguage(mContext).equals("ar"))
-{*/
-    /*studentListRecyclerview.visibility=View.GONE
-    studentListRecyclerViewArab.visibility=View.VISIBLE
-    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-    studentListRecyclerViewArab.layoutManager = linearLayoutManager
-    val studentAdapter = StudentListAdapterArab(mContext,list,name)
-    studentListRecyclerViewArab.setAdapter(studentAdapter)*/
-/*}
-  else
-{*/
+            /*if(PreferenceManager().getLanguage(mContext).equals("ar"))
+            {*/
+            /*studentListRecyclerview.visibility=View.GONE
+            studentListRecyclerViewArab.visibility=View.VISIBLE
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            studentListRecyclerViewArab.layoutManager = linearLayoutManager
+            val studentAdapter = StudentListAdapterArab(mContext,list,name)
+            studentListRecyclerViewArab.setAdapter(studentAdapter)*/
+            /*}
+              else
+            {*/
 
 //}
 
         }
-        if(CommonClass.isInternetAvailable(mContext)) {
+        if (CommonClass.isInternetAvailable(mContext)) {
             FirebaseApp.initializeApp(mContext)
             FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
                 if (task.isComplete) {
-                    val token: String = task.getResult().toString()
+                    val token: String = task.result.toString()
                     tokenM = token
                     calldeviceRegistrion(tokenM)
                     //callChangePasswordStaffAPI(URL_STAFF_CHANGE_PASSWORD, token)
                 }
             }
 
-        }
-        else{
-            Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                mContext,
+                "Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
 
     }
 
     private fun calldeviceRegistrion(tokenM: String) {
-        var androidID = Settings.Secure.getString(this.contentResolver,
-            Settings.Secure.ANDROID_ID)
-        Log.e("android_id",androidID)
-        val call: Call<ResponseBody> = ApiClient.getApiService().devicereg("Bearer "+
-                PreferenceManager().getAccessToken(mContext).toString(),"2",
-            tokenM, androidID)
+        var androidID = Settings.Secure.getString(
+            this.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+        Log.e("android_id", androidID)
+        val call: Call<ResponseBody> = ApiClient.getApiService().devicereg(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mContext).toString(), "2",
+            tokenM, androidID
+        )
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
-              // progressBarDialog.hide()
+                // progressBarDialog.hide()
 
 
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-              //  progressBarDialog.hide()
+                //  progressBarDialog.hide()
 
                 Toast.makeText(
                     mContext,
@@ -632,21 +636,15 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                                 showforceupdate(mContext)
 
                             }
+                        } else if (response.body()!!.status.equals("106")) {
+                            val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                            startActivity(intent)
+                        }
+
+                    } else {
+                        // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
-
-
-                else if(response.body()!!.status.equals("106"))
-                {
-                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
-
-                }
-                else{
-                   // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
-                }
-                }
-                else{
+                } else {
                     callguestApiCall()
                     val intent = Intent(mContext, SigninyourAccountActivity::class.java)
                     startActivity(intent)
@@ -673,13 +671,15 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 call: Call<HomeGuestrResponseModel>,
                 response: Response<HomeGuestrResponseModel>
             ) {
-                Log.e("respon",response.body().toString())
+                Log.e("respon", response.body().toString())
                 if (response.body() != null) {
 
-                    if(response.body()!!.status.equals("100"))
-                    {
-                        PreferenceManager().setAccessToken(mContext,"")
-                        PreferenceManager().setAppversion(mContext, response.body()!!.home.android_version)
+                    if (response.body()!!.status.equals("100")) {
+                        PreferenceManager().setAccessToken(mContext, "")
+                        PreferenceManager().setAppversion(
+                            mContext,
+                            response.body()!!.home.android_version
+                        )
                         versionfromapi =
                             PreferenceManager().getAppVersion(mContext)!!.replace(".", "")
                         currentversion = currentversion.replace(".", "")
@@ -693,22 +693,16 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                                 showforceupdate(mContext)
 
                             }
-                        }
-
-
-                        else if(response.body()!!.status.equals("106"))
-                        {
+                        } else if (response.body()!!.status.equals("106")) {
                             val intent = Intent(mContext, SigninyourAccountActivity::class.java)
                             startActivity(intent)
                         }
 
-                    }
-                    else{
+                    } else {
                         // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
-                }
-                else{
-                   // callguestApiCall()
+                } else {
+                    // callguestApiCall()
                 }
             }
 
@@ -725,30 +719,34 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
     }
 
     private fun studentListApiCall() {
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-                PreferenceManager().getAccessToken(mContext).toString())
+        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mContext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
-                Log.e("Response",response.body().toString())
-                if (response.body()!!.status.equals(100))
-                {
+                Log.e("Response", response.body().toString())
+                if (response.body()!!.status.equals(100)) {
                     student_name.addAll(response.body()!!.student_list)
 
                     linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                     studentListRecyclerview.layoutManager = linearLayoutManager
-                    val studentAdapter = StudentListAdapter(mContext,student_name,studentListRecyclerview,lang_switch)
-                    studentListRecyclerview.setAdapter(studentAdapter)
+                    val studentAdapter = StudentListAdapter(
+                        mContext,
+                        student_name,
+                        studentListRecyclerview,
+                        lang_switch
+                    )
+                    studentListRecyclerview.adapter = studentAdapter
                     /*student_name.addAll(response.body()!!.student_list)
                     circleImageView!!.layoutManager = LinearLayoutManager(mContext)
                     val studentlist_adapter =
                         ChildSelectionAdapter(ncontext, student_name)
                     circleImageView!!.adapter = studentlist_adapter*/
-                }
-                else
-                {
+                } else {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
             }
@@ -798,8 +796,14 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         }
         dialog.show()
     }
-    override fun onItemLongClick(parent: AdapterView<*>?, view: View?, position: Int, p3: Long): Boolean {
-        Log.e("Success","Success")
+
+    override fun onItemLongClick(
+        parent: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        p3: Long
+    ): Boolean {
+        Log.e("Success", "Success")
         shadowBuilder = MyDragShadowBuilder(view)
         sPosition = position
         val selecteditem = parent?.getItemIdAtPosition(position)
@@ -810,236 +814,220 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         drawerLayout.closeDrawer(linearLayout)
         return false
     }
-    private fun display(position:Int)
-    {
 
-            if (PreferenceManager().getAccessToken(mContext).equals(""))
+    private fun display(position: Int) {
 
-            {
-                if(position==0)
-                {
-                    fragment = HomeFragment()
-                    replaceFragmentsSelected(position)
-                }
-                else if(position==1)
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
+        if (PreferenceManager().getAccessToken(mContext).equals("")) {
+            if (position == 0) {
+                fragment = HomeFragment()
+                replaceFragmentsSelected(position)
+            } else if (position == 1) {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
 
 
-                }
-                else if(position==2)
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
-                    //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==3)
-                {
+            } else if (position == 2) {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
+                //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 3) {
 
 
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
-                    //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==4)
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
+                //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 4) {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
 
-                }
-                else if(position==5)
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
+            } else if (position == 5) {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
 
-                    //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==6)
-                {
+                //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 6) {
 
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
 
-                }
-                else if(position==7)
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==8)
-                {
+            } else if (position == 7) {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 8) {
 
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==9)
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 9) {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
 
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
-                    Toast.makeText(mContext,"This feature is only available for registered users.",
-                        Toast.LENGTH_SHORT).show()
-                    drawerLayout.closeDrawer(linearLayout)
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    mContext, "This feature is only available for registered users.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                drawerLayout.closeDrawer(linearLayout)
 
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
-        else
-
-            {
-                if(position==0)
-                {
-                    fragment = HomeFragment()
-                    replaceFragmentsSelected(position)
-                }
-                else if(position==1)
-                {
-                    val intent = Intent(mContext, StudentInfoActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
+        } else {
+            if (position == 0) {
+                fragment = HomeFragment()
+                replaceFragmentsSelected(position)
+            } else if (position == 1) {
+                val intent = Intent(mContext, StudentInfoActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
 
 
-                }
-                else if(position==2)
-                {
-                    PreferenceManager().setFromYearView(mContext,"0")
-                    val intent = Intent(mContext, SchoolCalendarActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-                    //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==3)
-                {
-                    studentListRecyclerview.visibility=View.GONE
-                    top_navigation_li.visibility=View.GONE
-                    fragment = MessageFragment()
-                    replaceFragmentsSelected(position)
-                    drawerLayout.closeDrawer(linearLayout)
+            } else if (position == 2) {
+                PreferenceManager().setFromYearView(mContext, "0")
+                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+                //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 3) {
+                studentListRecyclerview.visibility = View.GONE
+                top_navigation_li.visibility = View.GONE
+                fragment = MessageFragment()
+                replaceFragmentsSelected(position)
+                drawerLayout.closeDrawer(linearLayout)
 
 
-                    //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==4)
-                {
-
-                    val intent = Intent(mContext, AbsenceActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-
-                }
-                else if(position==5)
-                {
-
-                    val intent = Intent(mContext, EarlyPickupListActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-
-                    //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==6)
-                {
-
-                    val intent = Intent(mContext, TimeTableActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-
-                }
-                else if(position==7)
-                {
-                    val intent = Intent(mContext, ParentEssentialsActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==8)
-                {
-                    val intent = Intent(mContext, ReportsActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==9)
-                {
-                    val intent = Intent(mContext, FormsActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==10)
-                {
-                    val intent = Intent(mContext, AppsActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else if(position==11)
-                {
-                    val intent = Intent(mContext, SocialMediaActivity::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(linearLayout)
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
-                    if (ActivityCompat.checkSelfPermission(
-                            mContext,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            mContext,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                            mContext,
-                            Manifest.permission.CALL_PHONE
-                        ) != PackageManager.PERMISSION_GRANTED
-                    )
-                    {
-                        checkPermissionContactUs()
-
-
-                    }
-                    else {
-                        studentListRecyclerview.visibility=View.GONE
-                        top_navigation_li.visibility=View.GONE
-                        fragment = ContactFragment()
-                        replaceFragmentsSelected(position)
-                        drawerLayout.closeDrawer(linearLayout)
-                    }
-
-
-
-                    // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-                }
+                //  Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             }
+//            else if (position == 4) {
+//                val intent = Intent(mContext, TeacherContactActivity::class.java)
+//                startActivity(intent)
+//                drawerLayout.closeDrawer(linearLayout)
+//
+//                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+//            }
+            else if (position == 4) {
 
+                val intent = Intent(mContext, AbsenceActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+
+            } else if (position == 5) {
+
+                val intent = Intent(mContext, EarlyPickupListActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+
+                //Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 6) {
+
+                val intent = Intent(mContext, TimeTableActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+
+            } else if (position == 7) {
+                val intent = Intent(mContext, ParentEssentialsActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 8) {
+                val intent = Intent(mContext, ReportsActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 9) {
+                val intent = Intent(mContext, FormsActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 10) {
+                val intent = Intent(mContext, AppsActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 11) {
+                val intent = Intent(mContext, SocialMediaActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else {
+                if (ActivityCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        mContext,
+                        Manifest.permission.CALL_PHONE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    checkPermissionContactUs()
+
+
+                } else {
+                    studentListRecyclerview.visibility = View.GONE
+                    top_navigation_li.visibility = View.GONE
+                    fragment = ContactFragment()
+                    replaceFragmentsSelected(position)
+                    drawerLayout.closeDrawer(linearLayout)
+                }
+
+
+                // Toast.makeText(com.example.kingsapp.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }
         }
+
+    }
+
     private fun checkPermissionContactUs() {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(
+                mContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                mContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                mContext,
+                Manifest.permission.CALL_PHONE
+            ) != PackageManager.PERMISSION_GRANTED
 //            || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_NOTIFICATION_POLICY) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
@@ -1055,6 +1043,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             )
         }
     }
+
     fun showfragmenthome() {
         val transaction = manager.beginTransaction()
         val fragment = HomeFragment()
@@ -1068,18 +1057,19 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             fragmentManager
                 .beginTransaction()
                 .replace(
-                    R.id.frame_container, fragment!!,
+                    R.id.frame_container, fragment,
                     mListItemArray[position]
                 )
                 .addToBackStack(mListItemArray[position]).commitAllowingStateLoss()
             mHomeListView.setItemChecked(position, true)
             mHomeListView.setSelection(position)
             supportActionBar?.setTitle(R.string.null_value)
-            if (drawerLayout.isDrawerOpen(linearLayout!!)) {
-                drawerLayout.closeDrawer(linearLayout!!)
+            if (drawerLayout.isDrawerOpen(linearLayout)) {
+                drawerLayout.closeDrawer(linearLayout)
             }
         }
     }
+
     fun initializeFragment(fragment: Fragment?) {
         if (fragment != null) {
             val fragmentManager = supportFragmentManager
@@ -1087,54 +1077,53 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
                 .replace(
-                    R.id.frame_container, fragment!!)
+                    R.id.frame_container, fragment
+                )
                 .addToBackStack(null).commitAllowingStateLoss()
 
         }
     }
-     fun showChangeLang() {
+
+    fun showChangeLang() {
 
 
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            PreferenceManager().setLanguagetype(mContext, "2")
 
-            if (PreferenceManager().getLanguage(mContext).equals("ar")) {
-                PreferenceManager().setLanguagetype(mContext, "2")
+            lang_switch.isChecked = false
+            /* setLocate("ar")
+             recreate()*/
+        } else if (PreferenceManager().getLanguage(mContext).equals("en")) {
+            PreferenceManager().setLanguagetype(mContext, "1")
 
-                lang_switch.isChecked = false
-               /* setLocate("ar")
-                recreate()*/
-            } else if (PreferenceManager().getLanguage(mContext).equals("en")) {
+            lang_switch.isChecked = true
+            /*setLocate("en")
+            recreate()*/
+        }
+        lang_switch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+
+
+            if (lang_switch.isChecked) {
+                Log.e("english", "english")
                 PreferenceManager().setLanguagetype(mContext, "1")
-
+                setLocate("en")
+                restartActivity()
                 lang_switch.isChecked = true
-                /*setLocate("en")
-                recreate()*/
+
+            } else {
+                Log.e("arabic", "arabic")
+                PreferenceManager().setLanguagetype(mContext, "2")
+                setLocate("ar")
+                restartActivity()
+                lang_switch.isChecked = false
             }
-         lang_switch. setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-
-
-             if (lang_switch.isChecked) {
-                 Log.e("english","english")
-                 PreferenceManager().setLanguagetype(mContext, "1")
-                 setLocate("en")
-                 restartActivity()
-                 lang_switch.isChecked = true
-
-             }
-             else
-             {
-                 Log.e("arabic","arabic")
-                 PreferenceManager().setLanguagetype(mContext, "2")
-                 setLocate("ar")
-                 restartActivity()
-                 lang_switch.isChecked = false
-             }
-         })
-
+        })
 
 
     }
+
     @SuppressLint("ObsoleteSdkInt")
-     fun setLocate(Lang: String) {
+    fun setLocate(Lang: String) {
 
         val locale = Locale(Lang)
 
@@ -1144,15 +1133,15 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
 
         config.locale = locale
         baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
-        val locale1= Locale.getDefault().language
-        Log.e("localelang",locale1)
-        PreferenceManager().setLanguage(mContext,locale1)
+        val locale1 = Locale.getDefault().language
+        Log.e("localelang", locale1)
+        PreferenceManager().setLanguage(mContext, locale1)
         if (locale1 == "ar") {
-           /* name.gravity = Gravity.RIGHT
-            password.gravity = Gravity.RIGHT*/
+            /* name.gravity = Gravity.RIGHT
+             password.gravity = Gravity.RIGHT*/
         } else {
-           /* name.gravity = Gravity.LEFT
-            password.gravity = Gravity.LEFT*/
+            /* name.gravity = Gravity.LEFT
+             password.gravity = Gravity.LEFT*/
         }
 
 
@@ -1161,166 +1150,165 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         editor.apply()
 
     }
-     fun loadLocate() {
+
+    fun loadLocate() {
         val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
         val language = sharedPreferences.getString("My_Lang", "")
         setLocate(language.toString())
     }
+
     private fun restartActivity() {
         val intent = Intent(mContext, HomeActivity::class.java)
         startActivity(intent)
         finish()
         startActivity(intent)
     }
-   /* override fun onStart() {
-        // TODO Auto-generated method stub
-        super.onStart()
-        if (flag) {
-            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show()
+
+    /* override fun onStart() {
+         // TODO Auto-generated method stub
+         super.onStart()
+         if (flag) {
+             Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show()
+         } else {
+             Toast.makeText(getApplicationContext(), "Restart 2",Toast.LENGTH_SHORT).show();
+             val i = Intent(mContext, MainActivity::class.java)
+             finish()
+             startActivity(i)
+         }
+     }*/
+    override fun onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(linearLayout)
         } else {
-            Toast.makeText(getApplicationContext(), "Restart 2",Toast.LENGTH_SHORT).show();
-            val i = Intent(mContext, MainActivity::class.java)
-            finish()
-            startActivity(i)
-        }
-    }*/
-   override fun onBackPressed() {
 
-       if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-           drawerLayout.closeDrawer(linearLayout)
-       }
-       else
-            {
-
-                    val fm = supportFragmentManager
-                    val currentFragment = fm
-                        .findFragmentById(R.id.frame_container)
-                    println(
-                        "nas current fragment "
-                                + currentFragment!!.javaClass.toString()
+            val fm = supportFragmentManager
+            val currentFragment = fm
+                .findFragmentById(R.id.frame_container)
+            println(
+                "nas current fragment "
+                        + currentFragment!!.javaClass.toString()
+            )
+            if (currentFragment
+                    .javaClass
+                    .toString()
+                    .equals(
+                        "class com.example.kingsapp.fragment.HomeFragment",
+                        ignoreCase = true
                     )
-                    if (currentFragment
-                            .javaClass
-                            .toString()
-                            .equals(
-                                "class com.example.kingsapp.fragment.HomeFragment",
-                                ignoreCase = true
-                            )
 
-                    ) {
-                        if (PreferenceManager().getAccessToken(mContext).equals(""))
+            ) {
+                if (PreferenceManager().getAccessToken(mContext).equals("")) {
+                    finish()
+                } else {
+                    showSuccessAlert(
+                        mContext,
+                        resources.getString(R.string.do_you_want_account)
+                    )
+                }
 
-                        {
-                            finish()
-                        }
-                        else
-                        {
-                            showSuccessAlert(mContext,getResources().getString(R.string.do_you_want_account))
-                        }
+            } else if (currentFragment
+                    .javaClass
+                    .toString()
+                    .equals(
+                        "class com.example.kingsapp.fragment.contact.ContactFragment",
+                        ignoreCase = true
+                    )
+                || currentFragment
+                    .javaClass
+                    .toString()
+                    .equals(
+                        "class com.example.kingsapp.fragment.setting.SettingFragment",
+                        ignoreCase = true
+                    )
+                || currentFragment
+                    .javaClass
+                    .toString()
+                    .equals(
+                        "class com.example.kingsapp.activities.message.MessageFragment",
+                        ignoreCase = true
+                    )
+            ) {
 
-                    } else if (currentFragment
-                            .javaClass
-                            .toString()
-                            .equals(
-                                "class com.example.kingsapp.fragment.contact.ContactFragment",
-                                ignoreCase = true
-                            )
-                        || currentFragment
-                            .javaClass
-                            .toString()
-                            .equals(
-                                "class com.example.kingsapp.fragment.setting.SettingFragment",
-                                ignoreCase = true
-                            )
-                        || currentFragment
-                            .javaClass
-                            .toString()
-                            .equals(
-                                "class com.example.kingsapp.activities.message.MessageFragment",
-                                ignoreCase = true
-                            ))
-                    {
-
-                    } else {
-                        supportFragmentManager.popBackStack()
-                    }
-
+            } else {
+                supportFragmentManager.popBackStack()
             }
 
+        }
 
-      //
 
-       /*if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-           drawerLayout.closeDrawer(linearLayout)
-       } else {
-           if (supportFragmentManager.backStackEntryCount > 1) {
-               val fm = supportFragmentManager
-               val currentFragment = fm
-                   .findFragmentById(R.id.frame_container)
-               println(
-                   "nas current fragment "
-                           + currentFragment!!.javaClass.toString()
-               )
-               if ((currentFragment
-                       .javaClass
-                       .toString()
-                       .equals(
-                           "class com.example.kingsapp.fragment.HomeFragment",
-                           ignoreCase = true
+        //
+
+        /*if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(linearLayout)
+        } else {
+            if (supportFragmentManager.backStackEntryCount > 1) {
+                val fm = supportFragmentManager
+                val currentFragment = fm
+                    .findFragmentById(R.id.frame_container)
+                println(
+                    "nas current fragment "
+                            + currentFragment!!.javaClass.toString()
+                )
+                if ((currentFragment
+                        .javaClass
+                        .toString()
+                        .equals(
+                            "class com.example.kingsapp.fragment.HomeFragment",
+                            ignoreCase = true
+                        )
                        )
-                      )
-               ) {
-                   finish()
-               } else if ((currentFragment
-                       .javaClass
-                       .toString()
-                       .equals(
-                           "class com.example.kingsapp.fragment.about_us.AboutusFragment",
-                           ignoreCase = true
-                       )
-                           || currentFragment
-                       .javaClass
-                       .toString()
-                       .equals(
-                           "class com.example.kingsapp.fragment.setting.SettingFragment",
-                           ignoreCase = true
-                       )
-                           || currentFragment
-                       .javaClass
-                       .toString()
-                       .equals(
-                           "class com.example.kingsapp.activities.message.MessageFragment",
-                           ignoreCase = true
-                       )
-                           || currentFragment
-                       .javaClass
-                       .toString()
-                       .equals(
-                           "class com.mobatia.naisapp.fragments.cca.CcaFragmentMain",
-                           ignoreCase = true
-                       )
+                ) {
+                    finish()
+                } else if ((currentFragment
+                        .javaClass
+                        .toString()
+                        .equals(
+                            "class com.example.kingsapp.fragment.about_us.AboutusFragment",
+                            ignoreCase = true
+                        )
+                            || currentFragment
+                        .javaClass
+                        .toString()
+                        .equals(
+                            "class com.example.kingsapp.fragment.setting.SettingFragment",
+                            ignoreCase = true
+                        )
+                            || currentFragment
+                        .javaClass
+                        .toString()
+                        .equals(
+                            "class com.example.kingsapp.activities.message.MessageFragment",
+                            ignoreCase = true
+                        )
+                            || currentFragment
+                        .javaClass
+                        .toString()
+                        .equals(
+                            "class com.mobatia.naisapp.fragments.cca.CcaFragmentMain",
+                            ignoreCase = true
+                        )
 
 
-                       )
-               ) {
-//                    imageButton.setImageResource(R.drawable.hamburgerbtn);
+                        )
+                ) {
+ //                    imageButton.setImageResource(R.drawable.hamburgerbtn);
 
-                       val intent = Intent(mContext, MainActivity::class.java)
-                       startActivity(intent)
+                        val intent = Intent(mContext, MainActivity::class.java)
+                        startActivity(intent)
 
-               } else {
-                   println("working *** * *  8")
-                   supportFragmentManager.popBackStack()
-                   //                    getSupportFragmentManager().popBackStackImmediate();
-               }
-           } else {
+                } else {
+                    println("working *** * *  8")
+                    supportFragmentManager.popBackStack()
+                    //                    getSupportFragmentManager().popBackStackImmediate();
+                }
+            } else {
 
-           }
-       }*/
+            }
+        }*/
 
 
-
-   }
+    }
 
     fun showEmailHelpAlert(context: Context) {
         val dialog = Dialog(context)
@@ -1347,6 +1335,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         }
         dialog.show()
     }
+
     fun showAlert(
         activity: Context, okBtnVisibility: Boolean
     ) {
@@ -1391,14 +1380,13 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
             // if button is clicked, close the custom dialog
             dialogOkButton.setOnClickListener {
                 dialog.dismiss()
-               finish()
+                finish()
             }
         }
         dialog.show()
     }
 
-    fun showSuccessAlert(context: Context,msgHead:String)
-    {
+    fun showSuccessAlert(context: Context, msgHead: String) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -1406,7 +1394,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         dialog.setContentView(R.layout.alert_dialogue_layout)
         var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
 
-       // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
@@ -1414,7 +1402,7 @@ class HomeActivity : AppCompatActivity(),AdapterView.OnItemLongClickListener {
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
-            moveTaskToBack(true);
+            moveTaskToBack(true)
             exitProcess(-1)
         }
         btn_Cancel.setOnClickListener()

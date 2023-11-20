@@ -9,6 +9,7 @@ class ClassNameConstants {
     var PARENT_ESSENTIAL = "Parent Essentials"
     var FORMS = "Forms"
     var MESSAGE = "Notices"
+    var TEACHER_CONTACT = "Teacher Contact"
     var REPORTS = "Reports"
     var APPS = "Apps"
     var CONTACTUS = "Contact Us"
