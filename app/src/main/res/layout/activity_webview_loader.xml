@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relMain"
-    >
+    android:id="@+id/relMain">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -78,7 +77,7 @@
                 android:visibility="visible" />
         </RelativeLayout>
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="40dp"

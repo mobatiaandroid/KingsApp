@@ -149,7 +149,7 @@
                                 android:layout_height="35dp"
                                 android:layout_centerInParent="true"
                                 android:gravity="center" />
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtOne"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtFive"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -226,7 +226,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtTwo"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -262,7 +262,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtSeven"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -306,7 +306,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtEight"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -341,7 +341,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtThree"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"
@@ -376,7 +376,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="1dp">
 
-                            <com.example.kingsapp.manager.font.CustomMontserratMedium
+                            <com.kingseducation.app.manager.font.CustomMontserratMedium
                                 android:id="@+id/relTxtFour"
                                 style="@style/textstyleHomebutton"
                                 android:layout_width="match_parent"

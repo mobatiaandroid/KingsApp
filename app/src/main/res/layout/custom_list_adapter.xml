@@ -14,7 +14,7 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="15dp" />
 
-    <com.example.kingsapp.manager.font.CustomMontserratMedium
+    <com.kingseducation.app.manager.font.CustomMontserratMedium
         android:id="@+id/listTxtView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

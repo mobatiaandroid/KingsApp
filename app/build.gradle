@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace 'com.example.kingsapp'
+    namespace 'com.kingseducation.app'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.kingsapp"
+        applicationId "com.kingseducation.app"
         minSdk 27
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        targetSdk 33
+        versionCode 2
+        versionName "1.0.1"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -56,19 +56,13 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-
     implementation 'com.android.support:multidex:1.0.3'
-
     implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
-   // implementation 'com.applandeo:material-calendar-view:1.7.0'
-
     implementation 'com.android.support:design:33.0.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.mindorks.android:prdownloader:0.6.0'
     implementation 'com.google.code.gson:gson:2.9.0'
-
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
@@ -78,24 +72,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.1.2'
     implementation 'com.github.shrikanth7698:Custom-Navigation-Drawer:v0.0.1'
     implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
-
-
-    implementation project(':ijkplayer-java')
-    implementation project(':giraffeplayer')
-
-
-   // implementation 'com.github.bumptech.glide:glide:4.12.0'
-   // annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-   // implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-   // implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.applandeo:material-calendar-view:1.7.0'
-
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
     implementation 'com.ryanharter.android.tooltips:library:0.0.3'
-
     implementation 'com.gauravbhola.ripplepulsebackground:library:1.0.0'
 }

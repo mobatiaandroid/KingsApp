@@ -11,7 +11,7 @@
     android:layout_marginRight="10dp"
     android:id="@+id/realMain">
 
-    <com.example.kingsapp.manager.font.CustomMontserratMedium
+    <com.kingseducation.app.manager.font.CustomMontserratMedium
         android:id="@+id/listDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <com.example.kingsapp.manager.font.CustomMontserratMedium
+    <com.kingseducation.app.manager.font.CustomMontserratMedium
         android:id="@+id/listStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

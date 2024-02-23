@@ -49,7 +49,7 @@
                 android:justificationMode="inter_word"
                 android:orientation="vertical">
 
-                <com.example.kingsapp.manager.font.CustomMontserratBold
+                <com.kingseducation.app.manager.font.CustomMontserratBold
                     android:id="@+id/schoolNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                     android:textStyle="bold"
                     tools:text="Kings' School Dubai" />
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/descriptiontext"
@@ -102,7 +102,7 @@
         app:srcCompat="@drawable/backarrow" />
 
 
-    <com.example.kingsapp.manager.font.CustomTimeLTSBold
+    <com.kingseducation.app.manager.font.CustomTimeLTSBold
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

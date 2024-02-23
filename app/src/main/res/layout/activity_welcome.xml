@@ -40,7 +40,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.70" />
 
-    <com.example.kingsapp.manager.font.CustomTimeLTStandard
+    <com.kingseducation.app.manager.font.CustomTimeLTStandard
         android:id="@+id/welcomeToTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <com.example.kingsapp.manager.font.CustomTimeLTSBold
+    <com.kingseducation.app.manager.font.CustomTimeLTSBold
         android:id="@+id/kingsEduTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeToTxt" />
 
-    <com.example.kingsapp.manager.font.CustomTimeLTStandard
+    <com.kingseducation.app.manager.font.CustomTimeLTStandard
         android:id="@+id/welcomeDescriptionTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signInBtn">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/joinGuestTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"

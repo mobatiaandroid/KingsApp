@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:715672071837:android:457c110a6789377ab7ae74",
+        "mobilesdk_app_id": "1:715672071837:android:2d47c277f40357adb7ae74",
         "android_client_info": {
-          "package_name": "com.example.kingsapp"
+          "package_name": "com.kingseducation.app"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "715672071837-ba5n86tl1h429qgenuh34p6nttnr0dda.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "715672071837-jaq721634miqhmee09g29s7k13iqfhcb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kings.KingsAppBeta"
+              }
             }
           ]
         }

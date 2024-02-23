@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" >
 
-        <com.example.kingsapp.manager.font.CustomTimeLTSBold
+        <com.kingseducation.app.manager.font.CustomTimeLTSBold
             android:id="@+id/heading"
             android:layout_width="match_parent"
             android:background="@color/kings_blue"
@@ -29,10 +29,11 @@
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
             android:background="@drawable/backarrow"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     </RelativeLayout>
-    <com.example.kingsapp.manager.font.CustomVerdanaBold
+
+    <com.kingseducation.app.manager.font.CustomVerdanaBold
         android:id="@+id/webView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +46,8 @@
         android:focusableInTouchMode="false"
         android:overScrollMode="never"
         android:scrollbars="none" />
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+    <com.kingseducation.app.manager.font.CustomVerdanaRegular
         android:id="@+id/webView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

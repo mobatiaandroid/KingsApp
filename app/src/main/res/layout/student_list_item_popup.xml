@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <com.example.kingsapp.manager.font.CustomVerdanaBold
+            <com.kingseducation.app.manager.font.CustomVerdanaBold
                 android:id="@+id/studentName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -59,7 +59,7 @@
                 android:textStyle="bold" />
 
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/studentclass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

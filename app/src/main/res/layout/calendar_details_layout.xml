@@ -19,7 +19,7 @@
             android:layout_weight=".1"
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
@@ -29,7 +29,7 @@
             android:layout_weight=".7"
             android:text="Calendar" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
@@ -55,7 +55,7 @@
                 android:layout_height="25dp"
                 android:src="@drawable/message_icon"/>
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/msgTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
             android:layout_marginLeft="12dp"
             tools:listitem="@layout/student_image_name" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/black" />
@@ -140,14 +140,14 @@
                 android:overScrollMode="never"
                 android:scrollbars="none" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/greyy"
                 android:text="Venue: KINGS" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 android:textSize="15dp"
                 android:text="More details to folllow" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/datee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,13 +165,14 @@
 
 
                 />
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/greyy"
-                android:text="(All day)"/>
+                android:text="(All day)" />
 
             <!--<WebView
                 android:id="@+id/webView"
@@ -190,7 +191,7 @@
 
                 layout="@layout/custom_progress_layout"
                 android:visibility="visible" />-->
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/txt"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -200,7 +201,7 @@
                 android:layout_marginLeft="8dp"
                 android:textSize="16sp" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/mDateTv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -211,9 +212,9 @@
                 android:textColor="@color/logout_user"
                 android:gravity="center|right"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                />
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+                android:layout_marginTop="5dp" />
+
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/mTimeTv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

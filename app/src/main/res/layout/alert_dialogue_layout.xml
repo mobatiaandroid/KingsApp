@@ -64,7 +64,7 @@
             android:textColor="#ff000000"
             android:textSize="18sp" />-->
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
 
             android:id="@+id/text_dialog"
             android:layout_width="200dp"
@@ -84,13 +84,15 @@
             android:layout_below="@+id/text_dialog"
 
             android:weightSum="100">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
                 android:clickable="true"
                 android:layout_weight="50">
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+
+                <com.kingseducation.app.manager.font.CustomVerdanaBold
                     android:id="@+id/btn_Cancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -103,12 +105,14 @@
                     android:layout_marginRight="10dp"
                     android:textColor="#ffffffff" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="50">
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+
+                <com.kingseducation.app.manager.font.CustomVerdanaBold
                     android:id="@+id/btn_Ok"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

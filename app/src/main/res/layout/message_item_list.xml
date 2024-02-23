@@ -10,7 +10,7 @@
         android:layout_marginLeft="7dp"
         android:background="@color/white">
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:layout_below="@id/desc"
             android:orientation="horizontal">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 android:textSize="13sp"
                 android:text="13 Sep 2022" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -42,7 +42,7 @@
                     android:visibility="visible" />
 
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:id="@+id/txtMYW"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                         android:src="@drawable/no_events"
                         android:layout_gravity="center" />
 
-                    <com.example.kingsapp.manager.font.CustomMontserratMedium
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
                         android:id="@+id/noDataAlertTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                 android:background="@color/kings_blue"
                 android:src="@drawable/ic_arrow_left" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/Header"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -200,7 +200,7 @@
             android:weightSum="7"
             android:layout_below="@id/calendar_title" >
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/firstday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -213,7 +213,7 @@
                 android:backgroundTint="@color/white"
                 android:text="@string/sun" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/secondday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -226,7 +226,7 @@
                 android:layout_marginRight="5dp"
                 android:backgroundTint="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/thirdday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -239,7 +239,7 @@
                 android:layout_marginRight="5dp"
                 android:backgroundTint="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/fourthday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -252,7 +252,7 @@
                 android:layout_marginRight="5dp"
                 android:backgroundTint="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/fifthday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -265,7 +265,7 @@
                 android:layout_marginRight="5dp"
                 android:backgroundTint="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/sixthday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -278,7 +278,7 @@
                 android:layout_marginRight="5dp"
                 android:backgroundTint="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/seventhday"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -301,7 +301,7 @@
            android:orientation="horizontal"
            android:weightSum="7">
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_0"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -312,7 +312,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_1"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -322,7 +322,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_2"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -332,7 +332,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_3"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -342,7 +342,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_4"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -352,7 +352,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_5"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -362,7 +362,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_6"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -385,7 +385,7 @@
            android:weightSum="7"
            android:layout_below="@+id/days_layout_r1">
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_7"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -396,7 +396,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_8"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -406,7 +406,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_9"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -416,7 +416,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_10"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -426,7 +426,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_11"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -436,7 +436,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_12"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -446,7 +446,7 @@
                android:gravity="center"
                android:textColor="@color/black" />
 
-           <com.example.kingsapp.manager.font.CustomMontserratMedium
+           <com.kingseducation.app.manager.font.CustomMontserratMedium
                android:id="@+id/textview_13"
                android:layout_width="0dp"
                android:layout_height="40dp"
@@ -468,7 +468,7 @@
             android:layout_marginTop="5dp"
            android:layout_below="@+id/days_layout_r2">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_14"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -479,7 +479,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_15"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -489,7 +489,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_16"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -499,7 +499,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_17"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -509,7 +509,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_18"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -519,7 +519,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_19"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -529,7 +529,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_20"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -551,7 +551,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/days_layout_r3">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_21"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -562,7 +562,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_22"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -572,7 +572,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_23"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -582,7 +582,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_24"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -591,7 +591,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_25"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -601,7 +601,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_26"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -611,7 +611,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/textview_27"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -633,7 +633,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/days_layout_r4">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_28"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -644,7 +644,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_29"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -653,7 +653,7 @@
                 android:gravity="center"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_30"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -663,7 +663,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_31"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -673,7 +673,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_32"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -683,7 +683,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_33"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -693,7 +693,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_34"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -715,7 +715,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/days_layout_r5">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_35"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -726,7 +726,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_36"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -736,7 +736,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_37"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -746,7 +746,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_38"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -756,7 +756,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_39"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -766,7 +766,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_40"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -776,7 +776,7 @@
                 android:textColor="@color/black"
                 android:background="@color/white" />
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/textview_41"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -800,7 +800,7 @@
             android:backgroundTint="@color/kings_blue"
             android:orientation="horizontal">
 
-            <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            <com.kingseducation.app.manager.font.CustomVerdanaRegular
                 android:id="@+id/daySpinner"
                 style="@style/SpinnerStyle"
                 android:layout_width="wrap_content"
@@ -864,7 +864,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+    <com.kingseducation.app.manager.font.CustomVerdanaRegular
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

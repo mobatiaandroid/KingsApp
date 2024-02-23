@@ -17,7 +17,7 @@
             android:background="@color/white"
             android:orientation="horizontal">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/timeTxt"
                 android:layout_width="0dp"
                 android:gravity="center"
@@ -27,7 +27,7 @@
                 android:background="@color/greyy"
                 android:text="start" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

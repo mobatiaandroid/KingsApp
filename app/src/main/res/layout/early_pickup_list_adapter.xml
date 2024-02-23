@@ -21,7 +21,7 @@
 
         </ImageView>
 
-        <com.example.kingsapp.manager.font.CustomTimeLTSBold
+        <com.kingseducation.app.manager.font.CustomTimeLTSBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.example.kingsapp.manager.font.CustomTimeLTStandard
+            <com.kingseducation.app.manager.font.CustomTimeLTStandard
                 android:id="@+id/studentName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -83,7 +83,7 @@
                 tools:text="Sanju Sabu" />
 
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/studentclass"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -122,7 +122,7 @@
             android:background="@drawable/button_bg"
             android:layout_marginRight="20dp">
 
-            <com.example.kingsapp.manager.font.CustomTimesNewRoman
+            <com.kingseducation.app.manager.font.CustomTimesNewRoman
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/white"
@@ -130,7 +130,7 @@
                 android:textSize="17dp"
                 android:text="@string/registernewearlypickup">
 
-            </com.example.kingsapp.manager.font.CustomTimesNewRoman>
+            </com.kingseducation.app.manager.font.CustomTimesNewRoman>
         </RelativeLayout>
     </RelativeLayout>
 

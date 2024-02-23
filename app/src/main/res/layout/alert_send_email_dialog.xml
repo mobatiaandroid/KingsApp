@@ -51,7 +51,7 @@
         android:background="@drawable/dialoguebottomcurve">
 
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/alertHead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,8 +82,9 @@
             android:textColor="@color/black"
             android:background="@drawable/edittext_greybg"
             android:imeOptions="actionNext"
-            android:singleLine="true"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:singleLine="true" />
+
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,8 +111,9 @@
             android:layout_gravity="left"
             android:textColor="@color/black"
             android:background="@drawable/edittext_greybg"
-            android:imeOptions="actionDone"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:imeOptions="actionDone" />
+
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -123,8 +125,9 @@
             android:text="@string/submit"
             android:textAllCaps="false"
             android:background="@color/kings_blue"
-            android:textColor="@color/white"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+            android:textColor="@color/white" />
+
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/cancelButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"

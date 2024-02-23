@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <com.example.kingsapp.manager.font.CustomVerdanaBold
+        <com.kingseducation.app.manager.font.CustomVerdanaBold
             android:id="@+id/nameTxt"
             android:textColor="@color/black"
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:paddingRight="18dp"
             android:paddingLeft="18dp"/>
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

@@ -42,14 +42,14 @@
         android:layout_below="@+id/r"
         android:layout_centerHorizontal="true"
         android:background="@drawable/dialoguebottomcurve">
-       <com.example.kingsapp.manager.font.CustomVerdanaBold
+       <com.kingseducation.app.manager.font.CustomVerdanaBold
            android:id="@+id/heading"
            android:layout_width="match_parent"
            android:layout_height="50dp"
            android:gravity="center"
            android:textSize="18sp"
            android:textColor="@color/black"
-           android:text="Refine calendar by Category"/>
+           android:text="Refine calendar by Category" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checkRecycler"
             android:layout_width="match_parent"
@@ -65,13 +65,15 @@
             android:orientation="horizontal"
             android:layout_below="@+id/checkRecycler"
             android:weightSum="100">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
 
                 android:layout_weight="50">
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+
+                <com.kingseducation.app.manager.font.CustomVerdanaBold
                     android:id="@+id/btn_Cancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -83,13 +85,15 @@
                     android:layout_marginRight="20dp"
                     android:textColor="#ffffffff" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
 
                 android:layout_weight="50">
-                <com.example.kingsapp.manager.font.CustomVerdanaBold
+
+                <com.kingseducation.app.manager.font.CustomVerdanaBold
                     android:id="@+id/btn_Ok"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

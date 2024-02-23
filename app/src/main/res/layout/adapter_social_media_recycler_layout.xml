@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:src="@mipmap/you_new"/>
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/socialMediaText"
             android:layout_width="match_parent"
             android:layout_height="50dp"

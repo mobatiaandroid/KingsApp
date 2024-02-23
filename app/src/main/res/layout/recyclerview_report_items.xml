@@ -14,7 +14,7 @@
         android:background="@color/button_blue"
         android:layout_marginTop="5dp">
 
-        <com.example.kingsapp.manager.font.CustomTimeLTStandard
+        <com.kingseducation.app.manager.font.CustomTimeLTStandard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/accYr"

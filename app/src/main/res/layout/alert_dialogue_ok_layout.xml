@@ -46,7 +46,7 @@
         android:background="@drawable/dialoguebottomcurve">
 
 
-        <!--<com.example.kingsapp.manager.font.CustomMontserratMedium
+        <!--<com.kingseducation.app.manager.font.CustomMontserratMedium
 
             android:id="@+id/alertHead"
             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
             android:textColor="#ff000000"
             android:textSize="18sp" />-->
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/text_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="50">
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:id="@+id/btn_Ok"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

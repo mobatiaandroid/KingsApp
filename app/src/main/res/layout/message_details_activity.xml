@@ -19,7 +19,7 @@
             android:layout_weight="1">
 
         </ImageView>
-        <com.example.kingsapp.manager.font.CustomTimeLTSBold
+        <com.kingseducation.app.manager.font.CustomTimeLTSBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textview"
@@ -57,7 +57,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:textSize="13sp"
                 android:text="13 Sep 2022" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/timetextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:text="9:30 pm" />
         </RelativeLayout>
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

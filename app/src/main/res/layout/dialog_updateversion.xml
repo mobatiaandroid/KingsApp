@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/update_icon"/>
 
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+    <com.kingseducation.app.manager.font.CustomVerdanaRegular
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:textColor="@color/black"
         android:textSize="15sp" />
 
-    <com.example.kingsapp.manager.font.CustomVerdanaRegular
+    <com.kingseducation.app.manager.font.CustomVerdanaRegular
         android:id="@+id/textDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

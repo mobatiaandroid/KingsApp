@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="120dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <ImageView
-        android:id="@+id/stud_profile"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="8dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/profile_photo" />
-        <com.example.kingsapp.manager.font.CustomVerdanaBold
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/stud_profile"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/profile_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kingseducation.app.manager.font.CustomVerdanaBold
             android:id="@+id/student_name"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
             android:inputType="textMultiLine"
-            android:layout_marginTop="10dp"
-            android:text="RexaMathewes"/>
+            android:text="RexaMathewes"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/stud_profile"
+            app:layout_constraintTop_toBottomOf="@+id/stud_profile" />
 
-    </LinearLayout>
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

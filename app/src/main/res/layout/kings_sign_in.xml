@@ -66,7 +66,7 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/signInTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 android:textStyle="bold"
                 android:text="Sign in to" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/accountTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                 android:textStyle="bold"
                 android:text="your account" />
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/signInDescTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                     android:background="@drawable/remember_me"
                     android:layout_margin="5dp" />
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5" />
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:id="@+id/forgetPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
                 android:weightSum="3"
                 android:layout_gravity="center">
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.75"
@@ -224,7 +224,7 @@
                     android:gravity="right"
                     android:text="Don\'t have an account?" />
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:id="@+id/createAccountTxt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
 
             </LinearLayout>
 
-            <com.example.kingsapp.manager.font.CustomMontserratMedium
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
                 android:id="@+id/joinGuestTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -262,7 +262,7 @@
                 android:weightSum="3"
                 android:gravity="center">
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.75"
@@ -272,7 +272,7 @@
                     android:gravity="right"
                     android:text="If you have any trouble" />
 
-                <com.example.kingsapp.manager.font.CustomMontserratMedium
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
                     android:id="@+id/emailSupport"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

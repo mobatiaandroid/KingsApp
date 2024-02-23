@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">KingsApp</string>
+    <string name="app_name">Kings\' Education</string>
     <string name="SchoolCalender">School Calender</string>
     <string name="StudentInformation">Student Information</string>
     <string name="Canteen">Canteen</string>
@@ -16,7 +16,7 @@
     <string name="Settings">Settings</string>
 
     <string name="staff_directory_detail">Staff Directory Detail</string>
-    <string name="search">Search...</string>
+    <string name="search">Search…</string>
     <string name="staff_directory">Staff Directory</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="new_password">New Password</string>
@@ -93,7 +93,7 @@
         <item> Tutorial</item>
         <item> Delete My Account</item>
         <item>Change Password</item>
-        <item>Log Out</item>
+        <item>Sign Out</item>
     </string-array>
 
 
@@ -350,7 +350,7 @@
     <string name="do_you_want_logout">Do you want to Logout?</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
-    <string name="may_be_later">May be later</string>
+    <string name="may_be_later">Maybe later</string>
 
     <string name="delete">Delete</string>
 

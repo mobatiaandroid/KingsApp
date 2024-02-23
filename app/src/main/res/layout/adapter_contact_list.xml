@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.example.kingsapp.manager.font.CustomTimeLTSBold
+        <com.kingseducation.app.manager.font.CustomTimeLTSBold
             android:id="@+id/contactName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Sanju" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/contactNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/contactName"
             tools:text="9567456927" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/contactEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

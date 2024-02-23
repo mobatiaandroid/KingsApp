@@ -17,7 +17,7 @@
             android:layout_height="25dp"
             android:src="@drawable/check_box_header"
             />
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/categoryTypeTxt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,7 +25,7 @@
             android:textSize="14sp"
             android:paddingLeft="5dp"
             android:background="@color/white"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"

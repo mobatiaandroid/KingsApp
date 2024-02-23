@@ -29,11 +29,23 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
-            tools:listitem="@layout/item_about_us"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:listitem="@layout/item_about_us" />
+
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
+            android:id="@+id/versionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="128dp"
+            android:gravity="center"
+            android:text="v1.0.1"
+            android:textColor="@color/greyyy"
+            app:layout_constraintBottom_toBottomOf="@+id/settingsRecycler"
+            app:layout_constraintEnd_toEndOf="@+id/settingsRecycler"
+            app:layout_constraintStart_toStartOf="@+id/settingsRecycler" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -47,29 +59,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <com.example.kingsapp.manager.font.CustomTimeLTSBold
+    <com.kingseducation.app.manager.font.CustomTimeLTSBold
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Settings"
-        android:textSize="28dp"
         android:textColor="@color/white"
+        android:textSize="28dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.kingsapp.manager.font.CustomMontserratMedium
-        android:id="@+id/versionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="DEV-v1.3"
-        android:textColor="@color/greyyy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>

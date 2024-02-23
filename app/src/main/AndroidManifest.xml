@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.kingsapp">
+    package="com.kingseducation.app">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -151,7 +151,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu" />
         <activity
-            android:name=".activities.about_us.StaffDirectoryActivity"
+            android:name="com.kingseducation.app.activities.about_us.StaffDirectoryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu" />

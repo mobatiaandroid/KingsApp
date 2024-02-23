@@ -18,7 +18,7 @@
             android:background="@drawable/remember_me"
             android:layout_margin="5dp" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/forgetPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:gravity="right"
             android:layout_weight="2"
             android:textColor="@color/red"
-            android:text="Forget Password?"
+            android:text="Forgot Password?"
             android:layout_marginRight="20dp" />
     </LinearLayout>
 

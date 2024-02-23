@@ -25,7 +25,7 @@
         android:layout_toLeftOf="@id/stud_profile"
         android:background="@drawable/student_list_bg"
         android:id="@+id/relstudenttext">
-    <com.example.kingsapp.manager.font.CustomMontserratMedium
+    <com.kingseducation.app.manager.font.CustomMontserratMedium
         android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

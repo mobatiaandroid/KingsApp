@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">KingsApp</string>
+    <string name="app_name">Kings\' Education</string>
     <string name="SchoolCalender">التقويم المدرسي</string>
     <string name="StudentInformation">بيانات الطالب</string>
     <string name="Canteen">مقصف</string>

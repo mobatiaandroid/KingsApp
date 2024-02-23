@@ -43,7 +43,7 @@
                 android:visibility="invisible"/>
         </RelativeLayout>
 
-        <com.example.kingsapp.manager.font.CustomVerdanaRegular
+        <com.kingseducation.app.manager.font.CustomVerdanaRegular
             android:id="@+id/heading"
             android:layout_width="match_parent"
             android:background="@color/kings_blue"

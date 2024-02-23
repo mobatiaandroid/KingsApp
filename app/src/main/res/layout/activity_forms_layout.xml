@@ -34,7 +34,6 @@
             app:srcCompat="@drawable/kings_school_logo" />
 
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentessetialsrec"
             android:layout_width="0dp"
@@ -45,6 +44,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
+            android:id="@+id/noDataTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No data"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/parentessetialsrec"
+            app:layout_constraintEnd_toEndOf="@+id/parentessetialsrec"
+            app:layout_constraintStart_toStartOf="@+id/parentessetialsrec"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -57,7 +68,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
 
-    <com.example.kingsapp.manager.font.CustomTimeLTSBold
+    <com.kingseducation.app.manager.font.CustomTimeLTSBold
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

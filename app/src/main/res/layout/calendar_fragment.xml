@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/backarrow" />
-    <com.example.kingsapp.manager.font.CustomTimeLTSBold
+    <com.kingseducation.app.manager.font.CustomTimeLTSBold
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:paddingBottom="5dp"
@@ -47,13 +47,13 @@
         android:layout_marginTop="10dp"
         android:gravity="center_vertical">
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/logout_user"
             android:text="@string/past_events" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/hideBtn"
             android:layout_width="55dp"
             android:layout_height="30dp"
@@ -61,13 +61,13 @@
             android:textColor="@color/black"
             android:text="@string/hide" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/grey"
             android:text="| " />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/showBtn"
             android:layout_width="55dp"
             android:layout_height="30dp"
@@ -92,7 +92,7 @@
         android:orientation="horizontal"
         android:weightSum="100">
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/filterName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -135,7 +135,7 @@
             android:layout_marginRight="5dp"
             android:src="@drawable/ic_baseline_keyboard_arrow_left_24" />
 
-        <com.example.kingsapp.manager.font.CustomMontserratMedium
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:layout_width="0dp"
             android:layout_weight="50"
             android:layout_height="40dp"
@@ -178,7 +178,7 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <com.example.kingsapp.manager.font.CustomMontserratMedium
+    <com.kingseducation.app.manager.font.CustomMontserratMedium
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

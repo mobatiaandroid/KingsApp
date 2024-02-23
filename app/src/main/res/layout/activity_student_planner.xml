@@ -78,7 +78,7 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <com.example.kingsapp.manager.font.CustomTimesNewRoman
+        <com.kingseducation.app.manager.font.CustomTimesNewRoman
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="80dp"
