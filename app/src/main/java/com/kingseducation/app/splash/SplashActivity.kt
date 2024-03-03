@@ -61,6 +61,7 @@ class SplashActivity : AppCompatActivity() {
 
                         val intent = Intent(mContext, HomeActivity::class.java)
                         startActivity(intent)
+                        finish()
 
                     } else {
                         // CommonClass.checkApiStatusError(response.body()!!.status, mContext)
@@ -68,6 +69,7 @@ class SplashActivity : AppCompatActivity() {
                 } else {
                     val intent = Intent(mContext, WelcomeActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
             }
 

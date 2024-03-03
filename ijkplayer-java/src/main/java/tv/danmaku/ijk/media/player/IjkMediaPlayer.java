@@ -75,7 +75,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
     private static final int MEDIA_ERROR = 100;
     private static final int MEDIA_INFO = 200;
 
-    protected static final int MEDIA_SET_VIDEO_SAR = 10001;
+    private static final int MEDIA_SET_VIDEO_SAR = 10001;
 
     //----------------------------------------
     // options
@@ -928,10 +928,8 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
                 return;
 
             case MEDIA_INFO:
-                switch (msg.arg1) {
-                    case MEDIA_INFO_VIDEO_RENDERING_START:
-                        DebugLog.i(TAG, "Info: MEDIA_INFO_VIDEO_RENDERING_START\n");
-                        break;
+                if (msg.arg1 == MEDIA_INFO_VIDEO_RENDERING_START) {
+                    DebugLog.i(TAG, "Info: MEDIA_INFO_VIDEO_RENDERING_START\n");
                 }
                 player.notifyOnInfo(msg.arg1, msg.arg2);
                 // No real default action so far.
@@ -1042,26 +1040,23 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
         if (listener != null && listener.onNativeInvoke(what, args))
             return true;
 
-        switch (what) {
-            case OnNativeInvokeListener.ON_CONCAT_RESOLVE_SEGMENT: {
-                OnControlMessageListener onControlMessageListener = player.mOnControlMessageListener;
-                if (onControlMessageListener == null)
-                    return false;
-
-                int segmentIndex = args.getInt(OnNativeInvokeListener.ARG_SEGMENT_INDEX, -1);
-                if (segmentIndex < 0)
-                    throw new InvalidParameterException("onNativeInvoke(invalid segment index)");
-
-                String newUrl = onControlMessageListener.onControlResolveSegmentUrl(segmentIndex);
-                if (newUrl == null)
-                    throw new RuntimeException(new IOException("onNativeInvoke() = <NULL newUrl>"));
-
-                args.putString(OnNativeInvokeListener.ARG_URL, newUrl);
-                return true;
-            }
-            default:
+        if (what == OnNativeInvokeListener.ON_CONCAT_RESOLVE_SEGMENT) {
+            OnControlMessageListener onControlMessageListener = player.mOnControlMessageListener;
+            if (onControlMessageListener == null)
                 return false;
+
+            int segmentIndex = args.getInt(OnNativeInvokeListener.ARG_SEGMENT_INDEX, -1);
+            if (segmentIndex < 0)
+                throw new InvalidParameterException("onNativeInvoke(invalid segment index)");
+
+            String newUrl = onControlMessageListener.onControlResolveSegmentUrl(segmentIndex);
+            if (newUrl == null)
+                throw new RuntimeException(new IOException("onNativeInvoke() = <NULL newUrl>"));
+
+            args.putString(OnNativeInvokeListener.ARG_URL, newUrl);
+            return true;
         }
+        return false;
     }
 
     /*

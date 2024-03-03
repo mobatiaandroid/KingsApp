@@ -43,20 +43,29 @@ class ChildSelectionActivity:AppCompatActivity() {
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
         initFn()
-        if(CommonClass.isInternetAvailable(ncontext)) {
+        if (CommonClass.isInternetAvailable(ncontext)) {
             studentListApiCall()
-        }
-        else{
-            Toast.makeText(ncontext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                ncontext,
+                "Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT
+            ).show()
 
         }
 
     }
 
+    override fun onBackPressed() {
+
+    }
+
     private fun studentListApiCall() {
         progressBarDialog.show()
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-                PreferenceManager().getAccessToken(ncontext).toString())
+        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(ncontext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
                 call: Call<StudentListResponseModel>,
@@ -143,6 +152,7 @@ class ChildSelectionActivity:AppCompatActivity() {
                         .toString()
                 )
                 startActivity(Intent(ncontext, HomeActivity::class.java))
+                finish()
             }
 
         })

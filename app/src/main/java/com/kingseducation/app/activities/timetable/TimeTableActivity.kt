@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.JsonObject
 import com.kingseducation.app.R
@@ -40,6 +40,7 @@ import com.kingseducation.app.activities.timetable.model.WeekModel
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.ProgressBarDialog
 import com.kingseducation.app.constants.api.ApiClient
+import com.kingseducation.app.fragment.mContext
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.OnItemClickListener
 import com.kingseducation.app.manager.recyclerviewmanager.addOnItemClickListener
@@ -465,13 +466,36 @@ class TimeTableActivity : AppCompatActivity() {
 
         studentNameTextView.text = PreferenceManager().getStudentName(ncontext)
         studentclass.text = PreferenceManager().getStudentClass(ncontext)
+
+
         if (!PreferenceManager().getStudentPhoto(ncontext).equals("")) {
-            Glide.with(ncontext) //1
-                .load(studentImg).placeholder(R.drawable.profile_photo)
-                .error(R.drawable.profile_photo).skipMemoryCache(true) //2
-                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                .transform(CircleCrop()) //4
-                .into(imagicon)
+            if (!PreferenceManager().getStudentPhoto(ncontext).equals("")) {
+                studentImg = PreferenceManager().getStudentPhoto(ncontext).toString()
+                if (studentImg != null && !studentImg.isEmpty()) {
+                    val glideUrl = GlideUrl(
+                        studentImg,
+                        LazyHeaders.Builder()
+                            .addHeader(
+                                "Authorization",
+                                "Bearer " + PreferenceManager().getAccessToken(ncontext)
+                                    .toString()
+                            )
+                            .build()
+                    )
+
+                    Glide.with(ncontext)
+                        .load(glideUrl)
+                        .transform(CircleCrop()) // Apply circular transformation
+                        .placeholder(R.drawable.profile_photo) // Placeholder image while loading
+                        .error(R.drawable.profile_photo) // Image to display in case of error
+                        .into(imagicon)
+                } else {
+                    Toast.makeText(mContext, "Image empty", Toast.LENGTH_SHORT).show()
+                    // Handle the case when studentImg is null or empty
+                }
+            } else {
+                imagicon.setImageResource(R.drawable.profile_photo)
+            }
         } else {
             imagicon.setImageResource(R.drawable.profile_photo)
         }

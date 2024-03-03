@@ -52,23 +52,37 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/studentSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16sp"
             android:background="@drawable/rect_teal">
 
+
             <ImageView
                 android:id="@+id/imagicon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_margin="16sp"
                 android:gravity="center"
+                android:elevation="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/profile_photo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="16sp"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/curved_circle_yellow"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="@+id/imagicon"
+                app:layout_constraintStart_toStartOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon" />
+
 
             <com.kingseducation.app.manager.font.CustomTimeLTStandard
                 android:id="@+id/studentName"

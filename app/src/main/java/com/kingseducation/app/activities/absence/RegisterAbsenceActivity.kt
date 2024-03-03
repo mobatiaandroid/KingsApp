@@ -19,11 +19,11 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
@@ -37,6 +37,7 @@ import com.kingseducation.app.common.CommonResponse
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.ProgressBarDialog
 import com.kingseducation.app.constants.api.ApiClient
+import com.kingseducation.app.fragment.mContext
 import com.kingseducation.app.manager.AppUtils
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.OnItemClickListener
@@ -55,7 +56,8 @@ lateinit var reason_for_absence : TextInputEditText
 lateinit var reasonforabsence : TextInputLayout
 lateinit var first_day_of_absencetext: TextInputLayout
 lateinit var return_absence_text: TextInputLayout
-lateinit var studentSpinner: ConstraintLayout
+
+//lateinit var studentSpinner: ConstraintLayout
 lateinit var student_Name: TextView
 lateinit var studentName: String
 lateinit var studentId: String
@@ -96,7 +98,9 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         setContentView(R.layout.register_absence_layout)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         context = this
+        studentImg = ""
         initFn()
+
         if (CommonClass.isInternetAvailable(context)) {
             //studentListApiCall()
         } else {
@@ -122,7 +126,7 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         reason_for_absence = findViewById(R.id.reason_for_absence)
         firstdayofabsence = findViewById(R.id.firstdayofabsence)
         returnabsence = findViewById(R.id.returnabsence)
-        studentSpinner = findViewById(R.id.studentSpinner)
+//        studentSpinner = findViewById(R.id.studentSpinner)
         student_Name = findViewById(R.id.studentName)
         backarrow_registerabsence = findViewById(R.id.backarrow_registerabsence)
         calendar = Calendar.getInstance()
@@ -136,14 +140,28 @@ class RegisterAbsenceActivity:AppCompatActivity() {
         student_Name.text = PreferenceManager().getStudentName(context)
         studentclass.text = PreferenceManager().getStudentClass(context)
         if (!PreferenceManager().getStudentPhoto(context).equals("")) {
-            Glide.with(context) //1
-                .load(studentImg)
-                .placeholder(R.drawable.profile_photo)
-                .error(R.drawable.profile_photo)
-                .skipMemoryCache(true) //2
-                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                .transform(CircleCrop()) //4
-                .into(imagicon)
+            studentImg = PreferenceManager().getStudentPhoto(context).toString()
+            if (studentImg != null && !studentImg.isEmpty()) {
+                val glideUrl = GlideUrl(
+                    studentImg,
+                    LazyHeaders.Builder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + PreferenceManager().getAccessToken(context)
+                                .toString()
+                        )
+                        .build()
+                )
+                Glide.with(mContext)
+                    .load(glideUrl)
+                    .transform(CircleCrop()) // Apply circular transformation
+                    .placeholder(R.drawable.profile_photo) // Placeholder image while loading
+                    .error(R.drawable.profile_photo) // Image to display in case of error
+                    .into(imagicon)
+            } else {
+                Toast.makeText(context, "Image empty", Toast.LENGTH_SHORT).show()
+            }
+
         }
         else{
             imagicon.setImageResource(R.drawable.profile_photo)

@@ -17,7 +17,8 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.android.material.textfield.TextInputEditText
 import com.kingseducation.app.R
@@ -37,46 +38,45 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EarlyPickupRegisterActivity :AppCompatActivity(){
-lateinit var mContext: Context
-lateinit var timepikup:TextInputEditText
-lateinit var dayofearlypikup:TextInputEditText
-lateinit var student_Name: TextView
-lateinit var studentclass: TextView
-lateinit var imagicon: ImageView
-lateinit var pickup_by_text:TextInputEditText
-lateinit var pickup_reason:TextInputEditText
-lateinit var relativieabsence:RelativeLayout
-lateinit var progressBarDialog: ProgressBarDialog
-    lateinit var back:ImageView
+class EarlyPickupRegisterActivity : AppCompatActivity() {
+    lateinit var mContext: Context
+    lateinit var timepikup: TextInputEditText
+    lateinit var dayofearlypikup: TextInputEditText
+    lateinit var student_Name: TextView
+    lateinit var studentclass: TextView
+    lateinit var imagicon: ImageView
+    lateinit var pickup_by_text: TextInputEditText
+    lateinit var pickup_reason: TextInputEditText
+    lateinit var relativieabsence: RelativeLayout
+    lateinit var progressBarDialog: ProgressBarDialog
+    lateinit var back: ImageView
 
-    var totime: String =""
-    var pickup_date_time: String =""
-    var pickupby:String=""
-    var reasonpickup:String=""
+    var totime: String = ""
+    var pickup_date_time: String = ""
+    var pickupby: String = ""
+    var reasonpickup: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
+            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.register_early_pickup)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
-        mContext=this
+        mContext = this
 
         initFn()
     }
 
     @SuppressLint("ResourceAsColor")
     private fun initFn() {
-        timepikup=findViewById(R.id.returnabsence)
-        dayofearlypikup=findViewById(R.id.firstdayofabsence)
-       studentclass =findViewById(R.id.studentclass)
+        timepikup = findViewById(R.id.returnabsence)
+        dayofearlypikup = findViewById(R.id.firstdayofabsence)
+        studentclass = findViewById(R.id.studentclass)
         student_Name = findViewById(R.id.studentName)
-        imagicon=findViewById(R.id.imagicon)
-        pickup_by_text=findViewById(R.id.pickup_by_text)
-        pickup_reason=findViewById(R.id.reason_for_absence)
-        relativieabsence =findViewById(R.id.relativieabsence)
+        imagicon = findViewById(R.id.imagicon)
+        pickup_by_text = findViewById(R.id.pickup_by_text)
+        pickup_reason = findViewById(R.id.reason_for_absence)
+        relativieabsence = findViewById(R.id.relativieabsence)
         progressBarDialog = ProgressBarDialog(mContext)
         back = findViewById(R.id.backarrow_registerabsence)
         back.setOnClickListener {
@@ -85,53 +85,76 @@ lateinit var progressBarDialog: ProgressBarDialog
         }
         relativieabsence.setOnClickListener {
 
-            if(dayofearlypikup.text.toString().trim().equals(""))
-            {
-                Toast.makeText(mContext, "Please select Date of Early Pickup", Toast.LENGTH_SHORT).show()
+            if (dayofearlypikup.text.toString().trim().equals("")) {
+                Toast.makeText(mContext, "Please select Date of Early Pickup", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                if (timepikup.text.toString().trim().equals("")) {
+                    Toast.makeText(
+                        mContext,
+                        "Please select Time of Early Pickup",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (pickup_by_text.text.toString().trim().equals("")) {
+                    Toast.makeText(
+                        mContext,
+                        "Please select Pickup By of Early Pickup",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (pickup_reason.text.toString().trim().equals("")) {
+                    Toast.makeText(
+                        mContext,
+                        "Please select Pickup Reason of Early Pickup",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    pickupby = pickup_by_text.text.toString().trim()
+                    reasonpickup = pickup_reason.text.toString().trim()
+                    val inputFormat2: DateFormat = SimpleDateFormat("d-m-yyyy")
+                    val outputFormat2: DateFormat = SimpleDateFormat("d-m-yyyy")
+                    val inputDateStr2 = fromDate
+                    val date2: Date = inputFormat2.parse(inputDateStr2)
+                    val f_date: String = outputFormat2.format(date2)
+                    Log.e("fd", f_date)
+                    Log.e("f_date", f_date)
+                    Log.e("time", totime)
+                    pickup_date_time = f_date + " " + totime
+                    callearlypickupSubmitApi(pickup_date_time, pickupby, reasonpickup)
+                }
             }
-
-            else{
-                if (timepikup.text.toString().trim().equals("")){
-                    Toast.makeText(mContext, "Please select Time of Early Pickup", Toast.LENGTH_SHORT).show()
-                }
-                else  if (pickup_by_text.text.toString().trim().equals("")){
-                    Toast.makeText(mContext, "Please select Pickup By of Early Pickup", Toast.LENGTH_SHORT).show()
-                }
-                else  if (pickup_reason.text.toString().trim().equals("")){
-                    Toast.makeText(mContext, "Please select Pickup Reason of Early Pickup", Toast.LENGTH_SHORT).show()
-                }
-                else
-                {
-            pickupby=pickup_by_text.text.toString().trim()
-            reasonpickup=pickup_reason.text.toString().trim()
-            val inputFormat2: DateFormat = SimpleDateFormat("d-m-yyyy")
-            val outputFormat2: DateFormat = SimpleDateFormat("d-m-yyyy")
-            val inputDateStr2 = fromDate
-            val date2: Date = inputFormat2.parse(inputDateStr2)
-            val f_date: String = outputFormat2.format(date2)
-            Log.e("fd",f_date)
-            Log.e("f_date",f_date)
-            Log.e("time",totime)
-            pickup_date_time=f_date+" "+totime
-                    callearlypickupSubmitApi(pickup_date_time,pickupby,reasonpickup)
-                }   }
         }
 
 
-        student_Name.text= PreferenceManager().getStudentName(mContext)
-        studentclass.text= PreferenceManager().getStudentClass(mContext)
-        if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
-        {
-            Glide.with(mContext) //1
-                .load(studentImg)
-                .placeholder(R.drawable.profile_photo)
-                .error(R.drawable.profile_photo)
-                .skipMemoryCache(true) //2
-                .diskCacheStrategy(DiskCacheStrategy.NONE) //3
-                .transform(CircleCrop()) //4
-                .into(imagicon)
-        }
-        else{
+        student_Name.text = PreferenceManager().getStudentName(mContext)
+        studentclass.text = PreferenceManager().getStudentClass(mContext)
+        if (!PreferenceManager().getStudentPhoto(mContext).equals("")) {
+            if (!PreferenceManager().getStudentPhoto(mContext).equals("")) {
+                studentImg = PreferenceManager().getStudentPhoto(mContext).toString()
+                if (studentImg != null && !studentImg.isEmpty()) {
+                    val glideUrl = GlideUrl(
+                        studentImg,
+                        LazyHeaders.Builder()
+                            .addHeader(
+                                "Authorization",
+                                "Bearer " + PreferenceManager().getAccessToken(mContext)
+                                    .toString()
+                            )
+                            .build()
+                    )
+                    Glide.with(mContext)
+                        .load(glideUrl)
+                        .transform(CircleCrop()) // Apply circular transformation
+                        .placeholder(R.drawable.profile_photo) // Placeholder image while loading
+                        .error(R.drawable.profile_photo) // Image to display in case of error
+                        .into(imagicon)
+                } else {
+                    Toast.makeText(mContext, "Image empty", Toast.LENGTH_SHORT).show()
+                    // Handle the case when studentImg is null or empty
+                }
+            } else {
+                imagicon.setImageResource(R.drawable.profile_photo)
+            }
+        } else {
             imagicon.setImageResource(R.drawable.profile_photo)
         }
         dayofearlypikup.setOnClickListener {
@@ -143,10 +166,15 @@ lateinit var progressBarDialog: ProgressBarDialog
             minDate.set(android.icu.util.Calendar.HOUR_OF_DAY, 0)
             minDate.set(android.icu.util.Calendar.MINUTE, 0)
             minDate.set(android.icu.util.Calendar.SECOND, 0)
-            val dpd1 = DatePickerDialog(this, R.style.DialogTheme,
-                object : DatePickerDialog.OnDateSetListener {
+            val dpd1 = DatePickerDialog(
+                this, R.style.DialogTheme, object : DatePickerDialog.OnDateSetListener {
                     @RequiresApi(Build.VERSION_CODES.O)
-                    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    override fun onDateSet(
+                        view: DatePicker?,
+                        year: Int,
+                        month: Int,
+                        dayOfMonth: Int
+                    ) {
                         var firstday: String? =
                             String.format("%d/%d/%d", month + 1, dayOfMonth, year)
                         var date_sel: String? =
@@ -169,49 +197,53 @@ lateinit var progressBarDialog: ProgressBarDialog
         }
         timepikup.setOnClickListener {
 
-            if (dayofearlypikup.text.toString().trim().equals("")){
-                Toast.makeText(mContext, "Please select Date of Early Pickup", Toast.LENGTH_SHORT).show()
+            if (dayofearlypikup.text.toString().trim().equals("")) {
+                Toast.makeText(mContext, "Please select Date of Early Pickup", Toast.LENGTH_SHORT)
+                    .show()
                 //showerror(mContext,"Please select Date of Early Pickup","Alert")
-            }
-            else
-            {
+            } else {
                 val mTimePicker: TimePickerDialog
                 val mcurrentTime = Calendar.getInstance()
                 val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
                 val minute = mcurrentTime.get(Calendar.MINUTE)
                 //var am_pm = mcurrentTime.get(Calendar.AM_PM)
-                var am_pm:String=""
+                var am_pm: String = ""
 
-                mTimePicker = TimePickerDialog(mContext, R.style.TimePickerTheme,object : TimePickerDialog.OnTimeSetListener {
-                    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                        var AM_PM: String
-                        var hour=hourOfDay
-                        var min=minute.toString()
-                        if (minute<10){
-                            min="0"+min
-                        }
+                mTimePicker = TimePickerDialog(
+                    mContext,
+                    R.style.TimePickerTheme,
+                    object : TimePickerDialog.OnTimeSetListener {
+                        override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                            var AM_PM: String
+                            var hour = hourOfDay
+                            var min = minute.toString()
+                            if (minute < 10) {
+                                min = "0" + min
+                            }
 
-                        if(hour ==0) {
-                            Log.e("h","0")
-                            hour = 12
-                            AM_PM="AM"
-                        } else if(hour<12){
-                            hour = hourOfDay
-                            AM_PM = "AM"
+                            if (hour == 0) {
+                                Log.e("h", "0")
+                                hour = 12
+                                AM_PM = "AM"
+                            } else if (hour < 12) {
+                                hour = hourOfDay
+                                AM_PM = "AM"
+                            } else if (hour > 12) {
+                                hour -= 12
+                                AM_PM = "PM"
+                            } else if (hour == 12) {
+                                Log.e("h", "12")
+                                hour = 12
+                                AM_PM = "PM"
+                            } else AM_PM = "AM"
+                            timepikup.setText(hour.toString() + ":" + min + ":" + "00" + AM_PM)
+                            totime = hour.toString() + ":" + min + ":" + "00"
                         }
-                        else if (hour >12) {
-                            hour -= 12
-                            AM_PM = "PM"
-                        } else if (hour == 12) {
-                            Log.e("h","12")
-                            hour = 12
-                            AM_PM = "PM"
-                        } else
-                            AM_PM = "AM"
-                        timepikup.setText( hour.toString() + ":" + min + ":" + "00"+ AM_PM)
-                        totime=hour.toString() + ":" + min + ":" + "00"
-                    }
-                }, hour, minute,false)
+                    },
+                    hour,
+                    minute,
+                    false
+                )
 
                 timepikup.setOnClickListener({ v ->
                     mTimePicker.show()
@@ -226,40 +258,38 @@ lateinit var progressBarDialog: ProgressBarDialog
         }
     }
 
-     fun callearlypickupSubmitApi(fDate: String, pickupby: String, reasonAPI: String) {
-       progressBarDialog.show()
-        var devicename:String= (Build.MANUFACTURER
-                + " " + Build.MODEL + " " + Build.VERSION.RELEASE
-                + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT]
-            .name)
-        val requestLeaveBody= RequestEarlyApiModel(PreferenceManager().getStudent_ID(mContext)!!,fDate,reasonAPI,pickupby,"1",devicename,"1.0")
-        val call: Call<CommonResponse> = ApiClient.getApiService().request_early_pickup("Bearer "+
-                PreferenceManager().getAccessToken(mContext).toString(),
-            requestLeaveBody
+    fun callearlypickupSubmitApi(fDate: String, pickupby: String, reasonAPI: String) {
+        progressBarDialog.show()
+        var devicename: String =
+            (Build.MANUFACTURER + " " + Build.MODEL + " " + Build.VERSION.RELEASE + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
+        val requestLeaveBody = RequestEarlyApiModel(
+            PreferenceManager().getStudent_ID(mContext)!!,
+            fDate,
+            reasonAPI,
+            pickupby,
+            "1",
+            devicename,
+            "1.0"
+        )
+        val call: Call<CommonResponse> = ApiClient.getApiService().request_early_pickup(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString(), requestLeaveBody
         )
         call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
-                call: Call<CommonResponse>,
-                response: Response<CommonResponse>
+                call: Call<CommonResponse>, response: Response<CommonResponse>
             ) {
                 progressBarDialog.hide()
                 //progressDialog.visibility = View.GONE
                 if (response.body() != null) {
-                    if(response.body()!!.status.equals(100))
-                    {
-                        showErrorAlert(mContext,"Successfully submitted","Success")
-                    }
-                    else if(response.body()!!.status.equals(106))
-                    {
+                    if (response.body()!!.status.equals(100)) {
+                        showErrorAlert(mContext, "Successfully submitted", "Success")
+                    } else if (response.body()!!.status.equals(106)) {
                         val intent = Intent(mContext, SigninyourAccountActivity::class.java)
                         startActivity(intent)
-                    }
-                    else
-                    {
+                    } else {
                         CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
-                }
-                else{
+                } else {
                     val intent = Intent(mContext, SigninyourAccountActivity::class.java)
                     startActivity(intent)
                 }
@@ -269,17 +299,14 @@ lateinit var progressBarDialog: ProgressBarDialog
                 progressBarDialog.hide()
 
                 Toast.makeText(
-                    context,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    context, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
                 Log.e("succ", t.message.toString())
             }
         })
     }
 
-    fun showErrorAlert(context: Context,message : String,msgHead : String) {
+    fun showErrorAlert(context: Context, message: String, msgHead: String) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -290,8 +317,7 @@ lateinit var progressBarDialog: ProgressBarDialog
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         text_dialog.text = message
         //alertHead.text = msgHead
-        btn_Ok.setOnClickListener()
-        {
+        btn_Ok.setOnClickListener {
             dialog.dismiss()
             val intent = Intent(context, EarlyPickupListActivity::class.java)
             startActivity(intent)

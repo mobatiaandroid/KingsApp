@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="128dp"
             android:gravity="center"
-            android:text="v1.0.1"
+            android:text="v1.0.4"
             android:textColor="@color/greyyy"
             app:layout_constraintBottom_toBottomOf="@+id/settingsRecycler"
             app:layout_constraintEnd_toEndOf="@+id/settingsRecycler"

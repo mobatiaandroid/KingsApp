@@ -357,10 +357,8 @@ public class GiraffePlayer {
                     return true;
 
                 // 处理手势结束
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_UP:
-                        endGesture();
-                        break;
+                if ((motionEvent.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                    endGesture();
                 }
 
                 return false;
@@ -668,7 +666,7 @@ public class GiraffePlayer {
         int showDelta = (int) delta / 1000;
         if (showDelta != 0) {
             $.id(R.id.app_video_fastForward_box).visible();
-            String text = showDelta > 0 ? ("+" + showDelta) : "" + showDelta;
+            String text = showDelta > 0 ? ("+" + showDelta) : String.valueOf(showDelta);
             $.id(R.id.app_video_fastForward).text(text + "s");
             $.id(R.id.app_video_fastForward_target).text(generateTime(newPosition)+"/");
             $.id(R.id.app_video_fastForward_all).text(generateTime(duration));

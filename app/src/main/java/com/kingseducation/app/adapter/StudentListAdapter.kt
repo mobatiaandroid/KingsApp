@@ -15,9 +15,14 @@ import android.widget.RelativeLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.login.model.StudentList
+import com.kingseducation.app.fragment.mContext
 import com.kingseducation.app.manager.PreferenceManager
 
 
@@ -55,7 +60,28 @@ class StudentListAdapter(
         Log.e("list", parentassoictionlist.toString())
         val list = parentassoictionlist[position].fullname
 
-        holder.stud_profile.setImageResource(R.drawable.profile_photo)
+        if (!parentassoictionlist[position].photo.equals("")) {
+            val glideUrl = GlideUrl(
+                parentassoictionlist[position].photo,
+                LazyHeaders.Builder()
+                    .addHeader(
+                        "Authorization",
+                        "Bearer " + PreferenceManager().getAccessToken(mContext)
+                            .toString()
+                    )
+                    .build()
+            )
+
+            Glide.with(mContext)
+                .load(glideUrl)
+                .transform(CircleCrop()) // Apply circular transformation
+                .placeholder(R.drawable.profile_photo) // Placeholder image while loading
+                .error(R.drawable.profile_photo) // Image to display in case of error
+                .into(holder.stud_profile)
+
+        } else {
+            holder.stud_profile.setImageResource(R.drawable.profile_photo)
+        }
 
         holder.stud_profile.setOnClickListener {
             PreferenceManager().setStudentName(

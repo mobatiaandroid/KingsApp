@@ -237,6 +237,9 @@ class StudentInfoActivity:AppCompatActivity (){
                        )
                        Glide.with(mContext)
                            .load(glideUrl)
+                           .transform(CircleCrop()) // Apply circular transformation
+                           .placeholder(R.drawable.profile_photo) // Placeholder image while loading
+                           .error(R.drawable.profile_photo) // Image to display in case of error
                            .into(imagicon)
                    } else {
                        Toast.makeText(mContext, "Image empty", Toast.LENGTH_SHORT).show()

@@ -39,6 +39,7 @@ import com.kingseducation.app.splash.WelcomeActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
+import java.lang.System.exit
 
 
 class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
@@ -70,19 +71,24 @@ class SigninyourAccountActivity:AppCompatActivity() ,View.OnTouchListener{
         setContentView(R.layout.kings_sign_in)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         ncontext = this
-        PreferenceManager().setAccessToken(ncontext,"")
+        PreferenceManager().setAccessToken(ncontext, "")
         initFn()
     }
 
+    override fun onBackPressed() {
+        exit(0)
+//        super.onBackPressed()
+    }
+
     private fun initFn() {
-        passwordTextInputLayout=findViewById(R.id.passwordTextInputLayout)
-        createAccountTxt=findViewById(R.id.createAccountTxt)
-        signInBtn=findViewById(R.id.signInBtn)
-        haveaccount=findViewById(R.id.haveaccount)
-        forgetPassword=findViewById(R.id.forgetPassword)
-        donthaveaccount=findViewById(R.id.donthaveaccount)
-        rememeberMeImg=findViewById(R.id.rememeberMeImg)
-        emailTextInputEditText=findViewById(R.id.emailTextInputEditText)
+        passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout)
+        createAccountTxt = findViewById(R.id.createAccountTxt)
+        signInBtn = findViewById(R.id.signInBtn)
+        haveaccount = findViewById(R.id.haveaccount)
+        forgetPassword = findViewById(R.id.forgetPassword)
+        donthaveaccount = findViewById(R.id.donthaveaccount)
+        rememeberMeImg = findViewById(R.id.rememeberMeImg)
+        emailTextInputEditText = findViewById(R.id.emailTextInputEditText)
         passwordTextInputEditText=findViewById(R.id.passwordTextInputEditText)
         backImg=findViewById(R.id.backImg)
         joinGuestTxt = findViewById(R.id.joinGuestTxt)

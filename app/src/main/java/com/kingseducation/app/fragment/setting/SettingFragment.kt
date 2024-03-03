@@ -39,13 +39,13 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 
-class SettingFragment: Fragment() {
+class SettingFragment : Fragment() {
     lateinit var rootView: View
     lateinit var recyclerList: RecyclerView
-    lateinit var mContext:Context
-    lateinit var menu : ImageView
-    lateinit var textView:TextView
-    lateinit var stringList:Array<String>
+    lateinit var mContext: Context
+    lateinit var menu: ImageView
+    lateinit var textView: TextView
+    lateinit var stringList: Array<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,9 +62,10 @@ class SettingFragment: Fragment() {
         recyclerList = (rootView.findViewById<View>(R.id.settingsRecycler) as? RecyclerView?)!!
         //recyclerList = findViewById(R.id.settingsRecycler)
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
-        textView= (rootView.findViewById<View>(R.id.textView) as? TextView?)!!
+        textView = (rootView.findViewById<View>(R.id.textView) as? TextView?)!!
         stringList = mContext.resources.getStringArray(
-            R.array.setting_list)
+            R.array.setting_list
+        )
         recyclerList.setHasFixedSize(true)
 
         recyclerList.setHasFixedSize(true)
@@ -85,11 +86,9 @@ class SettingFragment: Fragment() {
         recyclerList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
-                if (PreferenceManager().getAccessToken(mContext).equals(""))
-                {
+                if (PreferenceManager().getAccessToken(mContext).equals("")) {
 
-                    if(position==0)
-                    {
+                    if (position == 0) {
                         val intent = Intent()
                         intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                         val uri = Uri.fromParts("package", activity!!.packageName, null)
@@ -97,24 +96,39 @@ class SettingFragment: Fragment() {
                         mContext.startActivity(intent)
                     }
                     if (position == 1) {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            mContext,
+                            "This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     if (position == 2) {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            mContext,
+                            "This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     if (position == 3) {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            mContext,
+                            "This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     if (position == 4) {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            mContext,
+                            "This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     if (position == 5) {
-                        Toast.makeText(mContext,"This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            mContext,
+                            "This feature is only available for registered users.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     if (position == 6) {
@@ -122,11 +136,8 @@ class SettingFragment: Fragment() {
                         showSuccessAlertGuest(mContext, "Do you want to Sign Out?")
                     }
 
-                }
-                else
-                {
-                    if(position==0)
-                    {
+                } else {
+                    if (position == 0) {
                         val intent = Intent()
                         intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                         val uri = Uri.fromParts("package", activity!!.packageName, null)
@@ -142,15 +153,12 @@ class SettingFragment: Fragment() {
                     }
                     if (position == 3) {
                         Toast.makeText(
-                            mContext,
-                            "This feature will be available soon.",
-                            Toast.LENGTH_SHORT
+                            mContext, "This feature will be available soon.", Toast.LENGTH_SHORT
                         ).show()
                     }
                     if (position == 4) {
                         showSuccessAlertForDelete(
-                            mContext,
-                            resources.getString(R.string.do_you_want_delete)
+                            mContext, resources.getString(R.string.do_you_want_delete)
                         )
                     }
                     if (position == 5) {
@@ -175,19 +183,17 @@ class SettingFragment: Fragment() {
         dialog.setContentView(R.layout.alert_dialogue_layout)
         var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
 
-      //  var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        //  var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
         text_dialog.text = s
-        btn_Ok.setOnClickListener()
-        {
+        btn_Ok.setOnClickListener {
 
             val intent = Intent(mContext, WelcomeActivity::class.java)
             startActivity(intent)
         }
-        btn_Cancel.setOnClickListener()
-        {
+        btn_Cancel.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
@@ -217,24 +223,21 @@ class SettingFragment: Fragment() {
         dialog.setContentView(view)
 
         submit_button.setOnClickListener {
-            if(current_passwrd.text.isNullOrBlank())
-            {
+            if (current_passwrd.text.isNullOrBlank()) {
                 Toast.makeText(mContext, "Please enter the field !", Toast.LENGTH_SHORT).show()
 
-            }
-            else if(new_passwrd.text.isNullOrBlank())
-            {
+            } else if (new_passwrd.text.isNullOrBlank()) {
                 Toast.makeText(mContext, "Please enter the Password !", Toast.LENGTH_SHORT).show()
 
-            }
-            else if(confirm_passwd.text.isNullOrBlank())
-            {
+            } else if (confirm_passwd.text.isNullOrBlank()) {
                 Toast.makeText(mContext, "Please enter the Password !", Toast.LENGTH_SHORT).show()
 
-            }
-            else
-            {
-                callChangePasswdApi(current_passwrd.text.toString(),new_passwrd.text.toString(),confirm_passwd.text.toString())
+            } else {
+                callChangePasswdApi(
+                    current_passwrd.text.toString(),
+                    new_passwrd.text.toString(),
+                    confirm_passwd.text.toString()
+                )
                 dialog.dismiss()
             }
         }
@@ -242,73 +245,64 @@ class SettingFragment: Fragment() {
     }
 
     private fun callChangePasswdApi(currentpswd: String, newpswd: String, confrmpswd: String) {
-        val call: Call<CommonResponse> = ApiClient.getApiService().changepswd("Bearer "+
-            PreferenceManager().getAccessToken(mContext).toString(),
-            newpswd,confrmpswd,currentpswd)
+        val call: Call<CommonResponse> = ApiClient.getApiService().changepswd(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString(),
+            newpswd,
+            confrmpswd,
+            currentpswd
+        )
         call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
-                call: Call<CommonResponse>,
-                response: Response<CommonResponse>
+                call: Call<CommonResponse>, response: Response<CommonResponse>
             ) {
-           Log.e("responsedata",response.body().toString())
+                Log.e("responsedata", response.body().toString())
                 if (response.body() != null) {
-                if (response.body()!!.status.equals(100))
-                {
-                    Log.e("Response",response.body().toString())
-                    showErrorAlert(mContext,"Successfully submitted your password","Success")
-                }
-              else if(response.body()!!.status.equals(106))
-                {
-                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
-                    startActivity(intent)
-                }
+                    if (response.body()!!.status.equals(100)) {
+                        Log.e("Response", response.body().toString())
+                        showErrorAlert(mContext, "Successfully submitted your password", "Success")
+                    } else if (response.body()!!.status.equals(106)) {
+                        val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                    }
 
-               else{
-                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
-                }
-
-                }
-                else
-                {
-                    Log.e("failed","Failed")
-                    CommonClass.checkApiStatusError(300, mContext
+                } else {
+                    Log.e("failed", "Failed")
+                    CommonClass.checkApiStatusError(
+                        300, mContext
                     )
                 }
-                }
+            }
 
             override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
                 Toast.makeText(
-                    mContext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    mContext, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
                 Log.e("succ", t.message.toString())
             }
         })
     }
-    fun showErrorAlert(context: Context,message : String,msgHead : String)
-    {
+
+    fun showErrorAlert(context: Context, message: String, msgHead: String) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-       // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
-        var iconImageView=dialog.findViewById(R.id.iconImageView) as ImageView
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
         text_dialog.text = message
-       // alertHead.text = msgHead
-        btn_Ok.setOnClickListener()
-        {
+        // alertHead.text = msgHead
+        btn_Ok.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    fun showSuccessAlert(context: Context,msgHead:String)
-    {
+    fun showSuccessAlert(context: Context, msgHead: String) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -316,7 +310,7 @@ class SettingFragment: Fragment() {
         dialog.setContentView(R.layout.alert_dialogue_layout)
         var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
 
-      //  var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        //  var alertHead = dialog.findViewById(R.id.alertHead) as TextView
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
@@ -332,8 +326,7 @@ class SettingFragment: Fragment() {
         btn_Cancel.text = resources.getString(R.string.may_be_later)
 
         text_dialog.text = msgHead
-        btn_Ok.setOnClickListener()
-        {
+        btn_Ok.setOnClickListener {
             if (CommonClass.isInternetAvailable(mContext)) {
                 callLogoutApi()
             } else {
@@ -346,66 +339,65 @@ class SettingFragment: Fragment() {
             }
             dialog.dismiss()
         }
-        btn_Cancel.setOnClickListener()
-        {
+        btn_Cancel.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
     }
-fun showSuccessAlertForDelete(mContext: Context, s: String)
-{
-    val dialog = Dialog(mContext)
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    dialog.setCancelable(false)
-    dialog.setContentView(R.layout.alert_dialogue_layout)
-    var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
 
-   // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
-    var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
-    var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
-    var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
+    fun showSuccessAlertForDelete(mContext: Context, s: String) {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_layout)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
 
-    if (PreferenceManager().getLanguage(mContext).equals("ar")) {
-        val face: Typeface =
-            Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
-        btn_Ok.typeface = face
-        btn_Cancel.typeface = face
-        text_dialog.typeface = face
+        // var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+        var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
 
-    }
-    text_dialog.text = s
-    btn_Ok.text = resources.getString(R.string.delete)
-    btn_Ok.setOnClickListener()
-    {
-        if(CommonClass.isInternetAvailable(this.mContext)) {
-           callDeleteApicall()
-        }
-        else
-        {
-            Toast.makeText(this.mContext,"Network error occurred. Please check your internet connection and try again later",Toast.LENGTH_SHORT).show()
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            btn_Ok.typeface = face
+            btn_Cancel.typeface = face
+            text_dialog.typeface = face
 
         }
-        dialog.dismiss()
+        text_dialog.text = s
+        btn_Ok.text = resources.getString(R.string.delete)
+        btn_Ok.setOnClickListener {
+            if (CommonClass.isInternetAvailable(this.mContext)) {
+                callDeleteApicall()
+            } else {
+                Toast.makeText(
+                    this.mContext,
+                    "Network error occurred. Please check your internet connection and try again later",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+            dialog.dismiss()
+        }
+        btn_Cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
-    btn_Cancel.setOnClickListener()
-    {
-        dialog.dismiss()
-    }
-    dialog.show()
-}
 
     private fun callDeleteApicall() {
-        val call: Call<ResponseBody> = ApiClient.getApiService().delete("Bearer "+PreferenceManager().getAccessToken(mContext)
-            .toString())
+        val call: Call<ResponseBody> = ApiClient.getApiService().delete(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>
             ) {
-                Log.e("Response",response.body().toString())
-                PreferenceManager().setuser_id(mContext,"")
-                PreferenceManager().setAccessToken(mContext,"")
+                Log.e("Response", response.body().toString())
+                PreferenceManager().setuser_id(mContext, "")
+                PreferenceManager().setAccessToken(mContext, "")
                 val intent = Intent(mContext, WelcomeActivity::class.java)
                 startActivity(intent)
 
@@ -413,46 +405,43 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Toast.makeText(
-                    mContext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    mContext, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
                 Log.e("succ", t.message.toString())
             }
         })
     }
 
     private fun callLogoutApi() {
-        val call: Call<ResponseBody> = ApiClient.getApiService().logout("Bearer "+PreferenceManager().getAccessToken(mContext)
-            .toString())
+        val call: Call<ResponseBody> = ApiClient.getApiService().logout(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>
             ) {
-                Log.e("Response",response.body().toString())
-                PreferenceManager().setuser_id(mContext,"")
-                PreferenceManager().setAccessToken(mContext,"")
-                PreferenceManager().setStudentName(mContext,"")
-                PreferenceManager().setStudentPhoto(mContext,"")
-                PreferenceManager().setStudentClass(mContext,"")
+                Log.e("Response", response.body().toString())
+                PreferenceManager().setuser_id(mContext, "")
+                PreferenceManager().setAccessToken(mContext, "")
+                PreferenceManager().setStudentName(mContext, "")
+                PreferenceManager().setStudentPhoto(mContext, "")
+                PreferenceManager().setStudentClass(mContext, "")
                 val intent = Intent(mContext, WelcomeActivity::class.java)
-            startActivity(intent)
+                startActivity(intent)
+                activity!!.finish()
+
 
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Toast.makeText(
-                    mContext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    mContext, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
                 Log.e("succ", t.message.toString())
             }
         })
     }
+
     fun showEmailHelpAlert(context: Context) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -483,16 +472,14 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
             } else if (text_content.text.toString().trim().equals("")) {
                 Toast.makeText(
                     mContext,
-                    resources.getString(R.string.please_enter_the_subject), Toast.LENGTH_SHORT
+                    resources.getString(R.string.please_enter_the_subject),
+                    Toast.LENGTH_SHORT
                 ).show()
 
             } else {
                 if (CommonClass.isInternetAvailable(mContext)) {
                     callSendMailApi(
-                        text_dialog.text.toString(),
-                        text_content.text.toString(),
-                        context,
-                        dialog
+                        text_dialog.text.toString(), text_content.text.toString(), context, dialog
                     )
                 } else {
                     Toast.makeText(
@@ -518,33 +505,29 @@ fun showSuccessAlertForDelete(mContext: Context, s: String)
     }
 
     private fun callSendMailApi(
-        textDialog: String,
-        textContent: String,
-        context: Context,
-        dialog: Dialog
+        textDialog: String, textContent: String, context: Context, dialog: Dialog
     ) {
-        val call: Call<ResponseBody> = ApiClient.getApiService().feedback("Bearer "+PreferenceManager().getAccessToken(mContext)
-            .toString(),textDialog,textContent, PreferenceManager().getUserCode(context).toString(),
-            PreferenceManager().getuser_id(context).toString())
+        val call: Call<ResponseBody> = ApiClient.getApiService().feedback(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString(),
+            textDialog,
+            textContent,
+            PreferenceManager().getUserCode(context).toString(),
+            PreferenceManager().getuser_id(context).toString()
+        )
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
+                call: Call<ResponseBody>, response: Response<ResponseBody>
             ) {
-                Log.e("Response",response.body().toString())
-                dialog.dismiss()
-                /*val intent = Intent(context, WelcomeActivity::class.java)
+                Log.e("Response", response.body().toString())
+                dialog.dismiss()/*val intent = Intent(context, WelcomeActivity::class.java)
                 startActivity(intent)*/
 
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Toast.makeText(
-                    mContext,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    mContext, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
                 Log.e("succ", t.message.toString())
             }
         })

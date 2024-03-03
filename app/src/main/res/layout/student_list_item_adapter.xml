@@ -15,25 +15,43 @@
 
         <ImageView
             android:id="@+id/stud_profile"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:elevation="5dp"
             android:scaleType="fitXY"
             android:src="@drawable/profile_photo"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+            app:layout_constraintEnd_toEndOf="@+id/imageView7"
+            app:layout_constraintStart_toStartOf="@+id/imageView7"
+            app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/curved_circle_yellow"
+            app:layout_constraintBottom_toTopOf="@id/student_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.kingseducation.app.manager.font.CustomVerdanaBold
             android:id="@+id/student_name"
-            android:layout_width="90dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:inputType="textMultiLine"
             android:text="RexaMathewes"
+            android:justificationMode="inter_word"
+            android:textAlignment="center"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/stud_profile"
-            app:layout_constraintTop_toBottomOf="@+id/stud_profile" />
+            app:layout_constraintEnd_toEndOf="@+id/imageView7"
+            app:layout_constraintStart_toStartOf="@+id/imageView7"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

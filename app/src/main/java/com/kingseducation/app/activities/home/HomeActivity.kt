@@ -31,6 +31,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
@@ -511,6 +515,28 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
             //
 
         }
+        if (!PreferenceManager().getStudentPhoto(mContext).equals("")) {
+            val glideUrl = GlideUrl(
+                PreferenceManager().getStudentPhoto(mContext),
+                LazyHeaders.Builder()
+                    .addHeader(
+                        "Authorization",
+                        "Bearer " + PreferenceManager().getAccessToken(mContext)
+                            .toString()
+                    )
+                    .build()
+            )
+
+            Glide.with(mContext)
+                .load(glideUrl)
+                .transform(CircleCrop()) // Apply circular transformation
+                .placeholder(R.drawable.profile_photo) // Placeholder image while loading
+                .error(R.drawable.profile_photo) // Image to display in case of error
+                .into(student_profile)
+
+        } else {
+            student_profile.setImageResource(R.drawable.profile_photo)
+        }
         student_profile.setOnClickListener {
             if (flag) {
                 studentListRecyclerview.visibility = View.VISIBLE
@@ -545,27 +571,10 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
                 }
 
             } else {
-
                 studentListRecyclerview.visibility = View.GONE
-                /*linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                studentListRecyclerview.layoutManager = linearLayoutManager
-                val studentAdapter = StudentListAdapter(mContext,list,name)
-                studentListRecyclerview.setAdapter(studentAdapter)*/
             }
             flag = !flag
-            /*if(PreferenceManager().getLanguage(mContext).equals("ar"))
-            {*/
-            /*studentListRecyclerview.visibility=View.GONE
-            studentListRecyclerViewArab.visibility=View.VISIBLE
-            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-            studentListRecyclerViewArab.layoutManager = linearLayoutManager
-            val studentAdapter = StudentListAdapterArab(mContext,list,name)
-            studentListRecyclerViewArab.setAdapter(studentAdapter)*/
-            /*}
-              else
-            {*/
 
-//}
 
         }
         if (CommonClass.isInternetAvailable(mContext)) {
