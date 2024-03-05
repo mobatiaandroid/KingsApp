@@ -21,16 +21,17 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class ImageMessageActivity : AppCompatActivity(){
+
+class ImageMessageActivity : AppCompatActivity() {
     lateinit var mContext: Context
 
-    var id:String=""
-    var title:String=""
-    var idApi:String=""
-    var createdate:String=""
-    var message:String=""
-    var url:String=""
-    var date:String=""
+    var id: String = ""
+    var title: String = ""
+    var idApi: String = ""
+    var createdate: String = ""
+    var message: String = ""
+    var url: String = ""
+    var date: String = ""
     private lateinit var relativeHeader: RelativeLayout
     private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
@@ -38,28 +39,29 @@ class ImageMessageActivity : AppCompatActivity(){
     private lateinit var heading: TextView
     private lateinit var webView: WebView
     private lateinit var progressDialog: RelativeLayout
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_image_message_detail)
-        mContext=this
+        mContext = this
 
-       // id=intent.getStringExtra("id").toString()
-        title=intent.getStringExtra("title").toString()
-        url=intent.getStringExtra("url").toString()
-        createdate=intent.getStringExtra("createdate").toString()
+        id = intent.getStringExtra("id").toString()
+        title = intent.getStringExtra("title").toString()
+        url = intent.getStringExtra("url").toString()
+        createdate = intent.getStringExtra("createdate").toString()
+        message = intent.getStringExtra("message").toString()
         initUI()
         callMessageDetailAPI()
         getSettings()
 
     }
+
     fun initUI() {
         relativeHeader = findViewById(R.id.relativeHeader)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_info)
         progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
-       // backRelative = findViewById(R.id.backRelative)
+        // backRelative = findViewById(R.id.backRelative)
         heading.text = resources.getString(R.string.Message)
         if (PreferenceManager().getLanguage(mContext).equals("ar")) {
             val face: Typeface =
@@ -75,8 +77,8 @@ class ImageMessageActivity : AppCompatActivity(){
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
     }
-    fun callMessageDetailAPI()
-    {
+
+    fun callMessageDetailAPI() {
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
         val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMMM-yyyy")
@@ -84,67 +86,76 @@ class ImageMessageActivity : AppCompatActivity(){
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)
         val outputDateStr1: String = outputFormatdate.format(date)
-                    var pushNotificationDetail="<!DOCTYPE html>\n"+
-                            "<html>\n" +
-                            "<head>\n" +
-                            "<style>\n" +
-                            "\n" +
-                            "@font-face {\n" +
-                            "font-family: verdana_regular;" +
-                            "src: url(verdana_regular.ttf);" +
+        var pushNotificationDetail = "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<style>\n" +
+                "\n" +
+                "@font-face {\n" +
+                "font-family: verdana_regular;" +
+                "src: url(verdana_regular.ttf);" +
 
-                            "font-family:verdana_regular;" +
-                            "src: url(verdana_regular.ttf);" +
-                            "}" +
-                            ".date {" +
-                            "font-family:verdana_regular;" +
-                            "font-size:12px;" +
-                            "text-align:right;" +
-                            "color: #ACACAC;" +
-                            "text-align: ####TEXT_ALIGN####;" +
-                            "}"+
-                            ".title {" +
-                            "font-family: verdana_regular;" +
-                            "font-size:16px;" +
-                            "text-align:left;" +
-                            "color:	#001c53;" +
-                            "text-align: ####TEXT_ALIGN####;" +
-                            "}" +
-                            ".description {" +
-                            "font-family:verdana_regular;" +
-                            "text-align:justify;" +
-                            "font-size:14px;" +
-                            "color: #001c53;" +
-                            "text-align: ####TEXT_ALIGN####;" +
-                            "}" +
-                            "</style>\n" + "</head>" +
-                            "<body>" +
-                            "<p class='title'>"+title
+                "font-family:verdana_regular;" +
+                "src: url(verdana_regular.ttf);" +
+                "}" +
+                ".date {" +
+                "font-family:verdana_regular;" +
+                "font-size:12px;" +
+                "text-align:right;" +
+                "color: #ACACAC;" +
+                "text-align: ####TEXT_ALIGN####;" +
+                "}" +
+                ".title {" +
+                "font-family: verdana_regular;" +
+                "font-size:16px;" +
+                "text-align:left;" +
+                "color:	#001c53;" +
+                "text-align: ####TEXT_ALIGN####;" +
+                "}" +
+                ".description {" +
+                "font-family:verdana_regular;" +
+                "text-align:justify;" +
+                "font-size:14px;" +
+                "color: #001c53;" +
+                "text-align: ####TEXT_ALIGN####;" +
+                "}" +
+                "</style>\n" + "</head>" +
+                "<body>" +
+                "<p class='title'>" + title
 
-        pushNotificationDetail=pushNotificationDetail+"<p class='date'>"+outputDateStr1 +" "+outputDateStr+ "</p>"+"<hr>"+ "<p class='description'>" +message+ "</p>"
-        if (!url.equals(""))
-                    {
-                        pushNotificationDetail=pushNotificationDetail+"<center><img src='" + url + "'width='100%', height='auto'>"
-                    }
-                    pushNotificationDetail=pushNotificationDetail+"</body>\n</html>"
-                    var htmlData=pushNotificationDetail
-                    Log.e("HTML DATA",htmlData)
-                    //  webView.loadData(htmlData,"text/html; charset=utf-8","utf-8")
-                    webView.loadDataWithBaseURL("file:///android_asset/font/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
+        pushNotificationDetail =
+            pushNotificationDetail + "<p class='date'>" + outputDateStr1 + " " + outputDateStr + "</p>" + "<hr>" + "<p class='description'>" + message + "</p>"
+        if (!url.equals("")) {
+            if (url.endsWith(".pdf")) {
+                // Append PDF URL to pushNotificationDetail
+                pushNotificationDetail += "<iframe id='pdfFrame' src='https://docs.google.com/gview?embedded=true&url=" + url + "' style='width:100%; height:1024px;' frameborder='0'></iframe>";
 
+            }
+            else {
+                // Load image
+                pushNotificationDetail += "<center><img src='" + url + "' width='100%' height='auto'>"
+            }
 
-
-
-
+        }
+        pushNotificationDetail = pushNotificationDetail + "</body>\n</html>"
+        var htmlData = pushNotificationDetail
+        Log.e("HTML DATA", htmlData)
+        //  webView.loadData(htmlData,"text/html; charset=utf-8","utf-8")
+        webView.loadDataWithBaseURL(
+            "file:///android_asset/font/",
+            htmlData,
+            "text/html; charset=utf-8",
+            "utf-8",
+            "about:blank"
+        )
 
 
     }
 
-    fun getSettings()
-    {
+    fun getSettings() {
         webView.settings.javaScriptEnabled = true
         webView.settings.setSupportZoom(false)
-        webView.settings.cacheMode= WebSettings.LOAD_NO_CACHE
+        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
         webView.settings.domStorageEnabled = true
         webView.settings.databaseEnabled = true
@@ -160,8 +171,7 @@ class ImageMessageActivity : AppCompatActivity(){
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 progressDialog.visibility = View.VISIBLE
                 println("testing2")
-                if (newProgress == 100)
-                {
+                if (newProgress == 100) {
                     println("testing1")
                     progressDialog.visibility = View.GONE
 

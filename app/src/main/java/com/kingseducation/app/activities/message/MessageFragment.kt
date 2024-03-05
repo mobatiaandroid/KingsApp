@@ -161,6 +161,7 @@ class MessageFragment : Fragment() {
                     intent.putExtra("id", message_array[position].id)
                     intent.putExtra("title", message_array[position].title)
                     intent.putExtra("url", message_array[position].url)
+                    intent.putExtra("message", message_array[position].message)
                     intent.putExtra("createdate", message_array[position].created_at)
                     Log.e("image", message_array[position].title)
                     Log.e("url", message_array[position].url)
