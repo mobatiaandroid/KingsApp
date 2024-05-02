@@ -38,6 +38,17 @@
         android:vmSafeMode="true"
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
+            android:name=".activities.re_enrolment.ReEnrolmentListingActivity"
+            android:exported="false"
+            android:label="@string/title_activity_re_enrolment_listing"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activities.newsletter.NewsLetterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".activities.teacher_contact.TeacherContactActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -58,7 +69,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.absence.AbsenceActivity"
             android:exported="true"
@@ -134,12 +145,12 @@
             android:name=".splash.WelcomeActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Kings_Edu"></activity>
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.login.CreateAccountActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Kings_Edu"></activity>
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.absence.RegisterAbsenceActivity"
             android:exported="true"
@@ -151,7 +162,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu" />
         <activity
-            android:name="com.kingseducation.app.activities.about_us.StaffDirectoryActivity"
+            android:name=".activities.about_us.StaffDirectoryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu" />
@@ -200,24 +211,24 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.early_pickup.EarlyPickupdetailsActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.early_pickup.EarlyPickupRegisterActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Kings_Edu"></activity>
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.early_pickup.EarlyPickupListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Kings_Edu"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".constants.WebViewLoaderActivity"
             android:screenOrientation="portrait"

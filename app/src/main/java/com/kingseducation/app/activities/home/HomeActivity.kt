@@ -50,6 +50,7 @@ import com.kingseducation.app.activities.login.SigninyourAccountActivity
 import com.kingseducation.app.activities.login.model.StudentList
 import com.kingseducation.app.activities.login.model.StudentListResponseModel
 import com.kingseducation.app.activities.message.MessageFragment
+import com.kingseducation.app.activities.newsletter.NewsLetterActivity
 import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivity
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
@@ -114,7 +115,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
     lateinit var name: Array<String>
     lateinit var linearLayoutManager: LinearLayoutManager
     var flag: Boolean = true
-    lateinit var student_name: ArrayList<StudentList>
+    lateinit var studentList: ArrayList<StudentList>
     lateinit var menuicon: ImageView
 
     //    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -178,7 +179,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 
     @SuppressLint("ResourceAsColor")
     private fun initFn() {
-        student_name = ArrayList()
+        studentList = ArrayList()
         linearLayout = findViewById<View>(R.id.linearLayout) as LinearLayout
         drawerLayout = findViewById<View>(R.id.drawerLayout) as DrawerLayout
         mHomeListView = findViewById<View>(R.id.homeList) as ListView
@@ -554,7 +555,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
                         studentListRecyclerview.layoutManager = linearLayoutManager
                         val studentAdapter = StudentListAdapter(
                             mContext,
-                            student_name,
+                            studentList,
                             studentListRecyclerview,
                             lang_switch
                         )
@@ -691,7 +692,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 
                         if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
                             if (versionfromapi > currentversion) {
-                                showforceupdate(mContext)
+                                showForceUpdate(mContext)
 
                             }
                         } else if (response.body()!!.status.equals("106")) {
@@ -748,7 +749,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 
                         if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
                             if (versionfromapi > currentversion) {
-                                showforceupdate(mContext)
+                                showForceUpdate(mContext)
 
                             }
                         } else if (response.body()!!.status.equals("106")) {
@@ -787,15 +788,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
                 response: Response<StudentListResponseModel>
             ) {
                 Log.e("Response", response.body().toString())
-                if (response.body()!!.status.equals(100)) {
-                    student_name.addAll(response.body()!!.student_list)
-
-
-                    /*student_name.addAll(response.body()!!.student_list)
-                    circleImageView!!.layoutManager = LinearLayoutManager(mContext)
-                    val studentlist_adapter =
-                        ChildSelectionAdapter(ncontext, student_name)
-                    circleImageView!!.adapter = studentlist_adapter*/
+                if (response.body()!!.status == 100) {
+                    studentList.addAll(response.body()!!.student_list)
                 } else {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
@@ -813,7 +807,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
         })
     }
 
-    fun showforceupdate(mContext: Context) {
+    fun showForceUpdate(mContext: Context) {
         val dialog = Dialog(mContext)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -985,12 +979,19 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 //            }
             else if (position == 4) {
 
-                val intent = Intent(mContext, AbsenceActivity::class.java)
+                val intent = Intent(mContext, NewsLetterActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
 
             } else if (position == 5) {
+
+                val intent = Intent(mContext, AbsenceActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+
+            } else if (position == 6) {
 
                 val intent = Intent(mContext, EarlyPickupListActivity::class.java)
                 startActivity(intent)
@@ -998,38 +999,38 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 
 
                 //Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 6) {
+            } else if (position == 7) {
 
                 val intent = Intent(mContext, TimeTableActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
 
-            } else if (position == 7) {
+            } else if (position == 8) {
                 val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 8) {
+            } else if (position == 9) {
                 val intent = Intent(mContext, ReportsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 9) {
+            } else if (position == 10) {
                 val intent = Intent(mContext, FormsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 10) {
+            } else if (position == 11) {
                 val intent = Intent(mContext, AppsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 11) {
+            } else if (position == 12) {
                 val intent = Intent(mContext, SocialMediaActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)

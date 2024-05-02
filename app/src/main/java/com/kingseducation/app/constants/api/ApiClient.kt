@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
     //    var base_url = "http://ec2-54-236-247-24.compute-1.amazonaws.com"
-//    var base_url = "http://gama.mobatia.in:8080/kingseducation/public/"
-    var base_url = "https://mobile.kings-edu.com/"
+    var base_url = "http://gama.mobatia.in:8080/kingseducation/public/"
+//    var base_url = "https://mobile.kings-edu.com/"
 
     private lateinit var apiService: ApiService
     fun getApiService(): ApiService {

@@ -28,11 +28,10 @@ import com.kingseducation.app.manager.PreferenceManager
 
 class StudentListAdapter(
     private val context: Context,
-    private val parentassoictionlist: ArrayList<StudentList>,
+    private val studentList: ArrayList<StudentList>,
     private val recyclerView: RecyclerView,
     private val lang_switch: Switch
-) :
-    RecyclerView.Adapter<StudentListAdapter.MyViewHolder>() {
+) : RecyclerView.Adapter<StudentListAdapter.MyViewHolder>() {
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var stud_profile: ImageView = view.findViewById(R.id.stud_profile)
         var textview: TextView = view.findViewById(R.id.textview)
@@ -45,8 +44,8 @@ class StudentListAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.student_list, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.student_list, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -57,23 +56,18 @@ class StudentListAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var flag: Boolean = true
-        Log.e("list", parentassoictionlist.toString())
-        val list = parentassoictionlist[position].fullname
+        Log.e("list", studentList.toString())
+        val list = studentList[position].fullname
 
-        if (!parentassoictionlist[position].photo.equals("")) {
+        if (!studentList[position].photo.equals("")) {
             val glideUrl = GlideUrl(
-                parentassoictionlist[position].photo,
-                LazyHeaders.Builder()
-                    .addHeader(
-                        "Authorization",
-                        "Bearer " + PreferenceManager().getAccessToken(mContext)
-                            .toString()
-                    )
-                    .build()
+                studentList[position].photo, LazyHeaders.Builder().addHeader(
+                    "Authorization",
+                    "Bearer " + PreferenceManager().getAccessToken(mContext).toString()
+                ).build()
             )
 
-            Glide.with(mContext)
-                .load(glideUrl)
+            Glide.with(mContext).load(glideUrl)
                 .transform(CircleCrop()) // Apply circular transformation
                 .placeholder(R.drawable.profile_photo) // Placeholder image while loading
                 .error(R.drawable.profile_photo) // Image to display in case of error
@@ -85,31 +79,24 @@ class StudentListAdapter(
 
         holder.stud_profile.setOnClickListener {
             PreferenceManager().setStudentName(
-                context,
-                parentassoictionlist[position].fullname.toString()
+                context, studentList[position].fullname.toString()
             )
-            PreferenceManager().setStudent_ID(context, parentassoictionlist[position].id.toString())
+            PreferenceManager().setStudent_ID(context, studentList[position].id.toString())
             PreferenceManager().setStudentClass(
-                context,
-                convertFormat(parentassoictionlist[position].classs.toString())
+                context, convertFormat(studentList[position].classs.toString())
             )
             PreferenceManager().setStudentPhoto(
-                context,
-                parentassoictionlist[position].photo.toString()
+                context, studentList[position].photo.toString()
             )
             PreferenceManager().setLanguageschool(
-                context,
-                parentassoictionlist[position].school_language_type
+                context, studentList[position].school_language_type
             )
-            PreferenceManager().setSchoolName(context, parentassoictionlist[position].school_name)
+            PreferenceManager().setSchoolName(context, studentList[position].school_name)
             PreferenceManager().setSchoolIdentifier(
-                context,
-                parentassoictionlist[position].schoolIdentifier
+                context, studentList[position].schoolIdentifier
             )
             Log.e(
-                "shool",
-                PreferenceManager().getLanguageschool(context)
-                    .toString()
+                "shool", PreferenceManager().getLanguageschool(context).toString()
             )
 
             if (PreferenceManager().getLanguageschool(context).equals("2")) {
@@ -131,8 +118,7 @@ class StudentListAdapter(
             override fun onAnimationStart(p0: Animation?) {
                 holder.relstudenttext.visibility = View.VISIBLE
                 holder.textview.visibility = View.VISIBLE
-                holder.textview.text = list
-                /* var animationlist=AnimationUtils.loadAnimation(context,R.anim.slide_down)
+                holder.textview.text = list/* var animationlist=AnimationUtils.loadAnimation(context,R.anim.slide_down)
                  holder.textview.startAnimation(animationlist)*/
                 slideUp(holder.relstudenttext)
             }
@@ -192,6 +178,6 @@ class StudentListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return parentassoictionlist.size
+        return studentList.size
     }
 }

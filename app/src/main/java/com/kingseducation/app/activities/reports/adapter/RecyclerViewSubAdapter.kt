@@ -10,12 +10,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kingseducation.app.R
-import com.kingseducation.app.activities.reports.model.ReportsList
-import com.kingseducation.app.constants.PdfReaderActivity
+import com.kingseducation.app.activities.reports.model.ReportsNewResponseModel
 import com.kingseducation.app.constants.WebViewLoaderActivity
 
 
-class RecyclerViewSubAdapter(private val context: Context, private val name: ArrayList<ReportsList>):
+class RecyclerViewSubAdapter(
+    private val context: Context,
+    private val name: ArrayList<ReportsNewResponseModel.Report>,
+) :
     RecyclerView.Adapter<RecyclerViewSubAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -36,27 +38,19 @@ class RecyclerViewSubAdapter(private val context: Context, private val name: Arr
         Log.e("name","Success")
 
         //val accYr = name
-        val url = name[position].file
+        val url = name[position].reportUrl
         //Log.e("name",accYr)
         Log.e("url",url)
-        holder.titleTextView.text = name[position].report_cycle
+        holder.titleTextView.text = name[position].academicYear.toString()
 
         holder.relativelayout.setOnClickListener {
-            if(name.get(position).file.endsWith(".pdf"))
-            {
-                val intent = Intent(context, PdfReaderActivity::class.java)
-                intent.putExtra("pdf_url", name[position].file)
-                intent.putExtra("pdf_title", name[position].report_cycle)
-                context. startActivity(intent)
-            }
-            else
-            {
-                val intent = Intent(context, WebViewLoaderActivity::class.java)
-                intent.putExtra("webview_url", name[position].file)
-                intent.putExtra("title", name[position].report_cycle)
 
-                context. startActivity(intent)
-            }
+            val intent = Intent(context, WebViewLoaderActivity::class.java)
+            intent.putExtra("webview_url", name[position].reportUrl)
+            intent.putExtra("title", name[position].academicLabel)
+
+            context.startActivity(intent)
+
         }
 
         /*val mRecyclerViewSubAdapter =

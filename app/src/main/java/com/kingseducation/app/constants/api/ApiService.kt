@@ -2,8 +2,6 @@ package com.kingseducation.app.constants.api
 
 
 import android.content.Context
-
-
 import com.google.gson.JsonObject
 import com.kingseducation.app.activities.absence.model.AbsenceLeaveApiModel
 import com.kingseducation.app.activities.absence.model.AbsenceListModel
@@ -19,8 +17,10 @@ import com.kingseducation.app.activities.home.model.HomeUserResponseModel
 import com.kingseducation.app.activities.login.model.LoginResponseModel
 import com.kingseducation.app.activities.login.model.StudentListResponseModel
 import com.kingseducation.app.activities.message.model.NotificationModel
+import com.kingseducation.app.activities.newsletter.model.NewsLetterResponseModel
 import com.kingseducation.app.activities.parentessentials.model.ParentModel
-import com.kingseducation.app.activities.reports.model.ReportsResponseModel
+import com.kingseducation.app.activities.re_enrolment.model.ReEnrolmentListResponseModel
+import com.kingseducation.app.activities.reports.model.ReportsNewResponseModel
 import com.kingseducation.app.activities.social_media.model.SocialMediaResponseModel
 import com.kingseducation.app.activities.student_info.model.StudentInfoResponseModel
 import com.kingseducation.app.activities.teacher_contact.model.ContactTeacherResponseModel
@@ -257,27 +257,36 @@ interface ApiService {
 
 
     /*************Reports****************/
-    @POST("api/v1/reports")
+    @POST("api/v1/student-reports")
     @Headers("Content-Type: application/json")
     fun reportss(
-        @Header("Authorization") token:String,
+        @Header("Authorization") token: String,
         @Body json: JsonObject
 
-    ): Call<ReportsResponseModel>
+    ): Call<ReportsNewResponseModel>
+
+    /*************newsletter****************/
+    @POST("api/v1/newsletter")
+    @Headers("Content-Type: application/json")
+    fun newsletter(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+
+    ): Call<NewsLetterResponseModel>
 
 
     /*************Social Media****************/
     @POST("api/v1/socialmedia")
     @Headers("Content-Type: application/json")
     fun socialmedia(
-        @Header("Authorization") token:String,
+        @Header("Authorization") token: String,
         @Body json: JsonObject
 
     ): Call<SocialMediaResponseModel>
 
 
     /*************Time Table****************/
-    @POST("api/v1/timetable")
+    @POST("api/v1/timetable-new")
     @Headers("Content-Type: application/json")
     fun timetable(
         @Header("Authorization") token: String,
@@ -302,4 +311,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<ContactTeacherResponseModel>
+
+    @POST("api/v1/get-reenrollments")
+    @Headers("Content-Type: application/json")
+    fun getReEnrolments(
+        @Header("Authorization") token: String
+    ): Call<ReEnrolmentListResponseModel>
 }

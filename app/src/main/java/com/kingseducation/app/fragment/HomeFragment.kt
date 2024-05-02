@@ -34,6 +34,7 @@ import com.kingseducation.app.activities.early_pickup.EarlyPickupListActivity
 import com.kingseducation.app.activities.forms.FormsActivity
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.login.SigninyourAccountActivity
+import com.kingseducation.app.activities.newsletter.NewsLetterActivity
 import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivity
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
@@ -93,10 +94,6 @@ lateinit var appController: AppController
 var versionfromapi: String = ""
 var currentversion: String = ""
 
-@Suppress(
-    "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS",
-    "ControlFlowWithEmptyBody"
-)
 class HomeFragment  : Fragment(),View.OnClickListener{
     lateinit var rootView: View
     private var INTENT_TAB_ID: String? = null
@@ -396,9 +393,26 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     /* mFragment = CommunicationFragment()
                      fragmentIntent(mFragment)*/
                 }
+
                 naisTabConstants.TAB_REPORT_ABSENCE -> {
                     // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, AbsenceActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
+
+                    /*showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )*/
+                }
+
+                naisTabConstants.TAB_REPORT_ABSENCE -> {
+                    // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(mContext, NewsLetterActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(
                         R.anim.slide_in_up,

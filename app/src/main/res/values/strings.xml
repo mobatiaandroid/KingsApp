@@ -89,6 +89,7 @@
     <string-array name="setting_list">
         <item> Change App Settings</item>
         <item>Terms of Service</item>
+        <item>Re-Enrolment</item>
         <item> Feedback </item>
         <item> Tutorial</item>
         <item> Delete My Account</item>
@@ -110,7 +111,7 @@
         <item> Administration</item>
         <item>Arabic</item>
         <item> Art</item>
-        <item> Bussiness Studies</item>
+        <item> Business Studies</item>
         <item>Computer Science</item>
         <item> Design and Technology</item>
         <item>English</item>
@@ -172,7 +173,7 @@
     </string>
 
     <string name="placeholder_long">Dear All,
-        We are getting ready for the 2022/23 scholl year portraits.Photographers from Fotorex will be on campus nest weeek.</string>
+        We are getting ready for the 2022/23 school year portraits.Photographers from Fotorex will be on campus nest weeek.</string>
 
 
     <string-array name="home_list_items">
@@ -180,6 +181,7 @@
         <item>  Student Info </item>
         <item>  School Calendar</item>
         <item>  Notices</item>
+        <item>  Newsletters</item>
         <!--        <item>  Teacher Contact</item>-->
         <item>  Absence Reporting</item>
         <item>  Early Pickup</item>
@@ -208,6 +210,7 @@
         <!-- 4 -->
         <item>@drawable/calender4</item>
         <item>@drawable/message_white</item>
+        <item>@drawable/newsletter</item>
         <!--        <item>@drawable/meeting</item>-->
         <item>@drawable/absence4</item>
         <item>@drawable/earlypickup</item>
@@ -361,5 +364,12 @@
 
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="Newsletters">Newsletters</string>
+    <string name="title_activity_re_enrolment_listing">ReEnrolmentListingActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
 </resources>

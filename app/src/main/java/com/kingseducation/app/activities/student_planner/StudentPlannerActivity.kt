@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.kingseducation.app.R
-import com.kingseducation.app.constants.WebViewLoaderActivity
 
 class StudentPlannerActivity: AppCompatActivity() {
     lateinit var back: ImageView
@@ -49,7 +48,7 @@ class StudentPlannerActivity: AppCompatActivity() {
         webview.setBackgroundColor(Color.TRANSPARENT)
         webview.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
         // progressbar = findViewById(R.id.progress)
-        webview.webViewClient = WebViewLoaderActivity.MyWebViewClient(this)
+//        webview.webViewClient = WebViewLoaderActivity.MyWebViewClient(this)
 
         back.setOnClickListener {
             finish()

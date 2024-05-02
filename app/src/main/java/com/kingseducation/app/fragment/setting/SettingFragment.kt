@@ -149,23 +149,26 @@ class SettingFragment : Fragment() {
                         startActivity(intent)
                     }
                     if (position == 2) {
-                        showEmailHelpAlert(mContext)
+                        // show ReEnrolment PopUp
                     }
                     if (position == 3) {
+                        showEmailHelpAlert(mContext)
+                    }
+                    if (position == 4) {
                         Toast.makeText(
                             mContext, "This feature will be available soon.", Toast.LENGTH_SHORT
                         ).show()
                     }
-                    if (position == 4) {
+                    if (position == 5) {
                         showSuccessAlertForDelete(
                             mContext, resources.getString(R.string.do_you_want_delete)
                         )
                     }
-                    if (position == 5) {
+                    if (position == 6) {
                         showChangePasswordPopUp()
                     }
 
-                    if (position == 6) {
+                    if (position == 7) {
                         showSuccessAlert(mContext, resources.getString(R.string.do_you_want_logout))
                     }
                 }

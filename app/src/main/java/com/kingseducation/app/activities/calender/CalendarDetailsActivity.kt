@@ -35,14 +35,14 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CalendarDetailsActivity :AppCompatActivity() {
+class CalendarDetailsActivity : AppCompatActivity() {
     var txtmsg: TextView? = null
     var mDateTv: TextView? = null
     lateinit var mTimeTv: TextView
     var img: ImageView? = null
     var studName: TextView? = null
     var home: ImageView? = null
-    lateinit var student_name: ArrayList<StudentList>
+    lateinit var studentList: ArrayList<StudentList>
 
     var eventArraylist: ArrayList<CalendarList>? = null
 
@@ -56,26 +56,25 @@ class CalendarDetailsActivity :AppCompatActivity() {
     lateinit var mContext: Context
     var studentRecycleUnread: RecyclerView? = null
 
-
-
     //    String date="";
     lateinit var mWebView: WebView
+
     //lateinit var mProgressRelLayout: RelativeLayout
     lateinit var mwebSettings: WebSettings
     private var loadingFlag = true
     private var mLoadUrl: String? = null
     private var mErrorFlag = false
-   lateinit var anim: RotateAnimation
-   lateinit var studentRecycle:RecyclerView
-   lateinit var datee:TextView
+    lateinit var anim: RotateAnimation
+    lateinit var studentRecycle: RecyclerView
+    lateinit var datee: TextView
     var extras: Bundle? = null
     lateinit var msgTitle: TextView
-    var title:String=" "
-    var desc:String=" "
-    var venu:String=" "
-    var startdate:String=" "
-    var enddate:String=" "
-lateinit var linearLayoutManager:LinearLayoutManager
+    var title: String = " "
+    var desc: String = " "
+    var venu: String = " "
+    var startdate: String = " "
+    var enddate: String = " "
+    lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,47 +84,48 @@ lateinit var linearLayoutManager:LinearLayoutManager
 
         initFn()
 
-        if(CommonClass.isInternetAvailable(mContext)) {
+        if (CommonClass.isInternetAvailable(mContext)) {
             studentListApiCall()
-            Log.e("dckhsdchj", student_name.toString())
+            Log.e("dckhsdchj", studentList.toString())
 
-        }
-        else{
-            Toast.makeText(mContext,"Network error occurred. Please check your internet connection and try again later",
-                Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(
+                mContext,
+                "Network error occurred. Please check your internet connection and try again later",
+                Toast.LENGTH_SHORT
+            ).show()
 
         }
         // onclick()
     }
 
     private fun studentListApiCall() {
-        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list("Bearer "+
-                PreferenceManager().getAccessToken(mContext).toString())
+        val call: Call<StudentListResponseModel> = ApiClient.getApiService().student_list(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mContext).toString()
+        )
         call.enqueue(object : retrofit2.Callback<StudentListResponseModel> {
             override fun onResponse(
                 call: Call<StudentListResponseModel>,
                 response: Response<StudentListResponseModel>
             ) {
 
-                Log.e("Response",response.body().toString())
+                Log.e("Response", response.body().toString())
                 if (response.body() != null) {
-                if (response.body()!!.status.equals(100)) {
+                    if (response.body()!!.status.equals(100)) {
 
-                    student_name.addAll(response.body()!!.student_list)
-                    Log.e("StudentNameid", student_name.toString())
-                    studentRecycle.layoutManager = linearLayoutManager
-                    val abseneadapter = StudentRecyclerCalenderAdapter(mContext,student_name)
-                    studentRecycle.adapter = abseneadapter
-                }
-                else
-                {
-                    CommonClass.checkApiStatusError(response.body()!!.status, mContext)
-                }
-                }
-                    else{
-                        val intent = Intent(mContext, SigninyourAccountActivity::class.java)
-                        startActivity(intent)
+                        studentList.addAll(response.body()!!.student_list)
+                        Log.e("StudentNameid", studentList.toString())
+                        studentRecycle.layoutManager = linearLayoutManager
+                        val abseneadapter = StudentRecyclerCalenderAdapter(mContext, studentList)
+                        studentRecycle.adapter = abseneadapter
+                    } else {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
+                } else {
+                    val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
             }
 
             override fun onFailure(call: Call<StudentListResponseModel?>, t: Throwable) {
@@ -245,20 +245,20 @@ lateinit var linearLayoutManager:LinearLayoutManager
             )
         } else {
             //mProgressRelLayout.clearAnimation()
-           // mProgressRelLayout.setVisibility(View.GONE)
+            // mProgressRelLayout.setVisibility(View.GONE)
 
         }
     }
 
     private fun initFn() {
-        student_name = ArrayList()
-        studentRecycle=findViewById(R.id.studentRecycle)
+        studentList = ArrayList()
+        studentRecycle = findViewById(R.id.studentRecycle)
         /*name= ArrayList()
         name.add("Jane Mathewes")
         name.add("Esther Mathewes")*/
 
-        back=findViewById(R.id.back)
-        datee=findViewById(R.id.datee)
+        back = findViewById(R.id.back)
+        datee = findViewById(R.id.datee)
         msgTitle = findViewById(R.id.msgTitle)
         add_cl = findViewById(R.id.add_cl)
         studName = findViewById(R.id.studName)
@@ -268,22 +268,20 @@ lateinit var linearLayoutManager:LinearLayoutManager
         mDateTv = findViewById(R.id.mDateTv)
         mTimeTv = findViewById(R.id.mTimeTv)
         mWebView = findViewById(R.id.webView)
-      //  mProgressRelLayout = findViewById(R.id.progressDialog)
+        //  mProgressRelLayout = findViewById(R.id.progressDialog)
 
         extras = intent.extras
-        title= extras!!.getString("tittle").toString()
-        desc= extras!!.getString("des").toString()
-        startdate= extras!!.getString("startdate").toString()
-        enddate= extras!!.getString("enddate").toString()
-        venu= extras!!.getString("venu").toString()
+        title = extras!!.getString("tittle").toString()
+        desc = extras!!.getString("des").toString()
+        startdate = extras!!.getString("startdate").toString()
+        enddate = extras!!.getString("enddate").toString()
+        venu = extras!!.getString("venu").toString()
         linearLayoutManager = LinearLayoutManager(mContext)
 
-  linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
         back.setOnClickListener {
             finish()
-          /*  val intent = Intent(mContext, SchoolCalendarActivity::class.java)
-            startActivity(intent)*/
         }
 
         mLoadUrl =
@@ -293,38 +291,38 @@ lateinit var linearLayoutManager:LinearLayoutManager
                     "<style>\n" +
                     "\n" +
                     "@font-face {\n" +
-                    "font-family:verdana_regular;"+
-                    "src: url(verdana_regular.ttf);"+
+                    "font-family:verdana_regular;" +
+                    "src: url(verdana_regular.ttf);" +
 
-                    "font-family:verdana_regular;"+
-                    "src: url(verdana_regular.ttf);"+
-                    "}"+
-                    ".venue {"+
+                    "font-family:verdana_regular;" +
+                    "src: url(verdana_regular.ttf);" +
+                    "}" +
+                    ".venue {" +
 
-                    "font-family:verdana_regular;"+
-                    "font-size:16px;"+
-                    "text-align:left;"+
-                    "color:	#A9A9A9;"+
-                    "}"+
-                    ".title {"+
-                    "font-family:verdana_regular;"+
-                    "font-size:16px;"+
-                    "text-align:left;"+
-                    "color:	#46C1D0;"+
-                    "}"+
-                    ".description {"+
-                    "font-family:verdana_regular;"+
-                    "text-align:justify;"+
-                    "font-size:14px;"+
-                    "color: #000000;"+
-                    "}"+".date {"+
-                    "font-family:verdana_regular;"+
-                    "text-align:right;"+
-                    "font-size:12px;"+
+                    "font-family:verdana_regular;" +
+                    "font-size:16px;" +
+                    "text-align:left;" +
+                    "color:	#A9A9A9;" +
+                    "}" +
+                    ".title {" +
+                    "font-family:verdana_regular;" +
+                    "font-size:16px;" +
+                    "text-align:left;" +
+                    "color:	#46C1D0;" +
+                    "}" +
+                    ".description {" +
+                    "font-family:verdana_regular;" +
+                    "text-align:justify;" +
+                    "font-size:14px;" +
+                    "color: #000000;" +
+                    "}" + ".date {" +
+                    "font-family:verdana_regular;" +
+                    "text-align:right;" +
+                    "font-size:12px;" +
 
-                    "color: #A9A9A9;"+
-                    "}"+
-                    "</style>\n"+"</head>"+
+                    "color: #A9A9A9;" +
+                    "}" +
+                    "</style>\n" + "</head>" +
                     "<body>"
 
         msgTitle.text = title
@@ -351,26 +349,26 @@ lateinit var linearLayoutManager:LinearLayoutManager
         datee.text = outputEndDateStr
         //mDateTv!!.text = "2023-02-23"
 
-       /* val startFormat: DateFormat = SimpleDateFormat("H:mm:ss")
-        val newStart: DateFormat = SimpleDateFormat("h:mm a")
-        val starttime: String = eventArraylist!![position].start_date
-        var newSTime: Date? = null
-        try {
-            newSTime = startFormat.parse(starttime)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        val newstart = newStart.format(newSTime)
-        val endtime: String = eventArraylist!![position].end_date
-        var newETime: Date? = null
-        try {
-            newETime = startFormat.parse(endtime)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }*/
+        /* val startFormat: DateFormat = SimpleDateFormat("H:mm:ss")
+         val newStart: DateFormat = SimpleDateFormat("h:mm a")
+         val starttime: String = eventArraylist!![position].start_date
+         var newSTime: Date? = null
+         try {
+             newSTime = startFormat.parse(starttime)
+         } catch (e: ParseException) {
+             e.printStackTrace()
+         }
+         val newstart = newStart.format(newSTime)
+         val endtime: String = eventArraylist!![position].end_date
+         var newETime: Date? = null
+         try {
+             newETime = startFormat.parse(endtime)
+         } catch (e: ParseException) {
+             e.printStackTrace()
+         }*/
 
-            mLoadUrl =
-                mLoadUrl + "<p class='venue'>Venue: " + venu + "</p>"
+        mLoadUrl =
+            mLoadUrl + "<p class='venue'>Venue: " + venu + "</p>"
 
         mLoadUrl = mLoadUrl +
                 "<p class='description'>" + desc + "</p>"
@@ -382,7 +380,7 @@ lateinit var linearLayoutManager:LinearLayoutManager
             """$mLoadUrl<p class='date'>$outputDateStr </p><p class='date'>${mTimeTv.text}</p></body>
 </html>"""
         getWebViewSettings()
-        }
-
-
     }
+
+
+}

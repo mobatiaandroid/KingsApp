@@ -22,16 +22,12 @@ import com.kingseducation.app.R
 class WebViewLoaderActivity: AppCompatActivity() {
     lateinit var back: ImageView
 
-    //lateinit var downloadpdf: ImageView
     lateinit var context: Context
     lateinit var webview: WebView
-    //lateinit var progressbar: ProgressBar
     var urltoshow: String = ""
     var titleToShow: String = ""
-
     lateinit var logoclick: ImageView
     lateinit var titleTextView: TextView
-    //private lateinit var progressDialog: RelativeLayout
     lateinit var progressBarDialog: ProgressBarDialog
 
     @SuppressLint("SetJavaScriptEnabled", "MissingInflatedId")
@@ -42,32 +38,25 @@ class WebViewLoaderActivity: AppCompatActivity() {
         titleTextView = findViewById(R.id.titleTextView)
         logoclick = findViewById(R.id.logoclick)
         urltoshow = intent.getStringExtra("webview_url").toString()
-        Log.e("urltoshow",urltoshow)
+        urltoshow = "https://docs.google.com/gview?embedded=true&url=$urltoshow"
+//        urltoshow = "https://www.google.com/"
+        Log.e("urltoshow", urltoshow)
         titleToShow = intent.getStringExtra("title").toString()
         back = findViewById(R.id.back)
         titleTextView.text = titleToShow
         progressBarDialog = ProgressBarDialog(context)
-        /*val aniRotate: Animation =
-            AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)*/
-        // downloadpdf = findViewById(R.id.downloadpdf)
         webview = findViewById(R.id.webview)
         webview.settings.javaScriptEnabled = true
-       // webview.settings.setAppCacheEnabled(true)
         webview.settings.javaScriptCanOpenWindowsAutomatically = true
         webview.settings.loadsImagesAutomatically = true
         webview.setBackgroundColor(Color.TRANSPARENT)
         webview.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
-       // progressbar = findViewById(R.id.progress)
         webview.webViewClient = MyWebViewClient(this)
 
         back.setOnClickListener {
             finish()
         }
 
-//        if (urltoshow.contains("http")) {
-//            urltoshow = urltoshow.replace("http", "https")
-//        }
 
         webview.loadUrl(urltoshow)
         Log.e("LOADINGURL==>",urltoshow)
@@ -88,6 +77,7 @@ class WebViewLoaderActivity: AppCompatActivity() {
         settings.domStorageEnabled = true
 
     }
+
     class MyWebViewClient internal constructor(private val activity: Activity) : WebViewClient() {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun shouldOverrideUrlLoading(
