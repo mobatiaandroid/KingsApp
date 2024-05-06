@@ -113,6 +113,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
         initFn()
         if (CommonClass.isInternetAvailable(mcontext)) {
             callCalendarApi()
+            callCalendarAPIOutlook()
             //    callAPI()
         } else {
             Toast.makeText(
@@ -124,6 +125,10 @@ class SchoolCalendarActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun callCalendarAPIOutlook() {
+        TODO("Not yet implemented")
     }
 
 
@@ -465,14 +470,14 @@ class SchoolCalendarActivity : AppCompatActivity() {
 
         }
         if (wholeSchoolArrayList.size > 0) {
-            for (i in 0..wholeSchoolArrayList.size - 1) {
+            for (i in 0 until wholeSchoolArrayList.size) {
                 var wModel = PrimaryModel()
                 if (wholeSchoolArrayList.get(i).dTSTART.toString().length == 19) {
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).dTSTART)
-                   // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
-                   // outputFormat.timeZone = tz
+                    // var tz: TimeZone = TimeZone.getTimeZone("GMT+09:30")
+                    // outputFormat.timeZone = tz
                     var result = outputFormat.format(startdate)
                     var outputDateStrstart: String = outputFormat.format(startdate)
                     wModel.DTSTART = result

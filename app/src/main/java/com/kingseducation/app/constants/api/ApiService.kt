@@ -317,4 +317,10 @@ interface ApiService {
     fun getReEnrolments(
         @Header("Authorization") token: String
     ): Call<ReEnrolmentListResponseModel>
+
+    @POST("api/v1/calendar-outlook")
+    @Headers("Content-Type: application/json")
+    fun getOutlookCalendar(
+        @Header("Authorization") token: String
+    ): Call<ResponseBody>
 }
