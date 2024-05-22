@@ -190,7 +190,6 @@ class MessageFragment : Fragment() {
                 }  // showChangePasswordPopUp()
 
             }
-
         })
     }
 
