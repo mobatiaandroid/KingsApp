@@ -126,7 +126,7 @@
     <string name="FirstDayOfAbsence">أول يوم الغياب<font fgcolor='#FF0000'> * </font></string>
     <string name="ReasonForAbsence">سبب الغيا"<font fgcolor='#FF0000'> * </font></string>
 
-    <string name="ReturnToSchoolIfKnown">العودة إلى المدرسة إذا كانت معروفة<font fgcolor='#FF0000'> * </font></string>
+    <string name="ReturnToSchoolIfKnown">العودة إلى المدرسة إذا كانت معروفة</string>
 
     <string-array name="home_list_items">
 

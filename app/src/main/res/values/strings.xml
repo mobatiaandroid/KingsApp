@@ -133,7 +133,7 @@
     <string name="FirstDayOfAbsence">First Day Of Absence<font fgcolor='#FF0000'> * </font></string>
 
     <string name="ReasonForAbsence">Reason For Absence<font fgcolor='#FF0000'> * </font></string>
-    <string name="ReturnToSchoolIfKnown">Return To School If Known<font fgcolor='#FF0000'> * </font></string>
+    <string name="ReturnToSchoolIfKnown">Return To School If Known</string>
 
 
     <string name="lorem_ipsum">
