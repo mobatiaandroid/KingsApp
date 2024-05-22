@@ -2,8 +2,6 @@ package com.kingseducation.app.constants.api
 
 
 import android.content.Context
-
-
 import com.google.gson.JsonObject
 import com.kingseducation.app.activities.absence.model.AbsenceLeaveApiModel
 import com.kingseducation.app.activities.absence.model.AbsenceListModel
@@ -20,6 +18,7 @@ import com.kingseducation.app.activities.login.model.LoginResponseModel
 import com.kingseducation.app.activities.login.model.StudentListResponseModel
 import com.kingseducation.app.activities.message.model.NotificationModel
 import com.kingseducation.app.activities.parentessentials.model.ParentModel
+import com.kingseducation.app.activities.payments.model.PendingInvoiceResponseModel
 import com.kingseducation.app.activities.reports.model.ReportsResponseModel
 import com.kingseducation.app.activities.social_media.model.SocialMediaResponseModel
 import com.kingseducation.app.activities.student_info.model.StudentInfoResponseModel
@@ -30,7 +29,13 @@ import com.kingseducation.app.common.CommonResponse
 import com.kingseducation.app.fragment.contact.model.ContactusModel
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.POST
 
 
 /**
@@ -302,4 +307,13 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<ContactTeacherResponseModel>
+
+    /******************Pending Invoices*************/
+
+    @POST("api/v1/pending-invoices")
+    @Headers("Content-Type: application/json")
+    fun pendingInvoices(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<PendingInvoiceResponseModel>
 }
