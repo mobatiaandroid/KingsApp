@@ -372,5 +372,10 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="select_image">Attach Medical Document</string>
+    <string name="personal_info">Please check to confirm you have read and acknowledged the Nord Anglia\nEducation Personal Information Collection Statement</string>
+    <string name="agree_info">I confirm I have read and acknowledged the Nord Anglia Education Personal\nInformation Collection Statement as outlined in the above link.</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="agree">I have agreed to the terms and conditions.\n</string>
 
 </resources>

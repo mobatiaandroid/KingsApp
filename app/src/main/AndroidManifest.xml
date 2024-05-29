@@ -38,6 +38,9 @@
         android:vmSafeMode="true"
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
+            android:name=".activities.staff_directory.StaffDirectoryListingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.reenrolment.ReEnrolmentListing"
             android:exported="false" />
         <activity

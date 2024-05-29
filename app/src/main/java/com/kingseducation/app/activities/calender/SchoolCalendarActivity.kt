@@ -113,7 +113,7 @@ class SchoolCalendarActivity : AppCompatActivity() {
         initFn()
         if (CommonClass.isInternetAvailable(mcontext)) {
             callCalendarApi()
-            callCalendarAPIOutlook()
+//            callCalendarAPIOutlook()
             //    callAPI()
         } else {
             Toast.makeText(
@@ -128,7 +128,6 @@ class SchoolCalendarActivity : AppCompatActivity() {
     }
 
     private fun callCalendarAPIOutlook() {
-        TODO("Not yet implemented")
     }
 
 
@@ -1158,10 +1157,10 @@ class SchoolCalendarActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_calendar_category)
-        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
-        var checkRecycler = dialog.findViewById(R.id.checkRecycler) as RecyclerView
-        var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as TextView
-        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as TextView
+        var iconImageView: ImageView = dialog.findViewById(R.id.iconImageView)
+        var checkRecycler: RecyclerView = dialog.findViewById(R.id.checkRecycler)
+        var btn_Cancel: TextView = dialog.findViewById(R.id.btn_Cancel)
+        var btn_Ok: TextView = dialog.findViewById(R.id.btn_Ok)
         var linearLayoutManagerM: LinearLayoutManager = LinearLayoutManager(mContext)
         checkRecycler.layoutManager = linearLayoutManagerM
         checkRecycler.itemAnimator = DefaultItemAnimator()

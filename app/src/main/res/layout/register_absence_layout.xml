@@ -181,12 +181,25 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reason_for_absence"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="70dp"
                 android:inputType="textPersonName"
                 android:textCursorDrawable="@color/kings_blue"
                 android:textColor="@color/black"
                 android:textColorHint="@color/border_grey" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/select_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reasonforabsence"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/attach_file_bg"
+            android:padding="8dp"
+            android:text="@string/select_image"
+            android:textColor="@color/white" />
 
 
     </LinearLayout>

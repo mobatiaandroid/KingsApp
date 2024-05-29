@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="650dp"
+    android:background="@drawable/curved_rectangle_bottom_white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/kings_school_logo" />
+
+
+        <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/calendar_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.kingseducation.app.manager.font.CustomMontserratMedium
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/kings_blue"
+        android:gravity="left"
+        android:paddingLeft="16dp"
+
+
+        android:text="Re-Enrolment"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rel" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/relSub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/stud_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/profile_photo"
+                    app:siBorderColor="#A0DAE5"
+                    app:siBorderWidth="1dp" />
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/stud_name"
+                    style="@style/textstyleblack"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toEndOf="@+id/stud_img"
+                    android:layout_toRightOf="@+id/stud_img"
+                    android:gravity="center_vertical"
+                    android:singleLine="false"
+                    android:text="Student Name" />
+
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/stud_class"
+                    style="@style/textstyleblack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/stud_name"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toEndOf="@+id/stud_img"
+                    android:layout_toRightOf="@+id/stud_img"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Class Name"
+                    android:textColor="@color/grey" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_date"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:weightSum="1"
+                app:layout_constraintTop_toBottomOf="@+id/relSub">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight=".2"
+
+                    android:text="Date" />
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/textField_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/textfield_bg"
+                    android:hint="Date"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_parentName"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_date">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight=".2"
+                    android:text="Parent Name" />
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/textField_parentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/textfield_bg"
+                    android:hint=""
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_parentEmail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_parentName">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight=".2"
+                    android:text="Parent Email Address" />
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/textField_parentEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/textfield_bg"
+                    android:hint=""
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_grey1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_choose"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:weightSum="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_parentEmail">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/question"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight=".2"
+                    android:text="Will this child be returning for academic year ?" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Spinner
+                        android:id="@+id/spinnerlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/textfield_bg"
+                        android:popupBackground="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/black"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/option_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/textfield_bg"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <!-- <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                   android:id="@+id/textField_choose"
+                   android:layout_width="match_parent"
+                   android:layout_height="40dp"
+                   android:textColor="@color/black"
+                   android:hint=""
+                   android:layout_gravity="center"
+                   android:background="@drawable/textfield_bg"
+                   android:paddingLeft="8dp"
+                   android:paddingTop="8dp"
+                   android:textColorHint="@color/dark_grey1"/>-->
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/arrowdownnew"
+                app:layout_constraintBottom_toBottomOf="@+id/linear_choose"
+                app:layout_constraintEnd_toEndOf="@+id/linear_choose" />
+
+            <Button
+                android:id="@+id/personal_info"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:text="Personal Information Collection Statement"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/linear_choose" />
+
+            <LinearLayout
+                android:id="@+id/linear_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personal_info">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="8dp"
+                    android:text="@string/personal_info" />
+
+                <LinearLayout
+                    android:id="@+id/declaration_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:weightSum="1"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/check_btn_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight=".1"
+                        android:clickable="true" />
+
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/declrtn_txt_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight=".8"
+                        android:justificationMode="inter_word"
+                        android:text="@string/agree_info" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/terms_conditions"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="16dp"
+                android:text="Terms &amp; Conditions"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/linear_info" />
+
+            <LinearLayout
+                android:id="@+id/linear_termsDeclaratn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/terms_conditions">
+
+
+                <LinearLayout
+                    android:id="@+id/declaration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:weightSum="1"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/check_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight=".1"
+                        android:clickable="true" />
+
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/declrtn_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight=".8"
+                        android:justificationMode="inter_word"
+                        android:text="@string/agree" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/customButtonFontSansButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_termsDeclaratn">
+
+                <Button
+                    android:id="@+id/sub_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/kings_blue"
+                    android:gravity="center"
+                    android:text="SUBMIT"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

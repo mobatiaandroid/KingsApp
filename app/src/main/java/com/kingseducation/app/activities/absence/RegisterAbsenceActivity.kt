@@ -6,17 +6,22 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -47,8 +52,16 @@ import com.kingseducation.app.manager.AppUtils
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.OnItemClickListener
 import com.kingseducation.app.manager.recyclerviewmanager.addOnItemClickListener
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -95,12 +108,17 @@ lateinit var relativieabsence: RelativeLayout
 lateinit var progressBarDialog: ProgressBarDialog
 
 class RegisterAbsenceActivity : AppCompatActivity() {
+    lateinit var attachFileButton: Button
+    lateinit var attachFileURI: Uri
+
+    init {
+        attachFileURI = Uri.EMPTY
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
+            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.register_absence_layout)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -133,6 +151,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         reason_for_absence = findViewById(R.id.reason_for_absence)
         firstdayofabsence = findViewById(R.id.firstdayofabsence)
         returnabsence = findViewById(R.id.returnabsence)
+        attachFileButton = findViewById(R.id.select_image_button)
 //        studentSpinner = findViewById(R.id.studentSpinner)
         student_Name = findViewById(R.id.studentName)
         backarrow_registerabsence = findViewById(R.id.backarrow_registerabsence)
@@ -140,8 +159,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         // outputFormats = SimpleDateFormat("yyyy-MM-dd", Locale("ar"))
         progressBarDialog = ProgressBarDialog(context)
 
-        val aniRotate: Animation =
-            AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
+        val aniRotate: Animation = AnimationUtils.loadAnimation(context, R.anim.linear_interpolator)
 
 
         student_Name.text = PreferenceManager().getStudentName(context)
@@ -150,17 +168,12 @@ class RegisterAbsenceActivity : AppCompatActivity() {
             studentImg = PreferenceManager().getStudentPhoto(context).toString()
             if (studentImg != null && !studentImg.isEmpty()) {
                 val glideUrl = GlideUrl(
-                    studentImg,
-                    LazyHeaders.Builder()
-                        .addHeader(
+                    studentImg, LazyHeaders.Builder().addHeader(
                             "Authorization",
-                            "Bearer " + PreferenceManager().getAccessToken(context)
-                                .toString()
-                        )
-                        .build()
+                        "Bearer " + PreferenceManager().getAccessToken(context).toString()
+                    ).build()
                 )
-                Glide.with(mContext)
-                    .load(glideUrl)
+                Glide.with(mContext).load(glideUrl)
                     .transform(CircleCrop()) // Apply circular transformation
                     .placeholder(R.drawable.profile_photo) // Placeholder image while loading
                     .error(R.drawable.profile_photo) // Image to display in case of error
@@ -183,16 +196,20 @@ class RegisterAbsenceActivity : AppCompatActivity() {
             first_day_of_absencetext.setEndIconDrawable(R.drawable.ic_baseline_calendar_today_24)
             return_absence_text.setEndIconDrawable(R.drawable.ic_baseline_calendar_today_24)
 
-        }
-        /*else
+        }/*else
         {
             reason_for_absence.gravity = Gravity.LEFT
         }*/
         backarrow_registerabsence.setOnClickListener {
-            /*val intent = Intent(context, AbsenceActivity::class.java)
-            startActivity(intent)*/
-            navigateToClassroomAppOrBrowser(mContext)
+            val intent = Intent(context, AbsenceActivity::class.java)
+            startActivity(intent)
+//            navigateToClassroomAppOrBrowser(mContext)
 
+        }
+        attachFileButton.setOnClickListener {
+            val galleryIntent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, 10)
         }
         relativieabsence.setOnClickListener {
 
@@ -202,9 +219,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
             } else {
                 if (reason_for_absence.text.toString().trim().equals("")) {
                     Toast.makeText(
-                        context,
-                        "Please enter reason for your absence",
-                        Toast.LENGTH_SHORT
+                        context, "Please enter reason for your absence", Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     reasonAPI = reason_for_absence.text.toString().trim()
@@ -218,15 +233,23 @@ class RegisterAbsenceActivity : AppCompatActivity() {
 
                     val inputFormat3: DateFormat = SimpleDateFormat("d-m-yyyy")
                     val outputFormat3: DateFormat = SimpleDateFormat("d-m-yyyy")
-                    val inputDateStr3 = toDate
-                    val date3: Date = inputFormat3.parse(inputDateStr3)
-                    val t_date: String = outputFormat3.format(date3)
-                    Log.e("fd", t_date)
-                    callAbsenceSubmitApi(f_date, t_date, reasonAPI)
+                    if (toDate != "") {
+                        val inputDateStr3 = toDate
+                        val date3: Date = inputFormat3.parse(inputDateStr3)
+                        val t_date: String = outputFormat3.format(date3)
+                        Log.e("fd", t_date)
+                        callAbsenceSubmitApi(f_date, t_date, reasonAPI)
+                    } else {
+                        callAbsenceSubmitApi(f_date, "", reasonAPI)
+                    }
+//                    val inputDateStr3 = toDate
+//                    val date3: Date = inputFormat3.parse(inputDateStr3)
+//                    val t_date: String = outputFormat3.format(date3)
+//                    Log.e("fd", t_date)
+//                    callAbsenceSubmitApi(f_date, t_date, reasonAPI)
                 }
             }
-        }
-        /* studentSpinner.setOnClickListener {
+        }/* studentSpinner.setOnClickListener {
              studentlist_popup(student_name)
          }*/
         firstdayofabsence.setOnClickListener {
@@ -240,14 +263,10 @@ class RegisterAbsenceActivity : AppCompatActivity() {
             minDate.set(android.icu.util.Calendar.MINUTE, 0)
             minDate.set(android.icu.util.Calendar.SECOND, 0)
             val dpd1 = DatePickerDialog(
-                this, R.style.DialogTheme,
-                object : OnDateSetListener {
+                this, R.style.DialogTheme, object : OnDateSetListener {
                     @RequiresApi(Build.VERSION_CODES.O)
                     override fun onDateSet(
-                        view: DatePicker?,
-                        year: Int,
-                        month: Int,
-                        dayOfMonth: Int
+                        view: DatePicker?, year: Int, month: Int, dayOfMonth: Int
                     ) {
                         var firstday: String? =
                             String.format("%d/%d/%d", month + 1, dayOfMonth, year)
@@ -286,10 +305,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
                 val dpd1 = DatePickerDialog(this, R.style.DialogTheme, object : OnDateSetListener {
                     @RequiresApi(Build.VERSION_CODES.O)
                     override fun onDateSet(
-                        view: DatePicker?,
-                        year: Int,
-                        month: Int,
-                        dayOfMonth: Int
+                        view: DatePicker?, year: Int, month: Int, dayOfMonth: Int
                     ) {
                         var firstday: String? =
                             String.format("%d/%d/%d", month + 1, dayOfMonth, year)
@@ -317,30 +333,18 @@ class RegisterAbsenceActivity : AppCompatActivity() {
 
 
     fun navigateToClassroomAppOrBrowser(context: Context) {
-        // Create an intent to launch the Seesaw Classroom app
-        val seesawIntent = Intent(Intent.ACTION_VIEW)
-        seesawIntent.data = Uri.parse("seesaw.shadowpuppet.co.classroom")
-
-        // Check if the Seesaw Classroom app is installed
-        if (seesawIntent.resolveActivity(context.packageManager) != null) {
-            // Launch the Seesaw Classroom app
-            context.startActivity(seesawIntent)
-        } else {
-            // Open the Seesaw Classroom website in a browser
-            val browserIntent = Intent(Intent.ACTION_VIEW)
-            browserIntent.data = Uri.parse("https://web.seesaw.me/")
-            context.startActivity(browserIntent)
-        }
+//        val seesawIntent = Intent(Intent.ACTION_VIEW)
+        val seesawIntent = Intent("com.seesaw.android.OPEN_SEESAW")
+        seesawIntent.setPackage("com.seesaw.android")
+        startActivity(seesawIntent)
     }
 
     private fun callAbsenceSubmitApi(from: String, tDate: String, reasonAPI: String) {
         //progressDialog.visibility = View.VISIBLE
         progressBarDialog.show()
-        var devicename: String = (Build.MANUFACTURER
-                + " " + Build.MODEL + " " + Build.VERSION.RELEASE
-                + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT]
-            .name)
-        Log.e("fromto", from + tDate)
+        var devicename: String =
+            (Build.MANUFACTURER + " " + Build.MODEL + " " + Build.VERSION.RELEASE + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
+        Log.e("from_to", from + tDate)
         val requestLeaveBody = RequestAbsenceApiModel(
             PreferenceManager().getStudent_ID(context)!!,
             from,
@@ -350,15 +354,29 @@ class RegisterAbsenceActivity : AppCompatActivity() {
             devicename,
             "1.0"
         )
+        val studentID = PreferenceManager().getStudent_ID(context)!!
+            .toRequestBody("text/plain".toMediaTypeOrNull())
+        val fromDate = from.toRequestBody("text/plain".toMediaTypeOrNull())
+        val toDate = tDate.toRequestBody("text/plain".toMediaTypeOrNull())
+        val reason = "2".toRequestBody("text/plain".toMediaTypeOrNull())
+        val deviceType = reasonAPI.toRequestBody("text/plain".toMediaTypeOrNull())
+        val deviceName = devicename.toRequestBody("text/plain".toMediaTypeOrNull())
+        val appVersion = "1.0".toRequestBody("text/plain".toMediaTypeOrNull())
+        val file = prepareImagePart(attachFileURI, "file")
         val call: Call<CommonResponse> = ApiClient.getApiService().requestleave(
-            "Bearer " +
-                    PreferenceManager().getAccessToken(context).toString(),
-            requestLeaveBody
+            "Bearer " + PreferenceManager().getAccessToken(context).toString(),
+            studentID,
+            fromDate,
+            toDate,
+            reason,
+            deviceType,
+            deviceName,
+            appVersion,
+            file
         )
         call.enqueue(object : retrofit2.Callback<CommonResponse> {
             override fun onResponse(
-                call: Call<CommonResponse>,
-                response: Response<CommonResponse>
+                call: Call<CommonResponse>, response: Response<CommonResponse>
             ) {
                 progressBarDialog.hide()
                 //progressDialog.visibility = View.GONE
@@ -381,124 +399,174 @@ class RegisterAbsenceActivity : AppCompatActivity() {
                 progressBarDialog.hide()
 
                 Toast.makeText(
-                    context,
-                    "Fail to get the data..",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                    context, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
                 Log.e("succ", t.message.toString())
             }
         })
     }
 
-    var startDate =
-        OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            fromDate = year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth
-            if (toDate != "") {
-                val dateFormatt = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                try {
-                    sdate = dateFormatt.parse(fromDate)
-                    edate = dateFormatt.parse(toDate)
-                    printDifference(sdate, edate)
-                } catch (e: Exception) {
+    //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == 10 && resultCode == RESULT_OK) {
+//            // The user selected an image
+//            val imageUri = data?.data
+//            attachFileURI = imageUri!!
+//            // Do something with the image, such as display it in an ImageView
+//        }
+//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && data != null) {
+            val selectedImage = data.data
+            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+            val cursor: Cursor? =
+                contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
+            cursor?.use {
+                it.moveToFirst()
+                val columnIndex = it.getColumnIndex(filePathColumn[0])
+                val imagePath = it.getString(columnIndex)
+                when (requestCode) {
+                    10 -> {
+                        attachFileURI = Uri.parse(imagePath)
+                        Log.e("uri", attachFileURI.toString())
+                    }
+
+                    else -> {
+                        Toast.makeText(context, "File attachment failed!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
-            if (elapsedDays < 0 && toDate != "") {
-                fromDate =
-                    AppUtils().dateConversionYToD(firstdayofabsence.text.toString()).toString()
-                /*AppUtils().showDialogAlertDismiss(
+        }
+    }
+
+    private fun prepareImagePart(uri: Uri, partName: String): MultipartBody.Part? {
+        return try {
+            val file = File(uri.path)
+            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            val stream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+            val byteArray = stream.toByteArray()
+            val currentTimeMillis = System.currentTimeMillis().toString()
+            val compressedFile = File(
+                context.cacheDir, "compressed_image$currentTimeMillis.jpg"
+            )
+            val fos = FileOutputStream(compressedFile)
+            fos.write(byteArray)
+            fos.flush()
+            fos.close()
+            val requestFile =
+                compressedFile.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData(partName, compressedFile.name, requestFile)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+
+    var startDate = OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        fromDate = year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth
+        if (toDate != "") {
+            val dateFormatt = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            try {
+                sdate = dateFormatt.parse(fromDate)
+                edate = dateFormatt.parse(toDate)
+                printDifference(sdate, edate)
+            } catch (e: Exception) {
+            }
+        }
+        if (elapsedDays < 0 && toDate != "") {
+            fromDate = AppUtils().dateConversionYToD(firstdayofabsence.text.toString()).toString()/*AppUtils().showDialogAlertDismiss(
                     context as Activity?,
                     getString(R.string.alert_heading),
                     "Choose first day of absence(date) less than or equal to selected return to school(date)",
                     R.drawable.infoicon,
                     R.drawable.round
                 )*/
-                //break;
+            //break;
+        } else {
+
+            if (PreferenceManager().getLanguage(context).equals("ar")) {
+                Log.e("Language", PreferenceManager().getLanguage(context).toString())
+                firstdayofabsence.setText(AppUtils().dateConversionArabic(fromDate))
             } else {
+                Log.e("Language", fromDate)
+                firstdayofabsence.setText(AppUtils().dateConversionY(fromDate))
+            }
+            //
 
-                if (PreferenceManager().getLanguage(context).equals("ar")) {
-                    Log.e("Language", PreferenceManager().getLanguage(context).toString())
-                    firstdayofabsence.setText(AppUtils().dateConversionArabic(fromDate))
-                } else {
-                    Log.e("Language", fromDate)
-                    firstdayofabsence.setText(AppUtils().dateConversionY(fromDate))
-                }
-                //
-
-                // val txtPrice = String.format(locale "%d", item.getPrice())
-                Log.e("Date", AppUtils().dateConversionY(fromDate).toString())
+            // val txtPrice = String.format(locale "%d", item.getPrice())
+            Log.e("Date", AppUtils().dateConversionY(fromDate).toString())
+            try {
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                val strDate = sdf.parse(fromDate)
+                c = Calendar.getInstance()
+                mYear = c!!.get(Calendar.YEAR)
+                mMonth = c!!.get(Calendar.MONTH)
+                mDay = c!!.get(Calendar.DAY_OF_MONTH)
+                df = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                formattedDate = df!!.format(c!!.time)
+                val endDate = sdf.parse(formattedDate)
+                val dateFormatt = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+                var convertedDate: Date? = Date()
                 try {
-                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                    val strDate = sdf.parse(fromDate)
-                    c = Calendar.getInstance()
-                    mYear = c!!.get(Calendar.YEAR)
-                    mMonth = c!!.get(Calendar.MONTH)
-                    mDay = c!!.get(Calendar.DAY_OF_MONTH)
-                    df = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                    formattedDate = df!!.format(c!!.time)
-                    val endDate = sdf.parse(formattedDate)
-                    val dateFormatt = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-                    var convertedDate: Date? = Date()
-                    try {
-                        convertedDate = dateFormatt.parse(firstdayofabsence.text.toString())
-                    } catch (e: ParseException) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace()
-                    }
-                    calendar!!.time = convertedDate
-                    calendar!!.add(Calendar.DAY_OF_YEAR, 1)
-                    val tomorrow: Date = calendar!!.time
-                    tomorrowAsString = dateFormatt.format(tomorrow)
-
-                    //System.out.println(todayAsString);
-                    println("Tomorrow--$tomorrowAsString")
-                    //  enterEndDate.setText(tomorrowAsString);
+                    convertedDate = dateFormatt.parse(firstdayofabsence.text.toString())
                 } catch (e: ParseException) {
+                    // TODO Auto-generated catch block
                     e.printStackTrace()
                 }
+                calendar!!.time = convertedDate
+                calendar!!.add(Calendar.DAY_OF_YEAR, 1)
+                val tomorrow: Date = calendar!!.time
+                tomorrowAsString = dateFormatt.format(tomorrow)
+
+                //System.out.println(todayAsString);
+                println("Tomorrow--$tomorrowAsString")
+                //  enterEndDate.setText(tomorrowAsString);
+            } catch (e: ParseException) {
+                e.printStackTrace()
             }
         }
+    }
 
-    var endDate =
-        OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            toDate = year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth
-            if (toDate != "") {
-                val dateFormatt = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                try {
-                    sdate = dateFormatt.parse(fromDate)
-                    edate = dateFormatt.parse(toDate)
-                    printDifference(sdate, edate)
-                } catch (e: java.lang.Exception) {
-                }
-                if (elapsedDays < 0) {
-                    toDate = AppUtils().dateConversionYToD(returnabsence.text.toString())
-                    /*AppUtils.showDialogAlertDismiss(
+    var endDate = OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+        toDate = year.toString() + "-" + (monthOfYear + 1) + "-" + dayOfMonth
+        if (toDate != "") {
+            val dateFormatt = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            try {
+                sdate = dateFormatt.parse(fromDate)
+                edate = dateFormatt.parse(toDate)
+                printDifference(sdate, edate)
+            } catch (e: java.lang.Exception) {
+            }
+            if (elapsedDays < 0) {
+                toDate = AppUtils().dateConversionYToD(returnabsence.text.toString())/*AppUtils.showDialogAlertDismiss(
                         mContext as Activity?,
                         getString(R.string.alert_heading),
                         "Choose return to school(date) greater than or equal to first day of absence(date)",
                         R.drawable.infoicon,
                         R.drawable.round
                     )*/
-
-                    //break;
+                //break;
+            } else {
+                if (PreferenceManager().getLanguage(context).equals("ar")) {
+                    Log.e("Language", PreferenceManager().getLanguage(context).toString())
+                    Log.e("Language", fromDate)
+                    returnabsence.setText(AppUtils().dateConversionArabic(fromDate))
                 } else {
-
-
-                    if (PreferenceManager().getLanguage(context).equals("ar")) {
-                        Log.e("Language", PreferenceManager().getLanguage(context).toString())
-                        Log.e("Language", fromDate)
-                        returnabsence.setText(AppUtils().dateConversionArabic(fromDate))
-                    } else {
-                        returnabsence.setText(AppUtils().dateConversionY(fromDate))
-                    }
-                    //returnabsence.setText(AppUtils().dateConversionY(toDate))
+                    returnabsence.setText(AppUtils().dateConversionY(fromDate))
                 }
-
-                //AppUtils.showDialogAlertDismiss((Activity) mContext, getString(R.string.alert_heading), getString(R.string.enter_enddate), R.drawable.infoicon,  R.drawable.round);
+                //returnabsence.setText(AppUtils().dateConversionY(toDate))
             }
-            /*
+
+            //AppUtils.showDialogAlertDismiss((Activity) mContext, getString(R.string.alert_heading), getString(R.string.enter_enddate), R.drawable.infoicon,  R.drawable.round);
+        }/*
                     enterEndDate.setText(AppUtils.dateConversionY(toDate));
-        */try {
+        */
+        try {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
             val strDate = sdf.parse(toDate)
             c = Calendar.getInstance()
@@ -511,7 +579,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-        }
+    }
 
     fun printDifference(startDate: Date, endDate: Date) {
 
@@ -534,7 +602,9 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         System.out.printf(
             "%d days, %d hours, %d minutes, %d seconds%n",
             elapsedDays,
-            elapsedHours, elapsedMinutes, elapsedSeconds
+            elapsedHours,
+            elapsedMinutes,
+            elapsedSeconds
         )
     }
 
@@ -549,8 +619,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         var btn_Ok: TextView = dialog.findViewById(R.id.btn_Ok)
         text_dialog.text = message
         //alertHead.text = msgHead
-        btn_Ok.setOnClickListener()
-        {
+        btn_Ok.setOnClickListener {
             dialog.dismiss()
             val intent = Intent(context, AbsenceActivity::class.java)
             startActivity(intent)
@@ -571,11 +640,9 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         var crossicon = dialog.findViewById<ImageView>(R.id.crossicon)!!
         var recycler_view = dialog.findViewById<RecyclerView>(R.id.studentlistrecycler)
         recycler_view!!.layoutManager = LinearLayoutManager(context)
-        val studentlist_adapter =
-            AbsenceStudentListAdapter(
-                context,
-                student_name
-            )
+        val studentlist_adapter = AbsenceStudentListAdapter(
+            context, student_name
+        )
         recycler_view.adapter = studentlist_adapter
         crossicon.setOnClickListener {
             dialog.dismiss()
