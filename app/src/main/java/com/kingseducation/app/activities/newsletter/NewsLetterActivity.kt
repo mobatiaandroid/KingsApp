@@ -23,9 +23,12 @@ import com.kingseducation.app.activities.login.model.StudentList
 import com.kingseducation.app.activities.newsletter.model.NewsLetterResponseModel
 import com.kingseducation.app.activities.reports.adapter.RecyclerViewSubAdapter
 import com.kingseducation.app.constants.CommonClass
+import com.kingseducation.app.constants.PdfReaderActivity
 import com.kingseducation.app.constants.ProgressBarDialog
+import com.kingseducation.app.constants.WebViewLoaderActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
+import com.kingseducation.app.manager.recyclerviewmanager.RecyclerItemListener
 import retrofit2.Call
 import retrofit2.Response
 
@@ -181,6 +184,33 @@ class NewsLetterActivity : AppCompatActivity() {
             val intent = Intent(ncontext, HomeActivity::class.java)
             startActivity(intent)
         }
+
+        reportrec.addOnItemTouchListener(
+            RecyclerItemListener(
+                ncontext, reportrec,
+                object : RecyclerItemListener.RecyclerTouchListener {
+                    override fun onClickItem(v: View?, position: Int) {
+                        if (report_array[position].url.endsWith(".pdf")) {
+                            val intent = Intent(ncontext, PdfReaderActivity::class.java)
+                            intent.putExtra("pdf_url", report_array[position].url)
+                            intent.putExtra("pdf_title", report_array[position].title)
+                            startActivity(intent)
+                        } else if (report_array[position].url.endsWith(".png")) {
+                            val intent = Intent(ncontext, PdfReaderActivity::class.java)
+                            intent.putExtra("pdf_url", report_array[position].url)
+                            intent.putExtra("pdf_title", report_array[position].title)
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(ncontext, WebViewLoaderActivity::class.java)
+                            intent.putExtra("webview_url", report_array[position].url)
+                            intent.putExtra("title", report_array[position].title)
+                            startActivity(intent)
+                        }
+                    }
+
+                    override fun onLongClickItem(v: View?, position: Int) {}
+                })
+        )
 
 
         /* linearlayoutstudentlist.setOnClickListener {

@@ -342,6 +342,13 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Call<ReEnrolmentListResponseModel>
 
+    @POST("api/v1/submit-reenrollment")
+    @Headers("Content-Type: application/json")
+    fun submitReEnrolment(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<ContactTeacherResponseModel>
+
     @POST("api/v1/calendar-outlook")
     @Headers("Content-Type: application/json")
     fun getOutlookCalendar(

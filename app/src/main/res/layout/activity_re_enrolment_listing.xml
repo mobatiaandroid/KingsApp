@@ -35,7 +35,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/parentessetialsrec"
+            android:id="@+id/studentRecycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="8dp"
@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            tools:listitem="@layout/item_about_us" />
+            tools:listitem="@layout/item_reenrol_student" />
 
         <com.kingseducation.app.manager.font.CustomMontserratMedium
             android:id="@+id/noDataTV"
@@ -51,10 +51,11 @@
             android:layout_height="wrap_content"
             android:text="No data"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/parentessetialsrec"
-            app:layout_constraintEnd_toEndOf="@+id/parentessetialsrec"
-            app:layout_constraintStart_toStartOf="@+id/parentessetialsrec"
+            app:layout_constraintBottom_toBottomOf="@+id/studentRecycler"
+            app:layout_constraintEnd_toEndOf="@+id/studentRecycler"
+            app:layout_constraintStart_toStartOf="@+id/studentRecycler"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,10 +70,10 @@
         app:srcCompat="@drawable/backarrow" />
 
     <com.kingseducation.app.manager.font.CustomTimeLTSBold
-        android:id="@+id/textView"
+        android:id="@+id/titleTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/forms"
+        android:text="@string/re_enrolments"
         android:textColor="@color/white"
         android:textSize="28dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"

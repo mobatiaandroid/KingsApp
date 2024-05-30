@@ -376,6 +376,12 @@
     <string name="personal_info">Please check to confirm you have read and acknowledged the Nord Anglia\nEducation Personal Information Collection Statement</string>
     <string name="agree_info">I confirm I have read and acknowledged the Nord Anglia Education Personal\nInformation Collection Statement as outlined in the above link.</string>
     <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
-    <string name="agree">I have agreed to the terms and conditions.\n</string>
+    <string name="agree">I have agreed to the terms and conditions.</string>
+    <string name="re_enrolment_not_available">Re-Enrolment not available!</string>
+    <string name="re_enrolment_submitted">Re-Enrolment already submitted!</string>
+    <string name="re_enrolment_submit_success">Re-Enrolment successfully submitted!</string>
+    <string name="re_enrolment_submit_fail">Re-Enrolment submission failed!</string>
+    <string name="reenrol_status">"Re-Enrolment Status - "</string>
+    <string name="nil">nil</string>
 
 </resources>

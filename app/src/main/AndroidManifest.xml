@@ -38,10 +38,10 @@
         android:vmSafeMode="true"
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
-            android:name=".activities.staff_directory.StaffDirectoryListingActivity"
+            android:name=".constants.WebImageLoader"
             android:exported="false" />
         <activity
-            android:name=".activities.reenrolment.ReEnrolmentListing"
+            android:name=".activities.staff_directory.StaffDirectoryListingActivity"
             android:exported="false" />
         <activity
             android:name=".activities.payments.PaymentsListingActivity"
@@ -50,7 +50,8 @@
             android:name=".activities.re_enrolment.ReEnrolmentListingActivity"
             android:exported="false"
             android:label="@string/title_activity_re_enrolment_listing"
-            android:theme="@style/AppTheme" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.newsletter.NewsLetterActivity"
             android:exported="false"

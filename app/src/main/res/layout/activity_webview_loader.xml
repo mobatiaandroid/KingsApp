@@ -157,7 +157,7 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeHeader"
         tools:targetApi="lollipop" />-->
 
-    <WebView
+    <ImageView
         android:id="@+id/webview"
         android:layout_width="0dp"
         android:layout_height="0dp"
