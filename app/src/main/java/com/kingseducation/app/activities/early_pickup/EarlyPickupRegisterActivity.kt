@@ -13,7 +13,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.view.WindowManager
-import android.widget.*
+import android.widget.DatePicker
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.TimePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -22,7 +27,9 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.android.material.textfield.TextInputEditText
 import com.kingseducation.app.R
-import com.kingseducation.app.activities.absence.*
+import com.kingseducation.app.activities.absence.context
+import com.kingseducation.app.activities.absence.fromDate
+import com.kingseducation.app.activities.absence.studentImg
 import com.kingseducation.app.activities.early_pickup.model.RequestEarlyApiModel
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.login.SigninyourAccountActivity
@@ -36,7 +43,8 @@ import retrofit2.Call
 import retrofit2.Response
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class EarlyPickupRegisterActivity : AppCompatActivity() {
     lateinit var mContext: Context
@@ -71,7 +79,7 @@ class EarlyPickupRegisterActivity : AppCompatActivity() {
     private fun initFn() {
         timepikup = findViewById(R.id.returnabsence)
         dayofearlypikup = findViewById(R.id.firstdayofabsence)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         student_Name = findViewById(R.id.studentName)
         imagicon = findViewById(R.id.imagicon)
         pickup_by_text = findViewById(R.id.pickup_by_text)

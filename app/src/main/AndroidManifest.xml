@@ -39,13 +39,19 @@
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
             android:name=".constants.WebImageLoader"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.staff_directory.StaffDirectoryListingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.payments.PaymentsListingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Kings_Edu" />
         <activity
             android:name=".activities.re_enrolment.ReEnrolmentListingActivity"
             android:exported="false"

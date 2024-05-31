@@ -21,7 +21,17 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.RelativeLayout
+import android.widget.Switch
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -52,6 +62,7 @@ import com.kingseducation.app.activities.login.model.StudentListResponseModel
 import com.kingseducation.app.activities.message.MessageFragment
 import com.kingseducation.app.activities.newsletter.NewsLetterActivity
 import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivity
+import com.kingseducation.app.activities.payments.PaymentsListingActivity
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
 import com.kingseducation.app.activities.student_info.StudentInfoActivity
@@ -71,7 +82,7 @@ import com.kingseducation.app.manager.recyclerviewmanager.addOnItemClickListener
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import java.util.*
+import java.util.Locale
 import kotlin.system.exitProcess
 
 
@@ -1001,36 +1012,44 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
                 //Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             } else if (position == 7) {
 
+                val intent = Intent(mContext, PaymentsListingActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+
+                //Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            } else if (position == 8) {
+
                 val intent = Intent(mContext, TimeTableActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
 
-            } else if (position == 8) {
+            } else if (position == 9) {
                 val intent = Intent(mContext, ParentEssentialsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 9) {
+            } else if (position == 10) {
                 val intent = Intent(mContext, ReportsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 10) {
+            } else if (position == 11) {
                 val intent = Intent(mContext, FormsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 11) {
+            } else if (position == 12) {
                 val intent = Intent(mContext, AppsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 12) {
+            } else if (position == 13) {
                 val intent = Intent(mContext, SocialMediaActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)

@@ -89,7 +89,7 @@ class AbsenceActivity: AppCompatActivity() {
     private fun initFn() {
         absenceList = ArrayList()
         student_name = ArrayList()
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         imagicon = findViewById(R.id.imagicon)
         studentImg = ""
 

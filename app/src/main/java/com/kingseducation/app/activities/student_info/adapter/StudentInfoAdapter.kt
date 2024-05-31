@@ -38,7 +38,7 @@ internal class StudentInfoAdapter(
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var studentSpinner: LinearLayout = view.findViewById(R.id.studentSpinner)
         var studentName: TextView = view.findViewById(R.id.studentName)
-        var studentclass: TextView = view.findViewById(R.id.studentclass)
+        var studentclass: TextView = view.findViewById(R.id.studentClass)
        // var check : ImageView = view.findViewById(R.id.check)
     }
     @NonNull

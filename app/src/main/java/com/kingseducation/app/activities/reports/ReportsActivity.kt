@@ -87,7 +87,7 @@ class ReportsActivity : AppCompatActivity() {
         reportrec = findViewById(R.id.reportrec)
         report_array_filtered = ArrayList()
         student_Name = findViewById(R.id.studentName)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         imagicon = findViewById(R.id.imagicon)
         backarrow = findViewById(R.id.back)
         progressBarDialog = ProgressBarDialog(ncontext)

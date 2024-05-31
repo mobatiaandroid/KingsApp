@@ -31,7 +31,7 @@ class WebImageLoader : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_webview_loader)
+        setContentView(R.layout.activity_web_image_loader)
         context = this
         titleTextView = findViewById(R.id.titleTextView)
         logoclick = findViewById(R.id.logoclick)

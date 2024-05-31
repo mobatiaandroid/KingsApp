@@ -448,7 +448,7 @@ class TimeTableActivity : AppCompatActivity() {
         progressBarDialog = ProgressBarDialog(ncontext)
         studentNameTextView = findViewById(R.id.studentName)
 //        linearlayoutstudentlist = findViewById(R.id.studentSpinner)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         backarrow = findViewById(R.id.back)
         imagicon = findViewById(R.id.imagicon)
         textView = findViewById(R.id.textView)

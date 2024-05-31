@@ -36,6 +36,7 @@ import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.login.SigninyourAccountActivity
 import com.kingseducation.app.activities.newsletter.NewsLetterActivity
 import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivity
+import com.kingseducation.app.activities.payments.PaymentsListingActivity
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
 import com.kingseducation.app.activities.student_info.StudentInfoActivity
@@ -428,6 +429,15 @@ class HomeFragment  : Fragment(),View.OnClickListener{
 
                 naisTabConstants.TAB_EARLYPICKUP -> {
                     val intent = Intent(mContext, EarlyPickupListActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
+                }
+
+                naisTabConstants.TAB_PAYMENTS -> {
+                    val intent = Intent(mContext, PaymentsListingActivity::class.java)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(
                         R.anim.slide_in_up,

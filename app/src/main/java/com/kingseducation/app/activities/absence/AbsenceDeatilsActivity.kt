@@ -64,7 +64,7 @@ class AbsenceDeatilsActivity:AppCompatActivity() {
         firstdayofabsencetext = findViewById(R.id.firstdayofabsencetext)
         returnabsencetext = findViewById(R.id.returnabsencetext)
         reason_for_absence_text =findViewById(R.id.reason_for_absence_text)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         studentNameText = findViewById(R.id.studentName)
         backtolist = findViewById(R.id.backtolist)
         backarrow = findViewById(R.id.backarrow)

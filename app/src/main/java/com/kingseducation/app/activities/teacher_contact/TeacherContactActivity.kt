@@ -188,7 +188,7 @@ class TeacherContactActivity : AppCompatActivity() {
         teachersRecycler.layoutManager = LinearLayoutManager(context)
         progressBarDialog = ProgressBarDialog(context)
         studentNameTextView = findViewById(R.id.studentName)
-        studentClassTextView = findViewById(R.id.studentclass)
+        studentClassTextView = findViewById(R.id.studentClass)
         backButton = findViewById(R.id.back)
         studentNameTextView.text = PreferenceManager().getStudentName(context)
         studentClassTextView.text = PreferenceManager().getStudentClass(context)

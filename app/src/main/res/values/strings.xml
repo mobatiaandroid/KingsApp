@@ -186,6 +186,7 @@
         <!--        <item>  Teacher Contact</item>-->
         <item>  Absence Reporting</item>
         <item>  Early Pickup</item>
+        <item>  Payments</item>
         <item>  Time Table</item>
         <item>  Parent Essentials</item>
         <item>  Reports </item>
@@ -215,6 +216,7 @@
         <!--        <item>@drawable/meeting</item>-->
         <item>@drawable/absence4</item>
         <item>@drawable/earlypickup</item>
+        <item>@drawable/payment</item>
         <item>@drawable/timetable4</item>
         <item>@drawable/parent</item>
         <!-- 5 -->

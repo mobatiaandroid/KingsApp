@@ -239,7 +239,7 @@ class AppsActivity : AppCompatActivity() {
         studentName_Text = findViewById(R.id.studentName)
         imagicon = findViewById(R.id.imagicon)
         backImage = findViewById(R.id.back)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         progressBarDialog = ProgressBarDialog(mContext)
         /*val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)

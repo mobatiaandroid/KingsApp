@@ -143,7 +143,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
 
         student_name = ArrayList()
         imagicon = findViewById(R.id.imagicon)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         relativieabsence = findViewById(R.id.relativieabsence)
         first_day_of_absencetext = findViewById(R.id.first_day_of_absencetext)
         return_absence_text = findViewById(R.id.return_absence_text)

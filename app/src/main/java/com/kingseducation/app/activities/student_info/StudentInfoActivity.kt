@@ -282,7 +282,7 @@ class StudentInfoActivity:AppCompatActivity (){
         classs = findViewById(R.id.classs)
         address = findViewById(R.id.address)
         tutoremail = findViewById(R.id.tutoremailtext)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         backarrow = findViewById(R.id.backarrow)
         progressBarDialog = ProgressBarDialog(mContext)
         textView = findViewById(R.id.textView)

@@ -68,7 +68,7 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/studentclass"
+                app:layout_constraintBottom_toTopOf="@+id/studentClass"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imagicon"
                 app:layout_constraintTop_toTopOf="@+id/imagicon"
@@ -76,7 +76,7 @@
 
 
             <com.kingseducation.app.manager.font.CustomMontserratMedium
-                android:id="@+id/studentclass"
+                android:id="@+id/studentClass"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16sp"

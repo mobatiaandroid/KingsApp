@@ -25,6 +25,7 @@ import com.kingseducation.app.activities.reports.adapter.RecyclerViewSubAdapter
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.PdfReaderActivity
 import com.kingseducation.app.constants.ProgressBarDialog
+import com.kingseducation.app.constants.WebImageLoader
 import com.kingseducation.app.constants.WebViewLoaderActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
@@ -135,7 +136,7 @@ class NewsLetterActivity : AppCompatActivity() {
         reportrec = findViewById(R.id.reportrec)
         report_array_filtered = ArrayList()
         student_Name = findViewById(R.id.studentName)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         imagicon = findViewById(R.id.imagicon)
         backarrow = findViewById(R.id.back)
         progressBarDialog = ProgressBarDialog(ncontext)
@@ -196,9 +197,9 @@ class NewsLetterActivity : AppCompatActivity() {
                             intent.putExtra("pdf_title", report_array[position].title)
                             startActivity(intent)
                         } else if (report_array[position].url.endsWith(".png")) {
-                            val intent = Intent(ncontext, PdfReaderActivity::class.java)
-                            intent.putExtra("pdf_url", report_array[position].url)
-                            intent.putExtra("pdf_title", report_array[position].title)
+                            val intent = Intent(ncontext, WebImageLoader::class.java)
+                            intent.putExtra("webview_url", report_array[position].url)
+                            intent.putExtra("title", report_array[position].title)
                             startActivity(intent)
                         } else {
                             val intent = Intent(ncontext, WebViewLoaderActivity::class.java)

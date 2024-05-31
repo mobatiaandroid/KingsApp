@@ -144,7 +144,7 @@ class EarlyPickupListActivity:AppCompatActivity() {
         progressBarDialog = ProgressBarDialog(mContext)
         earlylistlist = findViewById(R.id.absencelist)
         registerabsence = findViewById(R.id.featureLinear)
-        studentclass =findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         student_Name = findViewById(R.id.studentName)
         imagicon=findViewById(R.id.imagicon)
         back.setOnClickListener {

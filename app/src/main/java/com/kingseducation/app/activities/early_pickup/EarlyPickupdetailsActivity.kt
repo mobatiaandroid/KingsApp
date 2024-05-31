@@ -74,7 +74,7 @@ class EarlyPickupdetailsActivity:AppCompatActivity() {
         pickup_by_text=findViewById(R.id.pickup_by_text)
         timepick=findViewById(R.id.returnabsencetext)
         date_pickup=findViewById(R.id.firstdayofabsencetext)
-        studentclass = findViewById(R.id.studentclass)
+        studentclass = findViewById(R.id.studentClass)
         studentNameText = findViewById(R.id.studentName)
         backtolist = findViewById(R.id.backtolist)
         rejection = findViewById(R.id.rejection)

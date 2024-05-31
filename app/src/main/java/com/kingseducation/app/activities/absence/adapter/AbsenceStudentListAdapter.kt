@@ -20,7 +20,7 @@ class AbsenceStudentListAdapter(
 
         var studentSpinner: ConstraintLayout = view.findViewById(R.id.studentSpinner)
         var studentName: TextView = view.findViewById(R.id.studentName)
-        var studentclass: TextView = view.findViewById(R.id.studentclass)
+        var studentclass: TextView = view.findViewById(R.id.studentClass)
         //var check : ImageView = view.findViewById(R.id.check)
 
     }
