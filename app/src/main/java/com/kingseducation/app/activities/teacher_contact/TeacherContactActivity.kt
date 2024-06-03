@@ -18,7 +18,7 @@ import com.google.gson.JsonObject
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.teacher_contact.adapter.TeachersListAdapterRecyclerView
-import com.kingseducation.app.activities.teacher_contact.model.ContactTeacherResponseModel
+import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResponseModel
 import com.kingseducation.app.activities.teacher_contact.model.SubjectTeachersResponseModel
 import com.kingseducation.app.activities.teacher_contact.model.TeacherModel
 import com.kingseducation.app.constants.ProgressBarDialog
@@ -140,14 +140,14 @@ class TeacherContactActivity : AppCompatActivity() {
             addProperty("message", contentText)
             addProperty("staff_id", teacherID)
         }
-        val call: Call<ContactTeacherResponseModel> = ApiClient.getApiService().postContactTeacher(
+        val call: Call<GeneralSubmitResponseModel> = ApiClient.getApiService().postContactTeacher(
             "Bearer " +
                     PreferenceManager().getAccessToken(context).toString(), paramObject
         )
-        call.enqueue(object : retrofit2.Callback<ContactTeacherResponseModel> {
+        call.enqueue(object : retrofit2.Callback<GeneralSubmitResponseModel> {
             override fun onResponse(
-                call: Call<ContactTeacherResponseModel>,
-                response: Response<ContactTeacherResponseModel>
+                call: Call<GeneralSubmitResponseModel>,
+                response: Response<GeneralSubmitResponseModel>
             ) {
                 progressBarDialog.hide()
                 if (response.body()!!.status.equals("100")) {
@@ -159,7 +159,7 @@ class TeacherContactActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ContactTeacherResponseModel>, t: Throwable) {
+            override fun onFailure(call: Call<GeneralSubmitResponseModel>, t: Throwable) {
                 progressBarDialog.hide()
             }
         }

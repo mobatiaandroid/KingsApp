@@ -31,7 +31,7 @@ import com.kingseducation.app.activities.absence.studentImg
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.re_enrolment.adapter.ReEnrolStudentListAdapter
 import com.kingseducation.app.activities.re_enrolment.model.ReEnrolmentListResponseModel
-import com.kingseducation.app.activities.teacher_contact.model.ContactTeacherResponseModel
+import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResponseModel
 import com.kingseducation.app.constants.ProgressBarDialog
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
@@ -280,14 +280,14 @@ class ReEnrolmentListingActivity : AppCompatActivity() {
             addProperty("selected_option", selectedStatus)
 
         }
-        val call: Call<ContactTeacherResponseModel> = ApiClient.getApiService().submitReEnrolment(
+        val call: Call<GeneralSubmitResponseModel> = ApiClient.getApiService().submitReEnrolment(
             "Bearer " +
                     PreferenceManager().getAccessToken(context).toString(), paramObject
         )
-        call.enqueue(object : retrofit2.Callback<ContactTeacherResponseModel> {
+        call.enqueue(object : retrofit2.Callback<GeneralSubmitResponseModel> {
             override fun onResponse(
-                call: Call<ContactTeacherResponseModel>,
-                response: Response<ContactTeacherResponseModel>
+                call: Call<GeneralSubmitResponseModel>,
+                response: Response<GeneralSubmitResponseModel>
             ) {
                 progressBarDialog.dismiss()
                 if (response.body()!!.status == "100") {
@@ -308,7 +308,7 @@ class ReEnrolmentListingActivity : AppCompatActivity() {
                 reEnrolmentDetailsAPICall()
             }
 
-            override fun onFailure(call: Call<ContactTeacherResponseModel>, t: Throwable) {
+            override fun onFailure(call: Call<GeneralSubmitResponseModel>, t: Throwable) {
                 progressBarDialog.dismiss()
                 Toast.makeText(
                     context,

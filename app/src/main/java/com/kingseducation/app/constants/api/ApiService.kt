@@ -7,7 +7,9 @@ import com.kingseducation.app.activities.absence.model.AbsenceLeaveApiModel
 import com.kingseducation.app.activities.absence.model.AbsenceListModel
 import com.kingseducation.app.activities.apps.model.AppsModel
 import com.kingseducation.app.activities.calender.model.CalendarListModel
+import com.kingseducation.app.activities.calender.model.CalendarOutlookResponseModel
 import com.kingseducation.app.activities.calender.model.CalendarResponseModel
+import com.kingseducation.app.activities.data_collection.model.DataCollectionResponseModel
 import com.kingseducation.app.activities.early_pickup.model.EarlyPickupListModel
 import com.kingseducation.app.activities.early_pickup.model.RequestEarlyApiModel
 import com.kingseducation.app.activities.forms.model.FormsModel
@@ -22,8 +24,9 @@ import com.kingseducation.app.activities.payments.model.PendingInvoiceResponseMo
 import com.kingseducation.app.activities.re_enrolment.model.ReEnrolmentListResponseModel
 import com.kingseducation.app.activities.reports.model.ReportsNewResponseModel
 import com.kingseducation.app.activities.social_media.model.SocialMediaResponseModel
+import com.kingseducation.app.activities.staff_directory.model.StaffDirectoryResponseModel
 import com.kingseducation.app.activities.student_info.model.StudentInfoResponseModel
-import com.kingseducation.app.activities.teacher_contact.model.ContactTeacherResponseModel
+import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResponseModel
 import com.kingseducation.app.activities.teacher_contact.model.SubjectTeachersResponseModel
 import com.kingseducation.app.activities.timetable.model.TimeTableResponseModel
 import com.kingseducation.app.common.CommonResponse
@@ -334,7 +337,7 @@ interface ApiService {
     fun postContactTeacher(
         @Header("Authorization") token: String,
         @Body json: JsonObject
-    ): Call<ContactTeacherResponseModel>
+    ): Call<GeneralSubmitResponseModel>
 
     @POST("api/v1/get-reenrollments")
     @Headers("Content-Type: application/json")
@@ -347,13 +350,14 @@ interface ApiService {
     fun submitReEnrolment(
         @Header("Authorization") token: String,
         @Body json: JsonObject
-    ): Call<ContactTeacherResponseModel>
+    ): Call<GeneralSubmitResponseModel>
 
     @POST("api/v1/calendar-outlook")
     @Headers("Content-Type: application/json")
     fun getOutlookCalendar(
-        @Header("Authorization") token: String
-    ): Call<ResponseBody>
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<CalendarOutlookResponseModel>
 
     /******************Pending Invoices*************/
 
@@ -363,4 +367,22 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<PendingInvoiceResponseModel>
+    @POST("api/v1/staff-list")
+    @Headers("Content-Type: application/json")
+    fun staffDirectory(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<StaffDirectoryResponseModel>
+    @POST("api/v1/datacollection-details")
+    @Headers("Content-Type: application/json")
+    fun dataCollection(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<DataCollectionResponseModel>
+    @POST("api/v1/submit-datacollection")
+    @Headers("Content-Type: application/json")
+    fun submitDataCollection(
+        @Header("Authorization") token: String,
+        @Body json: JsonObject
+    ): Call<GeneralSubmitResponseModel>
 }

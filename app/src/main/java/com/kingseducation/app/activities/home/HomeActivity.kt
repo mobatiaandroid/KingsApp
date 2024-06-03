@@ -3,19 +3,23 @@ package com.kingseducation.app.activities.home
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.TypedArray
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -48,10 +52,14 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.nas_dubai_kotlin.activities.home.adapter.HomeListAdapter
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.JsonObject
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.absence.AbsenceActivity
+import com.kingseducation.app.activities.absence.imagicon
 import com.kingseducation.app.activities.apps.AppsActivity
 import com.kingseducation.app.activities.calender.SchoolCalendarActivity
+import com.kingseducation.app.activities.data_collection.adapter.DataCollectionAdapter
+import com.kingseducation.app.activities.data_collection.model.DataCollectionResponseModel
 import com.kingseducation.app.activities.early_pickup.EarlyPickupListActivity
 import com.kingseducation.app.activities.forms.FormsActivity
 import com.kingseducation.app.activities.home.model.HomeGuestrResponseModel
@@ -65,6 +73,7 @@ import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivi
 import com.kingseducation.app.activities.payments.PaymentsListingActivity
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
+import com.kingseducation.app.activities.staff_directory.StaffDirectoryListingActivity
 import com.kingseducation.app.activities.student_info.StudentInfoActivity
 import com.kingseducation.app.activities.timetable.TimeTableActivity
 import com.kingseducation.app.adapter.StudentListAdapter
@@ -86,7 +95,7 @@ import java.util.Locale
 import kotlin.system.exitProcess
 
 
-class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
+class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,DataCollectionAdapter.ImagePickerCallback {
 
     val manager = supportFragmentManager
     lateinit var shadowBuilder: MyDragShadowBuilder
@@ -128,14 +137,30 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
     var flag: Boolean = true
     lateinit var studentList: ArrayList<StudentList>
     lateinit var menuicon: ImageView
+    lateinit var dataCollectionAdapter: DataCollectionAdapter
 
     //    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     var tokenM: String = ""
+    var dataCollectionFields: ArrayList<DataCollectionResponseModel.CollectionField> = ArrayList()
+    private var currentImagePickPosition: Int = -1
+    private val IMAGE_PICK_REQUEST_CODE = 1
+    private val PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE = 2
+    private val REQUEST_PERMISSION_EXTERNAL_STORAGE = 102
+
+    private lateinit var externalStoragePermissionStatus: SharedPreferences
+
+    val permissionsRequiredExternalStorage = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    private var externalStorageToSettings = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_activity)
 
         mContext = this
+        externalStoragePermissionStatus =
+            mContext.getSharedPreferences("externalStoragePermissionStatus", MODE_PRIVATE)
         PreferenceManager().setvalue(mContext, "")
         if (Build.VERSION.SDK_INT > 32) {
             if (!shouldShowRequestPermissionRationale("112")) {
@@ -144,8 +169,10 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
         }
         loadLocate()
         initFn()
+        askForStoragePermission()
         showfragmenthome()
         studentListApiCall()
+        callDataCollectionAPI()
 
         if (PreferenceManager().getAccessToken(mContext).equals("")) {
             Log.e("Sucess", "Success")
@@ -155,6 +182,262 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
         }
 
 
+    }
+
+    private fun askForStoragePermission() {
+        if (Build.VERSION.SDK_INT > 30) {
+
+        } else {
+            if (ActivityCompat.checkSelfPermission(
+                    mContext, permissionsRequiredExternalStorage[0]
+                ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                    mContext, permissionsRequiredExternalStorage[1]
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        (mContext as Activity), permissionsRequiredExternalStorage[0]
+                    ) || ActivityCompat.shouldShowRequestPermissionRationale(
+                        (mContext as Activity), permissionsRequiredExternalStorage[1]
+                    )
+                ) {
+                    val builder = AlertDialog.Builder(mContext)
+                    builder.setTitle("Need Storage Permission")
+                    builder.setMessage("This module needs Storage permissions.")
+                    builder.setPositiveButton(
+                        "Grant"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        ActivityCompat.requestPermissions(
+                            (mContext as Activity),
+                            permissionsRequiredExternalStorage,
+                            PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE
+                        )
+                    }
+                    builder.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, which -> dialog.cancel() }
+                    builder.show()
+                } else if (externalStoragePermissionStatus.getBoolean(
+                        permissionsRequiredExternalStorage[0], false
+                    )
+                ) {
+                    val builder = AlertDialog.Builder(mContext)
+                    builder.setTitle("Need Storage Permission")
+                    builder.setMessage("This module needs Storage permissions.")
+                    builder.setPositiveButton(
+                        "Grant"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = true
+                        val intent =
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts(
+                            "package", mContext.packageName, null
+                        )
+                        intent.setData(uri)
+                        startActivityForResult(
+                            intent, REQUEST_PERMISSION_EXTERNAL_STORAGE
+                        )
+                        Toast.makeText(
+                            mContext,
+                            "Go to settings and grant access to storage",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    builder.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = false
+                    }
+                    builder.show()
+                } else if (externalStoragePermissionStatus.getBoolean(
+                        permissionsRequiredExternalStorage[1], false
+                    )
+                ) {
+                    val builder = AlertDialog.Builder(mContext)
+                    builder.setTitle("Need Storage Permission")
+                    builder.setMessage("This module needs Storage permissions.")
+                    builder.setCancelable(false)
+                    builder.setPositiveButton(
+                        "Grant"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = true
+                        val intent =
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts(
+                            "package", mContext.packageName, null
+                        )
+                        intent.setData(uri)
+                        startActivityForResult(
+                            intent, REQUEST_PERMISSION_EXTERNAL_STORAGE
+                        )
+                        Toast.makeText(
+                            mContext,
+                            "Go to settings and grant access to storage",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    builder.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = false
+                    }
+                    builder.show()
+                } else {
+
+                    requestPermissions(
+                        permissionsRequiredExternalStorage,
+                        PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE
+                    )
+                }
+                val editor = externalStoragePermissionStatus.edit()
+                editor.putBoolean(permissionsRequiredExternalStorage[0], true)
+                editor.commit()
+            } else {
+                Toast.makeText(mContext, "Storage permissions granted!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onPickImage(position: Int) {
+        currentImagePickPosition = position
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, IMAGE_PICK_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_PICK_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri: Uri? = data.data
+            if (selectedImageUri != null && currentImagePickPosition != -1) {
+                val selectedImage = data.data
+                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor: Cursor? =
+                    contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
+                cursor?.use {
+                    it.moveToFirst()
+                    val columnIndex = it.getColumnIndex(filePathColumn[0])
+                    val imagePath = it.getString(columnIndex)
+                    dataCollectionFields[currentImagePickPosition].fieldValue =
+                        imagePath.toString()
+                    dataCollectionAdapter.notifyItemChanged(currentImagePickPosition)
+                }
+            }
+        }
+    }
+
+
+    private fun callDataCollectionAPI() {
+//        progressBarDialog.show()
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", PreferenceManager().getStudent_ID(mContext).toString())
+        }
+        val call: Call<DataCollectionResponseModel> = ApiClient.getApiService().dataCollection(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString(), paramObject
+        )
+        call.enqueue(object : retrofit2.Callback<DataCollectionResponseModel> {
+            override fun onResponse(
+                call: Call<DataCollectionResponseModel>,
+                response: Response<DataCollectionResponseModel>
+            ) {
+//                progressBarDialog.dismiss()
+
+                if (response.body() != null) {
+                    if (response.body()!!.status == 100) {
+                        if (response.body()!!.isTriggered == 1){
+                            dataCollectionFields = response.body()!!.collectionFields
+                            showDataCollectionDialog(mContext, dataCollectionFields)
+                        }else{
+                            Log.e("Triggered", "Not Triggered")
+                        }
+//                        paymentList = response.body()!!.invoices
+//                        if (paymentList.isEmpty()) {
+//                            paymentRecyclerView.layoutManager = linearLayoutManager
+//                            val studentListAdapter = PaymentsAdapter(context, ArrayList())
+//                            paymentRecyclerView.adapter = studentListAdapter
+//                            Toast.makeText(context, "No Data", Toast.LENGTH_SHORT).show()
+//                            noDataTV.visibility = View.VISIBLE
+//                        } else {
+//                            paymentRecyclerView.layoutManager = linearLayoutManager
+//                            val studentListAdapter = PaymentsAdapter(context, paymentList)
+//                            paymentRecyclerView.adapter = studentListAdapter
+//                            noDataTV.visibility = View.GONE
+//                        }
+                    } else {
+                        CommonClass.checkApiStatusError(response.body()!!.status, mContext)
+                    }
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<DataCollectionResponseModel?>, t: Throwable) {
+//                progressBarDialog.dismiss()
+                Toast.makeText(
+                    mContext, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+    private fun showDataCollectionDialog(mContext: Context, collectionFields: ArrayList<DataCollectionResponseModel.CollectionField>) {
+
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_data_collection)
+        val questionTextView = dialog.findViewById<TextView>(R.id.questionTV)
+        val closeButton = dialog.findViewById<ImageView>(R.id.close_btn)
+        val stud_name = dialog.findViewById<TextView>(R.id.stud_name)
+        val stud_class = dialog.findViewById<TextView>(R.id.stud_class)
+        val stud_img = dialog.findViewById<ImageView>(R.id.stud_img)
+        val dataCollectionRecycler = dialog.findViewById<RecyclerView>(R.id.dataCollectionRecycler)
+
+        var linearLayoutManager: LinearLayoutManager = LinearLayoutManager(mContext)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        dataCollectionRecycler.layoutManager = linearLayoutManager
+        dataCollectionAdapter = DataCollectionAdapter(mContext, collectionFields,this)
+        dataCollectionRecycler.adapter = dataCollectionAdapter
+        dataCollectionAdapter.notifyDataSetChanged()
+
+        stud_name.text = PreferenceManager().getStudentName(mContext)
+        stud_class.text = PreferenceManager().getStudentClass(mContext)
+        if (!PreferenceManager().getStudentPhoto(mContext)!!.isEmpty()) {
+            val studentImg = PreferenceManager().getStudentPhoto(mContext).toString()
+            if (studentImg != null && !studentImg.isEmpty()) {
+                val glideUrl = GlideUrl(
+                    studentImg,
+                    LazyHeaders.Builder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + PreferenceManager().getAccessToken(mContext).toString()
+                        )
+                        .build()
+                )
+                Glide.with(mContext)
+                    .load(glideUrl)
+                    .transform(CircleCrop())
+                    .placeholder(R.drawable.profile_photo)
+                    .error(R.drawable.profile_photo)
+                    .into(stud_img)
+            } else {
+                Toast.makeText(mContext, "Image empty", Toast.LENGTH_SHORT).show()
+
+            }
+        } else {
+            stud_img.setImageResource(R.drawable.profile_photo)
+            // Set default circular image resource
+        }
+
+
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun getNotificationPermission() {
@@ -1032,24 +1315,30 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener {
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             } else if (position == 10) {
+                val intent = Intent(mContext, StaffDirectoryListingActivity::class.java)
+                startActivity(intent)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }else if (position == 11) {
                 val intent = Intent(mContext, ReportsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 11) {
+            } else if (position == 12) {
                 val intent = Intent(mContext, FormsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 12) {
+            } else if (position == 13) {
                 val intent = Intent(mContext, AppsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            } else if (position == 13) {
+            } else if (position == 14) {
                 val intent = Intent(mContext, SocialMediaActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)

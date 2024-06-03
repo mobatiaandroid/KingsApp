@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="350dp"
+    android:layout_width="360dp"
     android:layout_height="650dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/curved_rectangle_bottom_white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,8 +49,8 @@
         android:layout_height="wrap_content"
         android:background="@color/kings_blue"
         android:gravity="left"
+        android:textSize="20dp"
         android:paddingLeft="16dp"
-
         android:text="Data Collection "
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,13 +69,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/relSub"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_margin="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -84,6 +85,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/profile_photo"
                     app:siBorderColor="#A0DAE5"
@@ -94,8 +96,7 @@
                     style="@style/textstyleblack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_toEndOf="@+id/stud_img"
                     android:layout_toRightOf="@+id/stud_img"
                     android:gravity="center_vertical"
@@ -109,8 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stud_name"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_toEndOf="@+id/stud_img"
                     android:layout_toRightOf="@+id/stud_img"
                     android:gravity="center_vertical"
@@ -119,6 +119,28 @@
                     android:textColor="@color/grey" />
 
             </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dataCollectionRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                tools:listitem="@layout/item_data_collection"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relSub" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Finalize"
+                android:backgroundTint="@color/kings_blue"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dataCollectionRecycler" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

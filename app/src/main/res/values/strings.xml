@@ -189,6 +189,7 @@
         <item>  Payments</item>
         <item>  Time Table</item>
         <item>  Parent Essentials</item>
+        <item>  Staff Directory</item>
         <item>  Reports </item>
         <item> Forms</item>
         <item>  Apps</item>
@@ -219,6 +220,7 @@
         <item>@drawable/payment</item>
         <item>@drawable/timetable4</item>
         <item>@drawable/parent</item>
+        <item>@drawable/directory</item>
         <!-- 5 -->
         <!-- 6 -->
 
@@ -385,5 +387,8 @@
     <string name="re_enrolment_submit_fail">Re-Enrolment submission failed!</string>
     <string name="reenrol_status">"Re-Enrolment Status - "</string>
     <string name="nil">nil</string>
+    <string name="upload">Upload</string>
+    <string name="attach_file">Attach File</string>
+    <string name="no_file">No file selected!</string>
 
 </resources>

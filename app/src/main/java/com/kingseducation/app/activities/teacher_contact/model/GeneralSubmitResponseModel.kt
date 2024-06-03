@@ -2,6 +2,6 @@ package com.kingseducation.app.activities.teacher_contact.model
 
 import com.google.gson.annotations.SerializedName
 
-class ContactTeacherResponseModel(
+class GeneralSubmitResponseModel(
     @SerializedName("status") val status: String
 )

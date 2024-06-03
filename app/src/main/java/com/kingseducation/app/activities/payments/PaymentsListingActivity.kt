@@ -1,6 +1,7 @@
 package com.kingseducation.app.activities.payments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.gson.JsonObject
 import com.kingseducation.app.R
+import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.payments.adapter.PaymentsAdapter
 import com.kingseducation.app.activities.payments.model.PendingInvoiceResponseModel
 import com.kingseducation.app.constants.CommonClass
@@ -34,7 +36,7 @@ class PaymentsListingActivity : AppCompatActivity() {
 
     lateinit var studentClass: TextView
 
-    //    lateinit var backButton: ImageView
+        lateinit var backButton: ImageView
     lateinit var noDataTV: TextView
     var paymentList: ArrayList<PendingInvoiceResponseModel.Invoice> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,6 +106,7 @@ class PaymentsListingActivity : AppCompatActivity() {
         studentClass.text = PreferenceManager().getStudentClass(context)
         linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        backButton = findViewById(R.id.back)
         noDataTV = findViewById(R.id.noDataTV)
         if (!PreferenceManager().getStudentPhoto(context).equals("")) {
             if (!PreferenceManager().getStudentPhoto(context).equals("")) {
@@ -135,9 +138,9 @@ class PaymentsListingActivity : AppCompatActivity() {
         } else {
             studentImage.setImageResource(R.drawable.profile_photo)
         }
-//        backButton.setOnClickListener {
-//            val intent = Intent(context, HomeActivity::class.java)
-//            startActivity(intent)
-//        }
+        backButton.setOnClickListener {
+            val intent = Intent(context, HomeActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
