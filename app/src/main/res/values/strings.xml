@@ -390,5 +390,6 @@
     <string name="upload">Upload</string>
     <string name="attach_file">Attach File</string>
     <string name="no_file">No file selected!</string>
+    <string name="payment_detail">Payment Detail</string>
 
 </resources>

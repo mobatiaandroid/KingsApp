@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:background="@color/kings_blue">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/curved_rectangle_top_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16sp"
+            android:background="@drawable/rect_teal"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
+
+
+            <ImageView
+                android:id="@+id/imagicon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="16sp"
+                android:elevation="5dp"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profile_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/studentImage"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="16sp"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/curved_circle_yellow"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="@+id/imagicon"
+                app:layout_constraintStart_toStartOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon" />
+
+
+            <com.kingseducation.app.manager.font.CustomTimeLTStandard
+                android:id="@+id/studentName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/studentClass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toTopOf="@+id/imagicon"
+                tools:text="Sanju Sabu" />
+
+
+            <com.kingseducation.app.manager.font.CustomMontserratMedium
+                android:id="@+id/studentClass"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imagicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagicon"
+                app:layout_constraintTop_toBottomOf="@+id/studentName"
+                tools:text="10 B" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
+
+            <RelativeLayout
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/descriptionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    tools:text="Title" />
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/descriptionTitle"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    tools:text="Description" />
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:id="@+id/duedate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/description"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    tools:text="Due Date" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/totalLinear"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/rectangular_border_payment"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:visibility="visible"
+                android:weightSum="90">
+
+                <com.kingseducation.app.manager.font.CustomMontserratMedium
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="30"
+                    android:text="Total"
+                    android:textAllCaps="true"
+
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="30"
+                    android:orientation="horizontal">
+
+                    <com.kingseducation.app.manager.font.CustomMontserratBold
+                        android:id="@+id/totalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textSize="20dp" />
+
+                    <com.kingseducation.app.manager.font.CustomMontserratBold
+                        android:id="@+id/aedTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="AED"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/paidImg"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="30"
+                    android:gravity="center"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/payTotalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="30"
+                    android:background="@color/rel_two"
+                    android:filterTouchesWhenObscured="true"
+                    android:gravity="center"
+                    android:text="PAY"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/backarrow" />
+
+    <com.kingseducation.app.manager.font.CustomTimeLTSBold
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_detail"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

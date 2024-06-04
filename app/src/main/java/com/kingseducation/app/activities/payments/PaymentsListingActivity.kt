@@ -16,6 +16,7 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.gson.JsonObject
 import com.kingseducation.app.R
+import com.kingseducation.app.activities.absence.AbsenceDeatilsActivity
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.payments.adapter.PaymentsAdapter
 import com.kingseducation.app.activities.payments.model.PendingInvoiceResponseModel
@@ -23,6 +24,7 @@ import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.ProgressBarDialog
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
+import com.kingseducation.app.manager.recyclerviewmanager.RecyclerItemListener
 import retrofit2.Call
 import retrofit2.Response
 
@@ -36,7 +38,7 @@ class PaymentsListingActivity : AppCompatActivity() {
 
     lateinit var studentClass: TextView
 
-        lateinit var backButton: ImageView
+    lateinit var backButton: ImageView
     lateinit var noDataTV: TextView
     var paymentList: ArrayList<PendingInvoiceResponseModel.Invoice> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,5 +144,24 @@ class PaymentsListingActivity : AppCompatActivity() {
             val intent = Intent(context, HomeActivity::class.java)
             startActivity(intent)
         }
+        paymentRecyclerView.addOnItemTouchListener(
+            RecyclerItemListener(
+                context, paymentRecyclerView,
+                object : RecyclerItemListener.RecyclerTouchListener {
+                    override fun onClickItem(v: View?, position: Int) {
+                        val intent = Intent(context, PaymentDetailActivity::class.java).apply {
+                            putExtra("invoice_id", paymentList[position].id)
+                            putExtra("invoice_number", paymentList[position].invoiceNumber)
+                            putExtra("invoice_date", paymentList[position].invoiceDate)
+//                            putExtra("invoice_amount", paymentList[position].amount)
+//                            putExtra("invoice_status", paymentList[position].status)
+
+                        }
+                        startActivity(intent)
+                    }
+
+                    override fun onLongClickItem(v: View?, position: Int) {}
+                })
+        )
     }
 }

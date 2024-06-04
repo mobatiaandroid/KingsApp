@@ -38,6 +38,9 @@
         android:vmSafeMode="true"
         tools:replace="android:allowBackup,android:icon, android:label, android:theme, android:supportsRtl">
         <activity
+            android:name=".activities.payments.PaymentDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".constants.WebImageLoader"
             android:exported="false"
             android:screenOrientation="portrait"
