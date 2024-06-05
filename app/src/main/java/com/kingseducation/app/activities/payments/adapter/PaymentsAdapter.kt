@@ -19,6 +19,8 @@ class PaymentsAdapter(
         var invoiceTitleTV: TextView = view.findViewById(R.id.invoiceTitleTV)
         var invoiceTitle2TV: TextView = view.findViewById(R.id.invoiceTitle2TV)
         var paymentStatusTV: TextView = view.findViewById(R.id.paymentStatusTV)
+        var amountTV: TextView = view.findViewById(R.id.amountTV)
+        var dueDateTV: TextView = view.findViewById(R.id.dueDateTV)
 
     }
 
@@ -35,7 +37,13 @@ class PaymentsAdapter(
         holder.invoiceTitleTV.text = studentList[position].component
         holder.invoiceTitle2TV.text = studentList[position].description
         if (studentList[position].outstanding > 0) {
-            holder.paymentStatusTV.text = "Pending"
+            holder.amountTV.text = studentList[position].outstanding.toString() + " AED"
+        } else {
+            holder.amountTV.text = ""
+        }
+        holder.dueDateTV.text = context.resources.getString(R.string.due_date) + " " + studentList[position].invoiceDueDate
+        if (studentList[position].outstanding > 0) {
+            holder.paymentStatusTV.text = "Pay"
         } else {
             holder.paymentStatusTV.text = "Paid"
         }

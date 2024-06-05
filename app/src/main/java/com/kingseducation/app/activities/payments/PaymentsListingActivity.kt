@@ -150,12 +150,23 @@ class PaymentsListingActivity : AppCompatActivity() {
                 object : RecyclerItemListener.RecyclerTouchListener {
                     override fun onClickItem(v: View?, position: Int) {
                         val intent = Intent(context, PaymentDetailActivity::class.java).apply {
-                            putExtra("invoice_id", paymentList[position].id)
-                            putExtra("invoice_number", paymentList[position].invoiceNumber)
-                            putExtra("invoice_date", paymentList[position].invoiceDate)
-//                            putExtra("invoice_amount", paymentList[position].amount)
-//                            putExtra("invoice_status", paymentList[position].status)
-
+                            putExtra("attribute_type", paymentList[position].attributes.type)
+                            putExtra("attribute_url", paymentList[position].attributes.url)
+                            putExtra("Id", paymentList[position].id)
+                            putExtra("name", paymentList[position].name)
+                            putExtra("Invoice_Number__c", paymentList[position].invoiceNumber)
+                            putExtra("Outstanding__c", paymentList[position].outstanding)
+                            putExtra("Component__c", paymentList[position].component)
+                            putExtra("Academic_Year__c", paymentList[position].academicYear)
+                            putExtra("Description__c", paymentList[position].description)
+                            putExtra("Grade__c", paymentList[position].grade)
+                            putExtra("Invoice_Date__c", paymentList[position].invoiceDate)
+                            putExtra("Invoice_Due_Date__c", paymentList[position].invoiceDueDate)
+                            putExtra("Invoice_Unique_Number__c", paymentList[position].invoiceUniqueNumber)
+                            putExtra("Student__r_pupil_code", paymentList[position].student.pupilCode)
+                            putExtra("Total_Amount__c", paymentList[position].totalAmount)
+                            putExtra("Unique_Invoice__c", paymentList[position].uniqueInvoice)
+                            putExtra("Total_Amount_Before_Tax__c", paymentList[position].totalAmountBeforeTax)
                         }
                         startActivity(intent)
                     }

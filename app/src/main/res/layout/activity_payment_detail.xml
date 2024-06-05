@@ -103,6 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16sp"
                 android:visibility="visible">
 
                 <com.kingseducation.app.manager.font.CustomMontserratMedium
@@ -117,108 +119,130 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:visibility="visible"
-                    tools:text="Title" />
-
-                <com.kingseducation.app.manager.font.CustomMontserratMedium
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/descriptionTitle"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:visibility="visible"
-                    tools:text="Description" />
-
-                <com.kingseducation.app.manager.font.CustomMontserratMedium
-                    android:id="@+id/duedate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/description"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:visibility="visible"
-                    tools:text="Due Date" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/totalLinear"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/title"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/rectangular_border_payment"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:visibility="visible"
-                android:weightSum="90">
-
-                <com.kingseducation.app.manager.font.CustomMontserratMedium
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="30"
-                    android:text="Total"
-                    android:textAllCaps="true"
-
-                    android:textSize="18dp" />
-
+                    android:text="@string/invoice_details" />
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/descriptionLinear"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="30"
+                    android:layout_below="@id/descriptionTitle"
                     android:orientation="horizontal">
-
-                    <com.kingseducation.app.manager.font.CustomMontserratBold
-                        android:id="@+id/totalAmount"
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/descriptionTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:textSize="20dp" />
-
-                    <com.kingseducation.app.manager.font.CustomMontserratBold
-                        android:id="@+id/aedTxt"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        android:text="@string/description" />
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/kings_blue"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        tools:text="Test" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/dueDateLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/descriptionLinear"
+                    android:orientation="horizontal">
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/duedateTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center"
-                        android:text="AED"
-                        android:textSize="18dp" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        android:text="@string/due_date" />
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/duedate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/kings_blue"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        tools:text="Test" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/invoiceNumberLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dueDateLinear"
+                    android:orientation="horizontal">
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/invoiceNumberTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        android:text="@string/unique_invoice" />
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/invoiceNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/kings_blue"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        tools:text="Test" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/invoiceNumberLinear"
+                    android:orientation="horizontal">
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/amountTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        android:text="@string/payable_amount" />
+                    <com.kingseducation.app.manager.font.CustomMontserratMedium
+                        android:id="@+id/amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/kings_blue"
+                        android:textSize="16sp"
+                        android:visibility="visible"
+                        tools:text="Test" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/paidImg"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="30"
-                    android:gravity="center"
-                    android:visibility="gone" />
 
-                <Button
-                    android:id="@+id/payTotalButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="30"
-                    android:background="@color/rel_two"
-                    android:filterTouchesWhenObscured="true"
-                    android:gravity="center"
-                    android:text="PAY"
-                    android:textColor="@color/white"
-                    android:visibility="visible" />
-            </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,12 +261,87 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/payment_detail"
+        android:text="@string/Payments"
         android:textColor="@color/white"
         android:textSize="28dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/totalLinear"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rectangular_border_payment"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:layout_margin="8dp"
+        android:visibility="visible"
+        android:weightSum="90"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="30"
+            android:text="Total"
+            android:textAllCaps="true"
+
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="30"
+            android:orientation="horizontal">
+
+            <com.kingseducation.app.manager.font.CustomMontserratBold
+                android:id="@+id/totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textSize="20dp" />
+
+            <com.kingseducation.app.manager.font.CustomMontserratBold
+                android:id="@+id/aedTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text="AED"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/paidImg"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:layout_weight="30"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/payTotalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="30"
+            android:backgroundTint="@color/rel_two"
+            android:filterTouchesWhenObscured="true"
+            android:gravity="center"
+            android:text="PAY"
+            android:textColor="@color/white"
+            android:visibility="visible" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

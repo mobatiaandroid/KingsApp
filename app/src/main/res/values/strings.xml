@@ -391,5 +391,10 @@
     <string name="attach_file">Attach File</string>
     <string name="no_file">No file selected!</string>
     <string name="payment_detail">Payment Detail</string>
+    <string name="description">"Description :"</string>
+    <string name="due_date">"Due Date :"</string>
+    <string name="invoice_details">Invoice Details</string>
+    <string name="unique_invoice">"Unique Invoice No. :"</string>
+    <string name="payable_amount">"Payable Amount :"</string>
 
 </resources>

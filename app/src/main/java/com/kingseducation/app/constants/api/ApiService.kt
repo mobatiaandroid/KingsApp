@@ -20,6 +20,8 @@ import com.kingseducation.app.activities.login.model.StudentListResponseModel
 import com.kingseducation.app.activities.message.model.NotificationModel
 import com.kingseducation.app.activities.newsletter.model.NewsLetterResponseModel
 import com.kingseducation.app.activities.parentessentials.model.ParentModel
+import com.kingseducation.app.activities.payments.model.PaymentInitiateModel
+import com.kingseducation.app.activities.payments.model.PaymentInitiateResponseModel
 import com.kingseducation.app.activities.payments.model.PendingInvoiceResponseModel
 import com.kingseducation.app.activities.re_enrolment.model.ReEnrolmentListResponseModel
 import com.kingseducation.app.activities.reports.model.ReportsNewResponseModel
@@ -385,4 +387,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<GeneralSubmitResponseModel>
+    @POST("api/v1/initiate-payment")
+    @Headers("Content-Type: application/json")
+    fun initiatePayment(
+        @Header("Authorization") token: String,
+        @Body  paymentInit: PaymentInitiateModel
+    ): Call<PaymentInitiateResponseModel>
+
 }
