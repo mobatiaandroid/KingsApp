@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -34,8 +35,6 @@ import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.login.SigninyourAccountActivity
 import com.kingseducation.app.activities.parentessentials.adapter.ParentListAdapter
 import com.kingseducation.app.activities.parentessentials.model.ParentModel
-import com.kingseducation.app.activities.re_enrolment.ReEnrolmentListingActivity
-import com.kingseducation.app.activities.re_enrolment.adapter.ReEnrolStudentListAdapter
 import com.kingseducation.app.activities.re_enrolment.model.ReEnrolmentListResponseModel
 import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResponseModel
 import com.kingseducation.app.constants.CommonClass
@@ -107,9 +106,12 @@ class ParentEssentialsActivity : AppCompatActivity() {
 //                            Toast.makeText(mcontext, "Re-Enrolment not available!", Toast.LENGTH_SHORT).show()
                         } else {
                             for (i in 0 until reEnrolList.size) {
-                                Log.e("getStudent_ID", PreferenceManager().getStudent_ID(mcontext).toString())
+                                Log.e(
+                                    "getStudent_ID",
+                                    PreferenceManager().getStudent_ID(mcontext).toString()
+                                )
                                 Log.e("api reenrol", reEnrolList[i].id.toString().toString())
-                                if (PreferenceManager().getStudent_ID(mcontext) == reEnrolList[i].id.toString()){
+                                if (PreferenceManager().getStudent_ID(mcontext) == reEnrolList[i].id.toString()) {
                                     reEnrolItem = reEnrolList[i]
                                     Log.e("set reenrol", reEnrolItem.id.toString())
                                 }
@@ -161,7 +163,14 @@ class ParentEssentialsActivity : AppCompatActivity() {
                     if (response.body()!!.status.equals(100)) {
                         list_name.clear()
                         list_name.addAll(response.body()!!.parent_essentials)
-                        list_name.add(FormList("9999999999","Re-Enrolment","pop_up","https://www.google.com"))
+                        list_name.add(
+                            FormList(
+                                "9999999999",
+                                "Re-Enrolment",
+                                "pop_up",
+                                "https://www.google.com"
+                            )
+                        )
                         parentList.layoutManager = linearLayoutManager
                         val parentadapter = ParentListAdapter(mcontext, list_name)
                         parentList.adapter = parentadapter
@@ -213,7 +222,10 @@ class ParentEssentialsActivity : AppCompatActivity() {
                 object : RecyclerItemListener.RecyclerTouchListener {
                     override fun onClickItem(v: View?, position: Int) {
 
+
                         if (list_name.get(position).url.endsWith(".pdf")) {
+                            Log.e("url pdf", list_name[position].title)
+
                             val intent = Intent(mcontext, PdfReaderActivity::class.java)
                             intent.putExtra("pdf_url", list_name[position].url)
                             intent.putExtra("pdf_title", list_name[position].title)
@@ -221,19 +233,59 @@ class ParentEssentialsActivity : AppCompatActivity() {
                         } else if (
                             list_name[position].title.contains("enrol", ignoreCase = true)
                         ) {
-                            Log.e("reenrol id ", reEnrolItem.id.toString())
-                            Log.e("reenrol isReEnrollment ", reEnrolItem.isReEnrollment.toString())
-                            if (reEnrolItem.selectedOption == ""){
-                                if (reEnrolItem.isReEnrollment == 1){
-                                    showReEnrolPopUp()
-                                }else{
-                                    Toast.makeText(mcontext, "Re-Enrolment not available!", Toast.LENGTH_SHORT).show()
+                            Log.e("url enrol", list_name[position].title)
+                            if (reEnrolItem != null) {
+                                if (reEnrolItem.selectedOption == "") {
+                                    if (reEnrolItem.isReEnrollment == 1) {
+                                        showReEnrolPopUp()
+                                    } else {
+                                        Toast.makeText(
+                                            mcontext,
+                                            "Re-Enrolment not available!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        mcontext,
+                                        "Re-Enrolment already submitted!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }else{
-                                Toast.makeText(mcontext, "Re-Enrolment already submitted!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    mcontext,
+                                    "Re-Enrolment not available!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
 
+
+                        } else if (list_name[position].title.contains(
+                                "seesaw",
+                                ignoreCase = true
+                            )
+                        ) {
+                            val packageName = "seesaw.shadowpuppet.co.classroom"
+                            val webUrl = "https://app.seesaw.me/#/login"
+                            val playStoreUrl = "market://details?id=$packageName"
+                            val playStoreWebUrl =
+                                "https://play.google.com/store/apps/details?id=$packageName"
+                            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
+                            val playStoreIntent =
+                                Intent(Intent.ACTION_VIEW, Uri.parse(playStoreUrl))
+                            if (playStoreIntent.resolveActivity(packageManager) != null) {
+                                startActivity(playStoreIntent)
+                            } else {
+                                startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(playStoreWebUrl)
+                                    )
+                                )
+                            }
                         } else {
+                            Log.e("url web view", list_name[position].title)
                             val intent = Intent(mcontext, WebViewLoaderActivity::class.java)
                             intent.putExtra("webview_url", list_name[position].url)
                             intent.putExtra("title", list_name[position].title)

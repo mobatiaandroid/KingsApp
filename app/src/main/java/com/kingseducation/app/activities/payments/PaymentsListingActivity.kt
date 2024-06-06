@@ -159,6 +159,7 @@ class PaymentsListingActivity : AppCompatActivity() {
                             putExtra("Component__c", paymentList[position].component)
                             putExtra("Academic_Year__c", paymentList[position].academicYear)
                             putExtra("Description__c", paymentList[position].description)
+                            putExtra("Student__c", paymentList[position].Student__c)
                             putExtra("Grade__c", paymentList[position].grade)
                             putExtra("Invoice_Date__c", paymentList[position].invoiceDate)
                             putExtra("Invoice_Due_Date__c", paymentList[position].invoiceDueDate)

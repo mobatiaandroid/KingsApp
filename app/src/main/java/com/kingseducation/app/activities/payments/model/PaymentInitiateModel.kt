@@ -15,6 +15,7 @@ class PaymentInitiateModel (
     @SerializedName("Name") var name: String,
     @SerializedName("Outstanding__c") var Outstanding__c: Double,
     @SerializedName("Component__c") var Component__c: String,
+    @SerializedName("Student__c") var Student__c: String,
     @SerializedName("Academic_Year__c") var Academic_Year__c: String,
     @SerializedName("Description__c") var Description__c: String,
     @SerializedName("Grade__c") var Grade__c: String,
@@ -43,6 +44,7 @@ class PaymentInitiateModel (
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readParcelable(StudentPaymentModel::class.java.classLoader)!!,
         parcel.readDouble(),
         parcel.readString()!!,
@@ -60,6 +62,7 @@ class PaymentInitiateModel (
         parcel.writeString(name)
         parcel.writeDouble(Outstanding__c)
         parcel.writeString(Component__c)
+        parcel.writeString(Student__c)
         parcel.writeString(Academic_Year__c)
         parcel.writeString(Description__c)
         parcel.writeString(Grade__c)

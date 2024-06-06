@@ -21,6 +21,7 @@ data class PendingInvoiceResponseModel(
         @SerializedName("Component__c") val component: String,
         @SerializedName("Academic_Year__c") val academicYear: String,
         @SerializedName("Description__c") val description: String?,
+        @SerializedName("Student__c") val Student__c: String?,
         @SerializedName("Grade__c") val grade: String,
         @SerializedName("Invoice_Date__c") val invoiceDate: String,
         @SerializedName("Invoice_Due_Date__c") val invoiceDueDate: String,

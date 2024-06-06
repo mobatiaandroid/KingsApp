@@ -57,6 +57,7 @@ import com.kingseducation.app.R
 import com.kingseducation.app.activities.absence.AbsenceActivity
 import com.kingseducation.app.activities.absence.imagicon
 import com.kingseducation.app.activities.apps.AppsActivity
+import com.kingseducation.app.activities.calender.CalendarOutlookActivity
 import com.kingseducation.app.activities.calender.SchoolCalendarActivity
 import com.kingseducation.app.activities.data_collection.adapter.DataCollectionAdapter
 import com.kingseducation.app.activities.data_collection.model.DataCollectionResponseModel
@@ -1250,7 +1251,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 
             } else if (position == 2) {
                 PreferenceManager().setFromYearView(mContext, "0")
-                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+//                val intent = Intent(mContext, SchoolCalendarActivity::class.java)
+                val intent = Intent(mContext, CalendarOutlookActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
                 //Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()

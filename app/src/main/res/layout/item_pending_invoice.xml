@@ -16,8 +16,7 @@
         android:textColor="@color/grey"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/invoiceTitle2TV"
-        app:layout_constraintEnd_toStartOf="@+id/paymentStatusTV"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +29,7 @@
         android:textSize="12sp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/amountTV"
-        app:layout_constraintEnd_toStartOf="@+id/paymentStatusTV"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
         app:layout_constraintStart_toStartOf="@+id/invoiceTitleTV"
         app:layout_constraintTop_toBottomOf="@+id/invoiceTitleTV" />
 
@@ -71,11 +70,12 @@
         tools:layout_editor_absoluteX="8dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:background="@drawable/rounded_square_bg_blue"
         android:gravity="center"
-        android:layout_margin="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">

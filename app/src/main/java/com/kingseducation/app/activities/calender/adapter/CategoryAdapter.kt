@@ -44,7 +44,7 @@ class CategoryAdapter (private var mContext:Context,private var settingsArrayLis
         }
 
         //    holder.categoryTypeTxt.setTextColor(Color.parseColor(movie.color))
-           holder.checkBoxImg.setBackgroundColor(Color.parseColor(movie.color))
+           holder.checkBoxImg.setBackgroundColor(R.color.kings_blue)
 
 
     }

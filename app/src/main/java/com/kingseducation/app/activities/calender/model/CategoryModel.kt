@@ -2,7 +2,7 @@ package com.kingseducation.app.activities.calender.model
 
 import com.google.gson.annotations.SerializedName
 
-class CategoryModel {
+class CategoryModel() {
     @SerializedName("categoryName")
     var categoryName: String = ""
     @SerializedName("checkedCategory")

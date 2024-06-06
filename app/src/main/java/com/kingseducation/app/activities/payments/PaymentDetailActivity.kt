@@ -49,7 +49,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         "","",attributesData,
         "","","",0.0,
         "","","","",
-        "","","",studentData,
+        "","","","",studentData,
         0.0,"",0.0)
 
     var attribute_type: String = ""
@@ -68,6 +68,7 @@ class PaymentDetailActivity : AppCompatActivity() {
     var Student__r_pupil_code = ""
     var Total_Amount__c: Double = 0.0
     var Unique_Invoice__c = ""
+    var Student__c = ""
     var Total_Amount_Before_Tax__c: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +85,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         Component__c = extra.getString("Component__c").toString()
         Academic_Year__c = extra.getString("Academic_Year__c").toString()
         Description__c = extra.getString("Description__c").toString()
+        Student__c = extra.getString("Student__c").toString()
         Grade__c = extra.getString("Grade__c").toString()
         Invoice_Date__c = extra.getString("Invoice_Date__c").toString()
         Invoice_Due_Date__c = extra.getString("Invoice_Due_Date__c").toString()
@@ -106,6 +108,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         paymentInitiate.Grade__c = Grade__c
         paymentInitiate.Invoice_Date__c = Invoice_Date__c
         paymentInitiate.Invoice_Due_Date__c = Invoice_Due_Date__c
+        paymentInitiate.Student__c = Student__c
         paymentInitiate.Invoice_Unique_Number__c = Invoice_Unique_Number__c
         paymentInitiate.Student__r = studentData
         paymentInitiate.Total_Amount__c = Total_Amount__c
