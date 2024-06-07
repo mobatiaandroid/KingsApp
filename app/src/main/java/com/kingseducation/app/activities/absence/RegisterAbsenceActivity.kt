@@ -1,11 +1,16 @@
 package com.kingseducation.app.activities.absence
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,6 +20,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -29,6 +35,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -38,6 +45,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.JsonObject
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.absence.adapter.AbsenceStudentListAdapter
 import com.kingseducation.app.activities.absence.model.RequestAbsenceApiModel
@@ -110,6 +118,16 @@ lateinit var progressBarDialog: ProgressBarDialog
 class RegisterAbsenceActivity : AppCompatActivity() {
     lateinit var attachFileButton: Button
     lateinit var attachFileURI: Uri
+    private val PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE = 2
+    private val REQUEST_PERMISSION_EXTERNAL_STORAGE = 102
+    val PERMISSION_REQUEST_CODE = 112
+
+    private lateinit var externalStoragePermissionStatus: SharedPreferences
+
+    val permissionsRequiredExternalStorage = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    private var externalStorageToSettings = false
 
     init {
         attachFileURI = Uri.EMPTY
@@ -122,6 +140,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         )
         setContentView(R.layout.register_absence_layout)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
+        askForStoragePermission()
         context = this
         studentImg = ""
         initFn()
@@ -135,6 +154,144 @@ class RegisterAbsenceActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
+        }
+    }
+
+    private fun askForStoragePermission() {
+        if (Build.VERSION.SDK_INT > 30) {
+
+        } else {
+            if (ActivityCompat.checkSelfPermission(
+                    mContext, permissionsRequiredExternalStorage[0]
+                ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                    mContext, permissionsRequiredExternalStorage[1]
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        (mContext as Activity), permissionsRequiredExternalStorage[0]
+                    ) || ActivityCompat.shouldShowRequestPermissionRationale(
+                        (mContext as Activity), permissionsRequiredExternalStorage[1]
+                    )
+                ) {
+                    val builder = AlertDialog.Builder(mContext)
+                    builder.setTitle("Need Storage Permission")
+                    builder.setMessage("This module needs Storage permissions.")
+                    builder.setPositiveButton(
+                        "Grant"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        ActivityCompat.requestPermissions(
+                            (mContext as Activity),
+                            permissionsRequiredExternalStorage,
+                            PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE
+                        )
+                    }
+                    builder.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, which -> dialog.cancel() }
+                    builder.show()
+                } else if (externalStoragePermissionStatus.getBoolean(
+                        permissionsRequiredExternalStorage[0], false
+                    )
+                ) {
+                    val builder = AlertDialog.Builder(mContext)
+                    builder.setTitle("Need Storage Permission")
+                    builder.setMessage("This module needs Storage permissions.")
+                    builder.setPositiveButton(
+                        "Grant"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = true
+                        val intent =
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts(
+                            "package", mContext.packageName, null
+                        )
+                        intent.setData(uri)
+                        startActivityForResult(
+                            intent, REQUEST_PERMISSION_EXTERNAL_STORAGE
+                        )
+                        Toast.makeText(
+                            mContext,
+                            "Go to settings and grant access to storage",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    builder.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = false
+                    }
+                    builder.show()
+                } else if (externalStoragePermissionStatus.getBoolean(
+                        permissionsRequiredExternalStorage[1], false
+                    )
+                ) {
+                    val builder = AlertDialog.Builder(mContext)
+                    builder.setTitle("Need Storage Permission")
+                    builder.setMessage("This module needs Storage permissions.")
+                    builder.setCancelable(false)
+                    builder.setPositiveButton(
+                        "Grant"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = true
+                        val intent =
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts(
+                            "package", mContext.packageName, null
+                        )
+                        intent.setData(uri)
+                        startActivityForResult(
+                            intent, REQUEST_PERMISSION_EXTERNAL_STORAGE
+                        )
+                        Toast.makeText(
+                            mContext,
+                            "Go to settings and grant access to storage",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    builder.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, which ->
+                        dialog.cancel()
+                        externalStorageToSettings = false
+                    }
+                    builder.show()
+                } else {
+
+                    requestPermissions(
+                        permissionsRequiredExternalStorage,
+                        PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE
+                    )
+                }
+                val editor = externalStoragePermissionStatus.edit()
+                editor.putBoolean(permissionsRequiredExternalStorage[0], true)
+                editor.commit()
+            } else {
+                Toast.makeText(mContext, "Storage permissions granted!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                } else {
+//                    Toast.makeText(mContext, "Please allow notifications permission to receive school notices.", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
         }
     }
 
@@ -169,7 +326,7 @@ class RegisterAbsenceActivity : AppCompatActivity() {
             if (studentImg != null && !studentImg.isEmpty()) {
                 val glideUrl = GlideUrl(
                     studentImg, LazyHeaders.Builder().addHeader(
-                            "Authorization",
+                        "Authorization",
                         "Bearer " + PreferenceManager().getAccessToken(context).toString()
                     ).build()
                 )
@@ -237,10 +394,18 @@ class RegisterAbsenceActivity : AppCompatActivity() {
                         val inputDateStr3 = toDate
                         val date3: Date = inputFormat3.parse(inputDateStr3)
                         val t_date: String = outputFormat3.format(date3)
-                        Log.e("fd", t_date)
-                        callAbsenceSubmitApi(f_date, t_date, reasonAPI)
+                        if (attachFileURI.toString().trim().equals("")) {
+                            callAbsenceSubmitApiNoFile(f_date, t_date, reasonAPI)
+                        } else {
+                            callAbsenceSubmitApi(f_date, t_date, reasonAPI)
+                        }
                     } else {
-                        callAbsenceSubmitApi(f_date, "", reasonAPI)
+                        if (attachFileURI.toString().trim().equals("")) {
+                            callAbsenceSubmitApiNoFile(f_date, "", reasonAPI)
+                        } else {
+                            callAbsenceSubmitApi(f_date, "", reasonAPI)
+
+                        }
                     }
 //                    val inputDateStr3 = toDate
 //                    val date3: Date = inputFormat3.parse(inputDateStr3)
@@ -329,6 +494,57 @@ class RegisterAbsenceActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun callAbsenceSubmitApiNoFile(fDate: String, tDate: String, reasonAPI: String) {
+        progressBarDialog.show()
+        var devicename: String =
+            (Build.MANUFACTURER + " " + Build.MODEL + " " + Build.VERSION.RELEASE + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT].name)
+        Log.e("from_to", fDate + tDate)
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", PreferenceManager().getStudent_ID(context).toString())
+            addProperty("from_date", fDate)
+            addProperty("to_date", tDate)
+            addProperty("reason", reasonAPI)
+            addProperty("device_type", "2")
+            addProperty("device_name", devicename)
+            addProperty("app_version", context.packageManager.getPackageInfo(context.packageName, 0).versionName)
+        }
+
+        val call: Call<CommonResponse> = ApiClient.getApiService().requestleaveNoFile(
+            "Bearer " + PreferenceManager().getAccessToken(context).toString(),
+           paramObject
+        )
+        call.enqueue(object : retrofit2.Callback<CommonResponse> {
+            override fun onResponse(
+                call: Call<CommonResponse>, response: Response<CommonResponse>
+            ) {
+                progressBarDialog.hide()
+                //progressDialog.visibility = View.GONE
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals(100)) {
+                        showErrorAlert(context, "Successfully submitted your absence.", "Success")
+                    } else if (response.body()!!.status.equals(106)) {
+                        val intent = Intent(context, SigninyourAccountActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        CommonClass.checkApiStatusError(response.body()!!.status, context)
+                    }
+                } else {
+                    val intent = Intent(context, SigninyourAccountActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<CommonResponse?>, t: Throwable) {
+                progressBarDialog.hide()
+
+                Toast.makeText(
+                    context, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
 

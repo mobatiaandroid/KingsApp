@@ -27,7 +27,8 @@ class SplashActivity : AppCompatActivity() {
 
         setContentView(R.layout.splash_screen_layout)
         mContext = this
-
+        PreferenceManager().setDataCollectionsShown(mContext,"n")
+        PreferenceManager().setReEnrolShown(mContext,"n")
         Handler().postDelayed({
             Log.e("Username", PreferenceManager().getuser_id(mContext).toString())
             if (PreferenceManager().getAccessToken(mContext).equals("")) {

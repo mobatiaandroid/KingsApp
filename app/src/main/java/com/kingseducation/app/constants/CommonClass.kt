@@ -114,6 +114,18 @@ class CommonClass {
             {
                 showErrorAlert(context, "Already exists in the given range","Alert")
 
+            }else if (statusCode==117)
+            {
+                showErrorAlert(context, "Required Fields Not Submitted!","Alert")
+
+            }else if (statusCode==118)
+            {
+                showErrorAlert(context, "Invalid Gateway!","Alert")
+
+            }else if (statusCode==119)
+            {
+                showErrorAlert(context, "Already Paid","Alert")
+
             }
             else if (statusCode==300)
             {

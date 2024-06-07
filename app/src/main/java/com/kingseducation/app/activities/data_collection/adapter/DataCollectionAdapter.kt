@@ -1,5 +1,6 @@
 package com.kingseducation.app.activities.data_collection.adapter
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -34,6 +36,7 @@ class DataCollectionAdapter(
         var attachButton: TextView = view.findViewById(R.id.attachButton)
         var uploadButton: Button = view.findViewById(R.id.uploadButton)
         var editTextView: EditText = view.findViewById(R.id.editText)
+        var statusImageView: ImageView = view.findViewById(R.id.statusImageView)
     }
 
     override fun onCreateViewHolder(
@@ -46,44 +49,65 @@ class DataCollectionAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.fieldTitleTV.text = dataCollectionFields[position].fieldLabel
-        var customFont: Typeface = Typeface.createFromAsset(context.assets, "font/montserrat_regular.ttf")
+        holder.fieldTitleTV.text = dataCollectionFields[position].fieldLabel.trim()
+        var customFont: Typeface =
+            Typeface.createFromAsset(context.assets, "font/montserrat_regular.ttf")
         holder.editTextView.typeface = customFont
+        if (dataCollectionFields[position].fieldType == "text") {
+            holder.attachButton.visibility = View.GONE
+            holder.uploadButton.visibility = View.VISIBLE
+        } else {
+            holder.attachButton.visibility = View.VISIBLE
+            holder.uploadButton.visibility = View.GONE
+        }
         if (dataCollectionFields[position].fieldType == "file") {
             holder.uploadedFieldTV.visibility = View.VISIBLE
             if (dataCollectionFields[position].fieldValue.isEmpty()) {
                 holder.uploadedFieldTV.text = context.resources.getString(R.string.no_file)
+                holder.statusImageView.visibility = View.GONE
             } else {
+                holder.statusImageView.visibility = View.VISIBLE
                 holder.uploadedFieldTV.text = dataCollectionFields[position].fieldValue.replace(
                     "http://gama.mobatia.in:8080/kingseducation/public/storage/student-data-collection/",
                     ""
                 )
             }
-            holder.attachButton.visibility = View.VISIBLE
-            holder.uploadButton.visibility = View.VISIBLE
+//            holder.attachButton.visibility = View.VISIBLE
+//            holder.uploadButton.visibility = View.VISIBLE
             holder.editTextView.visibility = View.GONE
         } else {
+            holder.uploadButton.text = context.resources.getString(R.string.upload)
+
             if (dataCollectionFields[position].fieldValue.isEmpty()) {
                 holder.editTextView.setText("")
+                holder.statusImageView.visibility = View.GONE
             } else {
                 holder.editTextView.setText(dataCollectionFields[position].fieldValue)
+                holder.statusImageView.visibility = View.VISIBLE
             }
             holder.uploadedFieldTV.visibility = View.GONE
-            holder.attachButton.visibility = View.GONE
-            holder.uploadButton.visibility = View.VISIBLE
+//            holder.attachButton.visibility = View.GONE
+//            holder.uploadButton.visibility = View.VISIBLE
             holder.editTextView.visibility = View.VISIBLE
         }
+        //TODO: Add attachment functionality
         holder.attachButton.setOnClickListener {
             imagePickerCallback.onPickImage(position)
         }
+//        holder.uploadButton.setOnClickListener {
+//            if (dataCollectionFields[position].fieldType == "file") {
+//                if (holder.uploadedFieldTV.text.toString().isEmpty()) {
+//                    Toast.makeText(context, "Please attach a file!", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    dataCollectionFileUploadAPI(position)
+//                }
+//            } else {
+//
+//            }
+//
+//        }
         holder.uploadButton.setOnClickListener {
-            if (dataCollectionFields[position].fieldType == "file") {
-                if (holder.uploadedFieldTV.text.toString().isEmpty()) {
-                    Toast.makeText(context, "Please attach a file!", Toast.LENGTH_SHORT).show()
-                } else {
-                    dataCollectionFileUploadAPI(position)
-                }
-            } else {
+            if (dataCollectionFields[position].fieldType == "text") {
                 if (holder.editTextView.text.toString().isEmpty()) {
                     Toast.makeText(context, "Please enter a value!", Toast.LENGTH_SHORT).show()
                 } else {
@@ -91,8 +115,9 @@ class DataCollectionAdapter(
                     dataCollectionFields[position].fieldValue = fieldValue
                     dataCollectionTextUploadAPI(position)
                 }
-            }
+            } else {
 
+            }
         }
     }
 
@@ -130,12 +155,17 @@ class DataCollectionAdapter(
 
     private fun dataCollectionFileUploadAPI(position: Int) {
 
+
     }
 
     interface ImagePickerCallback {
         fun onPickImage(position: Int)
-    }
 
+    }
+    fun callDataCollectionFinalize(dialog: Dialog){
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", PreferenceManager().getStudent_ID(context).toString())}
+    }
 
     override fun getItemCount(): Int {
         return dataCollectionFields.size

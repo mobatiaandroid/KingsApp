@@ -214,12 +214,12 @@ interface ApiService {
     ): Call<AppsModel>
 
     /*************Request Leave****************/
-//    @POST("api/v1/request-leave")
-//    @Headers("Accept: application/json")
-//    fun requestleave(
-//        @Header("Authorization") token:String,
-//        @Body requestLeave: RequestAbsenceApiModel
-//    ): Call<CommonResponse>
+    @POST("api/v1/request-leave")
+    @Headers("Accept: application/json")
+    fun requestleaveNoFile(
+        @Header("Authorization") token:String,
+        @Body json: JsonObject
+    ): Call<CommonResponse>
     @Multipart
 
     @POST("api/v1/request-leave")
@@ -387,6 +387,22 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<GeneralSubmitResponseModel>
+
+    @Multipart
+    @POST("api/v1/submit-datacollection")
+    fun submitDataCollectionFile(
+        @Header("Authorization") token: String?,
+        @Part("student_id") student_id: RequestBody?,
+        @Part("field_name") tripItemId: RequestBody?,
+        @Part field_value: MultipartBody.Part?
+    ): Call<GeneralSubmitResponseModel>
+
+    @POST("api/v1/finalize-datacollection")
+    fun finalizeDataCollection(
+        @Header("Authorization") token: String?,
+        @Body json: JsonObject
+    ): Call<GeneralSubmitResponseModel>
+
     @POST("api/v1/initiate-payment")
     @Headers("Content-Type: application/json")
     fun initiatePayment(

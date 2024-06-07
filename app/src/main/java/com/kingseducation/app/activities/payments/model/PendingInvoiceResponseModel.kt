@@ -13,10 +13,10 @@ data class PendingInvoiceResponseModel(
 
     @Parcelize
     data class Invoice(
-        val attributes: Attribute,
-        val id: String,
+        @SerializedName("attributes")val attributes: Attribute,
+        @SerializedName("Id")val id: String,
         @SerializedName("Invoice_Number__c") val invoiceNumber: String,
-        val name: String,
+        @SerializedName("Name")val name: String,
         @SerializedName("Outstanding__c") val outstanding: Double,
         @SerializedName("Component__c") val component: String,
         @SerializedName("Academic_Year__c") val academicYear: String,

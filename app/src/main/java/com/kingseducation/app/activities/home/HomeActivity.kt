@@ -26,13 +26,16 @@ import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.RadioButton
 import android.widget.RelativeLayout
+import android.widget.Spinner
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
@@ -56,9 +59,9 @@ import com.google.gson.JsonObject
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.absence.AbsenceActivity
 import com.kingseducation.app.activities.absence.imagicon
+import com.kingseducation.app.activities.absence.studentImg
 import com.kingseducation.app.activities.apps.AppsActivity
 import com.kingseducation.app.activities.calender.CalendarOutlookActivity
-import com.kingseducation.app.activities.calender.SchoolCalendarActivity
 import com.kingseducation.app.activities.data_collection.adapter.DataCollectionAdapter
 import com.kingseducation.app.activities.data_collection.model.DataCollectionResponseModel
 import com.kingseducation.app.activities.early_pickup.EarlyPickupListActivity
@@ -72,13 +75,16 @@ import com.kingseducation.app.activities.message.MessageFragment
 import com.kingseducation.app.activities.newsletter.NewsLetterActivity
 import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivity
 import com.kingseducation.app.activities.payments.PaymentsListingActivity
+import com.kingseducation.app.activities.re_enrolment.model.ReEnrolmentListResponseModel
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
 import com.kingseducation.app.activities.staff_directory.StaffDirectoryListingActivity
 import com.kingseducation.app.activities.student_info.StudentInfoActivity
+import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResponseModel
 import com.kingseducation.app.activities.timetable.TimeTableActivity
 import com.kingseducation.app.adapter.StudentListAdapter
 import com.kingseducation.app.constants.CommonClass
+import com.kingseducation.app.constants.WebViewLoaderActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.fragment.HomeFragment
 import com.kingseducation.app.fragment.contact.ContactFragment
@@ -89,14 +95,21 @@ import com.kingseducation.app.manager.MyDragShadowBuilder
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.OnItemClickListener
 import com.kingseducation.app.manager.recyclerviewmanager.addOnItemClickListener
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
+import java.io.IOException
 import java.util.Locale
 import kotlin.system.exitProcess
 
 
-class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,DataCollectionAdapter.ImagePickerCallback {
+class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,
+    DataCollectionAdapter.ImagePickerCallback {
 
     val manager = supportFragmentManager
     lateinit var shadowBuilder: MyDragShadowBuilder
@@ -139,6 +152,9 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
     lateinit var studentList: ArrayList<StudentList>
     lateinit var menuicon: ImageView
     lateinit var dataCollectionAdapter: DataCollectionAdapter
+    lateinit var reEnrolList: ArrayList<ReEnrolmentListResponseModel.ReEnrollment>
+    lateinit var reEnrolItem: ReEnrolmentListResponseModel.ReEnrollment
+    var selectedStatus: String = ""
 
     //    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     var tokenM: String = ""
@@ -147,7 +163,9 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
     private val IMAGE_PICK_REQUEST_CODE = 1
     private val PERMISSION_CALLBACK_CONSTANT_EXTERNAL_STORAGE = 2
     private val REQUEST_PERMISSION_EXTERNAL_STORAGE = 102
-
+    var check: Boolean = false
+    var dataCollectionTriggered = false
+    var reEnrolTriggered = false
     private lateinit var externalStoragePermissionStatus: SharedPreferences
 
     val permissionsRequiredExternalStorage = arrayOf(
@@ -173,7 +191,10 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
         askForStoragePermission()
         showfragmenthome()
         studentListApiCall()
+        callReEnrollmentAPI()
         callDataCollectionAPI()
+
+
 
         if (PreferenceManager().getAccessToken(mContext).equals("")) {
             Log.e("Sucess", "Success")
@@ -183,7 +204,258 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
         }
 
 
+
+
     }
+
+    private fun showReEnrolPopUp() {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_re_enrolment)
+        val questionTextView = dialog.findViewById<TextView>(R.id.questionTV)
+        val closeButton = dialog.findViewById<ImageView>(R.id.close_btn)
+        val headingTV = dialog.findViewById<TextView>(R.id.headingTV)
+        val descriptionTV = dialog.findViewById<TextView>(R.id.descriptionTV)
+        val stud_name = dialog.findViewById<TextView>(R.id.stud_name)
+        val stud_class = dialog.findViewById<TextView>(R.id.stud_class)
+        val stud_img = dialog.findViewById<ImageView>(R.id.stud_img)
+
+        val selectedOptionTV = dialog.findViewById<TextView>(R.id.option_txt)
+        val spinnerView = dialog.findViewById<Spinner>(R.id.spinnerlist)
+        val personalInfoButton = dialog.findViewById<Button>(R.id.personal_info)
+        val termsConditionsButton = dialog.findViewById<Button>(R.id.terms_conditions)
+        val sub_btn = dialog.findViewById<Button>(R.id.sub_btn)
+        val checkButton = dialog.findViewById<RadioButton>(R.id.check_btn)
+        val dropdownList: java.util.ArrayList<String> = ArrayList()
+        val optionsArray: ArrayList<String> = reEnrolItem.reEnrollmentData.options
+        stud_name.text = reEnrolItem.fullName
+        stud_class.text = reEnrolItem.className
+        closeButton.setOnClickListener {
+            check = false
+            selectedStatus = ""
+            dialog.dismiss()
+            PreferenceManager().setReEnrolShown(mContext, "y")
+//            if (PreferenceManager().getDataCollectionsShown(mContext).equals("n")) {
+//                if (dataCollectionTriggered) {
+//                    showDataCollectionDialog(mContext, dataCollectionFields)
+//                } else {
+//
+//                }
+//            }
+        }
+        personalInfoButton.setOnClickListener {
+            val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+            intent.putExtra("webview_url", reEnrolItem.reEnrollmentData.statementUrl)
+            intent.putExtra("title", "Personal Info Collection Statement")
+            startActivity(intent)
+        }
+        termsConditionsButton.setOnClickListener {
+            val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+            intent.putExtra("webview_url", reEnrolItem.reEnrollmentData.termsAndConditionsUrl)
+            intent.putExtra("title", "Terms and Conditions")
+            startActivity(intent)
+        }
+        checkButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            check = isChecked
+        }
+        sub_btn.setOnClickListener {
+            if (selectedStatus.isEmpty()) {
+                Toast.makeText(mContext, "Please select the option", Toast.LENGTH_SHORT).show()
+            } else {
+                if (check) {
+                    callReEnrolSubmitAPI(dialog, reEnrolItem.id)
+                } else {
+                    Toast.makeText(mContext, "Please check the box", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+        if (!PreferenceManager().getStudentPhoto(mContext)!!.isEmpty()) {
+            studentImg = PreferenceManager().getStudentPhoto(mContext).toString()
+            if (studentImg != null && !studentImg.isEmpty()) {
+                val glideUrl = GlideUrl(
+                    studentImg,
+                    LazyHeaders.Builder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + PreferenceManager().getAccessToken(mContext).toString()
+                        )
+                        .build()
+                )
+                Glide.with(mContext)
+                    .load(glideUrl)
+                    .transform(CircleCrop())
+                    .placeholder(R.drawable.profile_photo)
+                    .error(R.drawable.profile_photo)
+                    .into(stud_img)
+            } else {
+                Toast.makeText(mContext, "Image empty", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
+        headingTV.text = reEnrolItem.reEnrollmentData.title
+        descriptionTV.text = reEnrolItem.reEnrollmentData.description
+        questionTextView.text = reEnrolItem.reEnrollmentData.question
+        dropdownList.add(0, "Please Select")
+        for (i in 1..optionsArray.size) {
+            dropdownList.add(i, optionsArray[i - 1])
+        }
+        val sp_adapter = ArrayAdapter<String>(
+            mContext, R.layout.spinner_textview, dropdownList
+        )
+        spinnerView.adapter = sp_adapter
+        sp_adapter.setDropDownViewResource(R.layout.spinner_textview)
+        spinnerView.setSelection(0)
+
+        spinnerView.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedItem: String = parent.getItemAtPosition(position).toString()
+                    val optionlistSize: Int = dropdownList.size - 1
+                    for (i in 1..optionlistSize) {
+                        if ((selectedItem == dropdownList[i])) {
+                            selectedOptionTV.text = selectedItem
+                            selectedStatus = dropdownList[i]
+//                            check[0] = 1
+                        } else if ((selectedItem == dropdownList[0])) {
+                            selectedOptionTV.text = selectedItem
+                            selectedStatus = ""
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+//        selectedOptionTV.text = reEnrollmentData.selectedOption
+        dialog.show()
+    }
+
+    private fun callReEnrolSubmitAPI(d: Dialog, id: Int) {
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", id)
+            addProperty("selected_option", selectedStatus)
+
+        }
+        val call: Call<GeneralSubmitResponseModel> = ApiClient.getApiService().submitReEnrolment(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mContext).toString(), paramObject
+        )
+        call.enqueue(object : retrofit2.Callback<GeneralSubmitResponseModel> {
+            override fun onResponse(
+                call: Call<GeneralSubmitResponseModel>,
+                response: Response<GeneralSubmitResponseModel>
+            ) {
+                if (response.body()!!.status == "100") {
+                    Toast.makeText(
+                        mContext,
+                        resources.getString(R.string.re_enrolment_submit_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    PreferenceManager().setReEnrolShown(mContext, "y")
+                    d.dismiss()
+
+                } else {
+                    Toast.makeText(
+                        mContext,
+                        resources.getString(R.string.re_enrolment_submit_fail),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+
+            override fun onFailure(call: Call<GeneralSubmitResponseModel>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
+
+    private fun callReEnrollmentAPI() {
+        val call: Call<ReEnrolmentListResponseModel> = ApiClient.getApiService().getReEnrolments(
+            "Bearer " +
+                    PreferenceManager().getAccessToken(mContext).toString()
+        )
+        call.enqueue(object : retrofit2.Callback<ReEnrolmentListResponseModel> {
+            override fun onResponse(
+                call: Call<ReEnrolmentListResponseModel>,
+                response: Response<ReEnrolmentListResponseModel>
+            ) {
+                if (response.body()!!.status == 100) {
+                    if (response.body()!!.reEnrollments.isNotEmpty()) {
+                        reEnrolList = response.body()!!.reEnrollments
+                        if (reEnrolList.isEmpty()) {
+                            Log.e("ReEnrolList", "Empty")
+//                            Toast.makeText(mcontext, "Re-Enrolment not available!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            for (i in 0 until reEnrolList.size) {
+
+                                Log.e("api reenrol", reEnrolList[i].id.toString().toString())
+                                if (PreferenceManager().getStudent_ID(mContext) == reEnrolList[i].id.toString()) {
+                                    reEnrolItem = reEnrolList[i]
+                                    if (reEnrolItem.selectedOption == "") {
+                                        if (reEnrolItem.isReEnrollment == 1) {
+                                            reEnrolTriggered = true
+                                            Log.e("set","re enrol 1")
+                                        } else {
+                                            reEnrolTriggered = false
+                                            Log.e("set","re enrol 0")
+
+                                        }
+                                    } else {
+                                        reEnrolTriggered = false
+                                        Log.e("set","re enrol not empty")
+
+                                    }
+                                    if (reEnrolTriggered){
+                                        if (PreferenceManager().getReEnrolShown(mContext).equals("n")) {
+                                            showReEnrolPopUp()
+                                        }
+                                    }
+                                    Log.e("set reenrol", reEnrolItem.id.toString())
+                                } else {
+
+                                }
+
+
+                            }
+                        }
+                    } else {
+
+                    }
+
+                } else {
+                    Toast.makeText(
+                        mContext,
+                        "Fail to get the data..",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<ReEnrolmentListResponseModel>, t: Throwable) {
+                Toast.makeText(
+                    mContext,
+                    "Fail to get the data..",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
+
 
     private fun askForStoragePermission() {
         if (Build.VERSION.SDK_INT > 30) {
@@ -326,7 +598,86 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
                         imagePath.toString()
                     dataCollectionAdapter.notifyItemChanged(currentImagePickPosition)
                 }
+                dataCollectionFileUploadAPI(
+                    dataCollectionFields[currentImagePickPosition].fieldName,
+                    dataCollectionFields[currentImagePickPosition].fieldValue
+                )
             }
+        }
+    }
+
+    private fun dataCollectionFileUploadAPI(fieldName: String, fieldValue: String) {
+        val file = prepareImagePart(Uri.parse(fieldValue), "field_value")
+        Log.e("fieldvalue", fieldValue)
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", PreferenceManager().getStudent_ID(mContext).toString())
+            addProperty("field_name", fieldName)
+            addProperty("field_value", fieldValue)
+        }
+        val studentID = RequestBody.create(
+            "text/plain".toMediaTypeOrNull(),
+            PreferenceManager().getStudent_ID(mContext).toString()
+        )
+        val fieldName = RequestBody.create("text/plain".toMediaTypeOrNull(), fieldName)
+
+        val call: Call<GeneralSubmitResponseModel> =
+            ApiClient.getApiService().submitDataCollectionFile(
+                "Bearer " + PreferenceManager().getAccessToken(mContext).toString(),
+                studentID, fieldName, file
+            )
+        call.enqueue(object : retrofit2.Callback<GeneralSubmitResponseModel> {
+            override fun onResponse(
+                call: Call<GeneralSubmitResponseModel>,
+                response: Response<GeneralSubmitResponseModel>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == "100") {
+                        Toast.makeText(mContext, "Upload Successful!", Toast.LENGTH_SHORT).show()
+                        dataCollectionAdapter.notifyItemChanged(currentImagePickPosition)
+                    } else {
+                        Toast.makeText(mContext, "Upload Failed!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<GeneralSubmitResponseModel>, t: Throwable) {
+                Log.e("error", t.toString())
+                Toast.makeText(mContext, "Please try again later!", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun prepareImagePart(uri: Uri, partName: String): MultipartBody.Part? {
+//        return try {
+//            val file = File(uri.path)
+//            val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+//            val stream = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+//            val byteArray = stream.toByteArray()
+//            val currentTimeMillis = System.currentTimeMillis().toString()
+//            val compressedFile = File(
+//                mContext.cacheDir, "compressed_image$currentTimeMillis.jpg"
+//            )
+//            val fos = FileOutputStream(compressedFile)
+//            fos.write(byteArray)
+//            fos.flush()
+//            fos.close()
+//            val requestFile =
+//                compressedFile.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+//            MultipartBody.Part.createFormData(partName, compressedFile.name, requestFile)
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//            null
+//        }
+        return try {
+            val file = File(uri.path)
+            val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData(partName, file.name, requestFile)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
         }
     }
 
@@ -348,11 +699,18 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 
                 if (response.body() != null) {
                     if (response.body()!!.status == 100) {
-                        if (response.body()!!.isTriggered == 1){
+                        if (response.body()!!.isTriggered == 1) {
+                            dataCollectionTriggered = true
                             dataCollectionFields = response.body()!!.collectionFields
+
+                        } else {
+                            dataCollectionTriggered = false
+                            Log.e("Triggered", "Not Triggered")
+                        }
+                        if (dataCollectionTriggered){
                             showDataCollectionDialog(mContext, dataCollectionFields)
                         }else{
-                            Log.e("Triggered", "Not Triggered")
+
                         }
 //                        paymentList = response.body()!!.invoices
 //                        if (paymentList.isEmpty()) {
@@ -384,7 +742,10 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
         })
     }
 
-    private fun showDataCollectionDialog(mContext: Context, collectionFields: ArrayList<DataCollectionResponseModel.CollectionField>) {
+    private fun showDataCollectionDialog(
+        mContext: Context,
+        collectionFields: ArrayList<DataCollectionResponseModel.CollectionField>
+    ) {
 
         val dialog = Dialog(mContext)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -397,14 +758,17 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
         val stud_class = dialog.findViewById<TextView>(R.id.stud_class)
         val stud_img = dialog.findViewById<ImageView>(R.id.stud_img)
         val dataCollectionRecycler = dialog.findViewById<RecyclerView>(R.id.dataCollectionRecycler)
+        val finalize = dialog.findViewById<Button>(R.id.finalize)
 
         var linearLayoutManager: LinearLayoutManager = LinearLayoutManager(mContext)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         dataCollectionRecycler.layoutManager = linearLayoutManager
-        dataCollectionAdapter = DataCollectionAdapter(mContext, collectionFields,this)
+        dataCollectionAdapter = DataCollectionAdapter(mContext, collectionFields, this)
         dataCollectionRecycler.adapter = dataCollectionAdapter
         dataCollectionAdapter.notifyDataSetChanged()
-
+        finalize.setOnClickListener {
+            callDataCollectionFinalize(dialog)
+        }
         stud_name.text = PreferenceManager().getStudentName(mContext)
         stud_class.text = PreferenceManager().getStudentClass(mContext)
         if (!PreferenceManager().getStudentPhoto(mContext)!!.isEmpty()) {
@@ -436,9 +800,41 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 
 
         closeButton.setOnClickListener {
+            PreferenceManager().setDataCollectionsShown(mContext, "y")
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun callDataCollectionFinalize(dialog: Dialog) {
+
+        val paramObject = JsonObject().apply {
+            addProperty("student_id", PreferenceManager().getStudent_ID(mContext).toString())
+        }
+        val call: Call<GeneralSubmitResponseModel> =
+            ApiClient.getApiService().finalizeDataCollection(
+                "Bearer " + PreferenceManager().getAccessToken(mContext).toString(), paramObject
+            )
+        call.enqueue(object : retrofit2.Callback<GeneralSubmitResponseModel> {
+            override fun onResponse(
+                call: Call<GeneralSubmitResponseModel>,
+                response: Response<GeneralSubmitResponseModel>
+            ) {
+                if (response.body()!!.status == "100") {
+                    dialog.dismiss()
+                    PreferenceManager().setDataCollectionsShown(mContext, "y")
+                    Toast.makeText(mContext, "Data Collection Completed!", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    CommonClass.checkApiStatusError(response.body()!!.status.toInt(), mContext)
+                }
+            }
+
+            override fun onFailure(call: Call<GeneralSubmitResponseModel>, t: Throwable) {
+                Toast.makeText(mContext, "Failed to submit data collection", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
     }
 
     private fun getNotificationPermission() {
@@ -771,7 +1167,10 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
         studentListRecyclerview.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 Log.e("id", PreferenceManager().getStudent_ID(mContext).toString())
-                Log.e("schoolrec", PreferenceManager().getLanguageschool(mContext).toString())
+                Log.e(
+                    "schoolrec",
+                    PreferenceManager().getLanguageschool(mContext).toString()
+                )
 
                 /*if(!PreferenceManager().getStudentPhoto(mContext).equals(""))
                 {
@@ -841,7 +1240,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 //                    student_name.clear()
                     if (PreferenceManager().getAccessToken(mContext).equals("")) {
                         Toast.makeText(
-                            mContext, "This feature is only available for registered users.",
+                            mContext,
+                            "This feature is only available for registered users.",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -983,7 +1383,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 
                         Log.e("APPVERSIONAPI:", versionfromapi)
                         Log.e("CURRENTVERSION:", currentversion)
-
+                        Log.e("reEnrol", reEnrolTriggered.toString())
+                        Log.e("dataCollectionTriggered", dataCollectionTriggered.toString())
 
                         if (!PreferenceManager().getAppVersion(mContext).equals("", true)) {
                             if (versionfromapi > currentversion) {
@@ -991,7 +1392,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 
                             }
                         } else if (response.body()!!.status.equals("106")) {
-                            val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                            val intent =
+                                Intent(mContext, SigninyourAccountActivity::class.java)
                             startActivity(intent)
                         }
 
@@ -1048,7 +1450,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
 
                             }
                         } else if (response.body()!!.status.equals("106")) {
-                            val intent = Intent(mContext, SigninyourAccountActivity::class.java)
+                            val intent =
+                                Intent(mContext, SigninyourAccountActivity::class.java)
                             startActivity(intent)
                         }
 
@@ -1085,6 +1488,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
                 Log.e("Response", response.body().toString())
                 if (response.body()!!.status == 100) {
                     studentList.addAll(response.body()!!.student_list)
+
                 } else {
                     CommonClass.checkApiStatusError(response.body()!!.status, mContext)
                 }
@@ -1322,7 +1726,7 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
-            }else if (position == 11) {
+            } else if (position == 11) {
                 val intent = Intent(mContext, ReportsActivity::class.java)
                 startActivity(intent)
                 drawerLayout.closeDrawer(linearLayout)
@@ -1493,7 +1897,10 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,Da
         val config = Configuration()
 
         config.locale = locale
-        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
         val locale1 = Locale.getDefault().language
         Log.e("localelang", locale1)
         PreferenceManager().setLanguage(mContext, locale1)

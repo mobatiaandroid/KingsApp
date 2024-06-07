@@ -37,6 +37,7 @@ class PreferenceManager {
         return pref.getString("userid", "")
     }
 
+
     fun getIBackParent(context: Context): Boolean {
         val prefs = context.getSharedPreferences(
             PREFSNAME,
@@ -176,6 +177,33 @@ class PreferenceManager {
         val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
         val editor = pref.edit()
         editor.putString("student_id", id)
+        editor.apply()
+    }
+
+    /*GET STUDENT_ID*/
+    fun getDataCollectionsShown(context: Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("data_collections_shown", "")
+    }
+    fun setDataCollectionsShown(context: Context, id: String?) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("data_collections_shown", id)
+        editor.apply()
+    }
+    fun getReEnrolShown(context:Context): String? {
+        val pref = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        return pref.getString("re_enrol_shown", "")
+    }
+
+    fun setReEnrolShown(context: Context, id: String?) {
+        val pref = context.getSharedPreferences(PREFSNAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("re_enrol_shown", id)
         editor.apply()
     }
 

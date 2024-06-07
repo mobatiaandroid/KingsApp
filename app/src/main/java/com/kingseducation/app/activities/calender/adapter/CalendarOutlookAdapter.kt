@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.calender.model.CalendarOutlookResponseModel
-import com.mobatia.calendardemopro.adapter.CalendarDetailAdapter
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
+import java.util.Collections
 import java.util.Date
+import java.util.Locale
 
 
 class CalendarOutlookAdapter(
@@ -46,8 +47,8 @@ class CalendarOutlookAdapter(
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val summary = calendarArrayList.keys.toList()[position]
-
-        holder.dateTxt.text = summary.toString()
+        val formattedDate = formatDate(summary.toString())
+        holder.dateTxt.text = formattedDate.toString()
         linearLayoutManager = LinearLayoutManager(mContext)
         holder.detailRecycler.layoutManager = linearLayoutManager
         holder.detailRecycler.itemAnimator = DefaultItemAnimator()
@@ -60,6 +61,19 @@ class CalendarOutlookAdapter(
             holder.detailRecycler.adapter = calendarListAdapter
         }
 
+    }
+
+    private fun formatDate(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault())
+
+        try {
+            val date = inputFormat.parse(inputDate)
+            return outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            return "Invalid Date"
+        }
     }
 
 

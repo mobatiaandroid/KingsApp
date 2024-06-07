@@ -387,7 +387,7 @@
     <string name="re_enrolment_submit_fail">Re-Enrolment submission failed!</string>
     <string name="reenrol_status">"Re-Enrolment Status - "</string>
     <string name="nil">nil</string>
-    <string name="upload">Upload</string>
+    <string name="attach">Attach</string>
     <string name="attach_file">Attach File</string>
     <string name="no_file">No file selected!</string>
     <string name="payment_detail">Payment Detail</string>
@@ -396,5 +396,6 @@
     <string name="invoice_details">Invoice Details</string>
     <string name="unique_invoice">"Unique Invoice No. :"</string>
     <string name="payable_amount">"Payable Amount :"</string>
+    <string name="upload">Upload </string>
 
 </resources>

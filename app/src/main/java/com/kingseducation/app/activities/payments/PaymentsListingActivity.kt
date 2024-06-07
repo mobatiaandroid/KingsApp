@@ -149,6 +149,7 @@ class PaymentsListingActivity : AppCompatActivity() {
                 context, paymentRecyclerView,
                 object : RecyclerItemListener.RecyclerTouchListener {
                     override fun onClickItem(v: View?, position: Int) {
+
                         val intent = Intent(context, PaymentDetailActivity::class.java).apply {
                             putExtra("attribute_type", paymentList[position].attributes.type)
                             putExtra("attribute_url", paymentList[position].attributes.url)

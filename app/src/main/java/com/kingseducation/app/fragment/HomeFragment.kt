@@ -39,6 +39,7 @@ import com.kingseducation.app.activities.parentessentials.ParentEssentialsActivi
 import com.kingseducation.app.activities.payments.PaymentsListingActivity
 import com.kingseducation.app.activities.reports.ReportsActivity
 import com.kingseducation.app.activities.social_media.SocialMediaActivity
+import com.kingseducation.app.activities.staff_directory.StaffDirectoryListingActivity
 import com.kingseducation.app.activities.student_info.StudentInfoActivity
 import com.kingseducation.app.activities.timetable.TimeTableActivity
 import com.kingseducation.app.constants.CommonClass
@@ -225,7 +226,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                         "Alert"
                     )*/
                 }
-                naisTabConstants.TAB_COMMUNICATION -> {
+                naisTabConstants.TAB_PARENT_ESSENTIALS -> {
                     // Toast.makeText(mContext, "frg4", Toast.LENGTH_SHORT).show()
 
                     Toast.makeText(mContext,"This feature is only available for registered users.",
@@ -382,7 +383,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                         "Alert"
                     )*/
                 }
-                naisTabConstants.TAB_COMMUNICATION -> {
+                naisTabConstants.TAB_PARENT_ESSENTIALS -> {
                     // Toast.makeText(mContext, "frg4", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(mContext, ParentEssentialsActivity::class.java)
@@ -394,7 +395,22 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     /* mFragment = CommunicationFragment()
                      fragmentIntent(mFragment)*/
                 }
-
+                naisTabConstants.TAB_STAFF_DIRECTORY ->{
+                    val intent = Intent(mContext, StaffDirectoryListingActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
+                }
+                naisTabConstants.TAB_NEWSLETTER -> {
+                    val intent = Intent(mContext, NewsLetterActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(
+                        R.anim.slide_in_up,
+                        R.anim.slide_out_up
+                    )
+                }
                 naisTabConstants.TAB_REPORT_ABSENCE -> {
                     // Toast.makeText(mContext, "frg5", Toast.LENGTH_SHORT).show()
                     val intent = Intent(mContext, AbsenceActivity::class.java)
@@ -1214,7 +1230,7 @@ class HomeFragment  : Fragment(),View.OnClickListener{
                     TAB_ID = naisTabConstants.TAB_TIME_TABLE
                 }
                 textdata.equals(classNameConstants.PARENT_ESSENTIAL, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_COMMUNICATION
+                    TAB_ID = naisTabConstants.TAB_PARENT_ESSENTIALS
                 }
 
 
