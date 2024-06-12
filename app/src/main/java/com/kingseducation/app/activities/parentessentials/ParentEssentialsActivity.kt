@@ -246,11 +246,7 @@ class ParentEssentialsActivity : AppCompatActivity() {
                                         ).show()
                                     }
                                 } else {
-                                    Toast.makeText(
-                                        mcontext,
-                                        "Re-Enrolment already submitted!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    showReEnrolSubmittedPopUp(reEnrolItem.selectedOption)
                                 }
                             }else{
                                 Toast.makeText(
@@ -302,6 +298,57 @@ class ParentEssentialsActivity : AppCompatActivity() {
             val intent = Intent(mcontext, HomeActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun showReEnrolSubmittedPopUp(selectedOption: String) {
+        val dialog = Dialog(mcontext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_re_enrolment_submitted)
+        val questionTextView = dialog.findViewById<TextView>(R.id.questionTV)
+        val closeButton = dialog.findViewById<ImageView>(R.id.close_btn)
+        val headingTV = dialog.findViewById<TextView>(R.id.headingTV)
+        val descriptionTV = dialog.findViewById<TextView>(R.id.descriptionTV)
+        val stud_name = dialog.findViewById<TextView>(R.id.stud_name)
+        val stud_class = dialog.findViewById<TextView>(R.id.stud_class)
+        val stud_img = dialog.findViewById<ImageView>(R.id.stud_img)
+        val option_txt = dialog.findViewById<TextView>(R.id.option_txt)
+        option_txt.text = selectedOption
+        stud_name.text = reEnrolItem.fullName
+        stud_class.text = reEnrolItem.className
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        if (!PreferenceManager().getStudentPhoto(mcontext)!!.isEmpty()) {
+            studentImg = PreferenceManager().getStudentPhoto(mcontext).toString()
+            if (studentImg != null && !studentImg.isEmpty()) {
+                val glideUrl = GlideUrl(
+                    studentImg,
+                    LazyHeaders.Builder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + PreferenceManager().getAccessToken(mcontext).toString()
+                        )
+                        .build()
+                )
+                Glide.with(mcontext)
+                    .load(glideUrl)
+                    .transform(CircleCrop())
+                    .placeholder(R.drawable.profile_photo)
+                    .error(R.drawable.profile_photo)
+                    .into(stud_img)
+            } else {
+                Toast.makeText(mcontext, "Image empty", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            imagicon.setImageResource(R.drawable.profile_photo)
+        }
+        headingTV.text = reEnrolItem.reEnrollmentData.title
+        descriptionTV.text = reEnrolItem.reEnrollmentData.description
+        questionTextView.text = reEnrolItem.reEnrollmentData.question
+        dialog.show()
     }
 
     private fun showReEnrolPopUp() {

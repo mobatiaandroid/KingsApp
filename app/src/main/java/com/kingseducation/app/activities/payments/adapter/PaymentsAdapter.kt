@@ -43,7 +43,11 @@ class PaymentsAdapter(
         }
         holder.dueDateTV.text = context.resources.getString(R.string.due_date) + " " + studentList[position].invoiceDueDate
         if (studentList[position].outstanding > 0) {
-            holder.paymentStatusTV.text = "Pay"
+            if (studentList[position].Online_Payment__c){
+                holder.paymentStatusTV.text = "In Progress"
+            }else{
+                holder.paymentStatusTV.text = "Pay"
+            }
         } else {
             holder.paymentStatusTV.text = "Paid"
         }

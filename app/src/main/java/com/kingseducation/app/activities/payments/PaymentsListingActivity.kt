@@ -169,6 +169,7 @@ class PaymentsListingActivity : AppCompatActivity() {
                             putExtra("Total_Amount__c", paymentList[position].totalAmount)
                             putExtra("Unique_Invoice__c", paymentList[position].uniqueInvoice)
                             putExtra("Total_Amount_Before_Tax__c", paymentList[position].totalAmountBeforeTax)
+                            putExtra("Online_Payment__c", paymentList[position].Online_Payment__c)
                         }
                         startActivity(intent)
                     }

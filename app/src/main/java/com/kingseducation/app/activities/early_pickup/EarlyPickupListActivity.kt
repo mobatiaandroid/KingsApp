@@ -207,8 +207,12 @@ class EarlyPickupListActivity:AppCompatActivity() {
                 })
         )
         registerabsence.setOnClickListener {
-            val intent = Intent(mContext, EarlyPickupRegisterActivity::class.java)
-            startActivity(intent)
+            showPopUp()
         }
+    }
+
+    private fun showPopUp() {
+        val intent = Intent(mContext, EarlyPickupRegisterActivity::class.java)
+        startActivity(intent)
     }
 }

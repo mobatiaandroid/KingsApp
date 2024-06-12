@@ -29,7 +29,8 @@ data class PendingInvoiceResponseModel(
         @SerializedName("Student__r") val student: Student,
         @SerializedName("Total_Amount__c") val totalAmount: Double,
         @SerializedName("Unique_Invoice__c") val uniqueInvoice: String?,
-        @SerializedName("Total_Amount_Before_Tax__c") val totalAmountBeforeTax: Double
+        @SerializedName("Total_Amount_Before_Tax__c") val totalAmountBeforeTax: Double,
+        @SerializedName("Online_Payment__c") val Online_Payment__c: Boolean
     ) : Parcelable {
 
         @Parcelize

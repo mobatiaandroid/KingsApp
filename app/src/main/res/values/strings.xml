@@ -327,7 +327,6 @@
     <string name="thu">Thur</string>
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
-
     <string name="zero">0</string>
     <string name="one">1</string>
     <string name="tw0">2</string>
@@ -339,35 +338,24 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="ten">10</string>
-
-
     <string name="yearview">Year View</string>
     <string name="monthview">Month View</string>
     <string name="weekview">Week View</string>
-
     <string name="thismonth">This Month</string>
     <string name="thisweek">This Week</string>
-
-
     <string name="drawer_open">Terms of Services</string>
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
-
     <string name="do_you_want_account">Do you want to Exit?</string>
     <string name="do_you_want_delete">Do you want to delete your account?</string>
     <string name="do_you_want_logout">Do you want to Logout?</string>
     <string name="ok">Ok</string>
     <string name="yes">Yes</string>
     <string name="may_be_later">Maybe later</string>
-
     <string name="delete">Delete</string>
-
     <string name="parentcomms">Notices</string>
-
     <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
     <string name="no_data_found"> No data found</string>
-
-
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="Newsletters">Newsletters</string>
     <string name="title_activity_re_enrolment_listing">ReEnrolmentListingActivity</string>
@@ -376,7 +364,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="select_image">Attach Medical Document</string>
+    <string name="select_image">Attach Supporting Document</string>
     <string name="personal_info">Please check to confirm you have read and acknowledged the Nord Anglia\nEducation Personal Information Collection Statement</string>
     <string name="agree_info">I confirm I have read and acknowledged the Nord Anglia Education Personal\nInformation Collection Statement as outlined in the above link.</string>
     <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>

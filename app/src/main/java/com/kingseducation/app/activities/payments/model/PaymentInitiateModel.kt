@@ -25,7 +25,8 @@ class PaymentInitiateModel (
     @SerializedName("Student__r") var Student__r: StudentPaymentModel,
     @SerializedName("Total_Amount__c") var Total_Amount__c: Double,
     @SerializedName("Unique_Invoice__c") var Unique_Invoice__c: String,
-    @SerializedName("Total_Amount_Before_Tax__c") var Total_Amount_Before_Tax__c: Double
+    @SerializedName("Total_Amount_Before_Tax__c") var Total_Amount_Before_Tax__c: Double,
+    @SerializedName("Online_Payment__c") var Online_Payment__c: Boolean
     ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -48,7 +49,8 @@ class PaymentInitiateModel (
         parcel.readParcelable(StudentPaymentModel::class.java.classLoader)!!,
         parcel.readDouble(),
         parcel.readString()!!,
-        parcel.readDouble()
+        parcel.readDouble(),
+        parcel.readBoolean()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -73,6 +75,7 @@ class PaymentInitiateModel (
         parcel.writeDouble(Total_Amount__c)
         parcel.writeString(Unique_Invoice__c)
         parcel.writeDouble(Total_Amount_Before_Tax__c)
+        parcel.writeBoolean(Online_Payment__c)
     }
 
     override fun describeContents(): Int {

@@ -109,12 +109,13 @@
                 tools:text="10 B" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/absencelist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            tools:listitem="@layout/item_about_us"></androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/item_about_us"/>
 
     </LinearLayout>
     <RelativeLayout
