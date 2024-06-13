@@ -50,7 +50,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         "","","",0.0,
         "","","","",
         "","","","",studentData,
-        0.0,"",0.0)
+        0.0,"",0.0,false)
 
     var attribute_type: String = ""
     var attribute_url: String = ""

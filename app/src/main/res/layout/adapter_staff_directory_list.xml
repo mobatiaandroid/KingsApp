@@ -1,6 +1,5 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -13,7 +12,7 @@
         android:layout_margin="8dp"
         android:background="@drawable/rounded_square_bg"
         android:contentDescription="Teacher Photo"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,15 +22,15 @@
         android:id="@+id/teacherName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="Teacher Name"
-        android:textSize="16sp"
         android:textColor="@color/black"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toTopOf="@+id/teacherDesignation"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/teacherPhoto"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -39,14 +38,14 @@
         android:id="@+id/teacherDesignation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/montserrat"
         android:text="Teacher Designation"
         android:textSize="12sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/teacherPhoto"
         app:layout_constraintTop_toBottomOf="@+id/teacherName" />
 
     <ImageView
