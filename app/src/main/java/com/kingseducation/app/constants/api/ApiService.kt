@@ -369,7 +369,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body json: JsonObject
     ): Call<PendingInvoiceResponseModel>
-    @POST("api/v1/staff-list")
+    @POST("api/v1/school-staff-list")
     @Headers("Content-Type: application/json")
     fun staffDirectory(
         @Header("Authorization") token: String,

@@ -1,14 +1,19 @@
 package com.kingseducation.app.activities.teacher_contact.adapter
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.staff_directory.model.StaffDirectoryResponseModel
 
@@ -40,11 +45,51 @@ class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.teacherName.text = teachersList[position].fullName
-        holder.teacherRole.text = teachersList[position].email
+        holder.teacherRole.text = teachersList[position].subject
         holder.itemView.setOnClickListener {
-            openEmail(teachersList[position].email)
+            showDetailsPopUp(teachersList[position])
+//            openEmail(teachersList[position].email)
         }
 
+    }
+
+    private fun showDetailsPopUp(staff: StaffDirectoryResponseModel.Staff) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.dialog_staff_directory_detail)
+        val close = dialog.findViewById<ImageView>(R.id.close_btn)
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+        val teacherName = dialog.findViewById<TextView>(R.id.teacherName)
+        val teacherDesignation = dialog.findViewById<TextView>(R.id.teacherDesignation)
+        val teacherPhoto = dialog.findViewById<ImageView>(R.id.teacherPhoto)
+        val emailIDText = dialog.findViewById<TextInputEditText>(R.id.emailIDText)
+        val phoneNumberText = dialog.findViewById<TextInputEditText>(R.id.phoneNumberText)
+        if (staff.fullName.isNotEmpty()) {
+            teacherName.text = staff.fullName
+        }
+            teacherDesignation.text = staff.subject
+
+        if (staff.email.isNotEmpty()) {
+            emailIDText.setText(staff.email)
+        }
+        if (staff.mobile!!.isNotEmpty()) {
+            phoneNumberText.setText(staff.mobile)
+        }
+        emailIDText.setOnClickListener {
+            openEmail(emailIDText.text.toString())
+        }
+        phoneNumberText.setOnClickListener {
+            val mobile = staff.mobile
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$mobile")
+            }
+            context.startActivity(intent)
+        }
+        dialog.show()
     }
 
     private fun openEmail(email: String?) {
@@ -53,10 +98,10 @@ class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirec
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
         }
         if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(Intent.createChooser(intent, "Send email using:"))
+            context.startActivity(intent)
         } else {
-            // Handle the case where no email client is available
-            // For example, show a Toast or log an error
+            // No email client installed
+
         }
     }
 

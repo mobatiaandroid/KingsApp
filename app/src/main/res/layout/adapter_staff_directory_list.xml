@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/teacherPhoto"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_margin="8dp"
         android:background="@drawable/rounded_square_bg"
         android:contentDescription="Teacher Photo"
@@ -22,14 +22,17 @@
         android:id="@+id/teacherName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat"
+        android:maxLines="1"
         android:text="Teacher Name"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toTopOf="@+id/teacherDesignation"
+        app:layout_constraintEnd_toStartOf="@+id/arrow"
         app:layout_constraintStart_toEndOf="@+id/teacherPhoto"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,18 +46,17 @@
         android:text="Teacher Designation"
         android:textSize="12sp"
         android:layout_marginStart="4dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/teacherPhoto"
         app:layout_constraintTop_toBottomOf="@+id/teacherName" />
 
     <ImageView
         android:id="@+id/arrow"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_margin="8dp"
         android:contentDescription="Arrow"
-        android:src="@drawable/ic_baseline_mail_24_blue"
+        android:src="@drawable/arrow_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

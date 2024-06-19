@@ -12,7 +12,9 @@ data class StaffDirectoryResponseModel(
         @SerializedName("id") val id: Int,
         @SerializedName("full_name") val fullName: String,
         @SerializedName("email") val email: String,
-        @SerializedName("mobile") val mobile: String?
+        @SerializedName("mobile") val mobile: String?,
+        @SerializedName("subject_type") val subject_type: String?,
+        @SerializedName("subject") val subject: String?
     )
 }
 

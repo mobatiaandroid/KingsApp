@@ -44,11 +44,15 @@ class PaymentsAdapter(
         holder.dueDateTV.text = context.resources.getString(R.string.due_date) + " " + studentList[position].invoiceDueDate
         if (studentList[position].outstanding > 0) {
             if (studentList[position].Online_Payment__c){
+                holder.paymentStatusTV.setTextColor(context.resources.getColor(R.color.payment_amber))
                 holder.paymentStatusTV.text = "In Progress"
             }else{
                 holder.paymentStatusTV.text = "Pay"
+                holder.paymentStatusTV.setTextColor(context.resources.getColor(R.color.payment_red))
+
             }
         } else {
+            holder.paymentStatusTV.setTextColor(context.resources.getColor(R.color.payment_green))
             holder.paymentStatusTV.text = "Paid"
         }
 

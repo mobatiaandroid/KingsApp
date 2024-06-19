@@ -37,7 +37,9 @@
     <color name="timetableblue">#7AE2ED</color>
     <color name="dark_grey1">#908C86</color>
     <color name="red">#FB3445</color>
-
+    <color name="payment_red">#FF0000</color>
+    <color name="payment_amber">#FFC107</color>
+    <color name="payment_green">#008000</color>
     <color name="view">#121147</color>
     <color name="notificationr">#DD627F</color>
 
