@@ -10,7 +10,7 @@
 
     <dimen name="design_bottom_navigation_height" tools:override="true">40dp</dimen>
     <string name="Home">Home</string>
-    <string name="Message">Notices</string>
+    <string name="Message">Notifications</string>
     <string name="About">About</string>
     <string name="Contact">Contact Us</string>
     <string name="Settings">Settings</string>
@@ -68,7 +68,7 @@
 
     <string name="student_planner">Student Planner</string>
 
-    <string name="contact_form">Contact Form</string>
+    <string name="contact_form">School Feedback</string>
     <string name="enter_your_subject_here">Enter your subject here...</string>
     <string name="enter_content">Enter content:</string>
     <string name="cancel">Cancel</string>
@@ -90,8 +90,6 @@
     <string-array name="setting_list">
         <item> Change App Settings</item>
         <item>Terms of Service</item>
-        <item>Re-Enrolment</item>
-        <item> Feedback </item>
         <item> Tutorial</item>
         <item> Delete My Account</item>
         <item>Change Password</item>
@@ -181,7 +179,7 @@
         <item>  Home</item>
         <item>  Student Info </item>
         <item>  School Calendar</item>
-        <item>  Notices</item>
+        <item>  Notifications</item>
         <item>  Newsletters</item>
         <!--        <item>  Teacher Contact</item>-->
         <item>  Absence Reporting</item>
@@ -194,6 +192,7 @@
         <item> Forms</item>
         <item>  Apps</item>
         <item>  Social Media</item>
+        <item>  School Feedback</item>
         <item>  Contact Us</item>
     </string-array>
 
@@ -231,6 +230,7 @@
 
         <item>@drawable/app</item>
         <item>@drawable/social</item>
+        <item>@drawable/feedback</item>
         <item>@drawable/chatting_clicked</item>
         <!-- 8 -->
 
@@ -353,7 +353,7 @@
     <string name="yes">Yes</string>
     <string name="may_be_later">Maybe later</string>
     <string name="delete">Delete</string>
-    <string name="parentcomms">Notices</string>
+    <string name="parentcomms">Notifications</string>
     <string name="please_enter_the_subject"> "Please Enter The Subject "</string>
     <string name="no_data_found"> No data found</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
@@ -385,5 +385,6 @@
     <string name="unique_invoice">"Unique Invoice No. :"</string>
     <string name="payable_amount">"Payable Amount :"</string>
     <string name="upload">Upload </string>
+    <string name="early_pickup_warning">For urgent appointments and emergencies only</string>
 
 </resources>

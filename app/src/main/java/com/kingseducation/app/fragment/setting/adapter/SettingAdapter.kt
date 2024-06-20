@@ -12,7 +12,7 @@ import com.kingseducation.app.R
 import com.kingseducation.app.manager.PreferenceManager
 
 
-class SettingAdapter (
+class SettingAdapter(
     mContext: Context,
     assignedDealerShowArrayList: Array<String>,
 ) : RecyclerView.Adapter<SettingAdapter.MyViewHolder>() {
@@ -49,31 +49,23 @@ class SettingAdapter (
             // holder. txtUser.setTypeface(face);
 
         }
-        if (PreferenceManager().getAccessToken(context).equals(""))
+        if (PreferenceManager().getAccessToken(context).equals("")) {
+            if (position == 5) {
 
-        {
-            if (position==6)
-            {
-
-                holder.txtUser.visibility=View.VISIBLE
+                holder.txtUser.visibility = View.VISIBLE
                 holder.txtUser.text = "(Guest)"
-            }
-            else{
+            } else {
 
-                holder.txtUser.visibility=View.GONE
+                holder.txtUser.visibility = View.GONE
             }
-        }
-        else
-        {
-            if (position==6)
-            {
+        } else {
+            if (position == 5) {
 
-                holder.txtUser.visibility=View.VISIBLE
-                holder.txtUser.text = "("+PreferenceManager().getUserCode(context)+")"
-            }
-            else{
+                holder.txtUser.visibility = View.VISIBLE
+                holder.txtUser.text = "(" + PreferenceManager().getUserCode(context) + ")"
+            } else {
 
-                holder.txtUser.visibility=View.GONE
+                holder.txtUser.visibility = View.GONE
             }
         }
 

@@ -13,12 +13,20 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.google.android.material.textfield.TextInputEditText
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.staff_directory.model.StaffDirectoryResponseModel
+import com.kingseducation.app.manager.PreferenceManager
 
 
-class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirectoryResponseModel.Staff>) :
+class StaffDirectoryAdapter(
+    context: Context,
+    teachersList: ArrayList<StaffDirectoryResponseModel.Staff>
+) :
     RecyclerView.Adapter<StaffDirectoryAdapter.ViewHolder>() {
     var context = context
     var teachersList = teachersList
@@ -46,6 +54,28 @@ class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirec
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.teacherName.text = teachersList[position].fullName
         holder.teacherRole.text = teachersList[position].subject
+        if (teachersList[position].staff_photo!!.isNotEmpty()) {
+            val url = teachersList[position].staff_photo
+            if (url != null && !url.isEmpty()) {
+                val glideUrl = GlideUrl(
+                    url,
+                    LazyHeaders.Builder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer " + PreferenceManager().getAccessToken(context).toString()
+                        )
+                        .build()
+                )
+                Glide.with(context)
+                    .load(glideUrl)
+                    .transform(CircleCrop())
+                    .placeholder(R.drawable.profile_photo)
+                    .error(R.drawable.profile_photo)
+                    .into(holder.teacherPhoto)
+            } else {
+//                Toast.makeText(context, "Image empty", Toast.LENGTH_SHORT).show()
+            }
+        }
         holder.itemView.setOnClickListener {
             showDetailsPopUp(teachersList[position])
 //            openEmail(teachersList[position].email)
@@ -71,7 +101,7 @@ class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirec
         if (staff.fullName.isNotEmpty()) {
             teacherName.text = staff.fullName
         }
-            teacherDesignation.text = staff.subject
+        teacherDesignation.text = staff.subject
 
         if (staff.email.isNotEmpty()) {
             emailIDText.setText(staff.email)
@@ -81,6 +111,24 @@ class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirec
         }
         emailIDText.setOnClickListener {
             openEmail(emailIDText.text.toString())
+        }
+        val url = staff.staff_photo
+        if (url != null && !url.isEmpty()) {
+            val glideUrl = GlideUrl(
+                url,
+                LazyHeaders.Builder()
+                    .addHeader(
+                        "Authorization",
+                        "Bearer " + PreferenceManager().getAccessToken(context).toString()
+                    )
+                    .build()
+            )
+            Glide.with(context)
+                .load(glideUrl)
+                .transform(CircleCrop())
+                .placeholder(R.drawable.profile_photo)
+                .error(R.drawable.profile_photo)
+                .into(teacherPhoto)
         }
         phoneNumberText.setOnClickListener {
             val mobile = staff.mobile
@@ -108,8 +156,6 @@ class StaffDirectoryAdapter(context: Context, teachersList: ArrayList<StaffDirec
     override fun getItemCount(): Int {
         return teachersList.size
     }
-
-
 
 
 }

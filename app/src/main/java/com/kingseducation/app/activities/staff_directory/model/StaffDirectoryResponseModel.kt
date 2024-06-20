@@ -14,7 +14,8 @@ data class StaffDirectoryResponseModel(
         @SerializedName("email") val email: String,
         @SerializedName("mobile") val mobile: String?,
         @SerializedName("subject_type") val subject_type: String?,
-        @SerializedName("subject") val subject: String?
+        @SerializedName("subject") val subject: String?,
+        @SerializedName("staff_photo") val staff_photo: String?
     )
 }
 

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -45,6 +46,7 @@ class SettingFragment : Fragment() {
     lateinit var mContext: Context
     lateinit var menu: ImageView
     lateinit var textView: TextView
+    lateinit var versionText: TextView
     lateinit var stringList: Array<String>
 
     override fun onCreateView(
@@ -63,6 +65,10 @@ class SettingFragment : Fragment() {
         //recyclerList = findViewById(R.id.settingsRecycler)
         menu = ((rootView.findViewById<View>(R.id.menu) as? ImageView)!!)
         textView = (rootView.findViewById<View>(R.id.textView) as? TextView?)!!
+        versionText = (rootView.findViewById<View>(R.id.versionText) as? TextView?)!!
+        if(ApiClient.base_url.contains("mobile.kings-edu")){
+            versionText.text = getAppVersionName(requireContext()).toString()
+        }
         stringList = mContext.resources.getStringArray(
             R.array.setting_list
         )
@@ -109,6 +115,7 @@ class SettingFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     if (position == 3) {
                         Toast.makeText(
                             mContext,
@@ -123,15 +130,8 @@ class SettingFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    if (position == 5) {
-                        Toast.makeText(
-                            mContext,
-                            "This feature is only available for registered users.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
 
-                    if (position == 6) {
+                    if (position == 5) {
 
                         showSuccessAlertGuest(mContext, "Do you want to Sign Out?")
                     }
@@ -148,27 +148,22 @@ class SettingFragment : Fragment() {
                         val intent = Intent(mContext, TermsOfServiceActivity::class.java)
                         startActivity(intent)
                     }
+
                     if (position == 2) {
-                        // show ReEnrolment PopUp
-                    }
-                    if (position == 3) {
-                        showEmailHelpAlert(mContext)
-                    }
-                    if (position == 4) {
                         Toast.makeText(
                             mContext, "This feature will be available soon.", Toast.LENGTH_SHORT
                         ).show()
                     }
-                    if (position == 5) {
+                    if (position == 3) {
                         showSuccessAlertForDelete(
                             mContext, resources.getString(R.string.do_you_want_delete)
                         )
                     }
-                    if (position == 6) {
+                    if (position == 4) {
                         showChangePasswordPopUp()
                     }
 
-                    if (position == 7) {
+                    if (position == 5) {
                         showSuccessAlert(mContext, resources.getString(R.string.do_you_want_logout))
                     }
                 }
@@ -176,6 +171,16 @@ class SettingFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun getAppVersionName(context: Context): String {
+        return try {
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            packageInfo.versionName ?: "N/A"
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "N/A"
+        }
     }
 
     private fun showSuccessAlertGuest(mContext: Context, s: String) {

@@ -69,6 +69,12 @@ class PaymentsListingActivity : AppCompatActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == 100) {
                         paymentList = response.body()!!.invoices
+                        var tempList = ArrayList<PendingInvoiceResponseModel.Invoice>()
+                        for (i in 0 until paymentList.size) {
+                            if (!paymentList[i].Invoice_Type__c.equals("Tuition Fee", ignoreCase = true)) {
+                                tempList.add(paymentList[i])
+                            }
+                        }
                         if (paymentList.isEmpty()) {
                             paymentRecyclerView.layoutManager = linearLayoutManager
                             val studentListAdapter = PaymentsAdapter(context, ArrayList())
@@ -77,7 +83,7 @@ class PaymentsListingActivity : AppCompatActivity() {
                             noDataTV.visibility = View.VISIBLE
                         } else {
                             paymentRecyclerView.layoutManager = linearLayoutManager
-                            val studentListAdapter = PaymentsAdapter(context, paymentList)
+                            val studentListAdapter = PaymentsAdapter(context, tempList)
                             paymentRecyclerView.adapter = studentListAdapter
                             noDataTV.visibility = View.GONE
                         }

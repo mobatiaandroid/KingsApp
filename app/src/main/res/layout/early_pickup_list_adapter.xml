@@ -46,6 +46,13 @@
         android:layout_height="match_parent"
         android:background="@drawable/curved_rectangle_top_white"
         android:orientation="vertical">
+        <com.kingseducation.app.manager.font.CustomMontserratMedium
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:background="@color/red"
+            android:textColor="@color/white"
+            android:text="@string/early_pickup_warning"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

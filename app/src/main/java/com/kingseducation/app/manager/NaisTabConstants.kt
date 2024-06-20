@@ -18,7 +18,8 @@ class NaisTabConstants {
     var TAB_FORMS = "12"
     var TAB_APPS = "13"
     var TAB_SOCIAL_MEDIA = "14"
-    var TAB_CONTACT_US = "15"
+    var TAB_FEEDBACK = "15"
+    var TAB_CONTACT_US = "16"
 
     var TAB_HOME = "16"
     var TAB_NOTIFICATIONS = "17"

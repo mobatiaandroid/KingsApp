@@ -122,6 +122,7 @@
             app:boxStrokeColor="@color/kings_blue"
             app:endIconDrawable="@drawable/baseline_call_24"
             app:endIconMode="custom"
+            android:visibility="gone"
             app:helperTextTextColor="@color/kings_blue"
             app:hintTextColor="@color/kings_blue"
             android:layout_marginTop="8dp"

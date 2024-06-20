@@ -1750,6 +1750,12 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,
                 drawerLayout.closeDrawer(linearLayout)
 
                 // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
+            }else if (position == 15) {
+                // TODO Feedback
+               showFeedbackPopUp(mContext)
+                drawerLayout.closeDrawer(linearLayout)
+
+                // Toast.makeText(com.kingseducation.app.fragment.mContext, "Coming Soon", Toast.LENGTH_SHORT).show()
             } else {
                 if (ActivityCompat.checkSelfPermission(
                         mContext,
@@ -1778,6 +1784,100 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,
             }
         }
 
+    }
+
+    fun showFeedbackPopUp(context: Context) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_send_email_dialog)
+        //  var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        val dialogCancelButton = dialog.findViewById<View>(R.id.cancelButton) as TextView
+        val submitButton = dialog.findViewById<View>(R.id.submitButton) as TextView
+        val text_dialog = dialog.findViewById<View>(R.id.text_dialog) as EditText
+        val text_content = dialog.findViewById<View>(R.id.text_content) as EditText
+        if (PreferenceManager().getLanguage(mContext).equals("ar")) {
+            val face: Typeface =
+                Typeface.createFromAsset(mContext.assets, "font/times_new_roman.ttf")
+            dialogCancelButton.typeface = face
+            submitButton.typeface = face
+            text_dialog.typeface = face
+            text_content.typeface = face
+
+        }
+        //  text_dialog.text = message
+        // alertHead.text = msgHead
+        // iconImageView.setImageResource(R.color.white)
+
+        submitButton.setOnClickListener {
+            if (text_dialog.text.toString().trim().equals("")) {
+                Toast.makeText(mContext, "Please Enter The Subject ", Toast.LENGTH_SHORT).show()
+            } else if (text_content.text.toString().trim().equals("")) {
+                Toast.makeText(
+                    mContext,
+                    resources.getString(R.string.please_enter_the_subject),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            } else {
+                if (CommonClass.isInternetAvailable(mContext)) {
+                    callSendMailApi(
+                        text_dialog.text.toString(), text_content.text.toString(), context, dialog
+                    )
+                } else {
+                    Toast.makeText(
+                        mContext,
+                        "Network error occurred. Please check your internet connection and try again later",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+        }
+        dialogCancelButton.setOnClickListener { //   AppUtils.hideKeyBoard(mContext);
+            val imm =
+                com.kingseducation.app.fragment.mContext.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(text_dialog.windowToken, 0)
+            imm.hideSoftInputFromWindow(text_content.windowToken, 0)
+
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun callSendMailApi(
+        textDialog: String, textContent: String, context: Context, dialog: Dialog
+    ) {
+        val call: Call<ResponseBody> = ApiClient.getApiService().feedback(
+            "Bearer " + PreferenceManager().getAccessToken(mContext).toString(),
+            textDialog,
+            textContent,
+            PreferenceManager().getUserCode(context).toString(),
+            PreferenceManager().getuser_id(context).toString()
+        )
+        call.enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>, response: Response<ResponseBody>
+            ) {
+                Log.e("Response", response.body().toString())
+                Toast.makeText(
+                    mContext, "Feedback submitted successfully!", Toast.LENGTH_SHORT
+                ).show()
+                dialog.dismiss()/*val intent = Intent(context, WelcomeActivity::class.java)
+                startActivity(intent)*/
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+                Toast.makeText(
+                    mContext, "Fail to get the data..", Toast.LENGTH_SHORT
+                ).show()
+                Log.e("succ", t.message.toString())
+            }
+        })
     }
 
     private fun checkPermissionContactUs() {

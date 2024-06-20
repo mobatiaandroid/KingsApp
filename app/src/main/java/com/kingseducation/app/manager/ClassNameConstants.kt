@@ -8,7 +8,7 @@ class ClassNameConstants {
     var TIME_TABL = "Time Table"
     var PARENT_ESSENTIAL = "Parent Essentials"
     var FORMS = "Forms"
-    var MESSAGE = "Notices"
+    var MESSAGE = "Notifications"
     var TEACHER_CONTACT = "Teacher Contact"
     var REPORTS = "Reports"
     var APPS = "Apps"
