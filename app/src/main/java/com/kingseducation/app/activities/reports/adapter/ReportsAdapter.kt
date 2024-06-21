@@ -11,14 +11,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.reports.model.ReportsNewResponseModel
-import com.kingseducation.app.constants.WebViewLoaderActivity
+import com.kingseducation.app.constants.ReportCardWebViewActivity
 
 
-class RecyclerViewSubAdapter(
+class ReportsAdapter(
     private val context: Context,
     private val name: ArrayList<ReportsNewResponseModel.Report>,
 ) :
-    RecyclerView.Adapter<RecyclerViewSubAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<ReportsAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var titleTextView: TextView = view.findViewById(R.id.titleTextView)
@@ -45,7 +45,7 @@ class RecyclerViewSubAdapter(
 
         holder.relativelayout.setOnClickListener {
 
-            val intent = Intent(context, WebViewLoaderActivity::class.java)
+            val intent = Intent(context, ReportCardWebViewActivity::class.java)
             intent.putExtra("webview_url", name[position].reportUrl)
             intent.putExtra("title", name[position].academicLabel)
 

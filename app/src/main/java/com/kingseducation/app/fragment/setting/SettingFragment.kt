@@ -520,7 +520,8 @@ class SettingFragment : Fragment() {
             textDialog,
             textContent,
             PreferenceManager().getUserCode(context).toString(),
-            PreferenceManager().getuser_id(context).toString()
+            PreferenceManager().getuser_id(context).toString(),
+            PreferenceManager().getStudent_ID(context).toString()
         )
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(

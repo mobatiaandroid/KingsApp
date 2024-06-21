@@ -40,7 +40,8 @@ import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResp
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.PdfReaderActivity
 import com.kingseducation.app.constants.ProgressBarDialog
-import com.kingseducation.app.constants.WebViewLoaderActivity
+import com.kingseducation.app.constants.ReportCardWebViewActivity
+import com.kingseducation.app.constants.WebViewActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.RecyclerItemListener
@@ -282,7 +283,7 @@ class ParentEssentialsActivity : AppCompatActivity() {
                             }
                         } else {
                             Log.e("url web view", list_name[position].title)
-                            val intent = Intent(mcontext, WebViewLoaderActivity::class.java)
+                            val intent = Intent(mcontext, WebViewActivity::class.java)
                             intent.putExtra("webview_url", list_name[position].url)
                             intent.putExtra("title", list_name[position].title)
                             startActivity(intent)
@@ -381,13 +382,13 @@ class ParentEssentialsActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         personalInfoButton.setOnClickListener {
-            val intent = Intent(mcontext, WebViewLoaderActivity::class.java)
+            val intent = Intent(mcontext, WebViewActivity::class.java)
             intent.putExtra("webview_url", reEnrolItem.reEnrollmentData.statementUrl)
             intent.putExtra("title", "Personal Info Collection Statement")
             startActivity(intent)
         }
         termsConditionsButton.setOnClickListener {
-            val intent = Intent(mcontext, WebViewLoaderActivity::class.java)
+            val intent = Intent(mcontext, WebViewActivity::class.java)
             intent.putExtra("webview_url", reEnrolItem.reEnrollmentData.termsAndConditionsUrl)
             intent.putExtra("title", "Terms and Conditions")
             startActivity(intent)

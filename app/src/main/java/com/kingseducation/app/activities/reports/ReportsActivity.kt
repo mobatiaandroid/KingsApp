@@ -21,7 +21,7 @@ import com.google.gson.JsonObject
 import com.kingseducation.app.R
 import com.kingseducation.app.activities.home.HomeActivity
 import com.kingseducation.app.activities.login.model.StudentList
-import com.kingseducation.app.activities.reports.adapter.RecyclerViewSubAdapter
+import com.kingseducation.app.activities.reports.adapter.ReportsAdapter
 import com.kingseducation.app.activities.reports.model.ReportModelFiltered
 import com.kingseducation.app.activities.reports.model.ReportsNewResponseModel
 import com.kingseducation.app.constants.CommonClass
@@ -176,7 +176,7 @@ class ReportsActivity : AppCompatActivity() {
                         if (report_array.isEmpty()) {
                             reportrec.layoutManager = LinearLayoutManager(ncontext)
                             val report_rec_adapter =
-                                RecyclerViewSubAdapter(ncontext, ArrayList())
+                                ReportsAdapter(ncontext, ArrayList())
                             reportrec.adapter = report_rec_adapter
                             Toast.makeText(ncontext, "No data.", Toast.LENGTH_SHORT).show()
                             noDataTV.visibility = View.VISIBLE
@@ -185,7 +185,7 @@ class ReportsActivity : AppCompatActivity() {
                             webLoadBaseUrl = response.body()!!.pdfViewerUrl
                             reportrec.layoutManager = LinearLayoutManager(ncontext)
                             val report_rec_adapter =
-                                RecyclerViewSubAdapter(ncontext, report_array)
+                                ReportsAdapter(ncontext, report_array)
                             reportrec.adapter = report_rec_adapter
                         }
 

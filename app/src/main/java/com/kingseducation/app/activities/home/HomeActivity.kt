@@ -84,7 +84,8 @@ import com.kingseducation.app.activities.teacher_contact.model.GeneralSubmitResp
 import com.kingseducation.app.activities.timetable.TimeTableActivity
 import com.kingseducation.app.adapter.StudentListAdapter
 import com.kingseducation.app.constants.CommonClass
-import com.kingseducation.app.constants.WebViewLoaderActivity
+import com.kingseducation.app.constants.ReportCardWebViewActivity
+import com.kingseducation.app.constants.WebViewActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.fragment.HomeFragment
 import com.kingseducation.app.fragment.contact.ContactFragment
@@ -246,13 +247,13 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,
 //            }
         }
         personalInfoButton.setOnClickListener {
-            val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+            val intent = Intent(mContext, WebViewActivity::class.java)
             intent.putExtra("webview_url", reEnrolItem.reEnrollmentData.statementUrl)
             intent.putExtra("title", "Personal Info Collection Statement")
             startActivity(intent)
         }
         termsConditionsButton.setOnClickListener {
-            val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+            val intent = Intent(mContext, WebViewActivity::class.java)
             intent.putExtra("webview_url", reEnrolItem.reEnrollmentData.termsAndConditionsUrl)
             intent.putExtra("title", "Terms and Conditions")
             startActivity(intent)
@@ -1856,7 +1857,8 @@ class HomeActivity : AppCompatActivity(), AdapterView.OnItemLongClickListener,
             textDialog,
             textContent,
             PreferenceManager().getUserCode(context).toString(),
-            PreferenceManager().getuser_id(context).toString()
+            PreferenceManager().getuser_id(context).toString(),
+            PreferenceManager().getStudent_ID(context).toString()
         )
         call.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(

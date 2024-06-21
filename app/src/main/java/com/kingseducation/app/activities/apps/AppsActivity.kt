@@ -31,7 +31,8 @@ import com.kingseducation.app.activities.login.model.StudentList
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.PdfReaderActivity
 import com.kingseducation.app.constants.ProgressBarDialog
-import com.kingseducation.app.constants.WebViewLoaderActivity
+import com.kingseducation.app.constants.ReportCardWebViewActivity
+import com.kingseducation.app.constants.WebViewActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.OnItemClickListener
@@ -301,7 +302,7 @@ class AppsActivity : AppCompatActivity() {
                     intent.putExtra("pdf_title", list_name[position].title)
                     startActivity(intent)
                 } else {
-                    val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+                    val intent = Intent(mContext, WebViewActivity::class.java)
                     intent.putExtra("webview_url", list_name[position].url)
                     intent.putExtra("title", list_name[position].title)
 

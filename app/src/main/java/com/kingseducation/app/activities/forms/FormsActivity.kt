@@ -21,7 +21,8 @@ import com.kingseducation.app.activities.login.SigninyourAccountActivity
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.PdfReaderActivity
 import com.kingseducation.app.constants.ProgressBarDialog
-import com.kingseducation.app.constants.WebViewLoaderActivity
+import com.kingseducation.app.constants.ReportCardWebViewActivity
+import com.kingseducation.app.constants.WebViewActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.fragment.mContext
 import com.kingseducation.app.manager.PreferenceManager
@@ -145,7 +146,7 @@ class FormsActivity : AppCompatActivity() {
                         }
                         else
                         {
-                            val intent = Intent(mcontext, WebViewLoaderActivity::class.java)
+                            val intent = Intent(mcontext, WebViewActivity::class.java)
                             intent.putExtra("webview_url", list_name[position].url)
                             intent.putExtra("title", list_name[position].title)
 

@@ -126,6 +126,10 @@ class CommonClass {
             {
                 showErrorAlert(context, "Already Paid","Alert")
 
+            }else if (statusCode==120)
+            {
+                showErrorAlert(context, "Early pickup can only be scheduled at least 2 hours in advance.","Alert")
+
             }
             else if (statusCode==300)
             {

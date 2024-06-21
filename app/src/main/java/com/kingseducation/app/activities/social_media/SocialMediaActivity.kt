@@ -23,7 +23,8 @@ import com.kingseducation.app.activities.social_media.model.SocialMediaDetailMod
 import com.kingseducation.app.activities.social_media.model.SocialMediaResponseModel
 import com.kingseducation.app.constants.CommonClass
 import com.kingseducation.app.constants.ProgressBarDialog
-import com.kingseducation.app.constants.WebViewLoaderActivity
+import com.kingseducation.app.constants.ReportCardWebViewActivity
+import com.kingseducation.app.constants.WebViewActivity
 import com.kingseducation.app.constants.api.ApiClient
 import com.kingseducation.app.manager.PreferenceManager
 import com.kingseducation.app.manager.recyclerviewmanager.OnItemClickListener
@@ -159,7 +160,7 @@ class SocialMediaActivity:AppCompatActivity() {
                     } catch (e: ActivityNotFoundException) {
 
                         val url = socialMediaArrayList[position].url
-                        val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+                        val intent = Intent(mContext, WebViewActivity::class.java)
                         intent.putExtra("webview_url", socialMediaArrayList.get(position).url)
                         intent.putExtra("title", socialMediaArrayList.get(position).title)
                         startActivity(intent)
@@ -175,7 +176,7 @@ class SocialMediaActivity:AppCompatActivity() {
                         startActivity(likeIng)
                     } catch (e: ActivityNotFoundException) {
                         val url = socialMediaArrayList.get(position).url
-                        val intent = Intent(mContext, WebViewLoaderActivity::class.java)
+                        val intent = Intent(mContext, WebViewActivity::class.java)
                         intent.putExtra("webview_url", socialMediaArrayList.get(position).url)
                         intent.putExtra("title", socialMediaArrayList.get(position).title)
                         startActivity(intent)

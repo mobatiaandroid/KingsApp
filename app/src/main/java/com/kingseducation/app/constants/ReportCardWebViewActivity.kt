@@ -19,7 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.kingseducation.app.R
 
-class WebViewLoaderActivity: AppCompatActivity() {
+class ReportCardWebViewActivity: AppCompatActivity() {
     lateinit var back: ImageView
 
     lateinit var context: Context
